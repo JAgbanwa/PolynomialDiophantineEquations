@@ -136,6 +136,8 @@ begin
 end
 
 
+Lemma 2.3
+
 
 -- filepath: /Users/jamalmac/Desktop/research PC Lean/lemmas.lean
 
@@ -378,6 +380,8 @@ end
 
 ##### Now dealing with biprimes #####
 
+Lemma 2.5 
+
 
 -- filepath: /Users/jamalmac/Desktop/research PC Lean/lemmas.lean
 
@@ -452,6 +456,7 @@ begin
 end
 
 
+Lemma 2.7
 
 when b is a biprime.
 
@@ -626,6 +631,8 @@ begin
   },
 end
 
+
+Lemma 2.8 
 
 
 when c is a biprime
