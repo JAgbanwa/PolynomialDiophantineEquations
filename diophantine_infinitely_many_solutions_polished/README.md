@@ -1,11 +1,3 @@
-This project was edited by [Aristotle](https://aristotle.harmonic.fun).
-To cite Aristotle:
-- Tag @Aristotle-Harmonic on GitHub PRs/issues
-- Add as co-author to commits:
-```
-Co-authored-by: Aristotle (Harmonic) <aristotle-harmonic@harmonic.fun>
-```
-
 # Summary of changes for run 080257d8-2787-4d54-9497-ba73656ddcc2
 I fixed the "No goals to be solved" error. It was a cross–Mathlib-version fragility issue: on this project's toolchain the file compiled, but on the Mathlib version you were compiling against, a powerful tactic (`simp_all`) closed its goal earlier than expected, leaving a following tactic with nothing to do — which surfaces as "No goals to be solved".
 I made the two fragile blocks in `RequestProject/Main.lean` deterministic so no tactic can ever run after its goal is already closed:
@@ -47,3 +39,11 @@ The proof follows the paper's three ingredients, each as a named lemma:
 4. `rat_to_int` (Lemma 4.2): rational sums of two squares are integral sums of two squares, via Mathlib's two-squares characterization (`Nat.eq_sq_add_sq_iff`).
 These combine in `Npell_sq_add_sq` (each `Nₖ⁶ − 4` is an integer sum of two squares) and `exists_sol` (each `Nₖ` yields a solution); since the `x`-coordinates `Nₖ` are pairwise distinct, the solution set is infinite.
 All numerical identities from the paper (e.g. 578² + 3720² = 242³ − 4, P² − D·Q² = 1, X₀² − D·N₀² = −C) were verified both computationally and inside the Lean proofs.
+
+This project was edited by [Aristotle](https://aristotle.harmonic.fun).
+To cite Aristotle:
+- Tag @Aristotle-Harmonic on GitHub PRs/issues
+- Add as co-author to commits:
+```
+Co-authored-by: Aristotle (Harmonic) <aristotle-harmonic@harmonic.fun>
+```
