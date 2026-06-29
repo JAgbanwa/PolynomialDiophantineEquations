@@ -1,3 +1,11 @@
+This project was edited by [Aristotle](https://aristotle.harmonic.fun).
+To cite Aristotle:
+- Tag @Aristotle-Harmonic on GitHub PRs/issues
+- Add as co-author to commits:
+```
+Co-authored-by: Aristotle (Harmonic) <aristotle-harmonic@harmonic.fun>
+```
+
 # Summary of changes for run 080257d8-2787-4d54-9497-ba73656ddcc2
 I fixed the "No goals to be solved" error. It was a cross–Mathlib-version fragility issue: on this project's toolchain the file compiled, but on the Mathlib version you were compiling against, a powerful tactic (`simp_all`) closed its goal earlier than expected, leaving a following tactic with nothing to do — which surfaces as "No goals to be solved".
 I made the two fragile blocks in `RequestProject/Main.lean` deterministic so no tactic can ever run after its goal is already closed:
