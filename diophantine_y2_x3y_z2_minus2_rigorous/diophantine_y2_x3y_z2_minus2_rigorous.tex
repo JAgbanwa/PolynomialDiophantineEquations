@@ -1,0 +1,534 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+
+\numberwithin{equation}{section}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\DeclareMathOperator{\sgn}{sgn}
+
+\title{An Explicit Infinite Family of Integer Solutions to \texorpdfstring{\(y^2+x^3y+z^2-2=0\)}{y^2+x^3y+z^2-2=0}}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We prove, by an elementary Pell-type construction, that the Diophantine equation
+\[
+    y^2+x^3y+z^2-2=0
+\]
+has infinitely many integer solutions.  The proof is completely explicit: from every positive term of the recursively defined Pell sequence
+\[
+    (c_0,d_0)=(1,0),\qquad
+    c_{n+1}=3c_n+4d_n,\qquad d_{n+1}=2c_n+3d_n,
+\]
+we produce an integer solution \((x_n,y_n,z_n)\).  The construction is self-contained and uses only elementary algebraic identities.
+\end{abstract}
+
+\section{Statement of the result}
+
+We consider the integer equation
+\begin{equation}\label{eq:main}
+    y^2+x^3y+z^2-2=0.
+\end{equation}
+The aim is not to classify all solutions, but to settle the requested alternative by proving that there are infinitely many integer solutions.
+
+\begin{theorem}\label{thm:main}
+Equation \eqref{eq:main} has infinitely many integer solutions.  More precisely, define integer sequences \((c_n)_{n\ge 0}\) and \((d_n)_{n\ge 0}\) by
+\begin{equation}\label{eq:pell-recurrence}
+    (c_0,d_0)=(1,0),\qquad
+    c_{n+1}=3c_n+4d_n,
+    \qquad
+    d_{n+1}=2c_n+3d_n.
+\end{equation}
+For every integer \(n\ge 1\), put
+\begin{equation}\label{eq:definitions}
+\begin{aligned}
+    a_n&=2c_n^2-1,\qquad
+    R_n=2c_n(a_n-1),\qquad
+    S_n=a_n^2-a_n-1,\\
+    x_n&=4c_nd_n,\\
+    z_n&=a_n(R_n-S_n),\\
+    y_n&=a_n(R_n+S_n)-\frac{x_n^3}{2}.
+\end{aligned}
+\end{equation}
+Then \((x_n,y_n,z_n)\in\mathbb Z^3\) and
+\[
+    y_n^2+x_n^3y_n+z_n^2-2=0.
+\]
+Moreover, the integers \(x_n\) are strictly increasing for \(n\ge 1\).  Hence these solutions are pairwise distinct.
+\end{theorem}
+
+\section{A square-completion reduction}
+
+The first step is to replace \eqref{eq:main} by a representation problem of the shape \(u^2+4z^2=x^6+8\).
+
+\begin{lemma}\label{lem:square-completion}
+Let \(x,y,z\in\mathbb Z\), and set
+\[
+    u=2y+x^3.
+\]
+Then \((x,y,z)\) solves \eqref{eq:main} if and only if
+\begin{equation}\label{eq:representation}
+    u^2+4z^2=x^6+8.
+\end{equation}
+Conversely, if \(x,u,z\in\mathbb Z\) satisfy \eqref{eq:representation} and
+\begin{equation}\label{eq:parity-condition}
+    u\equiv x^3\pmod 2,
+\end{equation}
+then
+\[
+    y=\frac{u-x^3}{2}
+\]
+is an integer and \((x,y,z)\) solves \eqref{eq:main}.
+\end{lemma}
+
+\begin{proof}
+Starting from \eqref{eq:main}, we have
+\[
+    y^2+x^3y+z^2=2.
+\]
+Multiplying by \(4\) gives
+\[
+    4y^2+4x^3y+4z^2=8.
+\]
+Adding \(x^6\) to both sides yields
+\[
+    x^6+4x^3y+4y^2+4z^2=x^6+8.
+\]
+The left-hand side is exactly
+\[
+    (2y+x^3)^2+4z^2.
+\]
+Thus \eqref{eq:representation} holds with \(u=2y+x^3\).
+
+Conversely, assume \(x,u,z\in\mathbb Z\) satisfy \eqref{eq:representation} and \eqref{eq:parity-condition}.  Then \(u-x^3\) is even, so
+\[
+    y=\frac{u-x^3}{2}
+\]
+is an integer.  Therefore \(u=2y+x^3\).  Substituting this into \eqref{eq:representation} gives
+\[
+    (2y+x^3)^2+4z^2=x^6+8.
+\]
+Expanding the square and cancelling \(x^6\) from both sides gives
+\[
+    4y^2+4x^3y+4z^2=8.
+\]
+Dividing by \(4\), we obtain
+\[
+    y^2+x^3y+z^2=2,
+\]
+which is equivalent to \eqref{eq:main}.
+\end{proof}
+
+\section{An infinite Pell sequence}
+
+We shall need infinitely many integer pairs \((c,d)\) satisfying \(c^2-2d^2=1\).  Instead of invoking Pell's theorem as a black box, we construct such pairs explicitly.
+
+\begin{lemma}\label{lem:pell-sequence}
+Let \((c_n,d_n)\) be defined by \eqref{eq:pell-recurrence}.  Then, for every \(n\ge 0\),
+\begin{equation}\label{eq:pell}
+    c_n^2-2d_n^2=1.
+\end{equation}
+Furthermore, for every \(n\ge 1\), both \(c_n\) and \(d_n\) are positive, and the sequences \((c_n)_{n\ge 0}\) and \((d_n)_{n\ge 0}\) are strictly increasing from \(n=0\) onward in the following sense:
+\[
+    c_{n+1}>c_n,
+    \qquad
+    d_{n+1}>d_n
+    \qquad(n\ge 0).
+\]
+In particular, there are infinitely many distinct positive integer solutions of \(c^2-2d^2=1\).
+\end{lemma}
+
+\begin{proof}
+First, \((c_0,d_0)=(1,0)\), so
+\[
+    c_0^2-2d_0^2=1^2-2\cdot 0^2=1.
+\]
+Assume that \(c_n^2-2d_n^2=1\).  Using the recurrence \eqref{eq:pell-recurrence}, we compute
+\begin{align*}
+    c_{n+1}^2-2d_{n+1}^2
+    &=(3c_n+4d_n)^2-2(2c_n+3d_n)^2\\
+    &=\bigl(9c_n^2+24c_nd_n+16d_n^2\bigr)
+      -2\bigl(4c_n^2+12c_nd_n+9d_n^2\bigr)\\
+    &=9c_n^2+24c_nd_n+16d_n^2
+      -8c_n^2-24c_nd_n-18d_n^2\\
+    &=c_n^2-2d_n^2\\
+    &=1.
+\end{align*}
+Thus \eqref{eq:pell} holds for every \(n\ge 0\) by induction.
+
+Next we prove positivity and strict growth.  Since \((c_0,d_0)=(1,0)\), we have \(c_0>0\) and \(d_0\ge 0\).  If \(c_n>0\) and \(d_n\ge 0\), then
+\[
+    c_{n+1}=3c_n+4d_n>0,
+    \qquad
+    d_{n+1}=2c_n+3d_n>0.
+\]
+Hence \(c_n>0\) for all \(n\ge 0\), and \(d_n>0\) for all \(n\ge 1\).
+
+Moreover,
+\[
+    c_{n+1}-c_n=2c_n+4d_n>0
+\]
+for every \(n\ge 0\), because \(c_n>0\) and \(d_n\ge 0\).  Also
+\[
+    d_{n+1}-d_n=2c_n+2d_n>0
+\]
+for every \(n\ge 0\), again because \(c_n>0\) and \(d_n\ge 0\).  Therefore \((c_n)\) and \((d_n)\) are strictly increasing in the stated sense.  Since the pairs \((c_n,d_n)\) are distinct and satisfy \(c_n^2-2d_n^2=1\), this gives infinitely many positive integer solutions for \(n\ge 1\).
+\end{proof}
+
+\begin{remark}
+Equivalently, \((c_n,d_n)\) are the coefficients in
+\[
+    (3+2\sqrt2)^n=c_n+d_n\sqrt2.
+\]
+The recurrence proof above is included so that no external theorem on Pell equations is being used.
+\end{remark}
+
+\section{The auxiliary identities}
+
+The construction is based on forcing \(x^6+8\) to be a sum of one square and four times another square.  The following lemmas contain the required identities.
+
+\begin{lemma}\label{lem:pell-square}
+Let \(c,d\in\mathbb Z\) satisfy
+\begin{equation}\label{eq:c-d-pell}
+    c^2-2d^2=1.
+\end{equation}
+Define
+\begin{equation}\label{eq:a-b-def}
+    a=2c^2-1,
+    \qquad
+    b=2cd.
+\end{equation}
+Then
+\begin{equation}\label{eq:a-b-pell}
+    a^2-2b^2=1.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+From \eqref{eq:c-d-pell}, we have
+\begin{equation}\label{eq:two-d-square}
+    2d^2=c^2-1.
+\end{equation}
+Using \eqref{eq:a-b-def}, we compute
+\begin{align*}
+    a^2-2b^2
+    &=(2c^2-1)^2-2(2cd)^2\\
+    &=4c^4-4c^2+1-8c^2d^2.
+\end{align*}
+By \eqref{eq:two-d-square},
+\[
+    8c^2d^2=4c^2(2d^2)=4c^2(c^2-1)=4c^4-4c^2.
+\]
+Therefore
+\[
+    a^2-2b^2
+    =4c^4-4c^2+1-(4c^4-4c^2)=1.
+\]
+This proves \eqref{eq:a-b-pell}.
+\end{proof}
+
+\begin{lemma}\label{lem:RS}
+Let \(c,d\in\mathbb Z\) satisfy \(c^2-2d^2=1\), and define
+\[
+    a=2c^2-1,
+    \qquad
+    R=2c(a-1),
+    \qquad
+    S=a^2-a-1.
+\]
+Then
+\begin{equation}\label{eq:R2S2}
+    R^2+S^2=a^4-3a^2+3.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Since \(a=2c^2-1\), we have
+\begin{equation}\label{eq:a-plus-one}
+    a+1=2c^2.
+\end{equation}
+Therefore
+\begin{equation}\label{eq:R2-calc}
+    R^2=\bigl(2c(a-1)\bigr)^2=4c^2(a-1)^2=2(a+1)(a-1)^2,
+\end{equation}
+where the last equality follows from \eqref{eq:a-plus-one}.  Expanding the right-hand side of \eqref{eq:R2-calc},
+\begin{align*}
+    2(a+1)(a-1)^2
+    &=2(a+1)(a^2-2a+1)\\
+    &=2(a^3-a^2-a+1)\\
+    &=2a^3-2a^2-2a+2.
+\end{align*}
+Also,
+\begin{align*}
+    S^2
+    &=(a^2-a-1)^2\\
+    &=a^4-2a^3-a^2+2a+1.
+\end{align*}
+Adding these two expansions gives
+\begin{align*}
+    R^2+S^2
+    &=(2a^3-2a^2-2a+2)
+      +(a^4-2a^3-a^2+2a+1)\\
+    &=a^4-3a^2+3.
+\end{align*}
+This is \eqref{eq:R2S2}.
+\end{proof}
+
+\begin{lemma}\label{lem:x6-plus-eight}
+Let \(a,b\in\mathbb Z\) satisfy
+\[
+    a^2-2b^2=1.
+\]
+Set
+\[
+    x=2b.
+\]
+Then
+\begin{equation}\label{eq:x2-plus-two}
+    x^2+2=2a^2,
+\end{equation}
+and
+\begin{equation}\label{eq:x4-part}
+    x^4-2x^2+4=4(a^4-3a^2+3).
+\end{equation}
+Consequently,
+\begin{equation}\label{eq:x6-factor-final}
+    x^6+8=8a^2(a^4-3a^2+3).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Because \(a^2-2b^2=1\), we have
+\begin{equation}\label{eq:b2-as-a}
+    2b^2=a^2-1.
+\end{equation}
+Since \(x=2b\),
+\[
+    x^2+2=4b^2+2=2(2b^2+1)=2a^2,
+\]
+which proves \eqref{eq:x2-plus-two}.
+
+Next,
+\begin{align*}
+    x^4-2x^2+4
+    &=(2b)^4-2(2b)^2+4\\
+    &=16b^4-8b^2+4\\
+    &=4(4b^4-2b^2+1).
+\end{align*}
+Using \eqref{eq:b2-as-a}, we compute
+\begin{align*}
+    4b^4-2b^2+1
+    &=4\left(\frac{a^2-1}{2}\right)^2
+      -(a^2-1)+1\\
+    &=(a^2-1)^2-a^2+2\\
+    &=a^4-2a^2+1-a^2+2\\
+    &=a^4-3a^2+3.
+\end{align*}
+Therefore \eqref{eq:x4-part} follows.
+
+Finally, the elementary factorization
+\[
+    x^6+8=(x^2)^3+2^3=(x^2+2)(x^4-2x^2+4)
+\]
+together with \eqref{eq:x2-plus-two} and \eqref{eq:x4-part} gives
+\[
+    x^6+8=(2a^2)\cdot 4(a^4-3a^2+3)
+    =8a^2(a^4-3a^2+3).
+\]
+This proves \eqref{eq:x6-factor-final}.
+\end{proof}
+
+\section{Construction of the solutions}
+
+We now assemble the identities.
+
+\begin{lemma}\label{lem:representation-lemma}
+Let \(c,d\in\mathbb Z\) satisfy
+\[
+    c^2-2d^2=1.
+\]
+Define
+\begin{equation}\label{eq:construction-general}
+\begin{aligned}
+    a&=2c^2-1,\qquad b=2cd,\qquad x=2b=4cd,\\
+    R&=2c(a-1),\qquad S=a^2-a-1,\\
+    u&=2a(R+S),\qquad z=a(R-S).
+\end{aligned}
+\end{equation}
+Then
+\begin{equation}\label{eq:u-z-representation}
+    u^2+4z^2=x^6+8.
+\end{equation}
+If, in addition, \(x\) is even, then
+\[
+    y=\frac{u-x^3}{2}
+\]
+is an integer solution-producing value, namely \((x,y,z)\) solves \eqref{eq:main}.
+\end{lemma}
+
+\begin{proof}
+By Lemma \ref{lem:pell-square}, the integers \(a\) and \(b\) satisfy
+\[
+    a^2-2b^2=1.
+\]
+Since \(x=2b\), Lemma \ref{lem:x6-plus-eight} gives
+\begin{equation}\label{eq:x6-middle}
+    x^6+8=8a^2(a^4-3a^2+3).
+\end{equation}
+By Lemma \ref{lem:RS},
+\[
+    R^2+S^2=a^4-3a^2+3.
+\]
+Substituting this into \eqref{eq:x6-middle}, we get
+\begin{equation}\label{eq:x6-RS}
+    x^6+8=8a^2(R^2+S^2).
+\end{equation}
+
+On the other hand, from the definitions of \(u\) and \(z\),
+\begin{align*}
+    u^2+4z^2
+    &=\bigl(2a(R+S)\bigr)^2+4\bigl(a(R-S)\bigr)^2\\
+    &=4a^2(R+S)^2+4a^2(R-S)^2\\
+    &=4a^2\bigl((R+S)^2+(R-S)^2\bigr).
+\end{align*}
+Now
+\[
+    (R+S)^2+(R-S)^2
+    =(R^2+2RS+S^2)+(R^2-2RS+S^2)
+    =2R^2+2S^2
+    =2(R^2+S^2).
+\]
+Hence
+\[
+    u^2+4z^2=4a^2\cdot 2(R^2+S^2)=8a^2(R^2+S^2).
+\]
+Comparing this with \eqref{eq:x6-RS}, we obtain
+\[
+    u^2+4z^2=x^6+8.
+\]
+This proves \eqref{eq:u-z-representation}.
+
+If \(x\) is even, then \(x^3\) is even.  Also \(u=2a(R+S)\) is even.  Therefore \(u-x^3\) is even, and
+\[
+    y=\frac{u-x^3}{2}
+\]
+is an integer.  Lemma \ref{lem:square-completion} then implies that \((x,y,z)\) solves \eqref{eq:main}.
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{thm:main}]
+Let \(n\ge 1\).  By Lemma \ref{lem:pell-sequence}, the pair \((c_n,d_n)\) satisfies
+\[
+    c_n^2-2d_n^2=1,
+\]
+with \(c_n,d_n\in\mathbb Z\) and \(c_n,d_n>0\).  Apply Lemma \ref{lem:representation-lemma} with \((c,d)=(c_n,d_n)\).  The definitions in \eqref{eq:construction-general} become exactly the definitions in \eqref{eq:definitions}, with
+\[
+    u_n=2a_n(R_n+S_n).
+\]
+Because
+\[
+    x_n=4c_nd_n,
+\]
+the integer \(x_n\) is even.  Therefore
+\[
+    y_n=\frac{u_n-x_n^3}{2}
+    =a_n(R_n+S_n)-\frac{x_n^3}{2}
+\]
+is an integer, and Lemma \ref{lem:representation-lemma} gives
+\[
+    y_n^2+x_n^3y_n+z_n^2-2=0.
+\]
+Thus every \(n\ge 1\) gives an integer solution.
+
+It remains only to prove that infinitely many distinct solutions are obtained.  By Lemma \ref{lem:pell-sequence}, both \((c_n)\) and \((d_n)\) are strictly increasing and positive for \(n\ge 1\).  Hence, for every \(n\ge 1\),
+\[
+    x_{n+1}=4c_{n+1}d_{n+1}>4c_nd_n=x_n.
+\]
+So the values \(x_n\) are strictly increasing.  In particular, the triples \((x_n,y_n,z_n)\) are pairwise distinct.  Therefore \eqref{eq:main} has infinitely many integer solutions.
+\end{proof}
+
+\section{First examples}
+
+The first positive Pell pair produced by \eqref{eq:pell-recurrence} is
+\[
+    (c_1,d_1)=(3,2).
+\]
+Then
+\[
+    a_1=2\cdot 3^2-1=17,
+    \qquad
+    R_1=2\cdot 3\cdot(17-1)=96,
+    \qquad
+    S_1=17^2-17-1=271,
+\]
+and
+\[
+    x_1=4\cdot 3\cdot 2=24.
+\]
+Therefore
+\[
+    z_1=17(96-271)=-2975,
+\]
+and
+\[
+    y_1=17(96+271)-\frac{24^3}{2}
+       =17\cdot 367-6912
+       =6239-6912
+       =-673.
+\]
+Thus
+\[
+    (x,y,z)=(24,-673,-2975)
+\]
+is a solution.  Since the equation depends on \(z\) only through \(z^2\), the sign-changed triple
+\[
+    (24,-673,2975)
+\]
+is also a solution.
+
+For reference, the first few triples coming from the construction are listed below.  In every row, changing the sign of \(z\) gives another solution.
+
+\begin{center}
+\begin{tabular}{rrrrr}
+\toprule
+\(n\) & \(c_n\) & \(d_n\) & \(x_n\) & \((y_n,z_n)\) \\
+\midrule
+1 & 3 & 2 & 24 & \((-673,-2975)\) \\
+2 & 17 & 12 & 816 & \((-68602753,-180466559)\) \\
+3 & 99 & 70 & 27720 & \((-3043629943201,-7454236759199)\) \\
+4 & 577 & 408 & 941664 & \((-121772121013218817,-294705964894072319)\) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+A direct verification of the first row is
+\begin{align*}
+    (-673)^2+24^3(-673)+(-2975)^2-2
+    &=452929-9303552+8850625-2\\
+    &=0.
+\end{align*}
+
+\section{Conclusion}
+
+The recursive Pell sequence \eqref{eq:pell-recurrence} gives infinitely many positive pairs \((c_n,d_n)\).  The explicit formulas \eqref{eq:definitions} then give infinitely many pairwise distinct integer triples \((x_n,y_n,z_n)\) solving
+\[
+    y^2+x^3y+z^2-2=0.
+\]
+This proves, unconditionally and constructively, that the equation has infinitely many integer solutions.  The construction is explicit and does not depend on any unproved classification theorem.
+
+\end{document}
