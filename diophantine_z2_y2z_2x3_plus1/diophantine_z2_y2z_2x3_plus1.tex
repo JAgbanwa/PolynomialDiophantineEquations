@@ -1,0 +1,371 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage[hidelinks]{hyperref}
+\usepackage{microtype}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\DeclareMathOperator{\LHS}{LHS}
+
+\title{An Infinite Family of Integer Solutions to \texorpdfstring{\(z^2+y^2z+2x^3+1=0\)}{z^2+y^2z+2x^3+1=0}}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We give a fully explicit infinite family of integer solutions to
+\[
+        z^2+y^2z+2x^3+1=0.
+\]
+The proof is elementary and self-contained.  The construction is based on a polynomial identity which makes
+\(2X^3-1\) split as
+\((M-2T^2)(M+2T^2)\).  Setting \(x=-X\), \(y=2T\), and
+\(z=M-2T^2\) then gives the required equation.
+\end{abstract}
+
+\section{Statement of the result}
+
+The goal is not to classify all integer solutions, but to prove unconditionally that infinitely many exist.
+
+\begin{theorem}\label{thm:main}
+The Diophantine equation
+\[
+        z^2+y^2z+2x^3+1=0
+\]
+has infinitely many integer solutions.  More precisely, for every odd integer \(r\geq 3\), define
+\[
+        a=r^2-2,\qquad n=\frac{a^2-1}{2},\qquad T=\frac{r(a-1)}2,
+\]
+\[
+        X=2n^2+a,
+        \qquad
+        M=4n^3+3an+1.
+\]
+Then
+\[
+        \boxed{(x,y,z)=\bigl(-X,\,2T,\,M-2T^2\bigr)}
+\]
+is an integer solution of
+\[
+        z^2+y^2z+2x^3+1=0.
+\]
+As \(r\) ranges over the odd integers \(r\geq 3\), these solutions are pairwise distinct.
+\end{theorem}
+
+The same family can be written directly as a polynomial-parametric family:
+\begin{corollary}\label{cor:polynomial}
+For every odd integer \(r\geq 3\), the triple
+\[
+\boxed{
+\begin{aligned}
+ x_r&=-\frac{r^8-8r^6+22r^4-22r^2+5}{2},\\
+ y_r&=r^3-3r,\\
+ z_r&=\frac{r^{12}-12r^{10}+57r^8-134r^6+159r^4-84r^2+11}{2}
+\end{aligned}}
+\]
+is an integer solution of
+\[
+        z^2+y^2z+2x^3+1=0.
+\]
+\end{corollary}
+
+\section{The auxiliary identity}
+
+We first isolate the identity behind the construction.
+
+\begin{lemma}\label{lem:identity}
+Let \(a\) and \(n\) be rational numbers satisfying
+\[
+        n=\frac{a^2-1}{2}.
+\]
+Define
+\[
+        X=2n^2+a,
+        \qquad
+        M=4n^3+3an+1.
+\]
+Then
+\[
+        M^2-2X^3+1=\frac{(a-1)^4(a+2)^2}{4}.
+\]
+\end{lemma}
+
+\begin{proof}
+We expand first without substituting the special value of \(n\).  Since
+\[
+        M=4n^3+3an+1,
+        \qquad
+        X=2n^2+a,
+\]
+we have
+\begin{align*}
+ M^2
+ &= (4n^3+3an+1)^2 \\
+ &=16n^6+24an^4+8n^3+9a^2n^2+6an+1,
+\end{align*}
+and
+\begin{align*}
+ 2X^3
+ &=2(2n^2+a)^3 \\
+ &=2(8n^6+12an^4+6a^2n^2+a^3) \\
+ &=16n^6+24an^4+12a^2n^2+2a^3.
+\end{align*}
+Therefore
+\begin{align}\label{eq:basic-expanded}
+ M^2-2X^3+1
+ &=8n^3-3a^2n^2+6an-2a^3+2.
+\end{align}
+Now substitute \(n=(a^2-1)/2\).  Then \eqref{eq:basic-expanded} becomes
+\begin{align*}
+&8\left(\frac{a^2-1}{2}\right)^3
+ -3a^2\left(\frac{a^2-1}{2}\right)^2
+ +6a\left(\frac{a^2-1}{2}\right)
+ -2a^3+2 \\
+&\qquad = (a^2-1)^3-\frac{3a^2(a^2-1)^2}{4}+3a(a^2-1)-2a^3+2.
+\end{align*}
+Multiplying by \(4\), the last expression is equal to
+\begin{align*}
+&4(a^2-1)^3-3a^2(a^2-1)^2+12a(a^2-1)-8a^3+8 \\
+&\qquad = a^6-6a^4+4a^3+9a^2-12a+4 \\
+&\qquad = (a-1)^4(a+2)^2.
+\end{align*}
+Dividing by \(4\) gives
+\[
+        M^2-2X^3+1=\frac{(a-1)^4(a+2)^2}{4},
+\]
+as claimed.
+\end{proof}
+
+\section{Turning the identity into a solution}
+
+The next lemma is the conversion step.  It shows how a factorization of \(2X^3-1\) immediately gives a solution of the original equation.
+
+\begin{lemma}\label{lem:conversion}
+Let \(X,M,T\in\mathbb Z\) satisfy
+\[
+        M^2-2X^3+1=4T^4.
+\]
+Then
+\[
+        (x,y,z)=(-X,\,2T,\,M-2T^2)
+\]
+is an integer solution of
+\[
+        z^2+y^2z+2x^3+1=0.
+\]
+\end{lemma}
+
+\begin{proof}
+Define
+\[
+        x=-X,
+        \qquad
+        y=2T,
+        \qquad
+        z=M-2T^2.
+\]
+Then
+\[
+        z+y^2=M-2T^2+(2T)^2=M+2T^2.
+\]
+Therefore
+\begin{align*}
+        z(z+y^2)
+        &=(M-2T^2)(M+2T^2) \\
+        &=M^2-4T^4.
+\end{align*}
+Using the assumed identity \(M^2-2X^3+1=4T^4\), we get
+\[
+        M^2-4T^4=2X^3-1.
+\]
+Thus
+\begin{align*}
+ z^2+y^2z+2x^3+1
+ &=z(z+y^2)+2(-X)^3+1 \\
+ &=(2X^3-1)-2X^3+1 \\
+ &=0.
+\end{align*}
+This proves the lemma.
+\end{proof}
+
+\section{Proof of the infinite family}
+
+\begin{proof}[Proof of Theorem \ref{thm:main}]
+Let \(r\geq 3\) be odd.  Define
+\[
+        a=r^2-2,
+        \qquad
+        n=\frac{a^2-1}{2},
+        \qquad
+        T=\frac{r(a-1)}2,
+\]
+\[
+        X=2n^2+a,
+        \qquad
+        M=4n^3+3an+1.
+\]
+We first check that all quantities are integral.  Since \(r\) is odd, \(r^2\) is odd, so
+\[
+        a=r^2-2
+\]
+is odd.  Hence \(a^2-1=(a-1)(a+1)\) is divisible by \(8\), and in particular
+\[
+        n=\frac{a^2-1}{2}\in\mathbb Z.
+\]
+Also \(a-1=r^2-3\) is even, so
+\[
+        T=\frac{r(a-1)}2\in\mathbb Z.
+\]
+It follows immediately that \(X,M\in\mathbb Z\).
+
+By Lemma \ref{lem:identity},
+\[
+        M^2-2X^3+1=\frac{(a-1)^4(a+2)^2}{4}.
+\]
+Because \(a=r^2-2\), we have \(a+2=r^2\).  Hence
+\begin{align*}
+        \frac{(a-1)^4(a+2)^2}{4}
+        &=\frac{(a-1)^4r^4}{4} \\
+        &=4\left(\frac{r(a-1)}2\right)^4 \\
+        &=4T^4.
+\end{align*}
+Thus
+\[
+        M^2-2X^3+1=4T^4.
+\]
+Lemma \ref{lem:conversion} now gives that
+\[
+        (x,y,z)=(-X,2T,M-2T^2)
+\]
+is an integer solution of
+\[
+        z^2+y^2z+2x^3+1=0.
+\]
+
+It remains only to prove that the construction gives infinitely many distinct solutions.  For \(r\geq 3\), the number
+\[
+        a=r^2-2
+\]
+is strictly increasing with \(r\), and
+\[
+        n=\frac{a^2-1}{2}
+\]
+is strictly increasing with \(a\) for \(a\geq 7\).  Therefore
+\[
+        X=2n^2+a
+\]
+is strictly increasing as \(r\) ranges over the odd integers \(r\geq 3\).  Consequently the first coordinate
+\[
+        x=-X
+\]
+assumes infinitely many distinct values.  The corresponding triples are therefore pairwise distinct.
+\end{proof}
+
+\begin{proof}[Proof of Corollary \ref{cor:polynomial}]
+Substituting \(a=r^2-2\) into
+\[
+        n=\frac{a^2-1}{2}
+\]
+yields
+\[
+        n=\frac{(r^2-2)^2-1}{2}
+         =\frac{(r^2-3)(r^2-1)}{2}.
+\]
+Then
+\begin{align*}
+        X
+        &=2n^2+a \\
+        &=2\left(\frac{(r^2-3)(r^2-1)}{2}\right)^2+r^2-2 \\
+        &=\frac{r^8-8r^6+22r^4-22r^2+5}{2}.
+\end{align*}
+Also
+\[
+        2T=r(a-1)=r(r^2-3)=r^3-3r.
+\]
+Finally,
+\begin{align*}
+        M-2T^2
+        &=4\left(\frac{(r^2-3)(r^2-1)}{2}\right)^3
+          +3(r^2-2)\left(\frac{(r^2-3)(r^2-1)}{2}\right)+1
+          -2\left(\frac{r(r^2-3)}{2}\right)^2 \\
+        &=\frac{r^{12}-12r^{10}+57r^8-134r^6+159r^4-84r^2+11}{2}.
+\end{align*}
+These expressions are exactly the stated \((x_r,y_r,z_r)\).  By Theorem \ref{thm:main}, they solve the equation.
+\end{proof}
+
+\section{Examples}
+
+The following table lists several integer solutions produced by the construction.  The final column records the value of
+\[
+        z^2+y^2z+2x^3+1,
+\]
+which is \(0\) in each case.
+
+\begin{center}
+\begin{tabular}{@{}r r r r r@{}}
+\toprule
+\(r\) & \(x\) & \(y\) & \(z\) & \(z^2+y^2z+2x^3+1\) \\
+\midrule
+\(3\)  & \(-1159\)       & \(18\)   & \(55639\)          & \(0\) \\
+\(5\)  & \(-139415\)     & \(110\)  & \(73611143\)       & \(0\) \\
+\(7\)  & \(-2437679\)    & \(322\)  & \(5382395279\)     & \(0\) \\
+\(9\)  & \(-19468879\)   & \(702\)  & \(121485805039\)   & \(0\) \\
+\(11\) & \(-100252919\)  & \(1298\) & \(1419581333159\)  & \(0\) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+For instance, the first row gives
+\[
+        (x,y,z)=(-1159,18,55639).
+\]
+A direct check may be written in the factorized form
+\[
+        55639(55639+18^2)=3113725357=2\cdot 1159^3-1.
+\]
+Therefore
+\begin{align*}
+        55639^2+18^2\cdot 55639+2(-1159)^3+1
+        &=\bigl(2\cdot 1159^3-1\bigr)-2\cdot1159^3+1 \\
+        &=0.
+\end{align*}
+
+\section{A sign symmetry}
+
+Since the original equation contains \(y\) only through \(y^2\), every solution \((x,y,z)\) immediately gives another solution \((x,-y,z)\).  Thus the displayed family also yields the companion solutions
+\[
+        (-X,-2T,M-2T^2)
+\]
+for the same odd parameters \(r\geq 3\).
+
+\section{Conclusion}
+
+The elementary identity in Lemma \ref{lem:identity} produces infinitely many factorizations
+\[
+        2X^3-1=(M-2T^2)(M+2T^2).
+\]
+The substitution
+\[
+        x=-X,
+        \qquad
+        y=2T,
+        \qquad
+        z=M-2T^2
+\]
+then converts these factorizations into integer solutions of
+\[
+        z^2+y^2z+2x^3+1=0.
+\]
+Because the parameter \(r\) can be chosen as any odd integer \(r\geq 3\), and because the corresponding \(x\)-coordinates are pairwise distinct, the equation has infinitely many integer solutions.
+
+\end{document}
