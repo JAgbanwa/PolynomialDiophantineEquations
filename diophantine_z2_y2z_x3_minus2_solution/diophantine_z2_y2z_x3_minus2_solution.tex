@@ -1,0 +1,382 @@
+\documentclass[11pt,a4paper]{amsart}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+
+\title[The equation $z^2+y^2z+x^3-2=0$]{An exact divisor parametrisation for the integer solutions of $z^2+y^2z+x^3-2=0$}
+\author{Jamal Agbanwa}
+\date{\today}
+
+\begin{document}
+
+\begin{abstract}
+We give a complete elementary solution of the Diophantine equation
+\[
+        z^2+y^2z+x^3-2=0,
+        \qquad x,y,z\in \Z.
+\]
+The key point is the factorisation
+\[
+        z^2+y^2z=z(z+y^2).
+\]
+Since the case $z=0$ is impossible, every solution is obtained by choosing an integer $x$, a non-zero divisor $z$ of $2-x^3$, and then requiring
+\[
+        \frac{2-x^3}{z}-z
+\]
+to be a non-negative square. This gives an exact finite divisor test for each fixed value of $x$, and no external results are required.
+\end{abstract}
+
+\maketitle
+
+\section{Statement of the result}
+
+We solve the equation
+\begin{equation}\label{eq:main}
+        z^2+y^2z+x^3-2=0,
+        \qquad x,y,z\in \Z.
+\end{equation}
+The solution is most naturally expressed as a divisor parametrisation. Throughout the paper, a \emph{non-negative square} means an integer of the form $r^2$ with $r\in\Z$.
+
+\begin{theorem}[Complete divisor parametrisation]\label{thm:main}
+The integer solutions of \eqref{eq:main} are exactly the triples
+\begin{equation}\label{eq:param_set}
+        (x,y,z)\in \Z^3
+\end{equation}
+with the following three properties:
+\begin{enumerate}[label=\textup{(\roman*)}]
+    \item $z\ne 0$;
+    \item $z\mid (2-x^3)$;
+    \item the integer
+    \[
+            Q(x,z):=\frac{2-x^3}{z}-z
+    \]
+    is a non-negative square, and $y$ is one of its square roots.
+\end{enumerate}
+Equivalently,
+\begin{equation}\label{eq:solution_set}
+\boxed{
+\mathcal S
+=
+\left\{(x,y,z)\in\Z^3:
+        z\ne0,
+        \ z\mid(2-x^3),
+        \ y^2=\frac{2-x^3}{z}-z
+\right\}.}
+\end{equation}
+In particular, for fixed $x$ one obtains the complete finite list of solutions by checking the finitely many divisors $z$ of $2-x^3$.
+\end{theorem}
+
+The following equivalent form is often cleaner conceptually.
+
+\begin{theorem}[Factor-pair form]\label{thm:factorpair}
+The integer solutions of \eqref{eq:main} are in bijection with the quadruples
+\[
+        (x,a,b,y)\in\Z^4
+\]
+satisfying
+\begin{equation}\label{eq:factor_conditions}
+        ab=2-x^3,
+        \qquad b-a=y^2,
+        \qquad a\ne0.
+\end{equation}
+The bijection sends a solution $(x,y,z)$ to
+\[
+        (x,a,b,y)=(x,z,z+y^2,y),
+\]
+and the inverse map sends $(x,a,b,y)$ to
+\[
+        (x,y,z)=(x,y,a).
+\]
+Equivalently, one may choose a factor pair $(a,b)$ of $2-x^3$ whose difference $b-a$ is a non-negative square, and then set
+\[
+        z=a,
+        \qquad y=\pm\sqrt{b-a},
+\]
+with the convention that if $b-a=0$, then the single value $y=0$ is obtained.
+\end{theorem}
+
+\section{Proof of the parametrisation}
+
+We begin with the only exceptional case that could obstruct division by $z$.
+
+\begin{lemma}\label{lem:znonzero}
+If $(x,y,z)\in\Z^3$ satisfies \eqref{eq:main}, then $z\ne0$.
+\end{lemma}
+
+\begin{proof}
+Suppose, for contradiction, that $z=0$. Substituting into \eqref{eq:main} gives
+\[
+        x^3-2=0,
+\]
+so $x^3=2$. But no integer cube is equal to $2$: indeed, if $x\le1$, then $x^3\le1$, while if $x\ge2$, then $x^3\ge8$. This contradiction proves $z\ne0$.
+\end{proof}
+
+\begin{lemma}[The fundamental factorisation]\label{lem:factorisation}
+For integers $x,y,z$, equation \eqref{eq:main} is equivalent to
+\begin{equation}\label{eq:factorised}
+        z(z+y^2)=2-x^3.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Starting from \eqref{eq:main}, move $x^3-2$ to the other side:
+\[
+        z^2+y^2z=2-x^3.
+\]
+The left-hand side factors as
+\[
+        z^2+y^2z=z(z+y^2).
+\]
+This gives \eqref{eq:factorised}. Conversely, expanding \eqref{eq:factorised} gives
+\[
+        z^2+y^2z=2-x^3,
+\]
+which is exactly \eqref{eq:main}. Hence the two equations are equivalent.
+\end{proof}
+
+\begin{lemma}[Divisor-square criterion]\label{lem:criterion}
+Let $x,z\in\Z$ with $z\ne0$. There exists an integer $y$ satisfying \eqref{eq:main} if and only if
+\[
+        z\mid(2-x^3)
+\]
+and
+\[
+        \frac{2-x^3}{z}-z
+\]
+is a non-negative square. In that case the possible values of $y$ are exactly the integer square roots of this number.
+\end{lemma}
+
+\begin{proof}
+Assume first that there is an integer $y$ such that $(x,y,z)$ satisfies \eqref{eq:main}. By Lemma \ref{lem:factorisation},
+\[
+        z(z+y^2)=2-x^3.
+\]
+Because $z\ne0$, this implies immediately that $z$ divides $2-x^3$. Dividing by $z$ gives
+\[
+        z+y^2=\frac{2-x^3}{z}.
+\]
+Therefore
+\[
+        y^2=\frac{2-x^3}{z}-z.
+\]
+The right-hand side is thus a non-negative square, namely the square of the integer $y$.
+
+Conversely, suppose that $z\mid(2-x^3)$ and that
+\[
+        \frac{2-x^3}{z}-z=r^2
+\]
+for some integer $r$. Put $y=r$. Then
+\[
+        z+y^2
+        =z+r^2
+        =z+\left(\frac{2-x^3}{z}-z\right)
+        =\frac{2-x^3}{z}.
+\]
+Multiplying both sides by $z$ yields
+\[
+        z(z+y^2)=2-x^3.
+\]
+By Lemma \ref{lem:factorisation}, this is equivalent to \eqref{eq:main}. Thus $(x,r,z)$ is a solution. Since the displayed equation forces $y^2=r^2$, the only possible values of $y$ are precisely the integer square roots of $r^2$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{thm:main}]
+Let $(x,y,z)$ be an integer solution of \eqref{eq:main}. By Lemma \ref{lem:znonzero}, $z\ne0$. Lemma \ref{lem:criterion} then gives
+\[
+        z\mid(2-x^3)
+        \qquad\text{and}\qquad
+        y^2=\frac{2-x^3}{z}-z.
+\]
+Thus every solution belongs to the set displayed in \eqref{eq:solution_set}.
+
+Conversely, suppose $(x,y,z)$ belongs to the set displayed in \eqref{eq:solution_set}. Then $z\ne0$, $z\mid(2-x^3)$, and
+\[
+        y^2=\frac{2-x^3}{z}-z.
+\]
+Rearranging gives
+\[
+        z+y^2=\frac{2-x^3}{z}.
+\]
+After multiplication by $z$,
+\[
+        z(z+y^2)=2-x^3.
+\]
+By Lemma \ref{lem:factorisation}, this is equivalent to \eqref{eq:main}. Hence $(x,y,z)$ is a solution. This proves both inclusions and therefore proves the complete parametrisation.
+
+Finally, if $x$ is fixed, then $2-x^3\ne0$, because $x^3=2$ has no integer solution. A non-zero integer has only finitely many divisors. Hence the stated procedure checks only finitely many possible values of $z$ and gives the complete finite list for that fixed $x$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{thm:factorpair}]
+Let $(x,y,z)$ be a solution of \eqref{eq:main}. Define
+\[
+        a=z,
+        \qquad b=z+y^2.
+\]
+By Lemma \ref{lem:znonzero}, $a=z\ne0$. By Lemma \ref{lem:factorisation},
+\[
+        ab=z(z+y^2)=2-x^3.
+\]
+Moreover,
+\[
+        b-a=(z+y^2)-z=y^2.
+\]
+Therefore $(x,a,b,y)$ satisfies \eqref{eq:factor_conditions}.
+
+Conversely, suppose $(x,a,b,y)\in\Z^4$ satisfies \eqref{eq:factor_conditions}. Put $z=a$. Since $b-a=y^2$, we have
+\[
+        b=z+y^2.
+\]
+The identity $ab=2-x^3$ becomes
+\[
+        z(z+y^2)=2-x^3.
+\]
+By Lemma \ref{lem:factorisation}, $(x,y,z)$ satisfies \eqref{eq:main}.
+
+It remains only to check that the two constructions are inverse to each other. Starting with a solution $(x,y,z)$, the first construction gives
+\[
+        (x,a,b,y)=(x,z,z+y^2,y),
+\]
+and the inverse sends this back to $(x,y,z)$. Starting with a quadruple $(x,a,b,y)$ satisfying \eqref{eq:factor_conditions}, the inverse gives $(x,y,a)$; applying the first construction gives
+\[
+        (x,a,a+y^2,y).
+\]
+But $b-a=y^2$, so $a+y^2=b$. Hence the original quadruple is recovered. Thus the correspondence is a bijection.
+\end{proof}
+
+\section{Consequences and examples}
+
+The equation is even in $y$, and the parametrisation makes this symmetry explicit.
+
+\begin{corollary}[Sign symmetry in $y$]\label{cor:y_symmetry}
+If $(x,y,z)$ is an integer solution of \eqref{eq:main}, then $(x,-y,z)$ is also an integer solution. If $y\ne0$, these are distinct solutions; if $y=0$, they coincide.
+\end{corollary}
+
+\begin{proof}
+The equation contains $y$ only through $y^2$. Therefore replacing $y$ by $-y$ does not change the left-hand side of \eqref{eq:main}. The final assertion is immediate.
+\end{proof}
+
+\begin{corollary}[A sign restriction for $x\ge2$]\label{cor:sign_restriction}
+If $x\ge2$ and $(x,y,z)$ is a solution of \eqref{eq:main}, then
+\[
+        z<0<z+y^2.
+\]
+In particular, $y\ne0$ for every solution with $x\ge2$.
+\end{corollary}
+
+\begin{proof}
+For $x\ge2$, we have
+\[
+        2-x^3<0.
+\]
+By Lemma \ref{lem:factorisation},
+\[
+        z(z+y^2)=2-x^3<0.
+\]
+Thus the two factors $z$ and $z+y^2$ have opposite signs. Since $y^2\ge0$, we have
+\[
+        z\le z+y^2.
+\]
+The only way two ordered real numbers $z\le z+y^2$ can have opposite signs is
+\[
+        z<0<z+y^2.
+\]
+This also implies $y^2>0$, so $y\ne0$.
+\end{proof}
+
+For illustration, the following table was obtained directly from Theorem \ref{thm:main}. For each displayed value of $x$, the listed values of $z$ are exactly those shown in the table; each row gives $Q(x,z)=y^2$ and hence the corresponding values of $y$.
+
+\begin{center}
+\begin{tabular}{rrrr}
+\toprule
+$x$ & $2-x^3$ & admissible $z$ & corresponding $y$ \\
+\midrule
+$1$ & $1$ & $1,-1$ & $0$ \\
+$0$ & $2$ & $1,-2$ & $\pm1$ \\
+$-2$ & $10$ & $1,-10$ & $\pm3$ \\
+$-7$ & $345$ & $5,-69$ & $\pm8$ \\
+$8$ & $-510$ & $-15,-34$ & $\pm7$ \\
+$20$ & $-7998$ & $-31,-258$ & $\pm17$ \\
+$26$ & $-17574$ & $-58,-303$ & $\pm19$ \\
+$26$ & $-17574$ & $-87,-202$ & $\pm17$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+For example, take $x=8$. Then
+\[
+        2-x^3=2-512=-510.
+\]
+The divisor $z=-15$ gives
+\[
+        Q(8,-15)=\frac{-510}{-15}-(-15)=34+15=49=7^2,
+\]
+so
+\[
+        (8,7,-15)
+        \quad\text{and}\quad
+        (8,-7,-15)
+\]
+are solutions. Similarly, the divisor $z=-34$ gives
+\[
+        Q(8,-34)=\frac{-510}{-34}-(-34)=15+34=49=7^2,
+\]
+so
+\[
+        (8,7,-34)
+        \quad\text{and}\quad
+        (8,-7,-34)
+\]
+are also solutions.
+
+\section{Verification certificate for the sample table}
+
+The table can be checked without any search. Each row follows from the identity
+\[
+        z^2+y^2z+x^3-2=0.
+\]
+For instance, the row $(x,y,z)=(26,19,-58)$ gives
+\[
+        z^2+y^2z+x^3-2
+        =(-58)^2+19^2(-58)+26^3-2.
+\]
+The terms are
+\[
+        (-58)^2=3364,
+        \qquad 19^2(-58)=361(-58)=-20938,
+        \qquad 26^3-2=17574.
+\]
+Therefore
+\[
+        3364-20938+17574=0.
+\]
+The other listed rows are verified in the same way, or more systematically by checking the divisor-square identity
+\[
+        y^2=\frac{2-x^3}{z}-z.
+\]
+This identity is equivalent to the original equation by Lemma \ref{lem:factorisation}, so the table is not a numerical guess but a direct certificate.
+
+\section{Conclusion}
+
+The factorisation
+\[
+        z^2+y^2z=z(z+y^2)
+\]
+reduces the original Diophantine equation exactly to a divisor-square condition. There is no missing exceptional case: $z=0$ would force $x^3=2$, impossible over the integers. Hence every integer solution is obtained by choosing $x\in\Z$, a non-zero divisor $z$ of $2-x^3$, and a square root of
+\[
+        \frac{2-x^3}{z}-z,
+\]
+provided this number is a non-negative square. This proves the complete classification of the integer solutions of \eqref{eq:main}.
+
+\end{document}
