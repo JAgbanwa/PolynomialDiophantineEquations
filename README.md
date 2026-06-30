@@ -7,7 +7,7 @@ This [folder](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/ma
 
 | Folder | Goal | Progress |
 |--------|------|----------|
-| `[folder](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_infinitely_many_solutions_polished)/` | rove the infinitude of integer solutions for the equation:  $y^2 + x^3 \cdot y + z^2 + 1 = 0$ | 🟡 Pending feedback |
+| [\[1\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_infinitely_many_solutions_polished) | rove the infinitude of integer solutions for the equation:  $y^2 + x^3 \cdot y + z^2 + 1 = 0$ | 🟡 Pending feedback |
 | `[folder](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_y2_x3y_z2_minus2_rigorous)/` | Analyze patterns in the sweep results | 🟡 Pending feedback |
 | - | - | 🔴 Not started |
 | - | - |  🔴 Not started |
