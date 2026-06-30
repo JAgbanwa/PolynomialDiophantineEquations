@@ -1,0 +1,808 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[hidelinks]{hyperref}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  breaklines=true,
+  columns=fullflexible,
+  frame=single,
+  showstringspaces=false
+}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\title{Infinitely Many Integer Solutions for Five Related Diophantine Equations}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We prove that each of the five equations
+\[
+ y^2+x^3y+z^2-2=0,\qquad
+ y^2+x^3y+z^2+z-1=0,
+\]
+\[
+ y^2+x^3y+z^2+z+1=0,\qquad
+ y^2+x^3y+y+z^2+1=0,
+\]
+\[
+ y^2+x^3y+z^2+1=0
+\]
+has infinitely many integer solutions.  The proof is constructive: explicit
+Pell-type recurrences produce infinitely many distinct values of the parameter
+\(x\).  A tangent identity on the surface of sums of two squares supplies
+rational two-square representations, and the classical two-squares theorem
+converts those rational representations into integral ones.
+\end{abstract}
+
+\noindent\textbf{Scope of the result.}
+The paper proves infinitude of integer solutions for the five displayed
+equations.  It does not claim to classify all integer solutions.  Each
+construction below gives an infinite subfamily of solutions, distinguished by
+infinitely many different values of \(x\).
+
+\section{Two elementary tools}
+
+We shall use the classical two-squares theorem.  A proof is included for
+self-containment.
+
+\begin{theorem}[Fermat's two-squares theorem]\label{thm:two-squares}
+A positive integer \(m\) is a sum of two integer squares if and only if every
+prime \(p\equiv3\pmod4\) occurs to an even exponent in the prime factorization
+of \(m\).
+\end{theorem}
+
+\begin{proof}
+We use the Gaussian integers \(\mathbb Z[i]\).  For
+\(\alpha=r+si\in\mathbb Z[i]\), put
+\[
+        N(\alpha)=\alpha\overline\alpha=r^2+s^2.
+\]
+This norm is multiplicative, and its units are exactly the elements of norm
+\(1\), namely \(\pm1,\pm i\).
+
+First recall that \(\mathbb Z[i]\) is Euclidean.  If
+\(\alpha,\beta\in\mathbb Z[i]\) and \(\beta\ne0\), choose a Gaussian integer
+\(q\) whose real and imaginary parts are nearest integers to those of
+\(\alpha/\beta\).  Put \(r=\alpha-q\beta\).  Then
+\[
+        N(r)=N(\beta)\left|\frac{\alpha}{\beta}-q\right|^2
+        \le \frac{1}{2}N(\beta)<N(\beta).
+\]
+Thus Euclidean division is available.  Hence every ideal of \(\mathbb Z[i]\)
+is principal: if \(I\ne0\) is an ideal, choose \(\delta\in I\setminus\{0\}\)
+with minimal norm.  For any \(\alpha\in I\), write
+\(\alpha=q\delta+r\), with either \(r=0\) or \(N(r)<N(\delta)\).  Since
+\(r\in I\), minimality forces \(r=0\), so \(I=(\delta)\).  Therefore
+\(\mathbb Z[i]\) is a principal ideal domain.
+
+In a principal ideal domain, every irreducible element is prime.  Indeed, if
+\(\pi\) is irreducible and \(\pi\mid\alpha\beta\) but \(\pi\nmid\alpha\), then
+\((\pi,\alpha)=(1)\), so there exist \(r,s\in\mathbb Z[i]\) with
+\(r\pi+s\alpha=1\).  Multiplying by \(\beta\) shows \(\pi\mid\beta\).
+Existence of factorizations follows by norm descent: if a nonzero nonunit is
+not irreducible, write it as a product of two nonunits, each of smaller
+positive norm, and repeat.  The process terminates because positive integers
+cannot decrease forever.  Uniqueness follows by induction on the number of
+irreducible factors, using the prime property to cancel one irreducible factor
+at a time.  Thus \(\mathbb Z[i]\) is a unique factorization domain.
+
+We next classify rational primes in \(\mathbb Z[i]\).  The prime \(2\) ramifies:
+\[
+        2=(1+i)(1-i).
+\]
+Let \(p\) be an odd rational prime.  If \(p\equiv3\pmod4\), then \(-1\) is not a
+quadratic residue modulo \(p\).  For if \(t^2\equiv-1\pmod p\), Fermat's theorem
+would give
+\[
+        1\equiv t^{p-1}=(t^2)^{(p-1)/2}
+        \equiv (-1)^{(p-1)/2}\equiv -1\pmod p,
+\]
+because \((p-1)/2\) is odd.  Here Fermat's theorem follows from the fact that
+multiplication by \(t\) permutes the nonzero residue classes modulo \(p\).
+Thus \(X^2+1\) is irreducible over \(\mathbb F_p\), and
+\[
+        \mathbb Z[i]/(p)\cong \mathbb F_p[X]/(X^2+1)
+\]
+is a field.  Hence \((p)\) is a prime ideal, equivalently \(p\) is prime in
+\(\mathbb Z[i]\).
+
+If \(p\equiv1\pmod4\), then \(-1\) is a quadratic residue modulo \(p\).  Wilson's
+theorem for odd primes gives \((p-1)!\equiv-1\pmod p\).  Also
+\[
+        (p-1)!\equiv
+        \prod_{j=1}^{(p-1)/2} j(p-j)
+        \equiv (-1)^{(p-1)/2}\left(\left(\frac{p-1}{2}\right)!\right)^2
+        \pmod p.
+\]
+Since \(p\equiv1\pmod4\), the exponent \((p-1)/2\) is even, and hence
+\[
+        \left(\left(\frac{p-1}{2}\right)!\right)^2\equiv -1\pmod p.
+\]
+Wilson's theorem itself follows by multiplying all nonzero residue classes
+modulo \(p\): every class pairs with its inverse, except \(1\) and \(-1\), so
+the product is \(-1\).  Therefore choose \(t\) with \(t^2\equiv-1\pmod p\).
+Then \(p\mid(t+i)(t-i)\) in \(\mathbb Z[i]\), but \(p\) divides neither factor.
+Thus \(p\) is not prime in \(\mathbb Z[i]\).  Since irreducibles are prime in a
+UFD, \(p\) is not irreducible.  Hence \(p=\alpha\beta\) for nonunits
+\(\alpha,\beta\in\mathbb Z[i]\).  Taking norms gives
+\[
+        p^2=N(p)=N(\alpha)N(\beta).
+\]
+The two factors on the right are integers greater than \(1\).  Since \(p\) is a
+rational prime, the only possibility is \(N(\alpha)=N(\beta)=p\).  Put
+\(\pi=\alpha\).  Then \(N(\pi)=p\), and therefore
+\[
+        p=\pi\overline\pi.
+\]
+Thus a rational prime \(p\equiv1\pmod4\) splits into two conjugate Gaussian
+factors, each of norm \(p\).
+
+Suppose first that \(m=r^2+s^2\).  Then
+\[
+        m=(r+si)(r-si).
+\]
+Let \(p\equiv3\pmod4\).  As just shown, \(p\) is prime in \(\mathbb Z[i]\), and
+it is associated to its conjugate.  Therefore its exponent in the product
+\((r+si)(r-si)\) is twice its exponent in \(r+si\), hence is even.  Thus every
+prime \(p\equiv3\pmod4\) occurs to an even exponent in \(m\).
+
+Conversely, suppose every prime \(p\equiv3\pmod4\) occurs to an even exponent in
+\(m\).  Write the prime factorization of \(m\) in \(\mathbb Z\).  For each prime
+\(p\equiv1\pmod4\), choose \(\pi_p\in\mathbb Z[i]\) with \(N(\pi_p)=p\).  For
+\(p=2\), use \(N(1+i)=2\).  For each prime \(q\equiv3\pmod4\), the exponent of
+\(q\) in \(m\) is even, say \(2e_q\), and \(N(q^{e_q})=q^{2e_q}\).  Hence the
+Gaussian integer
+\[
+        \alpha=(1+i)^{v_2(m)}
+        \prod_{p\equiv1\,({\rm mod}\,4)}\pi_p^{v_p(m)}
+        \prod_{q\equiv3\,({\rm mod}\,4)}q^{v_q(m)/2}
+\]
+has norm \(m\).  Writing \(\alpha=r+si\), we obtain
+\[
+        m=N(\alpha)=r^2+s^2.
+\]
+This proves the theorem.
+\end{proof}
+
+\begin{lemma}[Rational-to-integral two-square lemma]\label{lem:rational-integral}
+Let \(m\) be a positive integer.  If
+\[
+        m=A^2+B^2
+\]
+for some \(A,B\in\mathbb Q\), then
+\[
+        m=r^2+s^2
+\]
+for some \(r,s\in\mathbb Z\).
+\end{lemma}
+
+\begin{proof}
+Choose a positive integer \(q\) such that \(qA,qB\in\mathbb Z\).  Then
+\[
+        mq^2=(qA)^2+(qB)^2
+\]
+is a sum of two integer squares.  By Theorem \ref{thm:two-squares}, every prime
+\(p\equiv3\pmod4\) occurs to an even exponent in \(mq^2\).  Since \(q^2\)
+contributes only even exponents, every prime \(p\equiv3\pmod4\) already occurs
+to an even exponent in \(m\).  Applying Theorem \ref{thm:two-squares} again,
+\(m\) is a sum of two integer squares.
+\end{proof}
+
+We shall also use the Brahmagupta-Fibonacci identity
+\[
+        (r^2+s^2)(p^2+q^2)=(rp-sq)^2+(rq+sp)^2.       \tag{1}\label{eq:bf}
+\]
+
+\section{A tangent identity for \texorpdfstring{\(N^6+c\)}{N6+c}}
+
+The next lemma is the main source of sums of two squares.
+
+\begin{lemma}[Tangent identity]\label{lem:tangent}
+Let \(c,u,a,b\in\mathbb Z\), and put
+\[
+        S=u^3+c.
+\]
+Assume that \(S\ne0\) and
+\[
+        a^2+b^2=S.
+\]
+If \(N,R\in\mathbb Z\) satisfy
+\[
+        R^2=4SN^2-u(u^3-8c),                 \tag{2}\label{eq:Rcond}
+\]
+then \(N^6+c\) is a sum of two rational squares.
+\end{lemma}
+
+\begin{proof}
+The hypotheses imply \(S=a^2+b^2>0\), so the divisions by \(2S\) below are
+legitimate.  Set
+\[
+        L=3u^2N^2-u^3+2c.
+\]
+We first verify the polynomial identity
+\[
+        4S(N^6+c)-L^2
+        =(N^2-u)^2\{4SN^2-u(u^3-8c)\}.            \tag{3}\label{eq:tangent-id}
+\]
+Put \(T=N^2\).  The left-hand side of \eqref{eq:tangent-id} equals
+\[
+\begin{aligned}
+&4(u^3+c)(T^3+c)-\bigl(3u^2T-u^3+2c\bigr)^2  \\
+&\quad=4(u^3+c)T^3-9u^4T^2+(6u^5-12u^2c)T-u^6+8cu^3.
+\end{aligned}
+\]
+The right-hand side equals
+\[
+\begin{aligned}
+&(T-u)^2\{4(u^3+c)T-u(u^3-8c)\} \\
+&\quad=(T^2-2uT+u^2)(4(u^3+c)T-u^4+8uc) \\
+&\quad=4(u^3+c)T^3-9u^4T^2+(6u^5-12u^2c)T-u^6+8cu^3.
+\end{aligned}
+\]
+Thus \eqref{eq:tangent-id} is proved.
+
+Using \eqref{eq:Rcond}, identity \eqref{eq:tangent-id} becomes
+\[
+        4S(N^6+c)-L^2=(N^2-u)^2R^2.
+\]
+Define rational numbers
+\[
+        A=\frac{aL-b(N^2-u)R}{2S},
+        \qquad
+        B=\frac{bL+a(N^2-u)R}{2S}.
+\]
+Since \(S=a^2+b^2\), the mixed terms cancel and give
+\[
+\begin{aligned}
+        A^2+B^2
+        &=\frac{L^2+(N^2-u)^2R^2}{4S} \\
+        &=\frac{4S(N^6+c)}{4S}
+        =N^6+c.
+\end{aligned}
+\]
+Thus \(N^6+c\) is a sum of two rational squares.
+\end{proof}
+
+The Pell recurrences used below are packaged in the following elementary form.
+
+\begin{lemma}[Pell propagation]\label{lem:pell}
+Let \(D\) be a positive nonsquare integer, and let \(K\in\mathbb Z\).  Suppose
+\(X_0,N_0,P,Q\) are positive integers satisfying
+\[
+        X_0^2-DN_0^2=K,
+        \qquad
+        P^2-DQ^2=1.
+\]
+Define
+\[
+        X_{k+1}=PX_k+DQN_k,
+        \qquad
+        N_{k+1}=QX_k+PN_k
+        \qquad(k\ge0).
+\]
+Then
+\[
+        X_k^2-DN_k^2=K
+\]
+for every \(k\ge0\).  Moreover, the positive integers \(N_k\) are pairwise
+distinct.  If \(P\) is odd and \(Q\) is even, then the parities of \(X_k\) and
+\(N_k\) are independent of \(k\).
+\end{lemma}
+
+\begin{proof}
+Equivalently,
+\[
+        X_k+N_k\sqrt D=(X_0+N_0\sqrt D)(P+Q\sqrt D)^k.
+\]
+Taking norms gives \(X_k^2-DN_k^2=K\).  Since \(P^2=1+DQ^2>1\), we have
+\(P>1\).  Positivity is clear by induction, and
+\[
+        N_{k+1}=QX_k+PN_k>N_k.
+\]
+Thus the positive integers \(N_k\) are pairwise distinct.  Finally, if \(P\) is
+odd and \(Q\) is even, then
+\[
+        X_{k+1}=PX_k+DQN_k\equiv X_k\pmod2,
+        \qquad
+        N_{k+1}=QX_k+PN_k\equiv N_k\pmod2.
+\]
+\end{proof}
+
+\section{Four infinite families of two-square values}
+
+\begin{proposition}\label{prop:c8}
+There are infinitely many positive even integers \(N\) for which \(N^6+8\) is a
+sum of two integer squares.
+\end{proposition}
+
+\begin{proof}
+Apply Lemma \ref{lem:tangent} with
+\[
+        c=8,
+        \qquad u=8,
+        \qquad a=6,
+        \qquad b=22.
+\]
+Indeed,
+\[
+        6^2+22^2=520=8^3+8.
+\]
+For these constants, condition \eqref{eq:Rcond} is
+\[
+        R^2=2080N^2-3584=16(130N^2-224).
+\]
+Thus it is enough to solve
+\[
+        X^2-130N^2=-224,                    \tag{4}\label{eq:pell-c8}
+\]
+and then put \(R=4X\).  The initial solution and a Pell unit are
+\[
+        136^2-130\cdot 12^2=-224,
+        \qquad
+        6499^2-130\cdot570^2=1.
+\]
+Lemma \ref{lem:pell}, with
+\[
+        D=130,
+        \quad K=-224,
+        \quad X_0=136,
+        \quad N_0=12,
+        \quad P=6499,
+        \quad Q=570,
+\]
+produces infinitely many positive integers \(N_k\) solving
+\eqref{eq:pell-c8}.  Since \(N_0\) is even, \(P\) is odd, and \(Q\) is even,
+the parity assertion in Lemma \ref{lem:pell} shows that every \(N_k\) is even.
+Lemma \ref{lem:tangent} gives rational representations of \(N_k^6+8\) as sums
+of two squares, and Lemma \ref{lem:rational-integral} converts them to integer
+representations.
+\end{proof}
+
+\begin{proposition}\label{prop:c5}
+There are infinitely many positive even integers \(N\) for which \(N^6+5\) is a
+sum of two integer squares.
+\end{proposition}
+
+\begin{proof}
+Apply Lemma \ref{lem:tangent} with
+\[
+        c=5,
+        \qquad u=2,
+        \qquad a=2,
+        \qquad b=3.
+\]
+Here
+\[
+        2^2+3^2=13=2^3+5.
+\]
+The condition \eqref{eq:Rcond} becomes
+\[
+        R^2=52N^2+64=4(13N^2+16).
+\]
+Thus it is enough to solve
+\[
+        X^2-13N^2=16,                       \tag{5}\label{eq:pell-c5}
+\]
+and put \(R=2X\).  We have
+\[
+        22^2-13\cdot6^2=16,
+        \qquad
+        649^2-13\cdot180^2=1.
+\]
+Lemma \ref{lem:pell}, with
+\[
+        D=13,
+        \quad K=16,
+        \quad X_0=22,
+        \quad N_0=6,
+        \quad P=649,
+        \quad Q=180,
+\]
+therefore gives infinitely many positive integers \(N_k\) solving
+\eqref{eq:pell-c5}.  Since \(N_0\) is even, \(P\) is odd, and \(Q\) is even,
+the same lemma shows that every \(N_k\) is even.  Lemma \ref{lem:tangent} and
+Lemma \ref{lem:rational-integral} then imply that each \(N_k^6+5\) is a sum of
+two integer squares.
+\end{proof}
+
+\begin{proposition}\label{prop:cm3}
+There are infinitely many positive even integers \(N\) for which \(N^6-3\) is a
+sum of two integer squares.
+\end{proposition}
+
+\begin{proof}
+Apply Lemma \ref{lem:tangent} with
+\[
+        c=-3,
+        \qquad u=2,
+        \qquad a=1,
+        \qquad b=2.
+\]
+Indeed,
+\[
+        1^2+2^2=5=2^3-3.
+\]
+The condition \eqref{eq:Rcond} becomes
+\[
+        R^2=20N^2-64=4(5N^2-16).
+\]
+Thus it is enough to solve
+\[
+        X^2-5N^2=-16,                       \tag{6}\label{eq:pell-cm3}
+\]
+and put \(R=2X\).  We have
+\[
+        2^2-5\cdot2^2=-16,
+        \qquad
+        9^2-5\cdot4^2=1.
+\]
+Lemma \ref{lem:pell}, with
+\[
+        D=5,
+        \quad K=-16,
+        \quad X_0=2,
+        \quad N_0=2,
+        \quad P=9,
+        \quad Q=4,
+\]
+gives infinitely many positive integers \(N_k\) solving
+\eqref{eq:pell-cm3}.  Since \(N_0\) is even, \(P\) is odd, and \(Q\) is even,
+Lemma \ref{lem:pell} shows that every \(N_k\) is even.  Lemma
+\ref{lem:tangent} and Lemma \ref{lem:rational-integral} then imply that each
+\(N_k^6-3\) is a sum of two integer squares.
+\end{proof}
+
+\begin{proposition}\label{prop:cm4}
+There are infinitely many positive odd integers \(N\) for which \(N^6-4\) is a
+sum of two integer squares.
+\end{proposition}
+
+\begin{proof}
+Apply Lemma \ref{lem:tangent} with
+\[
+        c=-4,
+        \qquad u=242,
+        \qquad a=578,
+        \qquad b=3720.
+\]
+Then
+\[
+        a^2+b^2=578^2+3720^2=14172484=242^3-4.
+\]
+Thus, in the notation of Lemma \ref{lem:tangent},
+\(S=14172484\ne0\).  The condition \eqref{eq:Rcond} becomes
+\[
+        R^2=56689936N^2-3429749840.
+\]
+Since
+\[
+        56689936=16\cdot3543121,
+        \qquad
+        3429749840=16\cdot214359365,
+\]
+it is enough to solve
+\[
+        X^2-3543121N^2=-214359365,          \tag{7}\label{eq:pell-cm4}
+\]
+and then put \(R=4X\).  The integer \(3543121\) is nonsquare, since
+\[
+        1882^2<3543121<1883^2.
+\]
+The following two identities are direct integer equalities:
+\[
+\begin{aligned}
+&410154078658987088294^2
+ -3543121\cdot217898400660155259^2=-214359365, \\
+&53319160674725436041296699414748449^2 \\
+&\qquad
+ -3543121\cdot28326330128303226243386806483560^2=1.
+\end{aligned}
+\]
+Now apply Lemma \ref{lem:pell} with
+\[
+\begin{gathered}
+        D=3543121,\qquad K=-214359365, \\
+        X_0=410154078658987088294,\qquad
+        N_0=217898400660155259, \\
+        P=53319160674725436041296699414748449, \\
+        Q=28326330128303226243386806483560.
+\end{gathered}
+\]
+This produces infinitely many positive integers \(N_k\) solving
+\eqref{eq:pell-cm4}.  The parity is preserved because \(P\) is odd and \(Q\) is
+even.  Since \(N_0\) is odd, every \(N_k\) is odd.  Lemma \ref{lem:tangent}
+gives rational representations of \(N_k^6-4\) as sums of two squares, and Lemma
+\ref{lem:rational-integral} converts them to integer representations.
+\end{proof}
+
+\section{Converting two-square values into solutions}
+
+We now turn the two-square values above into solutions of the five equations.
+
+\begin{theorem}\label{thm:first-three}
+Each of the equations
+\[
+        y^2+x^3y+z^2-2=0,                    \tag{E1}\label{eq:E1}
+\]
+\[
+        y^2+x^3y+z^2+z-1=0,                  \tag{E2}\label{eq:E2}
+\]
+\[
+        y^2+x^3y+z^2+z+1=0                   \tag{E3}\label{eq:E3}
+\]
+has infinitely many integer solutions.
+\end{theorem}
+
+\begin{proof}
+For \eqref{eq:E1}, let \(N\) run through the infinitely many positive even
+integers supplied by Proposition \ref{prop:c8}.  For each such \(N\), choose
+integers \(a,b\) with
+\[
+        N^6+8=a^2+b^2.
+\]
+Since \(N\) is even, \(N^6+8\equiv8\pmod {16}\).  A square modulo \(16\) is one
+of \(0,1,4,9\), so a representation of a number congruent to \(8\pmod {16}\)
+forces both \(a\) and \(b\) to be even.  Put
+\[
+        x=N,
+        \qquad
+        y=\frac{a-N^3}{2},
+        \qquad
+        z=\frac b2.
+\]
+Then \(y,z\in\mathbb Z\), and
+\[
+        (2y+x^3)^2+(2z)^2=a^2+b^2=N^6+8=x^6+8.
+\]
+Expanding and dividing by \(4\) gives
+\[
+        y^2+x^3y+z^2-2=0.
+\]
+The values \(x=N\) are pairwise distinct, so \eqref{eq:E1} has infinitely many
+integer solutions.
+
+For \eqref{eq:E2}, let \(N\) run through the infinitely many positive even
+integers supplied by Proposition \ref{prop:c5}.  Choose integers \(a,b\) with
+\[
+        N^6+5=a^2+b^2.
+\]
+Since \(N\) is even, \(N^6+5\equiv5\pmod8\).  Hence one of \(a,b\) is even and
+the other is odd.  Relabel them, if necessary, so that \(a\) is even and \(b\)
+is odd.  Put
+\[
+        x=N,
+        \qquad
+        y=\frac{a-N^3}{2},
+        \qquad
+        z=\frac{b-1}{2}.
+\]
+Then \(y,z\in\mathbb Z\), and
+\[
+        (2y+x^3)^2+(2z+1)^2=a^2+b^2=N^6+5=x^6+5.
+\]
+Expanding, cancelling \(x^6\), and dividing by \(4\) gives
+\[
+        y^2+x^3y+z^2+z-1=0.
+\]
+Again the values \(x=N\) are pairwise distinct, so \eqref{eq:E2} has infinitely
+many integer solutions.
+
+For \eqref{eq:E3}, use the infinitely many positive even integers \(N\) supplied
+by Proposition \ref{prop:cm3}.  Choose integers \(a,b\) with
+\[
+        N^6-3=a^2+b^2.
+\]
+Since \(N\) is even, \(N^6-3\equiv5\pmod8\).  Thus one of \(a,b\) is even and
+the other is odd; relabel so that \(a\) is even and \(b\) is odd.  Put
+\[
+        x=N,
+        \qquad
+        y=\frac{a-N^3}{2},
+        \qquad
+        z=\frac{b-1}{2}.
+\]
+Then \(y,z\in\mathbb Z\), and
+\[
+        (2y+x^3)^2+(2z+1)^2=a^2+b^2=N^6-3=x^6-3,
+\]
+and expanding, cancelling \(x^6\), and dividing by \(4\) gives
+\[
+        y^2+x^3y+z^2+z+1=0.
+\]
+The values \(x=N\) are pairwise distinct, so \eqref{eq:E3} has infinitely many
+integer solutions.
+\end{proof}
+
+\begin{theorem}\label{thm:fourth}
+The equation
+\[
+        y^2+x^3y+y+z^2+1=0                  \tag{E4}\label{eq:E4}
+\]
+has infinitely many integer solutions.
+\end{theorem}
+
+\begin{proof}
+Let \(N\) run through the infinitely many positive even integers supplied by
+Proposition \ref{prop:cm3}.  Thus
+\[
+        N^6-3=r^2+s^2
+\]
+for some integers \(r,s\).  Also
+\[
+        N^6+1=(N^3)^2+1^2.
+\]
+By \eqref{eq:bf}, the product
+\[
+        (N^6-3)(N^6+1)
+\]
+is a sum of two integer squares.  Now set
+\[
+        x=-N^2.
+\]
+Then
+\[
+\begin{aligned}
+        (x^3+1)^2-4
+        &=(1-N^6)^2-4 \\
+        &=N^{12}-2N^6-3 \\
+        &=(N^6-3)(N^6+1).
+\end{aligned}
+\]
+Therefore there exist integers \(a,b\) such that
+\[
+        (x^3+1)^2-4=a^2+b^2.
+\]
+Because \(N\) is even, \(x=-N^2\) is even, so \(x^3+1\) is odd and
+\[
+        (x^3+1)^2-4\equiv5\pmod8.
+\]
+Thus one of \(a,b\) is odd and the other is even.  Relabel, if necessary, so
+that \(a\) is odd and \(b\) is even.  Put
+\[
+        y=\frac{a-(x^3+1)}{2},
+        \qquad
+        z=\frac b2.
+\]
+Then \(y,z\in\mathbb Z\), and
+\[
+        (2y+x^3+1)^2+(2z)^2=a^2+b^2=(x^3+1)^2-4.
+\]
+Expanding, cancelling \((x^3+1)^2\), and dividing by \(4\) gives
+\[
+        y^2+x^3y+y+z^2+1=0.
+\]
+The values \(x=-N^2\) are pairwise distinct as \(N\) varies, so \eqref{eq:E4}
+has infinitely many integer solutions.
+\end{proof}
+
+\begin{theorem}\label{thm:fifth}
+The equation
+\[
+        y^2+x^3y+z^2+1=0                    \tag{E5}\label{eq:E5}
+\]
+has infinitely many integer solutions.
+\end{theorem}
+
+\begin{proof}
+Let \(N\) run through the infinitely many positive odd integers supplied by
+Proposition \ref{prop:cm4}.  For each such \(N\), choose integers \(a,b\) with
+\[
+        N^6-4=a^2+b^2.
+\]
+Since \(N\) is odd,
+\[
+        N^6-4\equiv 1-4\equiv5\pmod8.
+\]
+The quadratic residues modulo \(8\) are \(0,1,4\).  Therefore one of \(a,b\) is
+odd and the other is even.  Relabel them, if necessary, so that \(a\) is odd
+and \(b\) is even.  Put
+\[
+        x=N,
+        \qquad
+        y=\frac{a-N^3}{2},
+        \qquad
+        z=\frac b2.
+\]
+These are integers, because \(a\) and \(N^3\) are odd and \(b\) is even.  Also
+\[
+        (2y+x^3)^2+(2z)^2=a^2+b^2=N^6-4=x^6-4.
+\]
+Expanding the left-hand side gives
+\[
+        4y^2+4x^3y+x^6+4z^2=x^6-4.
+\]
+After cancellation and division by \(4\), this is
+\[
+        y^2+x^3y+z^2+1=0.
+\]
+The values \(x=N\) are pairwise distinct, so \eqref{eq:E5} has infinitely many
+integer solutions.
+\end{proof}
+
+Combining Theorems \ref{thm:first-three}, \ref{thm:fourth}, and
+\ref{thm:fifth} proves the desired claim for all five equations.
+
+\begin{remark}
+The construction gives explicit infinite families.  The \(N\)'s in Propositions
+\ref{prop:c8}, \ref{prop:c5}, \ref{prop:cm3}, and \ref{prop:cm4} are obtained
+from the stated Pell recurrences.  The proof does not claim to classify all
+integer solutions; it only supplies infinitely many of them.
+\end{remark}
+
+\appendix
+\section{Exact arithmetic certificate for the large Pell identities}
+
+The proof of Proposition \ref{prop:cm4} uses two large Pell-type identities.
+They are ordinary integer equalities, not heuristic or floating-point checks.
+The following plain Python 3 script verifies them using exact arbitrary-precision
+integer arithmetic.
+
+\begin{lstlisting}[caption={Exact verification of the large Pell norm identities.}]
+D = 3543121
+C = 214359365
+
+X0 = 410154078658987088294
+N0 = 217898400660155259
+
+P = 53319160674725436041296699414748449
+Q = 28326330128303226243386806483560
+
+initial_norm = X0*X0 - D*N0*N0
+unit_norm = P*P - D*Q*Q
+
+assert initial_norm == -C
+assert unit_norm == 1
+
+# Parity data used in the c = -4 construction.
+assert X0 % 2 == 0
+assert N0 % 2 == 1
+assert P % 2 == 1
+assert Q % 2 == 0
+
+print("initial_norm =", initial_norm)
+print("unit_norm =", unit_norm)
+print("parities (X0,N0,P,Q) =", (X0 % 2, N0 % 2, P % 2, Q % 2))
+\end{lstlisting}
+
+The expected output is
+\begin{lstlisting}
+initial_norm = -214359365
+unit_norm = 1
+parities (X0,N0,P,Q) = (0, 1, 1, 0)
+\end{lstlisting}
+
+For completeness, the smaller constants used to specialize Lemma
+\ref{lem:tangent} in Proposition \ref{prop:cm4} may be checked in the same way:
+
+\begin{lstlisting}[caption={Exact verification of the constants in Proposition \ref{prop:cm4}.}]
+u = 242
+S = u**3 - 4
+
+assert S == 14172484
+assert 578**2 + 3720**2 == S
+assert 4*S == 16*3543121
+assert u*(u**3 + 32) == 16*214359365
+
+print("small constants verified")
+\end{lstlisting}
+
+These scripts are included only as checkable certificates for arithmetic
+substitutions.  The mathematical proof of infinitude is the Pell recurrence and
+norm argument given in Lemma \ref{lem:pell} and Proposition \ref{prop:cm4}.
+
+\end{document}
