@@ -5,5 +5,5 @@ attempts (solutions at best) to this catalogue of open polynomial diophantine pr
 |--------|------|----------|
 | [\[1\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_infinitely_many_solutions_polished) | Prove the infinitude of integer solutions for the equation:  $y^2 + x^3 \cdot y + z^2 + 1 = 0$ | 🟡 Pending feedback |
 | [\[2\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_y2_x3y_z2_minus2_rigorous) | Prove the infinitude of integer solutions for the equation:  $y^2 + x^3 \cdot y + z^2 - 2 = 0$ | 🟡 Pending feedback |
-| - | - | 🔴 Not started |
+| [\[3\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_z2_y2z_2x3_plus1) | Prove the infinitude of integer solutions for the equation:  $y^2 + x^3 \cdot y + z^2 - 2 = 0$ | 🟡 Pending feedback |
 | - | - |  🔴 Not started |
