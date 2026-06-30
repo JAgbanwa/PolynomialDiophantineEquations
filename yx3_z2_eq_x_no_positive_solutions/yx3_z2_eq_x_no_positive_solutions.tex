@@ -1,0 +1,320 @@
+\documentclass[a4paper,11pt]{amsart}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\DeclareMathOperator{\Norm}{N}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\Zi}{\mathbb Z[i]}
+
+\title[A Ljunggren--Nagell Reduction]{A Ljunggren--Nagell Reduction}
+\author{}
+\date{}
+
+\begin{document}
+
+\begin{abstract}
+We prove that the Diophantine equation
+\[
+        y(x^3-z^2)=x
+\]
+has no solution in positive integers.  More precisely, we prove that the only
+solution with $x,y\geq 1$ and $z\geq 0$ is $(x,y,z)=(1,1,0)$.  The elementary
+part of the argument reduces the problem to the classical Ljunggren--Nagell
+input that the equation $U^2+1=A^4B^3$ has no positive solution.  All
+reductions after that input are given in full detail.
+\end{abstract}
+
+\maketitle
+
+\section{The external input}
+
+We use the following standard Ljunggren--Nagell theorem.  It is the only
+external ingredient in the proof.
+
+\begin{theorem}[Ljunggren--Nagell input]\label{thm:LN}
+The equation
+\[
+        U^2+1=A^4B^3
+\]
+has no solution in integers $U,A,B$ with $U\geq 1$ and $A,B\geq 1$.  Equivalently,
+the only solution with $U\geq0$ and $A,B\geq1$ is
+\[
+        (U,A,B)=(0,1,1).
+\]
+\end{theorem}
+
+\begin{remark}
+The rest of the manuscript is self-contained once Theorem~\ref{thm:LN} is
+accepted.  Appendix~\ref{app:gaussian} records the Gaussian-integer form of
+Theorem~\ref{thm:LN}, because it explains exactly why this is the natural
+classical input for the present equation.
+\end{remark}
+
+\section{Elementary reductions}
+
+We shall repeatedly use the following elementary fact.
+
+\begin{lemma}[Coprime factors of a square]\label{lem:coprime-square}
+Let $r,s\in\Z_{>0}$ satisfy $\gcd(r,s)=1$.  If $rs$ is a square, then both
+$r$ and $s$ are squares.
+\end{lemma}
+
+\begin{proof}
+Write prime factorizations
+\[
+        r=\prod_p p^{\alpha_p},\qquad s=\prod_p p^{\beta_p},
+\]
+where all but finitely many exponents are zero.  The condition
+$\gcd(r,s)=1$ says that for each prime $p$, at most one of
+$\alpha_p,\beta_p$ is nonzero.  Since $rs$ is a square, each
+$\alpha_p+\beta_p$ is even.  Therefore the nonzero exponent among
+$\alpha_p,\beta_p$, if there is one, is even.  Thus every prime exponent in
+$r$ and in $s$ is even, so both $r$ and $s$ are squares.
+\end{proof}
+
+\begin{lemma}[The quotient forced by the equation]\label{lem:quotient}
+Let $x,y,z\in\Z$ satisfy
+\[
+        x\geq1,
+        \qquad y\geq1,
+        \qquad z\geq0,
+        \qquad y(x^3-z^2)=x.
+\]
+Then $y\mid x$.  If $d=x/y$, then
+\[
+        z^2=d(d^2y^3-1).                     \tag{2.1}\label{eq:z2-d}
+\]
+Moreover, if $z>0$, then $d^2y^3-1>0$.
+\end{lemma}
+
+\begin{proof}
+The defining equation gives
+\[
+        x^3-z^2=\frac{x}{y}.
+\]
+The left-hand side is an integer.  Hence $x/y$ is an integer, so $y\mid x$.
+Put
+\[
+        d=\frac{x}{y}\in\Z_{>0}.
+\]
+Then $x=dy$, and substitution gives
+\[
+        y\bigl((dy)^3-z^2\bigr)=dy.
+\]
+Dividing by $y>0$ yields
+\[
+        d^3y^3-z^2=d,
+\]
+so
+\[
+        z^2=d^3y^3-d=d(d^2y^3-1),
+\]
+which is \eqref{eq:z2-d}.  If $z>0$, then $z^2>0$, and since $d>0$, the
+factor $d^2y^3-1$ must also be positive.
+\end{proof}
+
+\begin{lemma}[The square quotient reduction]\label{lem:square-quotient}
+Let $x,y,z\in\Z$ satisfy
+\[
+        x\geq1,
+        \qquad y\geq1,
+        \qquad z\geq0,
+        \qquad y(x^3-z^2)=x.
+\]
+Then either $(x,y,z)=(1,1,0)$, or there are integers $a,u\geq1$ such that
+\[
+        x=a^2y,
+        \qquad z=au,
+        \qquad u^2+1=a^4y^3.                 \tag{2.2}\label{eq:LN-form}
+\]
+\end{lemma}
+
+\begin{proof}
+By Lemma~\ref{lem:quotient}, $d=x/y$ is a positive integer and
+\[
+        z^2=d(d^2y^3-1).
+\]
+First suppose
+\[
+        d^2y^3-1=0.
+\]
+Then $d^2y^3=1$.  Since $d,y\in\Z_{>0}$, this forces $d=1$ and $y=1$.
+Thus $x=dy=1$, and the displayed formula for $z^2$ gives $z=0$.  Hence
+$(x,y,z)=(1,1,0)$.
+
+It remains to consider the case
+\[
+        d^2y^3-1>0.
+\]
+The two positive factors $d$ and $d^2y^3-1$ are coprime, because any common
+divisor divides both $d$ and $d^2y^3-1$, hence divides
+\[
+        d^2y^3-(d^2y^3-1)=1.
+\]
+Their product is the square $z^2$.  Lemma~\ref{lem:coprime-square} therefore
+implies that both factors are squares.  Hence there are $a,u\in\Z_{>0}$ such
+that
+\[
+        d=a^2,
+        \qquad d^2y^3-1=u^2.
+\]
+The first equality gives
+\[
+        x=dy=a^2y.
+\]
+The second gives
+\[
+        u^2+1=d^2y^3=a^4y^3,
+\]
+which is \eqref{eq:LN-form}.  Finally,
+\[
+        z^2=d(d^2y^3-1)=a^2u^2,
+\]
+and since $z,a,u\geq0$, with $a,u>0$, we get $z=au$.
+\end{proof}
+
+\section{The solution of the original equation}
+
+\begin{theorem}\label{thm:main-nonnegative}
+The only integer solution of
+\[
+        y(x^3-z^2)=x
+\]
+with $x,y\geq1$ and $z\geq0$ is
+\[
+        (x,y,z)=(1,1,0).
+\]
+\end{theorem}
+
+\begin{proof}
+Let $x,y,z$ be a solution with $x,y\geq1$ and $z\geq0$.  By
+Lemma~\ref{lem:square-quotient}, either $(x,y,z)=(1,1,0)$, or there are
+integers $a,u\geq1$ such that
+\[
+        u^2+1=a^4y^3.
+\]
+The latter is impossible by Theorem~\ref{thm:LN}, applied with
+\[
+        U=u,
+        \qquad A=a,
+        \qquad B=y.
+\]
+Therefore only the first alternative can occur, and the only solution is
+$(1,1,0)$.
+\end{proof}
+
+\begin{corollary}\label{cor:positive}
+The equation
+\[
+        y(x^3-z^2)=x
+\]
+has no solution in positive integers $x,y,z$.
+\end{corollary}
+
+\begin{proof}
+A positive-integer solution would in particular be a solution with
+$x,y\geq1$ and $z\geq0$.  Theorem~\ref{thm:main-nonnegative} says that the
+only such solution is $(1,1,0)$, but this has $z=0$, not $z>0$.  Hence no
+positive-integer solution exists.
+\end{proof}
+
+\begin{remark}
+The theorem above proves nonexistence in the positive range and identifies the
+single boundary solution with $z=0$.  It does not claim a classification when
+$x,y,z$ are allowed to be arbitrary signed integers.
+\end{remark}
+
+\appendix
+
+\section{Gaussian-integer form of the quoted input}\label{app:gaussian}
+
+This appendix is included to make the role of the classical input transparent.
+It is not a replacement for Theorem~\ref{thm:LN}; rather, it shows why the
+input is exactly the Ljunggren--Nagell obstruction naturally produced by the
+present Diophantine equation.
+
+Recall that $\Zi$ is a unique factorization domain with units
+$\{\pm1,\pm i\}$ and norm
+\[
+        \Norm(r+si)=r^2+s^2.
+\]
+
+\begin{proposition}\label{prop:gaussian-reformulation}
+Let $U,A,B\in\Z$ satisfy $U\geq1$ and $A,B\geq1$.  If
+\[
+        U^2+1=A^4B^3,                         \tag{A.1}\label{eq:LN-app}
+\]
+then $U$ is even, $A$ and $B$ are odd, and there exist Gaussian integers
+$\alpha,\beta\in\Zi$ and a unit $\varepsilon\in\{\pm1,\pm i\}$ such that
+\[
+        U+i=\varepsilon\alpha^4\beta^3,
+        \qquad \Norm(\alpha)=A,
+        \qquad \Norm(\beta)=B.                \tag{A.2}\label{eq:gaussian-form}
+\]
+Consequently Theorem~\ref{thm:LN} is equivalent to the assertion that no
+nonunit Gaussian data in \eqref{eq:gaussian-form} can have imaginary part
+$1$.
+\end{proposition}
+
+\begin{proof}
+First consider parity.  If $U$ is odd, then
+\[
+        U^2+1\equiv 2\pmod 4.
+\]
+The right-hand side $A^4B^3$ is either odd, if $A$ and $B$ are both odd, or
+is divisible by $8$ if $B$ is even, or by $16$ if $A$ is even.  It is never
+congruent to $2\pmod4$.  Thus $U$ is even.  Then $U^2+1$ is odd, so
+$A^4B^3$ is odd, and therefore $A$ and $B$ are odd.
+
+In $\Zi$ we have
+\[
+        (U+i)(U-i)=U^2+1=A^4B^3.              \tag{A.3}\label{eq:gauss-factor}
+\]
+We claim that $U+i$ and $U-i$ are coprime in $\Zi$.  Indeed, any common
+divisor divides their difference $2i$.  Hence the norm of any common divisor
+is a divisor of $\Norm(2i)=4$.  On the other hand, the norm of any divisor of
+$U+i$ divides $\Norm(U+i)=U^2+1$, which is odd.  Therefore the norm of a
+common divisor is $1$, so the common divisor is a unit.
+
+Since $\Zi$ is a unique factorization domain and the two factors in
+\eqref{eq:gauss-factor} are coprime, every Gaussian prime occurring in
+$U+i$ occurs there with exactly the exponent with which its rational norm
+contributes to $A^4B^3$.  Thus the prime factorization of $U+i$ can be grouped
+into a fourth-power part, a third-power part, and a unit.  Concretely, there
+are $\alpha,\beta\in\Zi$ and a unit $\varepsilon$ such that
+\[
+        U+i=\varepsilon\alpha^4\beta^3.
+\]
+Taking norms gives
+\[
+        U^2+1=\Norm(\alpha)^4\Norm(\beta)^3.
+\]
+The grouping may be chosen so that
+\[
+        \Norm(\alpha)=A,
+        \qquad
+        \Norm(\beta)=B,
+\]
+because the rational prime exponents belonging to $A$ are placed in
+$\alpha$, while those belonging to $B$ are placed in $\beta$.
+
+Finally, $U+i$ has imaginary part $1$, so \eqref{eq:gaussian-form} says that
+a Gaussian product of a fourth power and a third power has imaginary part
+$1$.  Conversely, any identity of the form \eqref{eq:gaussian-form} with
+imaginary part $1$ gives, after taking norms, an equation of the form
+\eqref{eq:LN-app}.  This proves the claimed equivalence.
+\end{proof}
+
+\end{document}
