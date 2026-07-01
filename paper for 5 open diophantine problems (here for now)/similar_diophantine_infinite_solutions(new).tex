@@ -23,42 +23,40 @@
 \usepackage{rotating}
 \usepackage{longtable}
 \usepackage{mathtools}
-\usepackage{geometry}  % For better page margins (optional)
+\usepackage{geometry}  
 \geometry{a4paper, margin=1in} 
 \newtheorem{proposition}{Proposition}[section]
 \theoremstyle{remark}
-\newtheorem*{remark}{Remark}  % Asterisk prevents numbered remarks
-\usepackage{tocloft} % Required for \cft commands
-\usepackage{xcolor} % Required for colors
+\newtheorem*{remark}{Remark}  
+\usepackage{tocloft} 
+\usepackage{xcolor} 
 \usepackage[numbers]{natbib}
-\bibliographystyle{plainnat} % or abbrvnat, unsrtnat, etc.
-\usepackage{titlesec} % For customizing section titles
+\bibliographystyle{plainnat} 
+\usepackage{titlesec} 
 % Define a new 'subsubsubsection' level (level 4)
 \titleclass{\subsubsubsection}{straight}[\subsection]
 \newcounter{subsubsubsection}[subsubsection]
 \renewcommand{\thesubsubsubsection}{\thesubsubsection.\arabic{subsubsubsection}}
 \titleformat{\subsubsubsection}{\normalfont\normalsize\bfseries}{\thesubsubsubsection}{1em}{}
 \titlespacing*{\subsubsubsection}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
-\newtheorem{example}{Example} % Numbered examples
+\newtheorem{example}{Example} 
 % Define a custom theorem style for conjectures
 \newtheoremstyle{myconjecture}
-  {10pt}   % Space above
-  {10pt}   % Space below
-  {\itshape}  % Body font
-  {0pt}    % Indent
-  {\bfseries} % Head font
-  {.}      % Punctuation after head
-  { }      % Space after head
+  {10pt}   
+  {10pt}   
+  {\itshape}  
+  {0pt}    
+  {\bfseries} 
+  {.}     
+  { }      
   {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}} % Custom head spec
 
 \theoremstyle{myconjecture}
 \newtheorem{conjecture}{Conjecture}
 
 % Set numbering depth
-\setcounter{secnumdepth}{4} % Number down to subsubsubsection
-\setcounter{tocdepth}{4}    % Show down to subsubsubsection in TOC
-
-
+\setcounter{secnumdepth}{4} 
+\setcounter{tocdepth}{4}    
 
 % Theorem Environments
 \theoremstyle{plain}
