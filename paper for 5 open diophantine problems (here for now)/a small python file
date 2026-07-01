@@ -1,0 +1,24 @@
+D = 3543121
+C = 214359365
+
+X0 = 410154078658987088294
+N0 = 217898400660155259
+
+P = 53319160674725436041296699414748449
+Q = 28326330128303226243386806483560
+
+initial_norm = X0*X0 - D*N0*N0
+unit_norm = P*P - D*Q*Q
+
+assert initial_norm == -C
+assert unit_norm == 1
+
+# Parity data used in the c = -4 construction.
+assert X0 % 2 == 0
+assert N0 % 2 == 1
+assert P % 2 == 1
+assert Q % 2 == 0
+
+print("initial_norm =", initial_norm)
+print("unit_norm =", unit_norm)
+print("parities (X0,N0,P,Q) =", (X0 % 2, N0 % 2, P % 2, Q % 2))
