@@ -1,29 +1,122 @@
-\documentclass[11pt]{article}
-\usepackage[margin=1in]{geometry}
-\usepackage{amsmath,amssymb,amsthm}
-\usepackage[hidelinks]{hyperref}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
-\usepackage{array}
+\documentclass{article}
+\usepackage[svgnames]{xcolor}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{amsfonts, amsmath, amsthm, amssymb}
+\usepackage{breqn}
+\usepackage{empheq}
 \usepackage{listings}
-\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{makecell}
+\usepackage{float}
+\usepackage{longtable}
+\usepackage{geometry}
+\usepackage{enumitem}
+\theoremstyle{plain}
+\usepackage{tcolorbox}
+\usepackage{pgfplots}
+\usepackage{multicol}
+\pgfplotsset{compat=1.18}
+\usepackage{siunitx}
+\usepackage{listings}
+\usepackage{tabularx}
+\usepackage{rotating}
+\usepackage{longtable}
+\usepackage{mathtools}
+\usepackage{geometry}  % For better page margins (optional)
+\geometry{a4paper, margin=1in} 
+\newtheorem{proposition}{Proposition}[section]
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}  % Asterisk prevents numbered remarks
+\usepackage{tocloft} % Required for \cft commands
+\usepackage{xcolor} % Required for colors
+\usepackage[numbers]{natbib}
+\bibliographystyle{plainnat} % or abbrvnat, unsrtnat, etc.
+\usepackage{titlesec} % For customizing section titles
+% Define a new 'subsubsubsection' level (level 4)
+\titleclass{\subsubsubsection}{straight}[\subsection]
+\newcounter{subsubsubsection}[subsubsection]
+\renewcommand{\thesubsubsubsection}{\thesubsubsection.\arabic{subsubsubsection}}
+\titleformat{\subsubsubsection}{\normalfont\normalsize\bfseries}{\thesubsubsubsection}{1em}{}
+\titlespacing*{\subsubsubsection}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\newtheorem{example}{Example} % Numbered examples
+% Define a custom theorem style for conjectures
+\newtheoremstyle{myconjecture}
+  {10pt}   % Space above
+  {10pt}   % Space below
+  {\itshape}  % Body font
+  {0pt}    % Indent
+  {\bfseries} % Head font
+  {.}      % Punctuation after head
+  { }      % Space after head
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}} % Custom head spec
 
-\lstset{
-  basicstyle=\ttfamily\footnotesize,
-  breaklines=true,
-  columns=fullflexible,
-  frame=single,
-  showstringspaces=false
-}
+\theoremstyle{myconjecture}
+\newtheorem{conjecture}{Conjecture}
 
+% Set numbering depth
+\setcounter{secnumdepth}{4} % Number down to subsubsubsection
+\setcounter{tocdepth}{4}    % Show down to subsubsubsection in TOC
+
+
+
+% Theorem Environments
+\theoremstyle{plain}
+\newtheorem{exob}{Experimental Observation}
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{proposition}[theorem]{Proposition}
-\theoremstyle{remark}
-\newtheorem{remark}[theorem]{Remark}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newenvironment{keyword}
+{\noindent\textbf{Keywords:}\ }
+{\par\medskip}
+
+% TOC Customization
+\renewcommand{\cftsecfont}{\normalfont\bfseries}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\setlength{\cftbeforesecskip}{4pt}
+
+
+% Hyperref (LAST package)
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue}
+\usepackage{cleveref} % Auto-reference "Equation (X)"
+\numberwithin{equation}{section} % Reset numbering per section
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning}
+
+% Define colors and style
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{sagemath}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    frame=single,
+    rulecolor=\color{black},
+    language=Python,
+    morekeywords={True,False,sage,for,while,if,elif,else,def,return,print,lambda,in,try,except,with,as,assert,class,from,import,pass,break,continue,global,nonlocal,None,not,and,or,is},
+}
+
 
 \title{Infinitely Many Integer Solutions for Five Related Diophantine Equations}
-\author{}
+\author{Jamal Agbanwa \and Bogdan Grechuk}
 \date{}
 
 \begin{document}
@@ -54,6 +147,15 @@ The paper proves infinitude of integer solutions for the five displayed
 equations.  It does not claim to classify all integer solutions.  Each
 construction below gives an infinite subfamily of solutions, distinguished by
 infinitely many different values of \(x\).
+
+
+\noindent\textbf{Background.}
+The five equations treated here are taken from Table~13 of Grechuk's list of
+short open Diophantine problems, where they appear among the equations of
+length \(\ell\le 9\) for which Problem~4 was open.  In that reference,
+Problem~4 asks one either to list all integer solutions of a given Diophantine
+equation or to prove that it has infinitely many integer solutions
+\cite[Problem~4 and Table~13]{Grechuk2024}.
 
 \section{Two elementary tools}
 
@@ -804,5 +906,20 @@ print("small constants verified")
 These scripts are included only as checkable certificates for arithmetic
 substitutions.  The mathematical proof of infinitude is the Pell recurrence and
 norm argument given in Lemma \ref{lem:pell} and Proposition \ref{prop:cm4}.
+
+
+\bibliography{references}
+
+\vspace{2em}
+
+\noindent\textbf{Jamal Agbanwa}\\
+Independent Researcher, Rotterdam, The Netherlands\\
+\href{mailto:agbanwajamal03@gmail.com}{\texttt{agbanwajamal03@gmail.com}}
+
+\vspace{1em}
+
+\noindent\textbf{Bogdan Grechuk}\\
+Department of Mathematics, University of Leicester, Leicester, LE1 7RH, UK\\
+\href{mailto:bg83@leicester.ac.uk}{\texttt{bg83@leicester.ac.uk}}
 
 \end{document}
