@@ -1,0 +1,235 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\newcommand{\Z}{\mathbb{Z}}
+
+\title{A Self-Contained Analysis of the Integer Equation\\[0.3em]
+\large \texorpdfstring{$y(x^3-z^2)=z+1$}{y(x^3-z^2)=z+1}}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We give a completely elementary proof that the Diophantine equation
+\[
+        y(x^3-z^2)=z+1
+\]
+has infinitely many integer solutions.  More precisely, the entire fibre with
+$z=-1$ is determined explicitly: it is the union of the two infinite families
+\[
+        (x,y,z)=(t,0,-1) \quad (t\in\Z)
+\]
+and
+\[
+        (x,y,z)=(1,t,-1) \quad (t\in\Z).
+\]
+For completeness, we also record a full structural characterization of all
+integer solutions by a single divisibility condition, together with the unique
+exceptional zero-denominator case.
+\end{abstract}
+
+\section{The problem}
+
+We study integer triples $(x,y,z)\in\Z^3$ satisfying
+\begin{equation}\label{eq:main}
+        y(x^3-z^2)=z+1.
+\end{equation}
+The requested alternatives are either to list all integer solutions or to prove
+that infinitely many integer solutions exist.  The latter is immediate once the
+fibre $z=-1$ is examined carefully.  The point of this note is to present the
+argument in a fully explicit form, with all elementary facts used in the proof
+stated and proved.
+
+\section{Elementary preliminaries}
+
+\begin{lemma}[Zero-product property in the integers]\label{lem:zpp}
+Let $a,b\in\Z$.  If $ab=0$, then $a=0$ or $b=0$.
+\end{lemma}
+
+\begin{proof}
+Suppose, for contradiction, that $a\ne 0$ and $b\ne 0$.  Then
+$|a|\ge 1$ and $|b|\ge 1$, so
+\[
+        |ab|=|a|\,|b|\ge 1.
+\]
+Hence $ab\ne 0$, contradicting the hypothesis $ab=0$.  Therefore at least one
+of $a,b$ is zero.
+\end{proof}
+
+\begin{lemma}[The integer cube equal to one]\label{lem:cubeone}
+Let $x\in\Z$.  If $x^3=1$, then $x=1$.
+\end{lemma}
+
+\begin{proof}
+By trichotomy, exactly one of the following holds: $x\le 0$, $x=1$, or
+$x\ge 2$.  If $x\le 0$, then $x^3\le 0$, so $x^3\ne 1$.  If $x\ge 2$, then
+$x^3\ge 2^3=8$, so again $x^3\ne 1$.  The only remaining possibility is
+$x=1$.
+\end{proof}
+
+\section{The fibre \texorpdfstring{$z=-1$}{z=-1}}
+
+\begin{proposition}[Exact determination of the fibre $z=-1$]\label{prop:fibre}
+The integer solutions of \eqref{eq:main} with $z=-1$ are exactly
+\[
+        \{(t,0,-1):t\in\Z\}\ \cup\ \{(1,t,-1):t\in\Z\}.
+\]
+The union is not disjoint, since both families contain $(1,0,-1)$.
+\end{proposition}
+
+\begin{proof}
+Set $z=-1$ in \eqref{eq:main}.  Since $(-1)^2=1$ and $(-1)+1=0$, the equation
+becomes
+\begin{equation}\label{eq:zminusone}
+        y(x^3-1)=0.
+\end{equation}
+By Lemma~\ref{lem:zpp}, equation \eqref{eq:zminusone} holds if and only if
+\[
+        y=0 \qquad \text{or} \qquad x^3-1=0.
+\]
+The second condition is $x^3=1$, which by Lemma~\ref{lem:cubeone} is equivalent
+to $x=1$.
+
+Thus a triple with $z=-1$ solves \eqref{eq:main} if and only if either
+$y=0$, with $x$ arbitrary, or $x=1$, with $y$ arbitrary.  This is precisely
+\[
+        \{(t,0,-1):t\in\Z\}\ \cup\ \{(1,t,-1):t\in\Z\}.
+\]
+Conversely, every triple in this union satisfies \eqref{eq:zminusone}, and
+therefore satisfies \eqref{eq:main} with $z=-1$.
+\end{proof}
+
+\section{A full structural characterization}
+
+The preceding proposition already proves infinitude.  The following exact
+criterion is included to remove any possible ambiguity about the role of the
+factor $x^3-z^2$.
+
+\begin{proposition}[Divisibility description of all integer solutions]\label{prop:structure}
+An integer triple $(x,y,z)\in\Z^3$ satisfies
+\[
+        y(x^3-z^2)=z+1
+\]
+if and only if it belongs to exactly one of the following two classes:
+\begin{enumerate}[label=\textup{(\roman*)}]
+    \item $x^3-z^2\ne 0$, the integer $x^3-z^2$ divides $z+1$, and
+    \[
+            y=\frac{z+1}{x^3-z^2};
+    \]
+    \item $(x,z)=(1,-1)$ and $y$ is arbitrary.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Put
+\[
+        D=x^3-z^2.
+\]
+Then the equation is
+\begin{equation}\label{eq:D}
+        yD=z+1.
+\end{equation}
+
+First assume $D\ne 0$.  If $(x,y,z)$ is a solution, then \eqref{eq:D} says
+that $z+1$ is an integer multiple of $D$, namely the multiple $y$.  Hence
+$D\mid (z+1)$ and
+\[
+        y=\frac{z+1}{D}=\frac{z+1}{x^3-z^2}.
+\]
+Conversely, if $D\ne 0$, $D\mid(z+1)$, and
+$y=(z+1)/D$, then multiplying both sides by $D$ gives $yD=z+1$, which is
+exactly the original equation.
+
+It remains to handle $D=0$.  In that case the left-hand side of
+\eqref{eq:D} is $0$, so \eqref{eq:D} is equivalent to
+\[
+        z+1=0.
+\]
+Thus $z=-1$.  Since $D=0$, we also have
+\[
+        x^3-z^2=0.
+\]
+Substituting $z=-1$ gives
+\[
+        x^3-1=0,
+\]
+so $x^3=1$, and Lemma~\ref{lem:cubeone} gives $x=1$.  Therefore the only
+solutions with $D=0$ have $(x,z)=(1,-1)$ and arbitrary $y$.
+Conversely, if $(x,z)=(1,-1)$, then $x^3-z^2=1-1=0$ and $z+1=0$, so
+\[
+        y(x^3-z^2)=y\cdot 0=0=z+1
+\]
+for every $y\in\Z$.
+
+The two classes are disjoint because class (i) requires $x^3-z^2\ne 0$, while
+class (ii) has $x^3-z^2=0$.
+\end{proof}
+
+\section{Infinitely many integer solutions}
+
+\begin{theorem}\label{thm:infinite}
+The Diophantine equation
+\[
+        y(x^3-z^2)=z+1
+\]
+has infinitely many integer solutions.
+\end{theorem}
+
+\begin{proof}
+By Proposition~\ref{prop:fibre}, every triple of the form
+\[
+        (x,y,z)=(1,t,-1), \qquad t\in\Z,
+\]
+is a solution.  Directly substituting also verifies this without reference to
+any previous result:
+\[
+        t(1^3-(-1)^2)=t(1-1)=0=(-1)+1.
+\]
+If $t_1,t_2\in\Z$ and $t_1\ne t_2$, then
+\[
+        (1,t_1,-1)\ne (1,t_2,-1),
+\]
+so these triples are pairwise distinct.  Since $\Z$ is infinite, the displayed
+family contains infinitely many distinct integer solutions.
+\end{proof}
+
+\begin{corollary}
+The equation also has the infinite solution family
+\[
+        (x,y,z)=(t,0,-1),\qquad t\in\Z.
+\]
+\end{corollary}
+
+\begin{proof}
+For every $t\in\Z$,
+\[
+        0\cdot(t^3-(-1)^2)=0=(-1)+1,
+\]
+so $(t,0,-1)$ is a solution.  Distinct values of $t$ give distinct triples.
+\end{proof}
+
+\begin{remark}
+No finiteness classification is needed to answer the stated problem, because
+Theorem~\ref{thm:infinite} proves one of the requested alternatives.  Still,
+Proposition~\ref{prop:structure} gives an exact necessary-and-sufficient
+condition for every integer solution: outside the unique exceptional case
+$(x,z)=(1,-1)$, the value of $y$ is forced by divisibility.
+\end{remark}
+
+\end{document}
