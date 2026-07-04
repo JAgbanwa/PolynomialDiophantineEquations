@@ -1,0 +1,396 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+
+\allowdisplaybreaks
+\numberwithin{equation}{section}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+
+\title{An Infinite Pellian Family of Integer Solutions to\\
+\texorpdfstring{$y^2+x^2y+z^2x+1=0$}{y^2+x^2 y+z^2 x+1=0}}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We give a completely explicit infinite family of integer solutions to
+\[
+        y^2+x^2y+z^2x+1=0.
+\]
+The construction fixes $x=-145$ and reduces the equation to a Pell-type conic
+\[
+        S^2-580Z^2=21025^2-4.
+\]
+A single integral point on this conic, together with the Pell unit
+$289+12\sqrt{580}$ of norm $1$, generates infinitely many further integral
+points. A parity argument then converts all of them back to integer solutions
+of the original equation.
+\end{abstract}
+
+\section{Statement of the result}
+
+The purpose of this note is not to classify all integer solutions. Instead, we
+prove the following unconditional statement, which is enough to settle the
+``finite versus infinite'' alternative for the given Diophantine equation.
+
+\begin{theorem}\label{thm:main}
+The Diophantine equation
+\begin{equation}\label{eq:main}
+        y^2+x^2y+z^2x+1=0
+\end{equation}
+has infinitely many integer solutions $(x,y,z)\in\Z^3$.
+More precisely, let
+\begin{equation}\label{eq:initial-SZ}
+        S_0=39551,\qquad Z_0=1391,
+\end{equation}
+and define sequences $(S_n)_{n\geq 0}$ and $(Z_n)_{n\geq 0}$ recursively by
+\begin{equation}\label{eq:recurrence}
+\begin{aligned}
+        S_{n+1}&=289S_n+6960Z_n,\\
+        Z_{n+1}&=12S_n+289Z_n.
+\end{aligned}
+\end{equation}
+Then, for every $n\geq 0$,
+\begin{equation}\label{eq:family}
+        (x_n,y_n,z_n)
+        =\left(-145,\frac{S_n-21025}{2},Z_n\right)
+\end{equation}
+is an integer solution of \eqref{eq:main}. The solutions obtained in this way
+are pairwise distinct. Since \eqref{eq:main} contains $z$ only through $z^2$,
+we also get the companion solutions
+\begin{equation}\label{eq:family-pm}
+        \left(-145,\frac{S_n-21025}{2},-Z_n\right)
+        \qquad(n\geq 0).
+\end{equation}
+\end{theorem}
+
+The first few solutions produced by \eqref{eq:family} are
+\begin{equation*}
+        (-145,9263,1391),
+        \qquad
+        (-145,10545287,876611),
+        \qquad
+        (-145,6101221823,506679767).
+\end{equation*}
+
+\section{Reduction to a Pell-type conic}
+
+We first record the exact equivalence between the original equation with
+$x=-145$ and a quadratic Pell-type equation.
+
+\begin{lemma}[Completing the square]\label{lem:completion}
+Let $z\in\Z$ and $y\in\Z$. Put
+\begin{equation}\label{eq:S-def}
+        S=2y+21025.
+\end{equation}
+Then
+\begin{equation}\label{eq:fixed-x-equation}
+        y^2+21025y-145z^2+1=0
+\end{equation}
+holds if and only if
+\begin{equation}\label{eq:pell-conic}
+        S^2-580z^2=21025^2-4.
+\end{equation}
+Conversely, if $S,z\in\Z$ satisfy \eqref{eq:pell-conic} and $S$ is odd, then
+\begin{equation}\label{eq:y-from-S}
+        y=\frac{S-21025}{2}
+\end{equation}
+is an integer satisfying \eqref{eq:fixed-x-equation}.
+\end{lemma}
+
+\begin{proof}
+Starting from \eqref{eq:S-def}, we have
+\begin{equation*}
+        S^2=(2y+21025)^2=4y^2+4\cdot 21025\,y+21025^2.
+\end{equation*}
+Therefore
+\begin{align*}
+        S^2-580z^2-(21025^2-4)
+        &=4y^2+4\cdot 21025\,y+21025^2-580z^2-21025^2+4\\
+        &=4\bigl(y^2+21025y-145z^2+1\bigr).
+\end{align*}
+Hence \eqref{eq:fixed-x-equation} is equivalent to \eqref{eq:pell-conic}.
+
+For the converse, assume $S,z\in\Z$ satisfy \eqref{eq:pell-conic} and that
+$S$ is odd. Since $21025$ is also odd, $S-21025$ is even, so
+$y=(S-21025)/2$ is an integer. Substituting $S=2y+21025$ into
+\eqref{eq:pell-conic} and using the first part of the proof gives
+\eqref{eq:fixed-x-equation}.
+\end{proof}
+
+Because $x=-145$ gives $x^2=21025$, equation \eqref{eq:fixed-x-equation} is
+exactly the original equation \eqref{eq:main} after $x$ has been fixed equal to
+$-145$:
+\begin{equation*}
+        y^2+x^2y+z^2x+1
+        =y^2+21025y-145z^2+1.
+\end{equation*}
+Thus, to prove Theorem \ref{thm:main}, it remains to construct infinitely many
+integer pairs $(S,z)$ satisfying \eqref{eq:pell-conic}, with $S$ odd.
+
+\section{A norm-preserving Pell transformation}
+
+Let
+\begin{equation}\label{eq:Q-def}
+        Q(S,Z)=S^2-580Z^2.
+\end{equation}
+The Pell-type equation \eqref{eq:pell-conic} is simply
+\begin{equation*}
+        Q(S,Z)=21025^2-4.
+\end{equation*}
+We shall use a norm-one automorphism of the binary quadratic form $Q$.
+
+\begin{lemma}[The Pell unit]\label{lem:unit}
+The integers
+\begin{equation*}
+        U=289,
+        \qquad
+        V=12
+\end{equation*}
+satisfy
+\begin{equation}\label{eq:unit}
+        U^2-580V^2=1.
+\end{equation}
+Equivalently,
+\begin{equation*}
+        289^2-580\cdot 12^2=1.
+\end{equation*}
+\end{lemma}
+
+\begin{proof}
+This is a direct calculation:
+\begin{equation*}
+        289^2=83521,
+        \qquad
+        580\cdot 12^2=580\cdot 144=83520,
+\end{equation*}
+so $289^2-580\cdot 12^2=83521-83520=1$.
+\end{proof}
+
+\begin{lemma}[Norm preservation]\label{lem:norm-preserve}
+For every pair $(S,Z)\in\Z^2$, define
+\begin{equation}\label{eq:T-def}
+        T(S,Z)=(S',Z')=(289S+6960Z,\,12S+289Z).
+\end{equation}
+Then
+\begin{equation}\label{eq:Q-preserved}
+        Q(S',Z')=Q(S,Z).
+\end{equation}
+In particular, if $(S,Z)$ solves
+\begin{equation*}
+        S^2-580Z^2=21025^2-4,
+\end{equation*}
+then $T(S,Z)$ also solves the same equation.
+\end{lemma}
+
+\begin{proof}
+We prove a slightly more general identity. Suppose $U,V$ are integers and put
+\begin{equation*}
+        S'=US+580VZ,
+        \qquad
+        Z'=VS+UZ.
+\end{equation*}
+Then
+\begin{align*}
+        S'^2-580Z'^2
+        &=(US+580VZ)^2-580(VS+UZ)^2\\
+        &=U^2S^2+2\cdot 580UVSZ+580^2V^2Z^2\\
+        &\qquad{}-580V^2S^2-2\cdot 580UVSZ-580U^2Z^2\\
+        &=(U^2-580V^2)S^2-580(U^2-580V^2)Z^2\\
+        &=(U^2-580V^2)(S^2-580Z^2).
+\end{align*}
+Taking $U=289$ and $V=12$, Lemma \ref{lem:unit} gives
+$U^2-580V^2=1$. Hence
+\begin{equation*}
+        S'^2-580Z'^2=S^2-580Z^2.
+\end{equation*}
+Since $580V=580\cdot 12=6960$, this is exactly the transformation
+\eqref{eq:T-def}. The final assertion follows immediately.
+\end{proof}
+
+The transformation \eqref{eq:T-def} is the same as multiplication by the unit
+$289+12\sqrt{580}$ in the quadratic order $\Z[\sqrt{580}]$:
+\begin{equation*}
+        S'+Z'\sqrt{580}
+        =(S+Z\sqrt{580})(289+12\sqrt{580}).
+\end{equation*}
+The proof above expands this identity in elementary integer arithmetic, so no
+algebraic number theory is being used as a black box.
+
+\section{The initial point and the infinite orbit}
+
+We now verify the initial point on the Pell-type conic and prove that its orbit
+under the transformation from Lemma \ref{lem:norm-preserve} gives infinitely
+many admissible points.
+
+\begin{lemma}[The initial point]\label{lem:initial-point}
+The pair
+\begin{equation*}
+        (S_0,Z_0)=(39551,1391)
+\end{equation*}
+satisfies
+\begin{equation}\label{eq:initial-solves}
+        S_0^2-580Z_0^2=21025^2-4.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Again this is direct arithmetic. We compute
+\begin{equation*}
+        39551^2=1564281601,
+        \qquad
+        1391^2=1934881,
+\end{equation*}
+and hence
+\begin{equation*}
+        580\cdot 1391^2=580\cdot 1934881=1122230980.
+\end{equation*}
+Therefore
+\begin{equation*}
+        39551^2-580\cdot 1391^2
+        =1564281601-1122230980
+        =442050621.
+\end{equation*}
+On the other hand,
+\begin{equation*}
+        21025^2=442050625,
+\end{equation*}
+so
+\begin{equation*}
+        21025^2-4=442050625-4=442050621.
+\end{equation*}
+The two values agree, proving \eqref{eq:initial-solves}.
+\end{proof}
+
+\begin{proposition}[The recursively generated conic points]\label{prop:conic-points}
+Let $(S_n,Z_n)_{n\geq 0}$ be defined by \eqref{eq:initial-SZ} and
+\eqref{eq:recurrence}. Then, for every $n\geq 0$,
+\begin{equation}\label{eq:all-conic-points}
+        S_n^2-580Z_n^2=21025^2-4.
+\end{equation}
+Moreover, every $S_n$ is odd, and the sequence $(S_n)_{n\geq 0}$ is strictly
+increasing. In particular, the pairs $(S_n,Z_n)$ are pairwise distinct.
+\end{proposition}
+
+\begin{proof}
+First, Lemma \ref{lem:initial-point} proves \eqref{eq:all-conic-points} for
+$n=0$. If \eqref{eq:all-conic-points} holds for some $n$, then
+\eqref{eq:recurrence} says precisely that
+\begin{equation*}
+        (S_{n+1},Z_{n+1})=T(S_n,Z_n),
+\end{equation*}
+where $T$ is the transformation from Lemma \ref{lem:norm-preserve}. Therefore
+Lemma \ref{lem:norm-preserve} gives
+\begin{equation*}
+        S_{n+1}^2-580Z_{n+1}^2=S_n^2-580Z_n^2=21025^2-4.
+\end{equation*}
+By induction, \eqref{eq:all-conic-points} holds for all $n\geq 0$.
+
+Next we prove the parity claim. Since $S_0=39551$ is odd and
+\begin{equation*}
+        S_{n+1}=289S_n+6960Z_n,
+\end{equation*}
+we have, modulo $2$,
+\begin{equation*}
+        S_{n+1}\equiv S_n \pmod 2,
+\end{equation*}
+because $289\equiv 1\pmod 2$ and $6960\equiv 0\pmod 2$. Thus all $S_n$ are
+odd.
+
+It remains to prove strict increase. We first show that $S_n>0$ and $Z_n>0$ for
+all $n\geq 0$. This is true at $n=0$ because $39551>0$ and $1391>0$. If
+$S_n>0$ and $Z_n>0$, then the recurrence gives
+\begin{equation*}
+        S_{n+1}=289S_n+6960Z_n>0,
+        \qquad
+        Z_{n+1}=12S_n+289Z_n>0.
+\end{equation*}
+Hence $S_n,Z_n$ are positive for all $n$. Finally,
+\begin{equation*}
+        S_{n+1}-S_n=288S_n+6960Z_n>0,
+\end{equation*}
+so $S_{n+1}>S_n$ for every $n\geq 0$. Therefore the sequence $(S_n)$ is
+strictly increasing, and the pairs $(S_n,Z_n)$ are pairwise distinct.
+\end{proof}
+
+\section{Proof of the main theorem}
+
+We now assemble the preceding lemmas.
+
+\begin{proof}[Proof of Theorem \ref{thm:main}]
+For each $n\geq 0$, Proposition \ref{prop:conic-points} gives
+\begin{equation*}
+        S_n^2-580Z_n^2=21025^2-4,
+\end{equation*}
+and it also gives that $S_n$ is odd. Hence Lemma \ref{lem:completion} applies
+with $z=Z_n$ and
+\begin{equation*}
+        y_n=\frac{S_n-21025}{2}.
+\end{equation*}
+Because both $S_n$ and $21025$ are odd, $y_n$ is an integer. Lemma
+\ref{lem:completion} then gives
+\begin{equation*}
+        y_n^2+21025y_n-145Z_n^2+1=0.
+\end{equation*}
+Since $(-145)^2=21025$, this is the same as
+\begin{equation*}
+        y_n^2+(-145)^2y_n+Z_n^2(-145)+1=0.
+\end{equation*}
+Thus
+\begin{equation*}
+        (x_n,y_n,z_n)=\left(-145,\frac{S_n-21025}{2},Z_n\right)
+\end{equation*}
+satisfies the original equation \eqref{eq:main}.
+
+By Proposition \ref{prop:conic-points}, the sequence $(S_n)$ is strictly
+increasing. Therefore the corresponding integers
+\begin{equation*}
+        y_n=\frac{S_n-21025}{2}
+\end{equation*}
+are also strictly increasing. Consequently the triples in \eqref{eq:family} are
+pairwise distinct. This gives infinitely many integer solutions.
+
+Finally, equation \eqref{eq:main} depends on $z$ only through $z^2$. Therefore,
+whenever $(-145,y_n,Z_n)$ is a solution, so is $(-145,y_n,-Z_n)$. This proves
+\eqref{eq:family-pm} as well.
+\end{proof}
+
+\section{Direct check of the first solution}
+
+For completeness, we directly verify the first solution without appealing to
+the general construction. When $n=0$,
+\begin{equation*}
+        y_0=\frac{39551-21025}{2}=9263,
+        \qquad
+        z_0=1391.
+\end{equation*}
+Then
+\begin{align*}
+        y_0^2+(-145)^2y_0+z_0^2(-145)+1
+        &=9263^2+21025\cdot 9263-145\cdot 1391^2+1\\
+        &=85803169+194754575-280557745+1\\
+        &=0.
+\end{align*}
+This agrees with the theorem and illustrates the mechanism of the construction.
+
+\begin{remark}
+The proof is entirely constructive. The recurrence \eqref{eq:recurrence}
+provides a deterministic algorithm that outputs a new integer solution from the
+previous one. No unproved assumption, search result, or classification theorem
+is used.
+\end{remark}
+
+\end{document}
