@@ -1,0 +1,534 @@
+import Mathlib
+/- ============================================================
+   Section from SumTwoSquares.lean
+   ============================================================ -/
+/-!
+# Sums of two squares: basic infrastructure
+This file develops the elementary theory of the set `S₂` of integers that are sums
+of two integer squares, following Section 2 of the paper
+"On the polynomial values represented by quadratic forms" (Grechuk–Agbanwa).
+The key facts are:
+* `SqSum` is multiplicative (Brahmagupta–Fibonacci identity), `sqSum_mul`;
+* a sum of two squares is never `≡ 3 (mod 4)`, `sqSum_mod4`;
+* the "division" property (*) of the paper: if `N` and `N * k` are sums of two
+  squares (with `N, k` positive), then so is `k`, `sqSum_div`.
+-/
+namespace SumSquares
+open scoped BigOperators
+/-- `n` is a sum of two integer squares. -/
+def SqSum (n : ℤ) : Prop := ∃ a b : ℤ, n = a ^ 2 + b ^ 2
+lemma sqSum_zero : SqSum 0 := ⟨0, 0, by ring⟩
+lemma sqSum_four : SqSum 4 := ⟨2, 0, by ring⟩
+/-- The Brahmagupta–Fibonacci identity: `SqSum` is closed under multiplication. -/
+lemma sqSum_mul {m n : ℤ} (hm : SqSum m) (hn : SqSum n) : SqSum (m * n) := by
+  obtain ⟨a, b, rfl⟩ := hm
+  obtain ⟨c, d, rfl⟩ := hn
+  exact ⟨a * c - b * d, a * d + b * c, by ring⟩
+/-
+A sum of two squares is never congruent to `3` modulo `4`.
+-/
+lemma sqSum_mod4 {n : ℤ} (h : SqSum n) : n % 4 ≠ 3 := by
+  rcases h with ⟨ a, b, rfl ⟩ ; rcases Int.even_or_odd' a with ⟨ a, rfl | rfl ⟩ <;> rcases Int.even_or_odd' b with ⟨ b, rfl | rfl ⟩ <;> ring_nf <;> norm_num;
+/-
+Bridge between the integer and natural-number notions of a sum of two squares.
+-/
+lemma sqSum_iff_toNat {n : ℤ} (hn : 0 ≤ n) :
+    SqSum n ↔ ∃ a b : ℕ, n.toNat = a ^ 2 + b ^ 2 := by
+  constructor;
+  · rintro ⟨ a, b, rfl ⟩;
+    exact ⟨ a.natAbs, b.natAbs, by nlinarith [ Int.toNat_of_nonneg hn, abs_mul_abs_self a, abs_mul_abs_self b ] ⟩;
+  · rintro ⟨ a, b, h ⟩;
+    exact ⟨ a, b, by linarith [ Int.toNat_of_nonneg hn ] ⟩
+/-
+The "division" property (*): if `N` and `N * k` are sums of two squares, with
+`N` and `k` positive, then `k` is a sum of two squares.
+-/
+lemma sqSum_div {N k : ℤ} (hN : 0 < N) (hk : 0 < k)
+    (hNs : SqSum N) (hNk : SqSum (N * k)) : SqSum k := by
+  -- Let n1 = N.toNat, n2 = k.toNat. Since N,k>0, N*k>0 and (N*k).toNat = n1*n2, n1>0, n2>0.
+  obtain ⟨n1, hn1⟩ : ∃ n1 : ℕ, N = n1 := by
+    exact Int.eq_ofNat_of_zero_le hN.le
+  obtain ⟨n2, hn2⟩ : ∃ n2 : ℕ, k = n2 := by
+    exact ⟨ Int.toNat k, by rw [ Int.toNat_of_nonneg hk.le ] ⟩
+  have hn1_pos : 0 < n1 := by
+    linarith
+  have hn2_pos : 0 < n2 := by
+    linarith
+  have hNk_pos : 0 < N * k := by
+    positivity
+  have hNk_toNat : (N * k).toNat = n1 * n2 := by
+    grind;
+  have hN_sq : ∀ q ∈ n1.primeFactors, q % 4 = 3 → Even (padicValNat q n1) := by
+    have := Nat.eq_sq_add_sq_iff.mp (by
+    convert sqSum_iff_toNat ( by linarith : 0 ≤ N ) |>.1 hNs ; aesop : ∃ a b : ℕ, n1 = a ^ 2 + b ^ 2);
+    assumption
+  have hNk_sq : ∀ q ∈ (n1 * n2).primeFactors, q % 4 = 3 → Even (padicValNat q (n1 * n2)) := by
+    convert Nat.eq_sq_add_sq_iff.mp ( show ∃ x y : ℕ, n1 * n2 = x ^ 2 + y ^ 2 from ?_ ) using 1;
+    obtain ⟨ a, b, h ⟩ := hNk; exact ⟨ a.natAbs, b.natAbs, by linarith [ abs_mul_abs_self a, abs_mul_abs_self b, Int.toNat_of_nonneg hNk_pos.le ] ⟩ ;
+  have hNk_sq : ∀ q ∈ n2.primeFactors, q % 4 = 3 → Even (padicValNat q n2) := by
+    intro q hq hq'; specialize hNk_sq q; simp_all +decide [ Nat.primeFactors_mul, ne_of_gt ] ;
+    haveI := Fact.mk hq.1; rw [ padicValNat.mul ( by positivity ) ( by positivity ) ] at hNk_sq; simp_all +decide [ parity_simps ] ;
+    exact hNk_sq.mp ( if h : q ∣ n1 then hN_sq q hq.1 h hq' else by rw [ padicValNat.eq_zero_of_not_dvd h ] ; simp +decide );
+  have hNk_sq : ∃ a b : ℕ, n2 = a ^ 2 + b ^ 2 := by
+    exact Nat.eq_sq_add_sq_iff.mpr hNk_sq;
+  exact hn2.symm ▸ by obtain ⟨ a, b, h ⟩ := hNk_sq; exact ⟨ a, b, by linarith ⟩ ;
+end SumSquares
+/- ============================================================
+   Section from PellAux.lean
+   ============================================================ -/
+/-!
+# Infinitude of solutions of the auxiliary Pell-type equation
+The paper reduces the representability question to an auxiliary equation of the form
+`a x² + c = v²` (a special case of equation (10), with `b = 0`).  We prove the
+elementary fact that, when `a > 0` is not a perfect square and one integer solution
+with `x, v > 0` exists, the equation has infinitely many integer solutions with
+`x > 0` (the paper cites [9, Proposition 5.4]/Gauss's theorem for this).
+The proof is self-contained: we take a nontrivial unit `P² - a Q² = 1` from
+`Pell.exists_of_not_isSquare` and repeatedly apply the norm-multiplication step
+`(v, x) ↦ (vP + aQx, vQ + xP)`, which strictly increases `x`.
+-/
+namespace SumSquares
+/-
+A nontrivial positive Pell unit for a non-square `a > 0`.
+-/
+lemma pell_unit_pos {a : ℤ} (ha : 0 < a) (hns : ¬ IsSquare a) :
+    ∃ P Q : ℤ, 1 ≤ P ∧ 1 ≤ Q ∧ P ^ 2 - a * Q ^ 2 = 1 := by
+  have := Pell.exists_of_not_isSquare ha hns;
+  obtain ⟨ x, y, hxy, hy ⟩ := this; exact ⟨ |x|, |y|, abs_pos.mpr ( show x ≠ 0 by rintro rfl; exact hy <| by nlinarith ), abs_pos.mpr hy, by simpa [ sq_abs ] using hxy ⟩ ;
+/-
+Infinitude of solutions of `a x² + c = v²`.
+-/
+lemma aux_infinite {a c : ℤ} (ha : 0 < a) (hns : ¬ IsSquare a)
+    {x0 v0 : ℤ} (hx0 : 0 < x0) (hv0 : 0 < v0) (hseed : v0 ^ 2 = a * x0 ^ 2 + c) :
+    {x : ℤ | 0 < x ∧ ∃ v : ℤ, v ^ 2 = a * x ^ 2 + c}.Infinite := by
+  -- We'll prove that the map $n \mapsto (s n).2$ is strictly increasing, where $s n$ is defined recursively.
+  have h_strict_mono : ∃ s : ℕ → ℤ × ℤ, (∀ n, 0 < (s n).1 ∧ 0 < (s n).2 ∧ (s n).1 ^ 2 = a * (s n).2 ^ 2 + c) ∧ StrictMono (fun n => (s n).2) := by
+    obtain ⟨ P, Q, hP, hQ, h ⟩ := pell_unit_pos ha hns;
+    refine' ⟨ fun n => Nat.recOn n ( v0, x0 ) fun n ih => ( ih.1 * P + a * Q * ih.2, ih.1 * Q + ih.2 * P ), _, _ ⟩ <;> norm_num;
+    · intro n; induction n <;> simp_all +decide ;
+      exact ⟨ by nlinarith [ mul_pos ha ( by linarith : 0 < Q ) ], by nlinarith [ mul_pos ha ( by linarith : 0 < Q ) ], by linear_combination' h * ( ( Nat.rec ( v0, x0 ) ( fun n ih => ( ih.1 * P + a * Q * ih.2, ih.1 * Q + ih.2 * P ) ) ‹_› : ℤ × ℤ ).1 ^ 2 - a * ( Nat.rec ( v0, x0 ) ( fun n ih => ( ih.1 * P + a * Q * ih.2, ih.1 * Q + ih.2 * P ) ) ‹_› : ℤ × ℤ ).2 ^ 2 ) + ‹0 < ( Nat.rec ( v0, x0 ) ( fun n ih => ( ih.1 * P + a * Q * ih.2, ih.1 * Q + ih.2 * P ) ) ‹_› : ℤ × ℤ ).1 ∧ 0 < ( Nat.rec ( v0, x0 ) ( fun n ih => ( ih.1 * P + a * Q * ih.2, ih.1 * Q + ih.2 * P ) ) ‹_› : ℤ × ℤ ).2 ∧ ( Nat.rec ( v0, x0 ) ( fun n ih => ( ih.1 * P + a * Q * ih.2, ih.1 * Q + ih.2 * P ) ) ‹_› : ℤ × ℤ ).1 ^ 2 = a * ( Nat.rec ( v0, x0 ) ( fun n ih => ( ih.1 * P + a * Q * ih.2, ih.1 * Q + ih.2 * P ) ) ‹_› : ℤ × ℤ ).2 ^ 2 + c›.2.2 ⟩;
+    · refine' strictMono_nat_of_lt_succ _;
+      intro n;
+      -- By definition of $s$, we know that $(s n).1 > 0$ and $(s n).2 > 0$ for all $n$.
+      have h_pos : ∀ n, 0 < (Nat.rec (v0, x0) (fun n ih => (ih.1 * P + a * Q * ih.2, ih.1 * Q + ih.2 * P)) n : ℤ × ℤ).1 ∧ 0 < (Nat.rec (v0, x0) (fun n ih => (ih.1 * P + a * Q * ih.2, ih.1 * Q + ih.2 * P)) n : ℤ × ℤ).2 := by
+        intro n; induction n <;> simp_all +decide ;
+        constructor <;> nlinarith [ mul_pos ha ( by linarith : 0 < Q ) ];
+      nlinarith [ h_pos n, mul_pos ha ( h_pos n |>.2 ) ];
+  exact Set.infinite_of_injective_forall_mem h_strict_mono.choose_spec.2.injective fun n => ⟨ h_strict_mono.choose_spec.1 n |>.2.1, _, h_strict_mono.choose_spec.1 n |>.2.2 ⟩
+end SumSquares
+/- ============================================================
+   Section from Represent.lean
+   ============================================================ -/
+/-!
+# The tangent construction for `R(t) = t³ + f`, `Q(x) = x²`
+This file assembles the core of Algorithm 2.2 for the special families used in
+Section 3 of the paper: `R(t) = t³ + f`, `Q(x) = x²`, so that `P(x) = x⁶ + f`.
+* `cube_repr` is the tangent identity (7) combined with the division property (*).
+* `cube_sqSum_infinite` gives infinitely many `x` with `x⁶ + f ∈ S₂`.
+* `cube_sqSum_even_infinite` gives infinitely many *even* `x` with `x⁶ + f ∈ S₂`.
+* `sqSum_even_split` / `sqSum_odd_split` select a representation of the required
+  parity, used to produce the actual `(y, z)` solving the target equations.
+* `infinite_of_first_proj` packages "infinitely many `x`" into "the solution set is
+  infinite".
+-/
+namespace SumSquares
+open scoped BigOperators
+/-
+Equation (12)/(7): if `v² = 4(u³+f)x² − u(u³−8f)` and `x⁶+f > 0`, and `4(u³+f)`
+is itself a sum of two squares, then `x⁶+f` is a sum of two squares.
+-/
+lemma cube_repr {f u x v : ℤ} (hM : 0 < u ^ 3 + f)
+    (hMs : SqSum (4 * (u ^ 3 + f))) (hpos : 0 < x ^ 6 + f)
+    (h : v ^ 2 = 4 * (u ^ 3 + f) * x ^ 2 - u * (u ^ 3 - 8 * f)) :
+    SqSum (x ^ 6 + f) := by
+  -- Set M := u^3+f.
+  set M : ℤ := u^3 + f;
+  -- Then $4M(x^6 + f) = (2M + 3u^2(x^2 - u))^2 + ((x^2 - u)v)^2$.
+  have hkey : 4 * M * (x^6 + f) = (2 * M + 3 * u^2 * (x^2 - u))^2 + ((x^2 - u) * v)^2 := by
+    grobner;
+  convert sqSum_div ( show 0 < 4 * M by positivity ) ( show 0 < x ^ 6 + f by positivity ) hMs ⟨ _, _, hkey ⟩ using 1
+/-
+The set of integers `x` with `x⁶ + f` a sum of two squares is infinite.
+-/
+lemma cube_sqSum_infinite {f u : ℤ} (hM : 0 < u ^ 3 + f)
+    (hMs : SqSum (4 * (u ^ 3 + f)))
+    (hns : ¬ IsSquare (4 * (u ^ 3 + f)))
+    {x0 v0 : ℤ} (hx0 : 0 < x0) (hv0 : 0 < v0)
+    (hseed : v0 ^ 2 = 4 * (u ^ 3 + f) * x0 ^ 2 - u * (u ^ 3 - 8 * f)) :
+    {x : ℤ | 0 < x ∧ SqSum (x ^ 6 + f)}.Infinite := by
+  -- By `aux_infinite`, we get infinitely many `x` with `0 < x` and `∃ v, v^2 = a*x^2 + c`.
+  have hA : Set.Infinite {x : ℤ | 0 < x ∧ ∃ v : ℤ, v^2 = 4 * (u^3 + f) * x^2 - u * (u^3 - 8 * f)} := by
+    convert SumSquares.aux_infinite ( show 0 < 4 * ( u ^ 3 + f ) by linarith ) hns hx0 hv0 hseed using 1;
+  -- Let `Bad := {x : ℤ | ¬ (0 < x^6+f)}`. Show `Bad` is finite: if `x ∈ Bad` then `x^6+f ≤ 0`, so `x^6 ≤ -f`; since `|x|≥1` implies `x^6 ≥ x^2 ≥ |x|`, we get `|x| ≤ |f|`, hence `Bad ⊆ Set.Icc (-(|f|)) (|f|)` which is finite (`Set.finite_Icc`).
+  have hBadFinite : Set.Finite {x : ℤ | ¬(0 < x^6 + f)} := by
+    exact Set.Finite.subset ( Set.finite_Icc ( - ( |f| + 1 ) ) ( |f| + 1 ) ) fun x hx => ⟨ by cases abs_cases f <;> nlinarith [ sq_nonneg ( x^2 - 1 ), hx.out ], by cases abs_cases f <;> nlinarith [ sq_nonneg ( x^2 - 1 ), hx.out ] ⟩;
+  exact hA.diff hBadFinite |> Set.Infinite.mono fun x hx => ⟨ hx.1.1, by simpa using cube_repr hM hMs ( by aesop ) hx.1.2.choose_spec ⟩
+/-
+The set of *even* integers `x` with `x⁶ + f` a sum of two squares is infinite.
+Here the auxiliary equation is taken in the variable `w` with `x = 2w`, so its
+leading coefficient is `16(u³+f)`.
+-/
+lemma cube_sqSum_even_infinite {f u : ℤ} (hM : 0 < u ^ 3 + f)
+    (hMs : SqSum (4 * (u ^ 3 + f)))
+    (hns : ¬ IsSquare (16 * (u ^ 3 + f)))
+    {w0 v0 : ℤ} (hw0 : 0 < w0) (hv0 : 0 < v0)
+    (hseed : v0 ^ 2 = 16 * (u ^ 3 + f) * w0 ^ 2 - u * (u ^ 3 - 8 * f)) :
+    {x : ℤ | 0 < x ∧ Even x ∧ SqSum (x ^ 6 + f)}.Infinite := by
+  -- Let $a = 16(u^3 + f)$ and $c = -u(u^3 - 8f)$.
+  set a := 16 * (u ^ 3 + f)
+  set c := -u * (u ^ 3 - 8 * f);
+  -- By `aux_infinite`, there are infinitely many $w > 0$ such that $v^2 = a*w^2 + c$.
+  have hW : {w : ℤ | 0 < w ∧ ∃ v : ℤ, v^2 = a * w^2 + c}.Infinite := by
+    convert aux_infinite ( show 0 < a by positivity ) hns hw0 hv0 _ using 1;
+    linear_combination' hseed;
+  -- Let $Bad := {w : ℤ | ¬ (0 < (2 * w) ^ 6 + f)}$, which is finite by the same bound argument as in `cube_sqSum_infinite`.
+  have hBadFinite : {w : ℤ | ¬ (0 < (2 * w) ^ 6 + f)}.Finite := by
+    refine Set.Finite.subset ( Set.finite_Icc ( - ( |f| + 1 ) ) ( |f| + 1 ) ) ?_;
+    intro w hw; constructor <;> cases abs_cases f <;> nlinarith [ sq_nonneg ( w ^ 2 - 1 ), hw.out ] ;
+  -- Consider the image of $W \setminus Bad$ under the map $w \mapsto 2w$.
+  have h_image : Set.Infinite (Set.image (fun w => 2 * w) ({w : ℤ | 0 < w ∧ ∃ v : ℤ, v^2 = a * w^2 + c} \ {w : ℤ | ¬ (0 < (2 * w) ^ 6 + f)})) := by
+    refine Set.Infinite.image ?_ <| hW.diff hBadFinite;
+    exact fun x hx y hy hxy => mul_left_cancel₀ two_ne_zero hxy;
+  refine h_image.mono ?_;
+  simp +contextual [ Set.image_subset_iff ];
+  intro w hw; obtain ⟨ hw₁, v, hv ⟩ := hw.1; exact ⟨ by linarith, by
+    convert cube_repr hM hMs ( show 0 < ( 2 * w ) ^ 6 + f from not_le.mp hw.2 ) _ using 1;
+    exacts [ v, by linear_combination' hv ] ⟩ ;
+/-
+Parity selection for `f ≡ 0 (mod 4)`: choose a representation `x⁶+f = A²+B²`
+with `B` even and `A ≡ x (mod 2)`.
+-/
+lemma sqSum_even_split {f x : ℤ} (hf : f % 4 = 0) (h : SqSum (x ^ 6 + f)) :
+    ∃ A B : ℤ, x ^ 6 + f = A ^ 2 + B ^ 2 ∧ A % 2 = x % 2 ∧ B % 2 = 0 := by
+  cases' h with A hA;
+  obtain ⟨ B, hB ⟩ := hA;
+  by_cases hx : x % 2 = 0;
+  · have h_even : A % 2 = 0 ∧ B % 2 = 0 := by
+      replace hB := congr_arg ( · % 4 ) hB ; rcases Int.even_or_odd' A with ⟨ k, rfl | rfl ⟩ <;> rcases Int.even_or_odd' B with ⟨ l, rfl | rfl ⟩ <;> ring_nf at * <;> norm_num [ Int.add_emod, Int.mul_emod, hx, hf ] at hB ⊢;
+      · rw [ ← Int.emod_add_mul_ediv x 2, hx ] at hB; ring_nf at hB; norm_num [ Int.add_emod, Int.mul_emod ] at hB;
+      · rw [ ← Int.emod_add_mul_ediv x 2, hx ] at hB; ring_nf at hB; norm_num [ Int.add_emod, Int.mul_emod ] at hB;
+      · rw [ ← Int.emod_add_mul_ediv x 2, hx ] at hB; ring_nf at hB; norm_num [ Int.add_emod, Int.mul_emod ] at hB;
+    grind;
+  · rcases Int.even_or_odd' A with ⟨ a, rfl | rfl ⟩ <;> rcases Int.even_or_odd' B with ⟨ b, rfl | rfl ⟩ <;> ring_nf at * <;> norm_num [ Int.add_emod, Int.mul_emod ] at *;
+    · obtain ⟨ k, rfl ⟩ := hf; replace hB := congr_arg ( · % 4 ) hB ; rcases Int.even_or_odd' x with ⟨ c, rfl | rfl ⟩ <;> ring_nf at * <;> norm_num [ Int.add_emod, Int.mul_emod ] at *;
+    · exact ⟨ 2 * b + 1, 2 * a, by linarith, by norm_num [ Int.add_emod, Int.mul_emod, hx ], by norm_num [ Int.dvd_iff_emod_eq_zero, Int.add_emod, Int.mul_emod ] ⟩;
+    · exact ⟨ a * 2 + 1, b * 2, by linarith, by norm_num [ Int.add_emod, Int.mul_emod, hx ], by norm_num [ Int.dvd_iff_emod_eq_zero ] ⟩;
+    · obtain ⟨ k, rfl ⟩ := hf; replace hB := congr_arg ( · % 4 ) hB ; rcases Int.even_or_odd' x with ⟨ c, rfl | rfl ⟩ <;> ring_nf at * <;> norm_num [ Int.add_emod, Int.mul_emod ] at *;
+/-
+Parity selection for `f ≡ 1 (mod 4)`: choose a representation `x⁶+f = A²+B²`
+with `B` odd and `A ≡ x (mod 2)`.
+-/
+lemma sqSum_odd_split {f x : ℤ} (hf : f % 4 = 1) (h : SqSum (x ^ 6 + f)) :
+    ∃ A B : ℤ, x ^ 6 + f = A ^ 2 + B ^ 2 ∧ A % 2 = x % 2 ∧ B % 2 = 1 := by
+  obtain ⟨A, B, hAB⟩ : ∃ A B : ℤ, x^6 + f = A^2 + B^2 := by
+    exact h;
+  by_cases hx_even : Even x;
+  · rcases hx_even with ⟨ k, rfl ⟩;
+    rcases Int.even_or_odd' A with ⟨ a, rfl | rfl ⟩ <;> rcases Int.even_or_odd' B with ⟨ b, rfl | rfl ⟩; all_goals grind;
+  · rcases Int.even_or_odd' A with ⟨ k, rfl | rfl ⟩ <;> rcases Int.even_or_odd' B with ⟨ l, rfl | rfl ⟩ <;> simp_all +decide [ parity_simps ];
+    · replace hAB := congr_arg ( · % 4 ) hAB ; rcases hx_even with ⟨ m, rfl ⟩ ; ring_nf at hAB ; norm_num [ Int.add_emod, Int.mul_emod, hf ] at hAB;
+    · replace hAB := congr_arg ( · % 4 ) hAB ; rcases hx_even with ⟨ m, rfl ⟩ ; ring_nf at hAB ; norm_num [ Int.add_emod, Int.mul_emod, hf ] at hAB;
+    · obtain ⟨ m, rfl ⟩ := hx_even; replace hAB := congr_arg ( · % 4 ) hAB ; rcases Int.even_or_odd' k with ⟨ k, rfl | rfl ⟩ <;> rcases Int.even_or_odd' l with ⟨ l, rfl | rfl ⟩ <;> ring_nf at * <;> norm_num [ Int.add_emod, Int.mul_emod, hf ] at hAB;
+    · grind +revert
+/-
+Packaging via an explicit injective family.
+-/
+lemma infinite_of_inj {P : ℤ → ℤ → ℤ → Prop} (g : ℕ → ℤ × ℤ × ℤ)
+    (hinj : Function.Injective g)
+    (hmem : ∀ n, P (g n).1 (g n).2.1 (g n).2.2) :
+    {p : ℤ × ℤ × ℤ | P p.1 p.2.1 p.2.2}.Infinite := by
+  exact Set.infinite_of_injective_forall_mem hinj hmem
+/-
+Packaging: if infinitely many `x` admit a solution `(y, z)` of a relation `P`,
+then the full solution set `{(x,y,z) | P x y z}` is infinite.
+-/
+lemma infinite_of_first_proj {P : ℤ → ℤ → ℤ → Prop} {S : Set ℤ} (hS : S.Infinite)
+    (hsol : ∀ x ∈ S, ∃ y z : ℤ, P x y z) :
+    {p : ℤ × ℤ × ℤ | P p.1 p.2.1 p.2.2}.Infinite := by
+  intro H; exact hS <| Set.Finite.subset ( H.image fun p : ℤ × ℤ × ℤ ↦ p.1 ) fun a h ↦ by obtain ⟨ y, z, hyz ⟩ := hsol a h; aesop;
+/-
+Packaging with a reparametrization `φ` of the first coordinate.
+-/
+lemma infinite_of_first_proj_comp {P : ℤ → ℤ → ℤ → Prop} {S : Set ℤ} (hS : S.Infinite)
+    (φ : ℤ → ℤ) (hφ : Set.InjOn φ S)
+    (hsol : ∀ w ∈ S, ∃ y z : ℤ, P (φ w) y z) :
+    {p : ℤ × ℤ × ℤ | P p.1 p.2.1 p.2.2}.Infinite := by
+  intro H;
+  exact hS ( Set.Finite.of_finite_image ( Set.Finite.subset ( H.image fun p : ℤ × ℤ × ℤ => p.1 ) fun x hx => by aesop ) hφ )
+end SumSquares
+/- ============================================================
+   Section from Prop31.lean
+   ============================================================ -/
+/-!
+# Proposition 3.1: the shortest previously-open equation
+We prove that the equation `y² + x³y + z² + 1 = 0` (equation (2) of the paper) has
+infinitely many integer solutions, via the fact that `x⁶ − 4` is a sum of two squares
+for infinitely many integers `x`.
+The application of Algorithm 2.2 uses `f = −4`, `u = 162`, for which
+`4(u³+f) = 17006096` and the auxiliary equation is
+`17006096 x² − 688752720 = v²`, with seed solution
+`x₀ = 22108343594783571`, `v₀ = 91171377945572295096`.
+-/
+namespace SumSquares
+open scoped BigOperators
+/-- Infinitely many integers `x` have `x⁶ − 4` a sum of two squares. -/
+lemma sqSum_x6_sub_four_infinite :
+    {x : ℤ | 0 < x ∧ SqSum (x ^ 6 + (-4))}.Infinite := by
+  refine cube_sqSum_infinite (f := -4) (u := 162) ?_ ?_ ?_
+    (x0 := 22108343594783571) (v0 := 91171377945572295096) ?_ ?_ ?_
+  · norm_num
+  · exact ⟨700, 4064, by norm_num⟩
+  · native_decide
+  · norm_num
+  · norm_num
+  · norm_num
+/-
+From `x⁶ − 4 ∈ S₂` one obtains an integer solution of equation (2).
+-/
+lemma sol_of_x6_sub_four {x : ℤ} (h : SqSum (x ^ 6 + (-4))) :
+    ∃ y z : ℤ, y ^ 2 + x ^ 3 * y + z ^ 2 + 1 = 0 := by
+  obtain ⟨A, B, hA, hB⟩ : ∃ A B : ℤ, x^6 + (-4) = A^2 + B^2 ∧ A % 2 = x % 2 ∧ B % 2 = 0 :=
+    sqSum_even_split rfl h
+  obtain ⟨ z, rfl ⟩ := Int.modEq_zero_iff_dvd.mp hB.2;
+  -- Since $A \equiv x \pmod{2}$, we have $A = x^3 + 2y$ for some integer $y$.
+  obtain ⟨ y, hy ⟩ : ∃ y : ℤ, A = x^3 + 2 * y := by
+    exact ⟨ ( A - x ^ 3 ) / 2, by rw [ mul_comm, Int.ediv_mul_cancel ( Int.dvd_of_emod_eq_zero ( by norm_num [ Int.sub_emod, Int.mul_emod, pow_three, hB ] ; have := Int.emod_nonneg x two_ne_zero; have := Int.emod_lt_of_pos x two_pos; interval_cases x % 2 <;> trivial ) ) ] ; ring ⟩;
+  exact ⟨ y, z, by subst hy; linarith ⟩
+/-- **Proposition 3.1.** The equation `y² + x³y + z² + 1 = 0` has infinitely many
+integer solutions. -/
+theorem prop_3_1 :
+    {p : ℤ × ℤ × ℤ | p.2.1 ^ 2 + p.1 ^ 3 * p.2.1 + p.2.2 ^ 2 + 1 = 0}.Infinite := by
+  apply infinite_of_first_proj
+    (P := fun x y z => y ^ 2 + x ^ 3 * y + z ^ 2 + 1 = 0)
+    (S := {x : ℤ | 0 < x ∧ SqSum (x ^ 6 + (-4))})
+    sqSum_x6_sub_four_infinite
+  intro x hx
+  exact sol_of_x6_sub_four hx.2
+end SumSquares
+/- ============================================================
+   Section from Prop32.lean
+   ============================================================ -/
+/-!
+# Proposition 3.2: four further length-9 equations
+We prove that each of the equations (14)–(17) of the paper has infinitely many
+integer solutions:
+* (14) `y² + x³y + z² − 2 = 0`      (from `x⁶ + 8 ∈ S₂` infinitely often),
+* (15) `y² + x³y + z² + z − 1 = 0`  (from `x⁶ + 5 ∈ S₂` infinitely often),
+* (16) `y² + x³y + z² + z + 1 = 0`  (from `x⁶ − 3 ∈ S₂` infinitely often),
+* (17) `y² + x³y + y + z² + 1 = 0`  (from `(x³+1)² − 4 ∈ S₂` infinitely often,
+  obtained via `x = −w²` and the factorization `(w⁶−3)(w⁶+1)`).
+-/
+namespace SumSquares
+open scoped BigOperators
+/-! ## Infinitude of the relevant sum-of-two-squares values -/
+lemma sqSum_x6_add_eight_infinite :
+    {x : ℤ | 0 < x ∧ SqSum (x ^ 6 + 8)}.Infinite := by
+  refine cube_sqSum_infinite (f := 8) (u := 8) ?_ ?_ ?_
+    (x0 := 12) (v0 := 544) ?_ ?_ ?_
+  · norm_num
+  · exact ⟨44, 12, by norm_num⟩
+  · native_decide
+  · norm_num
+  · norm_num
+  · norm_num
+lemma sqSum_x6_add_five_infinite :
+    {x : ℤ | 0 < x ∧ SqSum (x ^ 6 + 5)}.Infinite := by
+  refine cube_sqSum_infinite (f := 5) (u := 2) ?_ ?_ ?_
+    (x0 := 6) (v0 := 44) ?_ ?_ ?_
+  · norm_num
+  · exact ⟨6, 4, by norm_num⟩
+  · native_decide
+  · norm_num
+  · norm_num
+  · norm_num
+lemma sqSum_x6_sub_three_infinite :
+    {x : ℤ | 0 < x ∧ SqSum (x ^ 6 + (-3))}.Infinite := by
+  refine cube_sqSum_infinite (f := -3) (u := 2) ?_ ?_ ?_
+    (x0 := 2) (v0 := 4) ?_ ?_ ?_
+  · norm_num
+  · exact ⟨4, 2, by norm_num⟩
+  · native_decide
+  · norm_num
+  · norm_num
+  · norm_num
+lemma sqSum_x6_sub_three_even_infinite :
+    {x : ℤ | 0 < x ∧ Even x ∧ SqSum (x ^ 6 + (-3))}.Infinite := by
+  refine cube_sqSum_even_infinite (f := -3) (u := 2) ?_ ?_ ?_
+    (w0 := 1) (v0 := 4) ?_ ?_ ?_
+  · norm_num
+  · exact ⟨4, 2, by norm_num⟩
+  · native_decide
+  · norm_num
+  · norm_num
+  · norm_num
+/-! ## Solution production -/
+lemma sol_14 {x : ℤ} (h : SqSum (x ^ 6 + 8)) :
+    ∃ y z : ℤ, y ^ 2 + x ^ 3 * y + z ^ 2 - 2 = 0 := by
+  -- By `sqSum_even_split (f := 8) (by decide) h`, obtain A B with x^6+8 = A^2+B^2, A%2 = x%2, B%2 = 0.
+  obtain ⟨A, B, hAB⟩ : ∃ A B : ℤ, x ^ 6 + 8 = A ^ 2 + B ^ 2 ∧ A % 2 = x % 2 ∧ B % 2 = 0 := by
+    exact sqSum_even_split ( by decide ) h;
+  obtain ⟨y, hy⟩ : ∃ y : ℤ, A = x ^ 3 + 2 * y := by
+    exact ⟨ ( A - x ^ 3 ) / 2, by rw [ mul_comm, Int.ediv_mul_cancel ( Int.dvd_of_emod_eq_zero <| by norm_num [ Int.sub_emod, Int.mul_emod, pow_three, hAB ] ; have := Int.emod_nonneg x two_ne_zero; have := Int.emod_lt_of_pos x two_pos; interval_cases x % 2 <;> simp_all +decide ) ] ; ring ⟩
+  obtain ⟨z, hz⟩ : ∃ z : ℤ, B = 2 * z := by
+    exact Int.modEq_zero_iff_dvd.mp hAB.2.2
+  use y, z;
+  subst_vars; linarith;
+lemma sol_15 {x : ℤ} (h : SqSum (x ^ 6 + 5)) :
+    ∃ y z : ℤ, y ^ 2 + x ^ 3 * y + z ^ 2 + z - 1 = 0 := by
+  obtain ⟨ A, B, h₁, h₂, h₃ ⟩ := sqSum_odd_split ( by decide ) h;
+  -- Since $A$ and $x$ have the same parity, $x^3$ and $A$ have the same parity.
+  have h_parity : (x ^ 3 - A) % 2 = 0 := by
+    norm_num [ Int.sub_emod, pow_succ, Int.mul_emod, h₂ ];
+    cases Int.emod_two_eq_zero_or_one x <;> simp +decide [ * ];
+  -- From B%2 = 1 obtain z with B = 2*z + 1.
+  obtain ⟨ z, hz ⟩ : ∃ z : ℤ, B = 2 * z + 1 := by
+    exact Int.odd_iff.2 h₃;
+  obtain ⟨ y, hy ⟩ := Int.modEq_zero_iff_dvd.mp h_parity;
+  exact ⟨ -y, z, by rw [ show A = x ^ 3 - 2 * y by linarith ] at h₁; rw [ hz ] at h₁; linarith ⟩
+lemma sol_16 {x : ℤ} (h : SqSum (x ^ 6 + (-3))) :
+    ∃ y z : ℤ, y ^ 2 + x ^ 3 * y + z ^ 2 + z + 1 = 0 := by
+  obtain ⟨ A, B, h ⟩ := SumSquares.sqSum_odd_split ( by decide ) h;
+  -- Since $B$ is odd, we can write $B = 2z + 1$ for some integer $z$.
+  obtain ⟨ z, hz ⟩ : ∃ z : ℤ, B = 2 * z + 1 := by
+    exact Int.odd_iff.2 h.2.2;
+  obtain ⟨ y, hy ⟩ : ∃ y : ℤ, A = x ^ 3 + 2 * y ∨ A = -x ^ 3 - 2 * y := by
+    have h_even : (A - x ^ 3) % 2 = 0 := by
+      norm_num [ Int.sub_emod, Int.mul_emod, pow_three, h ];
+      cases Int.emod_two_eq_zero_or_one x <;> simp +decide [ * ];
+    exact ⟨ ( A - x ^ 3 ) / 2, Or.inl ( by linarith [ Int.emod_add_mul_ediv ( A - x ^ 3 ) 2 ] ) ⟩;
+  rcases hy with ( rfl | rfl ) <;> [ exact ⟨ y, z, by subst hz; linarith ⟩ ; exact ⟨ -y - x ^ 3, z, by subst hz; linarith ⟩ ]
+/-
+General odd split: an odd sum of two squares is `(odd)² + (even)²`.
+-/
+lemma sqSum_split_of_odd {N : ℤ} (hodd : N % 2 = 1) (h : SqSum N) :
+    ∃ A B : ℤ, N = A ^ 2 + B ^ 2 ∧ A % 2 = 1 ∧ B % 2 = 0 := by
+  rcases h with ⟨ A, B, rfl ⟩;
+  cases Int.emod_two_eq_zero_or_one A <;> cases Int.emod_two_eq_zero_or_one B <;> simp_all +decide [ sq, Int.add_emod, Int.mul_emod ];
+  · exact ⟨ B, A, by ring, by assumption, by assumption ⟩;
+  · exact ⟨ A, B, rfl, by assumption, by assumption ⟩
+lemma sol_17_of {w : ℤ} (hw : Even w) (h : SqSum (w ^ 6 + (-3))) :
+    ∃ y z : ℤ, y ^ 2 + (-w ^ 2) ^ 3 * y + y + z ^ 2 + 1 = 0 := by
+  -- Set x := -w^2, so x^3 = (-w^2)^3 = -w^6.
+  set x : ℤ := -w^2;
+  obtain ⟨A, B, hN, hA, hB⟩ : ∃ A B : ℤ, ((x ^ 3 + 1) ^ 2 - 4) = A ^ 2 + B ^ 2 ∧ A % 2 = 1 ∧ B % 2 = 0 := by
+    convert sqSum_split_of_odd _ _;
+    · obtain ⟨ k, rfl ⟩ := hw; ring_nf; norm_num [ Int.add_emod, Int.sub_emod, Int.mul_emod ] ;
+      grind +locals;
+    · convert sqSum_mul h ( show SqSum ( w ^ 6 + 1 ) from ⟨ w ^ 3, 1, by ring ⟩ ) using 1 ; ring;
+  obtain ⟨y, hy⟩ : ∃ y : ℤ, A = x ^ 3 + 2 * y + 1 := by
+    use (A - x ^ 3 - 1) / 2;
+    linarith [ Int.ediv_mul_cancel ( show 2 ∣ A - x ^ 3 - 1 from Int.dvd_of_emod_eq_zero ( by norm_num [ Int.sub_emod, Int.add_emod, pow_succ, Int.mul_emod, hA, show x % 2 = 0 from Int.emod_eq_zero_of_dvd <| dvd_neg.mpr <| dvd_pow ( even_iff_two_dvd.mp hw ) two_ne_zero ] ) ) ]
+  obtain ⟨z, hz⟩ : ∃ z : ℤ, B = 2 * z := by
+    exact Int.modEq_zero_iff_dvd.mp hB;
+  exact ⟨ y, z, by subst_vars; linarith ⟩
+/-! ## The propositions -/
+/-- Equation (14) has infinitely many integer solutions. -/
+theorem prop_3_2_14 :
+    {p : ℤ × ℤ × ℤ | p.2.1 ^ 2 + p.1 ^ 3 * p.2.1 + p.2.2 ^ 2 - 2 = 0}.Infinite := by
+  apply infinite_of_first_proj
+    (P := fun x y z => y ^ 2 + x ^ 3 * y + z ^ 2 - 2 = 0)
+    (S := {x : ℤ | 0 < x ∧ SqSum (x ^ 6 + 8)})
+    sqSum_x6_add_eight_infinite
+  intro x hx
+  exact sol_14 hx.2
+/-- Equation (15) has infinitely many integer solutions. -/
+theorem prop_3_2_15 :
+    {p : ℤ × ℤ × ℤ | p.2.1 ^ 2 + p.1 ^ 3 * p.2.1 + p.2.2 ^ 2 + p.2.2 - 1 = 0}.Infinite := by
+  apply infinite_of_first_proj
+    (P := fun x y z => y ^ 2 + x ^ 3 * y + z ^ 2 + z - 1 = 0)
+    (S := {x : ℤ | 0 < x ∧ SqSum (x ^ 6 + 5)})
+    sqSum_x6_add_five_infinite
+  intro x hx
+  exact sol_15 hx.2
+/-- Equation (16) has infinitely many integer solutions. -/
+theorem prop_3_2_16 :
+    {p : ℤ × ℤ × ℤ | p.2.1 ^ 2 + p.1 ^ 3 * p.2.1 + p.2.2 ^ 2 + p.2.2 + 1 = 0}.Infinite := by
+  apply infinite_of_first_proj
+    (P := fun x y z => y ^ 2 + x ^ 3 * y + z ^ 2 + z + 1 = 0)
+    (S := {x : ℤ | 0 < x ∧ SqSum (x ^ 6 + (-3))})
+    sqSum_x6_sub_three_infinite
+  intro x hx
+  exact sol_16 hx.2
+/-- Equation (17) has infinitely many integer solutions. -/
+theorem prop_3_2_17 :
+    {p : ℤ × ℤ × ℤ | p.2.1 ^ 2 + p.1 ^ 3 * p.2.1 + p.2.1 + p.2.2 ^ 2 + 1 = 0}.Infinite := by
+  apply infinite_of_first_proj_comp
+    (P := fun x y z => y ^ 2 + x ^ 3 * y + y + z ^ 2 + 1 = 0)
+    (S := {x : ℤ | 0 < x ∧ Even x ∧ SqSum (x ^ 6 + (-3))})
+    sqSum_x6_sub_three_even_infinite (φ := fun w => -w ^ 2)
+  · intro a ha b hb hab
+    have hab' : -a ^ 2 = -b ^ 2 := hab
+    have hsq : a ^ 2 = b ^ 2 := by linarith
+    have hfac : (a - b) * (a + b) = 0 := by linear_combination hsq
+    rcases mul_eq_zero.mp hfac with h | h
+    · linarith
+    · have := ha.1; have := hb.1; linarith
+  · intro w hw
+    exact sol_17_of hw.2.1 hw.2.2
+end SumSquares
+/- ============================================================
+   Section from Prop44.lean
+   ============================================================ -/
+/-!
+# Proposition 4.4: a non-multiplicative form
+The binary quadratic form `F(y,z) = 2y² + yz + 2z²` is the simplest form that is not
+multiplicative.  Algorithm 4.3 nonetheless resolves both equations of (32):
+* (32a) `2y² + yz + 2z² = x³ + 1`, with the explicit family
+  `x = 30n²+15n+1`, `y = 30n³+45n²+15n+1`, `z = −(120n³+90n²+15n)`;
+* (32b) `2y² + yz + 2z² = x³ − 1`, with the explicit family
+  `x = 570n²+225n+24`, `y = 3+(570n²+225n+17)(4+17n)`,
+  `z = 12+(570n²+225n+17)(1−8n)`.
+Both families are verified directly, so this section is fully self-contained.
+-/
+namespace SumSquares
+open scoped BigOperators
+/-
+**Proposition 4.4(a).** `2y² + yz + 2z² = x³ + 1` has infinitely many solutions.
+-/
+theorem prop_4_4_a :
+    {p : ℤ × ℤ × ℤ | 2 * p.2.1 ^ 2 + p.2.1 * p.2.2 + 2 * p.2.2 ^ 2 = p.1 ^ 3 + 1}.Infinite := by
+  apply infinite_of_inj
+    (P := fun x y z => 2 * y ^ 2 + y * z + 2 * z ^ 2 = x ^ 3 + 1)
+    (g := fun n : ℕ =>
+      ((30 * (n : ℤ) ^ 2 + 15 * (n : ℤ) + 1,
+        30 * (n : ℤ) ^ 3 + 45 * (n : ℤ) ^ 2 + 15 * (n : ℤ) + 1,
+        -(120 * (n : ℤ) ^ 3 + 90 * (n : ℤ) ^ 2 + 15 * (n : ℤ))) : ℤ × ℤ × ℤ))
+  ·
+    exact fun a b h => by norm_num at h; exact_mod_cast ( by nlinarith : ( a : ℤ ) = b )
+  · intro n; push_cast; ring
+/-
+**Proposition 4.4(b).** `2y² + yz + 2z² = x³ − 1` has infinitely many solutions.
+-/
+theorem prop_4_4_b :
+    {p : ℤ × ℤ × ℤ | 2 * p.2.1 ^ 2 + p.2.1 * p.2.2 + 2 * p.2.2 ^ 2 = p.1 ^ 3 - 1}.Infinite := by
+  apply infinite_of_inj
+    (P := fun x y z => 2 * y ^ 2 + y * z + 2 * z ^ 2 = x ^ 3 - 1)
+    (g := fun n : ℕ =>
+      ((570 * (n : ℤ) ^ 2 + 225 * (n : ℤ) + 24,
+        3 + (570 * (n : ℤ) ^ 2 + 225 * (n : ℤ) + 17) * (4 + 17 * (n : ℤ)),
+        12 + (570 * (n : ℤ) ^ 2 + 225 * (n : ℤ) + 17) * (1 - 8 * (n : ℤ))) : ℤ × ℤ × ℤ))
+  ·
+    exact fun a b h => by norm_num at h; nlinarith
+  · intro n; push_cast; ring
+end SumSquares
+/- ============================================================
+   Section from Main.lean (global options)
+   ============================================================ -/
+open scoped BigOperators
+open scoped Real
+open scoped Nat
+open scoped Classical
+open scoped Pointwise
+set_option maxHeartbeats 8000000
+set_option maxRecDepth 4000
+set_option synthInstance.maxHeartbeats 20000
+set_option synthInstance.maxSize 128
+set_option relaxedAutoImplicit false
+set_option autoImplicit false
+set_option pp.fullNames true
+set_option pp.structureInstances true
+set_option pp.coercions.types true
+set_option pp.funBinderTypes true
+set_option pp.letVarTypes true
+set_option pp.piBinderTypes true
+set_option grind.warning false
