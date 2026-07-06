@@ -666,8 +666,21 @@ lemma prop_4_1_solution {A B C : ℤ} (u p q r : ℤ) (R Q Du : ℤ → ℤ) (x 
     cases abs_cases ( R u ) <;> [ exact dvd_trans ( by norm_num [ ‹_› ] ) hdiv2; exact dvd_trans ( by norm_num [ ‹_› ] ) hdiv2 ]
   obtain ⟨mu, hmu⟩ := hmu
   use p + (Q x - u) * lam, q + (Q x - u) * mu;
-  refine' mul_left_cancel₀ ( pow_ne_zero 2 hmne ) _;
-  grind +qlia
+  refine mul_left_cancel₀ (pow_ne_zero 2 hmne) ?_
+  -- Cancel a further factor `4` so the divisibility relations `hlam`, `hmu`
+  -- (which carry a factor `2 * R u`) can be substituted without division.
+  refine mul_left_cancel₀ (show (4 : ℤ) ≠ 0 by norm_num) ?_
+  linear_combination
+      (-2*(Q x - u)*(R u)*(2*A*p+B*q) - 2*(Q x - u)^2*A*(r*p+v*(B*p+2*C*q))
+        - (Q x - u)^2*B*(r*q-v*(2*A*p+B*q))
+        + (Q x - u)^2*A*((r*p+v*(B*p+2*C*q)) - 2*R u*lam)
+        + (Q x - u)^2*B*((r*q-v*(2*A*p+B*q)) - 2*R u*mu)) * hlam
+    + (-2*(Q x - u)*(R u)*(B*p+2*C*q) - (Q x - u)^2*B*(r*p+v*(B*p+2*C*q))
+        - 2*(Q x - u)^2*C*(r*q-v*(2*A*p+B*q))
+        + (Q x - u)^2*C*((r*q-v*(2*A*p+B*q)) - 2*R u*mu)) * hmu
+    + (-(Q x - u)^2*(A*p^2+B*p*q+C*q^2)) * h27
+    + (-(4*(R u)^2 + 4*(Q x - u)*r*(R u) + 4*(Q x - u)^2*(R u)*Du (Q x))) * hm
+    + (-4*(R u)^2) * (hTaylor (Q x))
 /-
 **Proposition 4.1.**  Let `F(y,z) = A y² + B y z + C z²` be non-degenerate
 (`Δ = B² − 4AC ≠ 0`), let `m = R(u) = F(p,q) ≠ 0`, `r = R'(u)`, and let `Du` be the
@@ -772,10 +785,18 @@ theorem algorithm_4_3 {A B C : ℤ} (u p q r a b c : ℤ) (R Q Du : ℤ → ℤ)
   convert prop_4_2 ( show R u ≠ 0 by assumption ) ha hb _ _ x0 v0 _ _ using 1;
   rotate_left;
   use fun v => 2 * |R u| ∣ r * p + v * ( B * p + 2 * C * q ) ∧ 2 * |R u| ∣ r * q - v * ( 2 * A * p + B * q );
-  · intro v w hvw;
-    constructor;
-    · convert dvd_add hvw.1 ( dvd_mul_of_dvd_left ( show 2 * |R u| ∣ 2 * R u from ⟨ if R u > 0 then 1 else -1, by split_ifs <;> cases abs_cases ( R u ) <;> linarith ⟩ ) ( w * ( B * p + 2 * C * q ) ) ) using 1 ; ring;
-    · convert dvd_sub hvw.2 ( dvd_mul_of_dvd_left ( show 2 * |R u| ∣ 2 * R u by exact ⟨ if R u > 0 then 1 else -1, by split_ifs <;> cases abs_cases ( R u ) <;> linarith ⟩ ) ( w * ( 2 * A * p + B * q ) ) ) using 1 ; ring;
+  · intro v w hvw
+    have h2 : (2 : ℤ) * |R u| ∣ 2 * R u :=
+      ⟨if R u > 0 then 1 else -1, by split_ifs <;> cases abs_cases (R u) <;> linarith⟩
+    refine ⟨?_, ?_⟩
+    · have hkey : r * p + (v + 2 * R u * w) * (B * p + 2 * C * q)
+          = (r * p + v * (B * p + 2 * C * q)) + 2 * R u * (w * (B * p + 2 * C * q)) := by ring
+      rw [hkey]
+      exact dvd_add hvw.1 (h2.mul_right (w * (B * p + 2 * C * q)))
+    · have hkey : r * q - (v + 2 * R u * w) * (2 * A * p + B * q)
+          = (r * q - v * (2 * A * p + B * q)) - 2 * R u * (w * (2 * A * p + B * q)) := by ring
+      rw [hkey]
+      exact dvd_sub hvw.2 (h2.mul_right (w * (2 * A * p + B * q)))
   · exact hsol;
   · exact ⟨ hcong1, hcong2 ⟩;
   · simp +decide only [haux]
@@ -869,7 +890,7 @@ theorem algorithm_2_2 (u r a b c : ℤ) (R Q Du : ℤ → ℤ)
       have hX_mod : X ≡ X0 [ZMOD M] := by
         exact hX.2.2
       have hX_div : (2 * a) ∣ (X - b) := by
-        have := hX_mod.symm.dvd; norm_num at this; obtain ⟨ k, hk ⟩ := this; exact ⟨ k + x0, by linarith ⟩ ;
+        have := hX_mod.symm.dvd; obtain ⟨ k, hk ⟩ := this; exact ⟨ k + x0, by linarith ⟩ ;
       obtain ⟨k, hk⟩ : ∃ k : ℤ, X = 2 * a * k + b := by
         exact ⟨ hX_div.choose, eq_add_of_sub_eq hX_div.choose_spec ⟩
       generalize_proofs at *;
