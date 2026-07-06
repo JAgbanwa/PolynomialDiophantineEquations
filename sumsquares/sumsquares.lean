@@ -18,12 +18,20 @@ non-multiplicative form `2y² + yz + 2z²`.
 * `genPell_infinite`        : a generalised Pell equation `v² = a x² + c` with `a > 0`
                               non-square, `c ≠ 0` and one solution has infinitely many
                               positive solutions (Gauss's theorem, [9, Prop. 5.4]).
+* `genPell_infinite_cong`   : the residue-controlled refinement: infinitely many solutions
+                              in any prescribed class modulo `N`.
 * `sum2sq_x6_add`           : the core tangent identity: if the auxiliary Pell equation
                               is solvable then `x⁶ + f` is a sum of two squares.
 * `prop_3_1`                : `y² + x³y + z² + 1 = 0` has infinitely many integer solutions.
 * `prop_3_2_eq14/15/16/17`  : the four length-9 equations (14)–(17) each have infinitely
                               many integer solutions.
-* `prop_4_1`                : the tangent construction for a general form (Proposition 4.1).
+* `prop_4_1_core`           : the algebraic tangent identity for a general form.
+* `prop_4_1`                : Proposition 4.1, the full infinitude statement for a general
+                              non-degenerate form.
+* `prop_4_2`                : Proposition 4.2, infinitely many solutions of the auxiliary
+                              equation (30) subject to the congruences (28).
+* `algorithm_2_2`           : Algorithm 2.2, the sum-of-two-squares recipe, as a theorem.
+* `algorithm_4_3`           : Algorithm 4.3, the general-form recipe, as a theorem.
 * `prop_4_4a`, `prop_4_4b`  : the equations `2y² + yz + 2z² = x³ ± 1` have infinitely many
                               integer solutions (Proposition 4.4).
 -/
@@ -172,6 +180,146 @@ theorem genPell_infinite {a c : ℤ} (ha : 0 < a) (hns : ¬ IsSquare a) (hc : c 
   rintro _ ⟨n, rfl⟩
   obtain ⟨h1, _, h3⟩ := pellIter_inv ha hp hq hpq hX0 hV0 hsol n
   exact ⟨h1, _, h3⟩
+/-! ## Residue-controlled generalised Pell equation
+The auxiliary equations arising in Section 4 must be solved subject to congruence
+conditions.  We strengthen `genPell_infinite` so that all produced solutions lie in a
+prescribed residue class modulo `N`.  The key ingredient is that a suitable power of the
+fundamental unit is congruent to the identity `(1, 0)` modulo `N`. -/
+/-- A bijective (indeed injective) self-map of a finite type has a positive power equal to
+the identity. -/
+lemma exists_iterate_eq_id {α : Type*} [Finite α] (f : α → α) (hf : Function.Injective f) :
+    ∃ n : ℕ, 0 < n ∧ f^[n] = id := by
+  have hb : Function.Bijective f := (Finite.injective_iff_bijective).mp hf
+  let e : Equiv.Perm α := Equiv.ofBijective f hb
+  obtain ⟨n, hn, hpow⟩ := (isOfFinOrder_of_finite e).exists_pow_eq_one
+  refine ⟨n, hn, ?_⟩
+  have h1 : ⇑(e ^ n) = (⇑e)^[n] := Equiv.Perm.coe_pow e n
+  have h2 : (⇑e : α → α) = f := rfl
+  have h3 : (⇑(e ^ n) : α → α) = id := by rw [hpow]; rfl
+  rw [h1, h2] at h3
+  exact h3
+/-- Multiplication of "unit" coordinates in `ℤ[√a]`: `(P, Q) ↦ (P, Q) · (p, q)` where the
+unit `(p, q)` represents `p + q√a`.  Thus `unitPow a p q n` represents `(p + q√a)ⁿ`. -/
+def unitPow (a p q : ℤ) : ℕ → ℤ × ℤ
+  | 0 => (1, 0)
+  | n + 1 => let w := unitPow a p q n; (w.1 * p + a * w.2 * q, w.1 * q + w.2 * p)
+/-
+The unit power preserves the norm `P² − aQ² = 1`.
+-/
+lemma unitPow_norm (a p q : ℤ) (hpq : p ^ 2 - a * q ^ 2 = 1) :
+    ∀ n, (unitPow a p q n).1 ^ 2 - a * (unitPow a p q n).2 ^ 2 = 1 := by
+  intro n
+  induction n with
+  | zero => simp [unitPow]
+  | succ n ih =>
+    simp only [unitPow]
+    linear_combination (p ^ 2 - a * q ^ 2) * ih + hpq
+/-
+For a positive unit, the unit powers have positive coordinates.
+-/
+lemma unitPow_pos (a p q : ℤ) (ha : 0 < a) (hp : 1 ≤ p) (hq : 1 ≤ q) :
+    ∀ n, 1 ≤ n → 1 ≤ (unitPow a p q n).1 ∧ 1 ≤ (unitPow a p q n).2 := by
+  intro n hn; induction hn <;> simp_all +decide [ unitPow ] ;
+  constructor <;> nlinarith [ mul_pos ha ( by linarith : 0 < ( unitPow a p q ‹_› ).2 ) ]
+/-
+Some positive power of the fundamental unit is congruent to the identity `(1, 0)`
+modulo `N`.
+-/
+lemma unitPow_identity_mod (a p q : ℤ) (hpq : p ^ 2 - a * q ^ 2 = 1) (N : ℤ) (hN : 0 < N) :
+    ∃ d : ℕ, 1 ≤ d ∧ (unitPow a p q d).1 ≡ 1 [ZMOD N] ∧ (unitPow a p q d).2 ≡ 0 [ZMOD N] := by
+  -- Define the transformation $T$ and show it is bijective.
+  set T : (ZMod N.toNat) × (ZMod N.toNat) → (ZMod N.toNat) × (ZMod N.toNat) := fun w => (w.1 * p + a * w.2 * q, w.1 * q + w.2 * p);
+  obtain ⟨d, hd_pos, hd_id⟩ : ∃ d : ℕ, 0 < d ∧ T^[d] = id := by
+    convert exists_iterate_eq_id T _;
+    · cases N <;> simp +decide [ ZMod ] at *;
+      cases ‹ℕ› <;> [ tauto; infer_instance ];
+    · intro x y hxy;
+      have h_det : (p : ZMod N.toNat) ^ 2 - a * (q : ZMod N.toNat) ^ 2 = 1 := by
+        norm_cast;
+        aesop;
+      grind +ring;
+  -- By definition of $T$, we know that $red(unitPow a p q k) = T^[k] (1, 0)$ for all $k$.
+  have h_red_unitPow : ∀ k : ℕ, (unitPow a p q k).1.cast = (T^[k] (1, 0)).1 ∧ (unitPow a p q k).2.cast = (T^[k] (1, 0)).2 := by
+    intro k; induction k <;> simp_all +decide [ Function.iterate_succ_apply', unitPow ] ;
+    aesop;
+  use d; simp_all +decide [ Int.ModEq ] ;
+  have h_cong : (unitPow a p q d).1 ≡ 1 [ZMOD N.toNat] ∧ (unitPow a p q d).2 ≡ 0 [ZMOD N.toNat] := by
+    erw [ ← ZMod.intCast_eq_intCast_iff, ← ZMod.intCast_eq_intCast_iff ] ; aesop;
+  simp_all +decide [ Int.ModEq, Int.emod_eq_emod_iff_emod_sub_eq_zero ];
+  exact ⟨ hd_pos, by simpa [ max_eq_left hN.le ] using h_cong.1, by simpa [ max_eq_left hN.le ] using h_cong.2 ⟩
+/-
+The Pell iteration preserves the equation `v² = a x² + c` (needs only `P² − aQ² = 1`).
+-/
+lemma pellIter_norm {a c P Q : ℤ} (hPQ : P ^ 2 - a * Q ^ 2 = 1) {x0 v0 : ℤ}
+    (h0 : v0 ^ 2 = a * x0 ^ 2 + c) :
+    ∀ n, (pellIter a P Q (x0, v0) n).2 ^ 2
+      = a * (pellIter a P Q (x0, v0) n).1 ^ 2 + c := by
+  intro n; induction n <;> simp_all +decide [ pellIter, pellStep ] ;
+  grind
+/-
+If the unit is congruent to the identity `(1, 0)` modulo `N`, then the Pell iteration
+stays in the residue class of its base modulo `N`.
+-/
+lemma pellIter_cong {a P Q N : ℤ} (hP : P ≡ 1 [ZMOD N]) (hQ : Q ≡ 0 [ZMOD N]) {x0 v0 : ℤ} :
+    ∀ n, (pellIter a P Q (x0, v0) n).1 ≡ x0 [ZMOD N] ∧
+      (pellIter a P Q (x0, v0) n).2 ≡ v0 [ZMOD N] := by
+  intro n;
+  induction' n with n ih;
+  · exact ⟨ rfl, rfl ⟩;
+  · simp_all +decide [ pellIter, pellStep ];
+    simp_all +decide only [Int.ModEq];
+    norm_num [ Int.add_emod, Int.mul_emod, hP, hQ, ih ];
+    simp +decide [ ← Int.mul_emod ]
+/-
+The Pell iteration by a positive unit `(P, Q)` (with `P, Q ≥ 1`) starting from a
+solution of `v² = a x² + c` (with `c ≠ 0`) is injective in the iteration index.
+This is proved by tracking the real quantity `v + x√a`, which is multiplied by
+`ρ = P + Q√a > 1` at each step.
+-/
+lemma pellIter_injective {a c P Q : ℤ} (ha : 0 < a) (hP : 1 ≤ P) (hQ : 1 ≤ Q) (hc : c ≠ 0)
+    {x0 v0 : ℤ} (h0 : v0 ^ 2 = a * x0 ^ 2 + c) :
+    Function.Injective (fun n : ℕ => pellIter a P Q (x0, v0) n) := by
+  intro n m hnm
+  have hsa : Real.sqrt (a : ℝ) ^ 2 = (a : ℝ) := Real.sq_sqrt (by positivity)
+  have h_mul : ∀ n, (pellIter a P Q (x0, v0) n).2 + (pellIter a P Q (x0, v0) n).1 * Real.sqrt (a : ℝ) = (v0 + x0 * Real.sqrt (a : ℝ)) * (P + Q * Real.sqrt (a : ℝ)) ^ n := by
+    intro n
+    induction n with
+    | zero => simp [pellIter]
+    | succ n ih =>
+      have hstep : pellIter a P Q (x0, v0) (n + 1)
+          = pellStep a P Q (pellIter a P Q (x0, v0) n) := rfl
+      rw [hstep, pow_succ, ← mul_assoc, ← ih]
+      simp only [pellStep]
+      push_cast
+      linear_combination (-((pellIter a P Q (x0, v0) n).1 : ℝ) * Q) * hsa
+  have h_mul_eq : (v0 + x0 * Real.sqrt (a : ℝ)) * (P + Q * Real.sqrt (a : ℝ)) ^ n = (v0 + x0 * Real.sqrt (a : ℝ)) * (P + Q * Real.sqrt (a : ℝ)) ^ m := by
+    grind;
+  by_cases h : ( v0 + x0 * Real.sqrt a ) = 0 <;> simp_all +decide;
+  · -- From $v0 + x0 * \sqrt{a} = 0$, we get $v0 = -x0 * \sqrt{a}$. Squaring both sides gives $v0^2 = a * x0^2$.
+    have h_sq : v0 ^ 2 = a * x0 ^ 2 := by
+      rw [ ← @Int.cast_inj ℝ ] ; push_cast ; rw [ ← eq_neg_iff_add_eq_zero ] at h ; rw [ h ]
+      linear_combination ((x0 : ℝ) ^ 2) * hsa
+    aesop;
+  · rw [ pow_right_inj₀ ] at h_mul_eq <;> norm_num at *;
+    · exact h_mul_eq;
+    · positivity;
+    · exact ne_of_gt ( lt_add_of_le_of_pos ( mod_cast hP ) ( mul_pos ( by positivity ) ( Real.sqrt_pos.mpr ( by positivity ) ) ) )
+/-- **Residue-controlled generalised Pell equation.**  Under the hypotheses of
+`genPell_infinite`, and for any modulus `N > 0`, there are infinitely many integer
+solutions `(x, v)` of `v² = a x² + c` with `x ≡ x₀` and `v ≡ v₀` modulo `N`. -/
+theorem genPell_infinite_cong {a c : ℤ} (ha : 0 < a) (hns : ¬ IsSquare a) (hc : c ≠ 0)
+    (N : ℤ) (hN : 0 < N) (x0 v0 : ℤ) (h0 : v0 ^ 2 = a * x0 ^ 2 + c) :
+    {p : ℤ × ℤ | p.2 ^ 2 = a * p.1 ^ 2 + c ∧ p.1 ≡ x0 [ZMOD N] ∧ p.2 ≡ v0 [ZMOD N]}.Infinite := by
+  obtain ⟨p, q, hp, hq, hpq⟩ := pell_unit a ha hns
+  obtain ⟨d, hd, hPd, hQd⟩ := unitPow_identity_mod a p q hpq N hN
+  have hPQnorm : (unitPow a p q d).1 ^ 2 - a * (unitPow a p q d).2 ^ 2 = 1 :=
+    unitPow_norm a p q hpq d
+  have hPpos : 1 ≤ (unitPow a p q d).1 := (unitPow_pos a p q ha hp hq d hd).1
+  have hQpos : 1 ≤ (unitPow a p q d).2 := (unitPow_pos a p q ha hp hq d hd).2
+  have hinj := pellIter_injective (a := a) (c := c) ha hPpos hQpos hc h0
+  refine (Set.infinite_range_of_injective hinj).mono ?_
+  rintro _ ⟨n, rfl⟩
+  exact ⟨pellIter_norm hPQnorm h0 n, (pellIter_cong hPd hQd n).1, (pellIter_cong hPd hQd n).2⟩
 /-! ## The tangent identity for the sum of two squares -/
 /-- **The core identity** (Section 2).  Let `R(t) = t³ + f`, `Q(x) = x²`, so that
 `P(x) = x⁶ + f`.  If `R(u) = u³ + f` is a positive sum of two squares and the auxiliary
@@ -443,7 +591,7 @@ theorem prop_3_2_eq17 :
 direction `(λ, μ)` satisfies the line condition `2Apλ + B(pμ+qλ) + 2Cqμ = r` and
 `F(λ,μ) = D`, then the point `(p + sλ, q + sμ)` on the line represents
 `R(u+s) = m + sr + s²D`, i.e. `F(y,z) = R(Q(x))`. -/
-lemma prop_4_1 {A B C : ℤ} (p q m r s D lam mu : ℤ)
+lemma prop_4_1_core {A B C : ℤ} (p q m r s D lam mu : ℤ)
     (hm : m = A * p ^ 2 + B * p * q + C * q ^ 2)
     (hline : 2 * A * p * lam + B * (p * mu + q * lam) + 2 * C * q * mu = r)
     (hF : A * lam ^ 2 + B * lam * mu + C * mu ^ 2 = D) :
@@ -479,4 +627,263 @@ theorem prop_4_4b :
   refine ⟨3 + (570 * (n : ℤ) ^ 2 + 225 * n + 17) * (4 + 17 * n),
     12 + (570 * (n : ℤ) ^ 2 + 225 * n + 17) * (1 - 8 * n), ?_⟩
   ring
+/-! ## Section 4: general infinitude and congruence machinery
+This section formalises the remaining components of Section 4 of the paper: the full
+infinitude statement of Proposition 4.1, Proposition 4.2 (solvability of the auxiliary
+equation subject to congruences), and the two algorithms (Algorithm 2.2 for the sum of
+two squares and Algorithm 4.3 for general non-degenerate forms), stated as theorems whose
+hypotheses record the data produced by the corresponding search steps. -/
+/-
+If a set of integer pairs is infinite but each fibre over the first coordinate is
+finite, then the set of first coordinates is infinite.
+-/
+lemma infinite_fst_of_finite_fibers {S : Set (ℤ × ℤ)} (hS : S.Infinite)
+    (hfib : ∀ x : ℤ, {v : ℤ | (x, v) ∈ S}.Finite) :
+    {x : ℤ | ∃ v : ℤ, (x, v) ∈ S}.Infinite := by
+  exact fun h => hS <| Set.Finite.subset ( h.biUnion fun x _ => hfib x |> Set.Finite.image fun y => ( x, y ) ) fun x hx => by aesop;
+/-
+For `D ≠ 0`, the solution set of `D · v² = K` is finite.
+-/
+lemma finite_setOf_mul_sq_eq {D K : ℤ} (hD : D ≠ 0) : {v : ℤ | D * v ^ 2 = K}.Finite := by
+  by_contra h_inf;
+  exact h_inf <| Set.Finite.subset ( Set.finite_Icc ( - |K| ) |K| ) fun x hx => ⟨ by cases abs_cases K <;> cases lt_or_gt_of_ne hD <;> nlinarith [ hx.symm, sq_nonneg x ], by cases abs_cases K <;> cases lt_or_gt_of_ne hD <;> nlinarith [ hx.symm, sq_nonneg x ] ⟩
+/-
+The per-solution tangent construction of Proposition 4.1: for a single pair `(x, v)`
+satisfying the auxiliary equation (27) and the congruences (28), the equation
+`F(y,z) = R(Q(x))` has an integer solution `(y, z)` given by the tangent-line formula.
+-/
+lemma prop_4_1_solution {A B C : ℤ} (u p q r : ℤ) (R Q Du : ℤ → ℤ) (x v : ℤ)
+    (hm : R u = A * p ^ 2 + B * p * q + C * q ^ 2) (hmne : R u ≠ 0)
+    (hTaylor : ∀ t, R t = R u + r * (t - u) + (t - u) ^ 2 * Du t)
+    (h27 : 4 * R u * Du (Q x) - r ^ 2 = -(B ^ 2 - 4 * A * C) * v ^ 2)
+    (hdiv1 : (2 * |R u|) ∣ (r * p + v * (B * p + 2 * C * q)))
+    (hdiv2 : (2 * |R u|) ∣ (r * q - v * (2 * A * p + B * q))) :
+    ∃ y z : ℤ, A * y ^ 2 + B * y * z + C * z ^ 2 = R (Q x) := by
+  have hlam : ∃ lam : ℤ, r * p + v * (B * p + 2 * C * q) = 2 * R u * lam := by
+    cases abs_cases ( R u ) <;> [ exact dvd_trans ( by norm_num [ ‹_› ] ) hdiv1; exact dvd_trans ( by norm_num [ ‹_› ] ) hdiv1 ]
+  obtain ⟨lam, hlam⟩ := hlam
+  have hmu : ∃ mu : ℤ, r * q - v * (2 * A * p + B * q) = 2 * R u * mu := by
+    cases abs_cases ( R u ) <;> [ exact dvd_trans ( by norm_num [ ‹_› ] ) hdiv2; exact dvd_trans ( by norm_num [ ‹_› ] ) hdiv2 ]
+  obtain ⟨mu, hmu⟩ := hmu
+  use p + (Q x - u) * lam, q + (Q x - u) * mu;
+  refine' mul_left_cancel₀ ( pow_ne_zero 2 hmne ) _;
+  grind +qlia
+/-
+**Proposition 4.1.**  Let `F(y,z) = A y² + B y z + C z²` be non-degenerate
+(`Δ = B² − 4AC ≠ 0`), let `m = R(u) = F(p,q) ≠ 0`, `r = R'(u)`, and let `Du` be the
+second-order Taylor coefficient of `R` at `u`.  If the auxiliary equation (27),
+`4 m · Du(Q(x)) − r² = −Δ v²`, together with the congruences (28) has infinitely many
+integer solutions `(x, v)`, then `F(y,z) = R(Q(x))` is solvable for infinitely many `x`.
+-/
+theorem prop_4_1 {A B C : ℤ} (u p q r : ℤ) (R Q Du : ℤ → ℤ)
+    (hΔ : B ^ 2 - 4 * A * C ≠ 0)
+    (hm : R u = A * p ^ 2 + B * p * q + C * q ^ 2) (hmne : R u ≠ 0)
+    (hTaylor : ∀ t, R t = R u + r * (t - u) + (t - u) ^ 2 * Du t)
+    (hInf : {xv : ℤ × ℤ |
+        4 * R u * Du (Q xv.1) - r ^ 2 = -(B ^ 2 - 4 * A * C) * xv.2 ^ 2 ∧
+        (2 * |R u|) ∣ (r * p + xv.2 * (B * p + 2 * C * q)) ∧
+        (2 * |R u|) ∣ (r * q - xv.2 * (2 * A * p + B * q))}.Infinite) :
+    {x : ℤ | ∃ y z : ℤ, A * y ^ 2 + B * y * z + C * z ^ 2 = R (Q x)}.Infinite := by
+  convert Set.Infinite.mono _ ( infinite_fst_of_finite_fibers hInf _ ) using 1;
+  · exact fun x hx => by obtain ⟨ v, hv ⟩ := hx; exact prop_4_1_solution u p q r R Q Du x v hm hmne hTaylor hv.1 hv.2.1 hv.2.2;
+  · intro x;
+    refine' Set.Finite.subset ( finite_setOf_mul_sq_eq hΔ ) _;
+    exacts [ r ^ 2 - 4 * R u * Du ( Q x ), fun v hv => by linear_combination' hv.1 ]
+/-
+**Proposition 4.2.**  Consider the auxiliary equation (30) `a x² + b x + c = −D v²`
+(where `D = Δ` is the discriminant of the form) together with a congruence condition `cg`
+on `v` that is periodic with period `2m` (`m ≠ 0`).  If (a) `a = 0` or `a(−D)` is a positive
+non-square, (b) the discriminant `b² − 4ac ≠ 0`, and (c) there is one solution `(x₀, v₀)`
+with `cg v₀`, then the equation has infinitely many integer solutions `(x, v)` with `cg v`.
+(As in the paper, these are exactly conditions (a)–(c); the non-degeneracy `Δ ≠ 0` of the
+form, a standing assumption of Section 4, is not needed for this infinitude statement.) -/
+theorem prop_4_2 {a b c D m : ℤ} (hm : m ≠ 0)
+    (ha : a = 0 ∨ (0 < a * (-D) ∧ ¬ IsSquare (a * (-D))))
+    (hb : b ^ 2 - 4 * a * c ≠ 0)
+    (cg : ℤ → Prop) (hperiod : ∀ v w : ℤ, cg v → cg (v + 2 * m * w))
+    (x0 v0 : ℤ) (hsol : a * x0 ^ 2 + b * x0 + c = -D * v0 ^ 2) (hc0 : cg v0) :
+    {p : ℤ × ℤ | a * p.1 ^ 2 + b * p.1 + c = -D * p.2 ^ 2 ∧ cg p.2}.Infinite := by
+  by_cases ha0 : a = 0;
+  · refine Set.infinite_of_injective_forall_mem ( show Function.Injective ( fun k : ℤ => ( x0 - 4 * D * m * k * ( v0 + m * b * k ), v0 + 2 * m * b * k ) ) from ?_ ) fun k => ⟨ ?_, ?_ ⟩ <;> simp_all +decide [ Function.Injective ];
+    · linear_combination hsol;
+    · simpa [ mul_assoc ] using hperiod v0 ( b * k ) hc0;
+  · obtain ⟨ha_pos, ha_not_square⟩ := ha.resolve_left ha0;
+    -- Set a' := 4*a*(-D), c' := b^2-4*a*c, X0 := 2*a*x0+b, M := |4*a*m| (note M > 0 since a ≠ 0, m ≠ 0).
+    set a' := 4 * a * (-D)
+    set c' := b ^ 2 - 4 * a * c
+    set X0 := 2 * a * x0 + b
+    set M := |4 * a * m| with hM_def
+    have hM_pos : 0 < M := by
+      exact abs_pos.mpr ( mul_ne_zero ( mul_ne_zero four_ne_zero ha0 ) hm );
+    -- Apply `genPell_infinite_cong` to get P'.Infinite where P' = {p | p.2^2 = a'*p.1^2 + c' ∧ p.1 ≡ v0 [ZMOD M] ∧ p.2 ≡ X0 [ZMOD M]}.
+    have hP'_infinite : {p : ℤ × ℤ | p.2 ^ 2 = a' * p.1 ^ 2 + c' ∧ p.1 ≡ v0 [ZMOD M] ∧ p.2 ≡ X0 [ZMOD M]}.Infinite := by
+      apply genPell_infinite_cong;
+      · grind;
+      · simp +zetaDelta at *;
+        rintro ⟨ k, hk ⟩;
+        exact ha_not_square ⟨ k / 2, by cases abs_cases k <;> nlinarith [ Int.ediv_mul_cancel ( show 2 ∣ k from even_iff_two_dvd.mp ( by simpa +decide [ parity_simps ] using congr_arg Even hk ) ) ] ⟩;
+      · grind +splitImp;
+      · exact hM_pos;
+      · grind;
+    -- Show that the set of second coordinates of P' is infinite.
+    have hVset_infinite : {W : ℤ | ∃ X : ℤ, (W, X) ∈ {p : ℤ × ℤ | p.2 ^ 2 = a' * p.1 ^ 2 + c' ∧ p.1 ≡ v0 [ZMOD M] ∧ p.2 ≡ X0 [ZMOD M]}}.Infinite := by
+      apply infinite_fst_of_finite_fibers hP'_infinite;
+      intro x; exact Set.Finite.subset ( Set.finite_Icc ( - ( |a' * x ^ 2 + c'| ) ) ( |a' * x ^ 2 + c'| ) ) fun v hv => ⟨ by cases abs_cases ( a' * x ^ 2 + c' ) <;> nlinarith [ hv.1 ], by cases abs_cases ( a' * x ^ 2 + c' ) <;> nlinarith [ hv.1 ] ⟩ ;
+    -- For W ∈ Vset, pick X with (W,X) ∈ P': from X ≡ X0 [ZMOD M] and 2*a ∣ M we get X ≡ X0 ≡ b [ZMOD 2*a], so 2*a ∣ (X - b); write X = 2*a*x + b.
+    have hW_to_x : ∀ W ∈ {W : ℤ | ∃ X : ℤ, (W, X) ∈ {p : ℤ × ℤ | p.2 ^ 2 = a' * p.1 ^ 2 + c' ∧ p.1 ≡ v0 [ZMOD M] ∧ p.2 ≡ X0 [ZMOD M]}}, ∃ x : ℤ, a * x ^ 2 + b * x + c = -D * W ^ 2 := by
+      rintro W ⟨ X, hX ⟩;
+      -- From X ≡ X0 [ZMOD M] and 2*a ∣ M we get X ≡ X0 ≡ b [ZMOD 2*a], so 2*a ∣ (X - b); write X = 2*a*x + b.
+      obtain ⟨x, hx⟩ : ∃ x : ℤ, X = 2 * a * x + b := by
+        have hX_mod : X ≡ X0 [ZMOD 2 * a] := by
+          exact hX.2.2.of_dvd <| by exact ⟨ 2 * m * ( if 4 * a * m ≥ 0 then 1 else -1 ), by split_ifs <;> cases abs_cases ( 4 * a * m ) <;> linarith ⟩ ;
+        obtain ⟨ k, hk ⟩ := hX_mod.symm.dvd;
+        exact ⟨ k + x0, by linear_combination hk ⟩;
+      simp +zetaDelta at *;
+      exact ⟨ x, by rw [ hx ] at hX; cases lt_or_gt_of_ne ha0 <;> nlinarith ⟩;
+    -- For W ∈ Vset, pick X with (W,X) ∈ P': from W ≡ v0 [ZMOD M] and 2*m ∣ M we get W ≡ v0 [ZMOD 2*m], so W = v0 + 2*m*t for some t, giving cg W by hperiod.
+    have hW_to_cg : ∀ W ∈ {W : ℤ | ∃ X : ℤ, (W, X) ∈ {p : ℤ × ℤ | p.2 ^ 2 = a' * p.1 ^ 2 + c' ∧ p.1 ≡ v0 [ZMOD M] ∧ p.2 ≡ X0 [ZMOD M]}}, cg W := by
+      intros W hW
+      obtain ⟨X, hX⟩ := hW
+      have hW_mod : W ≡ v0 [ZMOD 2 * m] := by
+        exact hX.2.1.of_dvd <| by exact ⟨ 2 * a * ( if 4 * a * m ≥ 0 then 1 else -1 ), by split_ifs <;> cases abs_cases ( 4 * a * m ) <;> nlinarith ⟩ ;
+      obtain ⟨ k, hk ⟩ := hW_mod.symm.dvd;
+      simpa [ sub_eq_iff_eq_add'.mp hk ] using hperiod v0 k hc0;
+    intro H;
+    exact hVset_infinite <| Set.Finite.subset ( H.image Prod.snd ) fun x hx => by obtain ⟨ y, hy ⟩ := hW_to_x x hx; exact ⟨ ( y, x ), ⟨ by linarith [ hy ], hW_to_cg x hx ⟩, rfl ⟩ ;
+/-
+**Algorithm 4.3** (stated as a theorem).  Given the data `(u, p, q)` with
+`R(u) = F(p,q) ≠ 0` found in Step 1, the auxiliary equation written in the form (30) with
+coefficients `(a, b, c)` (Step 2), and the verification of conditions (a)–(c) of
+Proposition 4.2 (Step 3), the equation `F(y,z) = R(Q(x))` is solvable for infinitely many
+integers `x`.  This is the composition of Proposition 4.2 and Proposition 4.1.
+-/
+theorem algorithm_4_3 {A B C : ℤ} (u p q r a b c : ℤ) (R Q Du : ℤ → ℤ)
+    (hΔ : B ^ 2 - 4 * A * C ≠ 0)
+    (hm : R u = A * p ^ 2 + B * p * q + C * q ^ 2) (hmne : R u ≠ 0)
+    (hTaylor : ∀ t, R t = R u + r * (t - u) + (t - u) ^ 2 * Du t)
+    (haux : ∀ x, 4 * R u * Du (Q x) - r ^ 2 = a * x ^ 2 + b * x + c)
+    (ha : a = 0 ∨ (0 < a * (-(B ^ 2 - 4 * A * C)) ∧ ¬ IsSquare (a * (-(B ^ 2 - 4 * A * C)))))
+    (hb : b ^ 2 - 4 * a * c ≠ 0)
+    (x0 v0 : ℤ) (hsol : a * x0 ^ 2 + b * x0 + c = -(B ^ 2 - 4 * A * C) * v0 ^ 2)
+    (hcong1 : (2 * |R u|) ∣ (r * p + v0 * (B * p + 2 * C * q)))
+    (hcong2 : (2 * |R u|) ∣ (r * q - v0 * (2 * A * p + B * q))) :
+    {x : ℤ | ∃ y z : ℤ, A * y ^ 2 + B * y * z + C * z ^ 2 = R (Q x)}.Infinite := by
+  convert prop_4_1 u p q r R Q Du hΔ hm hmne hTaylor _;
+  convert prop_4_2 ( show R u ≠ 0 by assumption ) ha hb _ _ x0 v0 _ _ using 1;
+  rotate_left;
+  use fun v => 2 * |R u| ∣ r * p + v * ( B * p + 2 * C * q ) ∧ 2 * |R u| ∣ r * q - v * ( 2 * A * p + B * q );
+  · intro v w hvw;
+    constructor;
+    · convert dvd_add hvw.1 ( dvd_mul_of_dvd_left ( show 2 * |R u| ∣ 2 * R u from ⟨ if R u > 0 then 1 else -1, by split_ifs <;> cases abs_cases ( R u ) <;> linarith ⟩ ) ( w * ( B * p + 2 * C * q ) ) ) using 1 ; ring;
+    · convert dvd_sub hvw.2 ( dvd_mul_of_dvd_left ( show 2 * |R u| ∣ 2 * R u by exact ⟨ if R u > 0 then 1 else -1, by split_ifs <;> cases abs_cases ( R u ) <;> linarith ⟩ ) ( w * ( 2 * A * p + B * q ) ) ) using 1 ; ring;
+  · exact hsol;
+  · exact ⟨ hcong1, hcong2 ⟩;
+  · simp +decide only [haux]
+/-
+The per-solution identity of Algorithm 2.2 (sum-of-two-squares case): if `R(u)` is a
+positive sum of two squares and the auxiliary equation `4 R(u) Du(Q(x)) − r² = v²` holds,
+then `R(Q(x))` is a sum of two squares.  Uses identity (7) and property (*).
+-/
+lemma sum2sq_of_aux (u r : ℤ) (R Q Du : ℤ → ℤ) (x v : ℤ)
+    (hRuS : Sum2Sq (R u)) (hRupos : 0 < R u)
+    (hTaylor : ∀ t, R t = R u + r * (t - u) + (t - u) ^ 2 * Du t)
+    (hv : 4 * R u * Du (Q x) - r ^ 2 = v ^ 2) :
+    Sum2Sq (R (Q x)) := by
+  -- From key, `Sum2Sq (4 * (R u) * (R (Q x)))` holds.
+  have h_key : Sum2Sq (4 * (R u) * (R (Q x))) := by
+    -- From key, `Sum2Sq (4 * (R u) * (R (Q x)))` holds via ⟨2*(R u)+r*(Q x - u), (Q x - u)*v, key⟩.
+    use 2 * R u + r * (Q x - u), (Q x - u) * v;
+    grind;
+  by_cases hRQx : R ( Q x ) > 0;
+  · convert Sum2Sq.div ( show 0 < 4 * R u by linarith ) hRQx _ h_key using 1;
+    exact Sum2Sq.mul ( by exact ⟨ 2, 0, by ring ⟩ ) hRuS;
+  · exact ⟨ 0, 0, by nlinarith [ show 0 ≤ 4 * R u * R ( Q x ) by obtain ⟨ a, b, h ⟩ := h_key; nlinarith ] ⟩
+/-
+**Algorithm 2.2** (stated as a theorem).  For the sum-of-two-squares form, given
+`R(u) ∈ S₂` positive (Step 1) and the auxiliary equation (10) `a x² + b x + c = v²`
+satisfying conditions (a)–(c) (Steps 2–3), `R(Q(x))` is a sum of two squares for infinitely
+many integers `x`.
+-/
+theorem algorithm_2_2 (u r a b c : ℤ) (R Q Du : ℤ → ℤ)
+    (hRuS : Sum2Sq (R u)) (hRupos : 0 < R u)
+    (hTaylor : ∀ t, R t = R u + r * (t - u) + (t - u) ^ 2 * Du t)
+    (haux : ∀ x, 4 * R u * Du (Q x) - r ^ 2 = a * x ^ 2 + b * x + c)
+    (ha : a = 0 ∨ (0 < a ∧ ¬ IsSquare a))
+    (hb : b ^ 2 - 4 * a * c ≠ 0)
+    (x0 v0 : ℤ) (hsol : a * x0 ^ 2 + b * x0 + c = v0 ^ 2) :
+    {x : ℤ | Sum2Sq (R (Q x))}.Infinite := by
+  rcases ha with rfl | ⟨ ha, ha' ⟩;
+  · -- Since $b \neq 0$, the equation $b * x + c = v^2$ has infinitely many solutions for $x$.
+    have h_inf_solutions : ∀ k : ℤ, Sum2Sq (R (Q (x0 + 2 * v0 * k + b * k ^ 2))) := by
+      intro k
+      have hv : 4 * R u * Du (Q (x0 + 2 * v0 * k + b * k ^ 2)) - r ^ 2 = (v0 + b * k) ^ 2 := by
+        grind
+      exact sum2sq_of_aux u r R Q Du (x0 + 2 * v0 * k + b * k ^ 2) (v0 + b * k) hRuS hRupos hTaylor hv;
+    by_contra h_contra;
+    -- Since $b \neq 0$, the set $\{x0 + 2 * v0 * k + b * k ^ 2 \mid k \in \mathbb{Z}\}$ is infinite.
+    have h_infinite_set : Set.Infinite {x : ℤ | ∃ k : ℤ, x = x0 + 2 * v0 * k + b * k ^ 2} := by
+      by_cases hb_pos : 0 < b;
+      · refine Set.infinite_of_forall_exists_gt ?_;
+        exact fun n => ⟨ _, ⟨ |n - x0| + |2 * v0| + 1, rfl ⟩, by cases abs_cases ( n - x0 ) <;> cases abs_cases ( 2 * v0 ) <;> nlinarith ⟩;
+      · by_cases hb_neg : b < 0;
+        · refine Set.infinite_of_not_bddBelow ?_;
+          norm_num [ bddBelow_def ];
+          exact fun x => ⟨ |x - x0| + |2 * v0| + 1, by cases abs_cases ( x - x0 ) <;> cases abs_cases ( 2 * v0 ) <;> nlinarith ⟩;
+        · interval_cases b ; norm_num at hb;
+    exact h_contra <| h_infinite_set.mono fun x hx => by obtain ⟨ k, rfl ⟩ := hx; exact h_inf_solutions k;
+  · set a' := 4 * a
+    set c' := b^2 - 4 * a * c
+    set X0 := 2 * a * x0 + b
+    set M := 2 * a
+    have ha'_pos : 0 < a' := by
+      positivity
+    have ha'_not_square : ¬ IsSquare a' := by
+      simp +zetaDelta at *;
+      exact fun ⟨ k, hk ⟩ => ha' ⟨ k / 2, by cases abs_cases k <;> nlinarith [ Int.ediv_mul_cancel ( show 2 ∣ k from even_iff_two_dvd.mp ( by simpa +decide [ parity_simps ] using congr_arg Even hk ) ) ] ⟩
+    have hc'_ne_zero : c' ≠ 0 := by
+      exact hb
+    have hX0 : X0^2 = a' * v0^2 + c' := by
+      linear_combination' hsol * 4 * a
+    have hM_pos : 0 < M := by
+      exact mul_pos zero_lt_two ha
+    have hM : |M| = M := by
+      exact abs_of_pos hM_pos
+    have hPell : {p : ℤ × ℤ | p.2^2 = a' * p.1^2 + c' ∧ p.1 ≡ v0 [ZMOD M] ∧ p.2 ≡ X0 [ZMOD M]}.Infinite := by
+      apply genPell_infinite_cong ha'_pos ha'_not_square hc'_ne_zero M hM_pos v0 X0 hX0
+    generalize_proofs at *;
+    -- Let $Vset$ be the set of first coordinates $W$ of these solutions.
+    set Vset := {W : ℤ | ∃ X : ℤ, (W, X) ∈ {p : ℤ × ℤ | p.2^2 = a' * p.1^2 + c' ∧ p.1 ≡ v0 [ZMOD M] ∧ p.2 ≡ X0 [ZMOD M]}} with hVset_def
+    have hVset_inf : Vset.Infinite := by
+      intro hVset_finite
+      generalize_proofs at *;
+      refine hPell <| Set.Finite.subset ( hVset_finite.prod <| Set.Finite.biUnion hVset_finite fun x hx => Set.finite_Ico ( - ( |a' * x ^ 2 + c'| ) ) ( |a' * x ^ 2 + c'| + 1 ) ) ?_;
+      simp +contextual [ Set.subset_def ];
+      exact fun a b hb ha hb' => ⟨ ⟨ b, hb, ha, hb' ⟩, a, by cases abs_cases ( a' * a ^ 2 + c' ) <;> nlinarith, ⟨ b, hb, ha, hb' ⟩, by cases abs_cases ( a' * a ^ 2 + c' ) <;> nlinarith ⟩
+    generalize_proofs at *;
+    -- For each $W \in Vset$, there exists $x$ such that $a * x^2 + b * x + c = W^2$.
+    have h_exists_x : ∀ W ∈ Vset, ∃ x : ℤ, a * x^2 + b * x + c = W^2 := by
+      intro W hW
+      obtain ⟨X, hX⟩ := hW
+      have hX_eq : X^2 = a' * W^2 + c' := by
+        exact hX.1
+      have hX_mod : X ≡ X0 [ZMOD M] := by
+        exact hX.2.2
+      have hX_div : (2 * a) ∣ (X - b) := by
+        have := hX_mod.symm.dvd; norm_num at this; obtain ⟨ k, hk ⟩ := this; exact ⟨ k + x0, by linarith ⟩ ;
+      obtain ⟨k, hk⟩ : ∃ k : ℤ, X = 2 * a * k + b := by
+        exact ⟨ hX_div.choose, eq_add_of_sub_eq hX_div.choose_spec ⟩
+      generalize_proofs at *;
+      exact ⟨ k, by subst hk; nlinarith ⟩
+    generalize_proofs at *;
+    -- For each $W \in Vset$, there exists $x$ such that $R(Q(x))$ is a sum of two squares.
+    have h_sum2sq : ∀ W ∈ Vset, ∃ x : ℤ, Sum2Sq (R (Q x)) ∧ a * x^2 + b * x + c = W^2 := by
+      intros W hW
+      obtain ⟨x, hx⟩ := h_exists_x W hW
+      use x
+      generalize_proofs at *;
+      exact ⟨ sum2sq_of_aux u r R Q Du x W hRuS hRupos hTaylor ( by linarith [ haux x ] ), hx ⟩
+    generalize_proofs at *;
+    contrapose! hVset_inf;
+    refine Set.Finite.subset ( hVset_inf.biUnion fun x hx => Set.finite_Icc ( - ( |a * x ^ 2 + b * x + c| ) ) ( |a * x ^ 2 + b * x + c| ) ) ?_;
+    intro W hW; obtain ⟨ x, hx₁, hx₂ ⟩ := h_sum2sq W hW; exact Set.mem_iUnion₂.mpr ⟨ x, hx₁, by constructor <;> cases abs_cases ( a * x ^ 2 + b * x + c ) <;> nlinarith ⟩ ;
 end SumSquaresPaper
