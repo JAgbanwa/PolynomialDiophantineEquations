@@ -148,6 +148,21 @@ lemma cube_repr {f u x v : ℤ} (hM : 0 < u ^ 3 + f)
     grobner;
   convert sqSum_div ( show 0 < 4 * M by positivity ) ( show 0 < x ^ 6 + f by positivity ) hMs ⟨ _, _, hkey ⟩ using 1
 /-
+Removing a finite set from an infinite set leaves an infinite set.
+This is proved from first principles (rather than via `Set.Infinite.diff`)
+so that it compiles across Mathlib versions, including newer ones where
+`Set.Infinite.diff` is deprecated in favour of `Set.Infinite.sdiff`.
+-/
+private lemma infinite_diff_of_finite {α : Type*} {s t : Set α}
+    (hs : s.Infinite) (ht : t.Finite) : (s \ t).Infinite := by
+  intro hfin
+  refine hs ?_
+  have hsub : s ⊆ (s \ t) ∪ t := fun x hx => by
+    by_cases h : x ∈ t
+    · exact Or.inr h
+    · exact Or.inl ⟨hx, h⟩
+  exact (hfin.union ht).subset hsub
+/-
 The set of integers `x` with `x⁶ + f` a sum of two squares is infinite.
 -/
 lemma cube_sqSum_infinite {f u : ℤ} (hM : 0 < u ^ 3 + f)
@@ -158,11 +173,13 @@ lemma cube_sqSum_infinite {f u : ℤ} (hM : 0 < u ^ 3 + f)
     {x : ℤ | 0 < x ∧ SqSum (x ^ 6 + f)}.Infinite := by
   -- By `aux_infinite`, we get infinitely many `x` with `0 < x` and `∃ v, v^2 = a*x^2 + c`.
   have hA : Set.Infinite {x : ℤ | 0 < x ∧ ∃ v : ℤ, v^2 = 4 * (u^3 + f) * x^2 - u * (u^3 - 8 * f)} := by
-    convert SumSquares.aux_infinite ( show 0 < 4 * ( u ^ 3 + f ) by linarith ) hns hx0 hv0 hseed using 1;
+    have h := SumSquares.aux_infinite (a := 4 * (u ^ 3 + f)) (c := -(u * (u ^ 3 - 8 * f)))
+      ( show 0 < 4 * ( u ^ 3 + f ) by linarith ) hns hx0 hv0 ( by linear_combination hseed )
+    simpa only [sub_eq_add_neg] using h
   -- Let `Bad := {x : ℤ | ¬ (0 < x^6+f)}`. Show `Bad` is finite: if `x ∈ Bad` then `x^6+f ≤ 0`, so `x^6 ≤ -f`; since `|x|≥1` implies `x^6 ≥ x^2 ≥ |x|`, we get `|x| ≤ |f|`, hence `Bad ⊆ Set.Icc (-(|f|)) (|f|)` which is finite (`Set.finite_Icc`).
   have hBadFinite : Set.Finite {x : ℤ | ¬(0 < x^6 + f)} := by
     exact Set.Finite.subset ( Set.finite_Icc ( - ( |f| + 1 ) ) ( |f| + 1 ) ) fun x hx => ⟨ by cases abs_cases f <;> nlinarith [ sq_nonneg ( x^2 - 1 ), hx.out ], by cases abs_cases f <;> nlinarith [ sq_nonneg ( x^2 - 1 ), hx.out ] ⟩;
-  exact hA.diff hBadFinite |> Set.Infinite.mono fun x hx => ⟨ hx.1.1, by simpa using cube_repr hM hMs ( by aesop ) hx.1.2.choose_spec ⟩
+  exact infinite_diff_of_finite hA hBadFinite |> Set.Infinite.mono fun x hx => ⟨ hx.1.1, by simpa using cube_repr hM hMs ( by aesop ) hx.1.2.choose_spec ⟩
 /-
 The set of *even* integers `x` with `x⁶ + f` a sum of two squares is infinite.
 Here the auxiliary equation is taken in the variable `w` with `x = 2w`, so its
@@ -187,13 +204,12 @@ lemma cube_sqSum_even_infinite {f u : ℤ} (hM : 0 < u ^ 3 + f)
     intro w hw; constructor <;> cases abs_cases f <;> nlinarith [ sq_nonneg ( w ^ 2 - 1 ), hw.out ] ;
   -- Consider the image of $W \setminus Bad$ under the map $w \mapsto 2w$.
   have h_image : Set.Infinite (Set.image (fun w => 2 * w) ({w : ℤ | 0 < w ∧ ∃ v : ℤ, v^2 = a * w^2 + c} \ {w : ℤ | ¬ (0 < (2 * w) ^ 6 + f)})) := by
-    refine Set.Infinite.image ?_ <| hW.diff hBadFinite;
+    refine Set.Infinite.image ?_ <| infinite_diff_of_finite hW hBadFinite;
     exact fun x hx y hy hxy => mul_left_cancel₀ two_ne_zero hxy;
-  refine h_image.mono ?_;
-  simp +contextual [ Set.image_subset_iff ];
-  intro w hw; obtain ⟨ hw₁, v, hv ⟩ := hw.1; exact ⟨ by linarith, by
-    convert cube_repr hM hMs ( show 0 < ( 2 * w ) ^ 6 + f from not_le.mp hw.2 ) _ using 1;
-    exacts [ v, by linear_combination' hv ] ⟩ ;
+  refine h_image.mono ?_
+  rintro _ ⟨w, ⟨⟨hw₁, v, hv⟩, hbad⟩, rfl⟩
+  have hpos : 0 < (2 * w) ^ 6 + f := by simpa using hbad
+  exact ⟨by linarith, ⟨w, by ring⟩, cube_repr (v := v) hM hMs hpos (by linear_combination' hv)⟩
 /-
 Parity selection for `f ≡ 0 (mod 4)`: choose a representation `x⁶+f = A²+B²`
 with `B` even and `A ≡ x (mod 2)`.
