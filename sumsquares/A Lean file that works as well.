@@ -322,9 +322,10 @@ lemma odd_pow6_sub4_S2_infinite :
   have hpos : 0 < x ^ 6 - 4 := by
     nlinarith [hxsq, sq_nonneg x, mul_le_mul hxsq hxsq (by norm_num) (by nlinarith [hxsq])]
   have hS : Sum2Sq (x ^ 6 - 4) := by
+    have hpos' : 0 < x ^ 6 + (-4 : ℤ) := by linarith
     have := sum2sq_x6_add (f := -4) (u := 162) (x := x) (v := v)
-      (by norm_num) (⟨350, 2032, by norm_num⟩) (by simpa using hpos) hv'
-    simpa using this
+      (by norm_num) (⟨350, 2032, by norm_num⟩) hpos' hv'
+    rw [sub_eq_add_neg]; exact this
   exact ⟨odd_of_S2_sub4 hpos hS, hS⟩
 /-- For `f = 8` and `u = 8`: there are infinitely many even `x ≥ 0` with `x⁶ + 8 ∈ S₂`. -/
 lemma even_pow6_add8_S2_infinite :
@@ -376,8 +377,10 @@ lemma even_pow6_sub3_S2_infinite :
       nlinarith [this]
     have he : (2 * w) ^ 6 = 64 * w ^ 6 := by ring
     rw [he]; nlinarith [h6]
-  exact sum2sq_x6_add (f := -3) (u := 2) (x := 2 * w) (v := v)
-    (by norm_num) (⟨2, 1, by norm_num⟩) hpos hv'
+  have hpos' : 0 < (2 * w) ^ 6 + (-3 : ℤ) := by linarith
+  have := sum2sq_x6_add (f := -3) (u := 2) (x := 2 * w) (v := v)
+    (by norm_num) (⟨2, 1, by norm_num⟩) hpos' hv'
+  rw [sub_eq_add_neg]; exact this
 /-! ## Section 3: the main propositions -/
 /-- **Proposition 3.1.** The equation `y² + x³y + z² + 1 = 0` (equation (2)) has
 infinitely many integer solutions. -/
