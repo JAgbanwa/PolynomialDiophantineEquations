@@ -1,0 +1,306 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{enumitem}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+
+\DeclareMathOperator{\Sol}{Sol}
+
+\title{A Self-Contained Resolution of the Integral Equation \(y(x^3-z^2)=x-1\)}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We give a completely elementary proof that the Diophantine equation
+\[
+    y(x^3-z^2)=x-1
+\]
+has infinitely many integer solutions.  In fact, we prove a precise description of the fibre above
+\(x=1\), isolate the exceptional case \(x^3=z^2\), and record the exact divisibility criterion governing every remaining solution.  The infinite families obtained include infinitely many solutions with all three coordinates non-zero.
+\end{abstract}
+
+\section{Statement of the problem}
+
+We study integer triples
+\[
+    (x,y,z)\in \mathbb Z^3
+\]
+satisfying
+\begin{equation}\label{eq:main}
+    y(x^3-z^2)=x-1.
+\end{equation}
+The goal is not to solve a finite search problem, but to decide whether there are infinitely many integer solutions.  The answer is affirmative, and the proof is short but complete.
+
+\section{Elementary preliminary facts}
+
+We use only the following elementary properties of the ring \(\mathbb Z\).
+
+\begin{lemma}[Zero-product principle in \(\mathbb Z\)]\label{lem:zero-product}
+If \(a,b\in \mathbb Z\) and \(ab=0\), then \(a=0\) or \(b=0\).
+\end{lemma}
+
+\begin{proof}
+Suppose \(a\ne 0\).  If also \(b\ne 0\), then \(|a|\ge 1\) and \(|b|\ge 1\), so
+\[
+    |ab|=|a|\,|b|\ge 1,
+\]
+which contradicts \(ab=0\).  Hence, if \(ab=0\), at least one of \(a,b\) must be zero.
+\end{proof}
+
+\begin{lemma}[Integer square roots of \(1\)]\label{lem:square-one}
+If \(z\in \mathbb Z\) and \(z^2=1\), then \(z=1\) or \(z=-1\).
+\end{lemma}
+
+\begin{proof}
+The equality \(z^2=1\) is equivalent to
+\[
+    (z-1)(z+1)=0.
+\]
+By Lemma~\ref{lem:zero-product}, either \(z-1=0\) or \(z+1=0\).  Thus \(z=1\) or \(z=-1\).
+\end{proof}
+
+\section{The fibre above \(x=1\)}
+
+The key observation is that the right-hand side of \eqref{eq:main} vanishes when \(x=1\).  This immediately produces infinite families, but we first state the exact fibre.
+
+\begin{proposition}[Exact solution set with \(x=1\)]\label{prop:fibre-x-one}
+The integer solutions of \eqref{eq:main} with \(x=1\) are precisely the triples belonging to
+\[
+    \{(1,0,t):t\in\mathbb Z\}
+    \;\cup\;
+    \{(1,t,1):t\in\mathbb Z\}
+    \;\cup\;
+    \{(1,t,-1):t\in\mathbb Z\}.
+\]
+\end{proposition}
+
+\begin{proof}
+Substituting \(x=1\) into \eqref{eq:main} gives
+\[
+    y(1^3-z^2)=1-1,
+\]
+so
+\[
+    y(1-z^2)=0.
+\]
+By Lemma~\ref{lem:zero-product}, either \(y=0\) or \(1-z^2=0\).
+
+If \(y=0\), then \(z\) is arbitrary, and we obtain exactly the triples
+\[
+    (1,0,t),\qquad t\in\mathbb Z.
+\]
+
+If \(1-z^2=0\), then \(z^2=1\), and Lemma~\ref{lem:square-one} gives \(z=1\) or \(z=-1\).  In either case \(y\) is arbitrary.  Hence we obtain exactly the triples
+\[
+    (1,t,1),\qquad t\in\mathbb Z,
+\]
+and
+\[
+    (1,t,-1),\qquad t\in\mathbb Z.
+\]
+
+Conversely, every triple in these three displayed families satisfies \(x=1\) and either \(y=0\) or \(z^2=1\).  Therefore
+\[
+    y(1-z^2)=0=1-1,
+\]
+so each such triple satisfies \eqref{eq:main}.  This proves the claimed exact description.
+\end{proof}
+
+\section{The exceptional case \(x^3=z^2\)}
+
+Although the proof of infinitude already follows from Proposition~\ref{prop:fibre-x-one}, it is useful to separate the only case in which the factor \(x^3-z^2\) vanishes.
+
+\begin{lemma}[Vanishing of the cubic-square factor]\label{lem:vanishing-factor}
+Let \((x,y,z)\in\mathbb Z^3\) satisfy \eqref{eq:main}.  If
+\[
+    x^3-z^2=0,
+\]
+then
+\[
+    x=1\quad\text{and}\quad z\in\{1,-1\}.
+\]
+Conversely, every triple \((1,y,1)\) and every triple \((1,y,-1)\), with \(y\in\mathbb Z\), satisfies \eqref{eq:main} and has \(x^3-z^2=0\).
+\end{lemma}
+
+\begin{proof}
+Assume \((x,y,z)\) satisfies \eqref{eq:main} and \(x^3-z^2=0\).  Then the left-hand side of \eqref{eq:main} is
+\[
+    y(x^3-z^2)=y\cdot 0=0.
+\]
+Therefore the right-hand side must also be zero:
+\[
+    x-1=0.
+\]
+Thus \(x=1\).  Substituting this into \(x^3-z^2=0\) gives
+\[
+    1-z^2=0,
+\]
+so \(z^2=1\).  By Lemma~\ref{lem:square-one}, \(z=1\) or \(z=-1\).
+
+Conversely, if \((x,z)=(1,1)\) or \((x,z)=(1,-1)\), then
+\[
+    x^3-z^2=1-1=0
+\]
+and
+\[
+    x-1=0.
+\]
+Thus, for every \(y\in\mathbb Z\), both sides of \eqref{eq:main} are zero.  Hence all such triples are solutions.
+\end{proof}
+
+\section{Divisibility criterion for the remaining cases}
+
+The equation is linear in \(y\).  Therefore, once \(x\) and \(z\) are chosen with \(x^3\ne z^2\), the value of \(y\), if it exists, is forced.
+
+\begin{proposition}[Exact divisibility criterion away from \(x^3=z^2\)]\label{prop:divisibility}
+Let \(x,z\in\mathbb Z\) satisfy
+\[
+    x^3-z^2\ne 0.
+\]
+Then there exists an integer \(y\) such that \((x,y,z)\) satisfies \eqref{eq:main} if and only if
+\[
+    x^3-z^2 \mid x-1.
+\]
+In that case the only possible value of \(y\) is
+\[
+    y=\frac{x-1}{x^3-z^2}.
+\]
+\end{proposition}
+
+\begin{proof}
+Set
+\[
+    D=x^3-z^2.
+\]
+By hypothesis, \(D\ne 0\).  Equation \eqref{eq:main} becomes
+\[
+    yD=x-1.
+\]
+
+First suppose that an integer \(y\) satisfying this equation exists.  Then \(x-1\) is an integer multiple of \(D\), namely
+\[
+    x-1=yD.
+\]
+Thus \(D\mid x-1\), which is exactly
+\[
+    x^3-z^2\mid x-1.
+\]
+Moreover, since \(D\ne 0\), division by \(D\) gives the forced value
+\[
+    y=\frac{x-1}{D}=\frac{x-1}{x^3-z^2}.
+\]
+
+Conversely, suppose \(D\mid x-1\).  By definition of divisibility in \(\mathbb Z\), there is an integer \(q\) such that
+\[
+    x-1=qD.
+\]
+Taking \(y=q\), we get
+\[
+    y(x^3-z^2)=qD=x-1,
+\]
+so \((x,y,z)\) satisfies \eqref{eq:main}.  The displayed formula for \(y\) follows again from \(D\ne 0\).
+\end{proof}
+
+\section{Infinitely many integer solutions}
+
+We now give the promised unconditional conclusion.
+
+\begin{theorem}[Infinitude of integer solutions]\label{thm:infinitely-many}
+The Diophantine equation
+\[
+    y(x^3-z^2)=x-1
+\]
+has infinitely many integer solutions.
+\end{theorem}
+
+\begin{proof}
+For each integer \(n\), define
+\[
+    (x_n,y_n,z_n)=(1,n,1).
+\]
+Then
+\[
+    y_n(x_n^3-z_n^2)
+    =n(1^3-1^2)
+    =n(1-1)
+    =n\cdot 0
+    =0,
+\]
+while
+\[
+    x_n-1=1-1=0.
+\]
+Hence
+\[
+    y_n(x_n^3-z_n^2)=x_n-1,
+\]
+so \((1,n,1)\) is an integer solution for every \(n\in\mathbb Z\).
+
+These solutions are pairwise distinct: if \((1,n,1)=(1,m,1)\), then equality of the second coordinates gives \(n=m\).  Since \(\mathbb Z\) is infinite, the set
+\[
+    \{(1,n,1):n\in\mathbb Z\}
+\]
+is infinite.  Therefore \eqref{eq:main} has infinitely many integer solutions.
+\end{proof}
+
+\begin{corollary}[Infinitely many non-zero-coordinate solutions]\label{cor:nonzero}
+There are infinitely many integer solutions \((x,y,z)\) of \eqref{eq:main} with
+\[
+    xyz\ne 0.
+\]
+\end{corollary}
+
+\begin{proof}
+For every non-zero integer \(n\), the triple
+\[
+    (1,n,1)
+\]
+is a solution by the proof of Theorem~\ref{thm:infinitely-many}.  Its coordinate product is
+\[
+    1\cdot n\cdot 1=n\ne 0.
+\]
+Since there are infinitely many non-zero integers \(n\), this gives infinitely many solutions with all three coordinates non-zero.
+\end{proof}
+
+\section{Summary of the solution set information proved here}
+
+Combining the preceding results, we have the following complete structural statement.
+
+\begin{theorem}[Structural description]\label{thm:structural}
+An integer triple \((x,y,z)\in\mathbb Z^3\) satisfies
+\[
+    y(x^3-z^2)=x-1
+\]
+if and only if exactly one of the following alternatives holds:
+\begin{enumerate}[label=\textup{(\roman*)}]
+    \item \(x=1\), \(z\in\{1,-1\}\), and \(y\in\mathbb Z\) is arbitrary;
+    \item \(x=1\), \(z\notin\{1,-1\}\), and \(y=0\);
+    \item \(x\ne 1\), \(x^3-z^2\ne 0\), \(x^3-z^2\mid x-1\), and
+    \[
+        y=\frac{x-1}{x^3-z^2}.
+    \]
+\end{enumerate}
+In particular, alternatives \textup{(i)} and \textup{(ii)} already contain infinite families of integer solutions.
+\end{theorem}
+
+\begin{proof}
+Let \((x,y,z)\in\mathbb Z^3\).
+
+Assume first that \((x,y,z)\) is a solution.  If \(x=1\), Proposition~\ref{prop:fibre-x-one} says precisely that either \(z\in\{1,-1\}\), with \(y\) arbitrary, or else \(z\notin\{1,-1\}\), in which case the only remaining possibility is \(y=0\).  Thus a solution with \(x=1\) falls into exactly one of alternatives \textup{(i)} and \textup{(ii)}.
+
+Now suppose \(x\ne 1\).  A solution cannot have \(x^3-z^2=0\), because Lemma~\ref{lem:vanishing-factor} would then force \(x=1\).  Hence \(x^3-z^2\ne 0\), and Proposition~\ref{prop:divisibility} gives exactly the divisibility condition and the displayed formula for \(y\).  Thus the solution falls into alternative \textup{(iii)}.
+
+Conversely, every triple in alternative \textup{(i)} or \textup{(ii)} is a solution by Proposition~\ref{prop:fibre-x-one}, and every triple in alternative \textup{(iii)} is a solution by Proposition~\ref{prop:divisibility}.  The three alternatives are disjoint because alternatives \textup{(i)} and \textup{(ii)} require \(x=1\), alternative \textup{(iii)} requires \(x\ne 1\), and alternatives \textup{(i)} and \textup{(ii)} impose mutually exclusive conditions on \(z\).  This proves the stated structural description.
+\end{proof}
+
+\end{document}
