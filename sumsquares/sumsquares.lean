@@ -34,6 +34,13 @@ non-multiplicative form `2y² + yz + 2z²`.
 * `algorithm_4_3`           : Algorithm 4.3, the general-form recipe, as a theorem.
 * `prop_4_4a`, `prop_4_4b`  : the equations `2y² + yz + 2z² = x³ ± 1` have infinitely many
                               integer solutions (Proposition 4.4).
+* `form2_not_multiplicative`: the form `2y² + yz + 2z²` is not multiplicative (it represents
+                              `2` but not `2·2 = 4`).
+* `degenerate_factorization`: a form with `Δ = B² − 4AC = 0` factors as `k (n y + m z)²`.
+* `degenerate_infinite_iff`,
+  `degenerate_case`         : the degenerate case `Δ = 0`: `F(y,z) = P(x)` has infinitely
+                              many integer solutions iff the reduced equation `k t² = P(x)`
+                              has a solution with `gcd(n,m) ∣ t`.
 -/
 namespace SumSquaresPaper
 open scoped Classical
@@ -907,4 +914,156 @@ theorem algorithm_2_2 (u r a b c : ℤ) (R Q Du : ℤ → ℤ)
     contrapose! hVset_inf;
     refine Set.Finite.subset ( hVset_inf.biUnion fun x hx => Set.finite_Icc ( - ( |a * x ^ 2 + b * x + c| ) ) ( |a * x ^ 2 + b * x + c| ) ) ?_;
     intro W hW; obtain ⟨ x, hx₁, hx₂ ⟩ := h_sum2sq W hW; exact Set.mem_iUnion₂.mpr ⟨ x, hx₁, by constructor <;> cases abs_cases ( a * x ^ 2 + b * x + c ) <;> nlinarith ⟩ ;
+/-! ## Section 4: non-multiplicativity of `2y² + yz + 2z²`
+The algorithm of Section 4 works for every non-degenerate binary quadratic form, in
+particular without any multiplicativity assumption.  Here we record the paper's running
+example of a form that is *not* multiplicative: `F(y,z) = 2y² + yz + 2z²` represents the
+positive integer `2` (as `F(0,1)`) but does not represent `2·2 = 4`. -/
+/-- A binary quadratic form `F : ℤ → ℤ → ℤ` is *multiplicative* if, whenever it represents
+two positive integers `m` and `n`, it also represents their product `m · n`. -/
+def MultiplicativeForm (F : ℤ → ℤ → ℤ) : Prop :=
+  ∀ m n : ℤ, 0 < m → 0 < n →
+    (∃ y z, F y z = m) → (∃ y z, F y z = n) → ∃ y z, F y z = m * n
+/-- `2y² + yz + 2z²` represents `2`, since `F(0,1) = 2`. -/
+lemma form2_represents_two : ∃ y z : ℤ, 2 * y ^ 2 + y * z + 2 * z ^ 2 = 2 :=
+  ⟨0, 1, by ring⟩
+/-
+`2y² + yz + 2z²` does not represent `4`: the equation `2y² + yz + 2z² = 4` has no
+integer solutions.
+-/
+lemma form2_not_represents_four : ¬ ∃ y z : ℤ, 2 * y ^ 2 + y * z + 2 * z ^ 2 = 4 := by
+  simp only [not_exists]
+  intro x y H
+  have hx1 : x ≤ 2 := by nlinarith [sq_nonneg (x + y)]
+  have hx2 : -2 ≤ x := by nlinarith [sq_nonneg (x + y)]
+  have hy1 : y ≤ 2 := by nlinarith [sq_nonneg (x + y)]
+  have hy2 : -2 ≤ y := by nlinarith [sq_nonneg (x + y)]
+  interval_cases x <;> interval_cases y <;> omega
+/-
+**Non-multiplicativity of `2y² + yz + 2z²`** (Section 4).  The form represents the
+positive integer `2` but not `2·2 = 4`, hence it is not multiplicative.
+-/
+theorem form2_not_multiplicative :
+    ¬ MultiplicativeForm (fun y z : ℤ => 2 * y ^ 2 + y * z + 2 * z ^ 2) := by
+  intro h;
+  convert form2_not_represents_four <| h 2 2 ( by norm_num ) ( by norm_num ) form2_represents_two form2_represents_two
+/-! ## Section 4: the degenerate case `Δ = 0`
+When the discriminant `Δ = B² − 4AC` of the form `F(y,z) = A y² + B y z + C z²` vanishes,
+the form is, up to an integer factor, the square of a linear form:
+`(A,B,C) = (k n², 2 k n m, k m²)` and `F(y,z) = k (n y + m z)²`.  Consequently any equation
+`F(y,z) = P(x)` reduces to `k t² = P(x)` with `t = n y + m z`, and it has infinitely many
+integer solutions iff the reduced equation has a solution whose `t`-coordinate is divisible
+by `gcd(n,m)`. -/
+/-
+**Degenerate form factorisation** (Section 4).  A binary quadratic form with vanishing
+discriminant `B² − 4AC = 0` is an integer multiple of the square of a linear form: there
+exist integers `k, n, m` with `A = k n²`, `B = 2 k n m`, `C = k m²`.
+-/
+lemma degenerate_factorization {A B C : ℤ} (hΔ : B ^ 2 - 4 * A * C = 0) :
+    ∃ k n m : ℤ, A = k * n ^ 2 ∧ B = 2 * k * n * m ∧ C = k * m ^ 2 := by
+  rcases eq_or_ne A 0 with ( rfl | hA ) <;> rcases eq_or_ne C 0 with ( rfl | hC );
+  · exact ⟨ 0, 0, 0, by norm_num, by norm_num; nlinarith, by norm_num ⟩;
+  · exact ⟨ C, 0, 1, by ring, by nlinarith, by ring ⟩;
+  · exact ⟨ A, 1, 0, by norm_num, by norm_num; nlinarith, by norm_num ⟩;
+  · -- Let $g = \gcd(A, C)$, then $A = gA_1$ and $C = gC_1$ where $\gcd(A_1, C_1) = 1$.
+    obtain ⟨g, A1, C1, hg, hA1, hC1⟩ : ∃ g A1 C1 : ℤ, A = g * A1 ∧ C = g * C1 ∧ Int.gcd A1 C1 = 1 := by
+      exact ⟨ Int.gcd A C, A / Int.gcd A C, C / Int.gcd A C, by rw [ Int.mul_ediv_cancel' ( Int.gcd_dvd_left _ _ ) ], by rw [ Int.mul_ediv_cancel' ( Int.gcd_dvd_right _ _ ) ], by rw [ Int.gcd_div ( Int.gcd_dvd_left _ _ ) ( Int.gcd_dvd_right _ _ ), Int.natAbs_natCast, Nat.div_self ( Int.gcd_pos_of_ne_zero_left _ hA ) ] ⟩;
+    -- From $B^2 = 4AC$, we get $B^2 = 4g^2A_1C_1$, so $B = 2gb_1$ for some integer $b_1$.
+    obtain ⟨b1, hb1⟩ : ∃ b1 : ℤ, B = 2 * g * b1 := by
+      exact Int.pow_dvd_pow_iff two_ne_zero |>.1 ⟨ A1 * C1, by subst_vars; linarith ⟩;
+    -- From $b1^2 = A1C1$, we know that $A1$ and $C1$ are both perfect squares or both negative perfect squares.
+    obtain ⟨n, m, hn, hm⟩ : ∃ n m : ℤ, A1 = n^2 ∧ C1 = m^2 ∨ A1 = -n^2 ∧ C1 = -m^2 := by
+      have h_sq : b1^2 = A1 * C1 := by
+        exact mul_left_cancel₀ ( show g ^ 2 ≠ 0 by aesop ) ( by subst_vars; linarith );
+      -- Since $A1$ and $C1$ are coprime and their product is a perfect square, each must be a perfect square.
+      have h_sq_A1 : ∃ n : ℤ, A1 = n^2 ∨ A1 = -n^2 := by
+        have h_perfect_square : ∃ n : ℕ, A1.natAbs = n^2 := by
+          exact exists_eq_pow_of_mul_eq_pow ( by aesop ) ( by rw [ ← Int.natAbs_mul ] ; simpa [ Int.natAbs_pow ] using congr_arg Int.natAbs h_sq.symm );
+        exact Exists.elim h_perfect_square fun n hn => ⟨ n, eq_or_eq_neg_of_abs_eq ( by linarith ) ⟩
+      have h_sq_C1 : ∃ m : ℤ, C1 = m^2 ∨ C1 = -m^2 := by
+        rcases h_sq_A1 with ⟨ n, rfl | rfl ⟩;
+        · -- Since $n^2 \mid b1^2$, we have $n \mid b1$. Let $b1 = kn$ for some integer $k$.
+          obtain ⟨k, hk⟩ : ∃ k : ℤ, b1 = n * k := by
+            exact Int.pow_dvd_pow_iff ( by decide ) |>.1 ( h_sq.symm ▸ dvd_mul_right _ _ );
+          exact ⟨ k, Or.inl <| mul_left_cancel₀ ( pow_ne_zero 2 <| show n ≠ 0 by aesop_cat ) <| by subst hk; linarith ⟩;
+        · by_cases hn : n = 0;
+          · grind;
+          · exact ⟨ b1 / n, Or.inr <| by cases lt_or_gt_of_ne hn <;> nlinarith [ sq_nonneg <| b1 / n - n, Int.ediv_mul_cancel <| show n ∣ b1 from Int.pow_dvd_pow_iff two_ne_zero |>.1 <| by exact ⟨ -C1, by linarith ⟩ ] ⟩;
+      rcases h_sq_A1 with ⟨ n, hn | hn ⟩ <;> rcases h_sq_C1 with ⟨ m, hm | hm ⟩ <;> simp_all +decide;
+      · exact ⟨ n, m, Or.inl ⟨ rfl, rfl ⟩ ⟩;
+      · nlinarith [ mul_self_pos.2 hA.2, mul_self_pos.2 hC ];
+      · nlinarith [ mul_self_pos.2 hA.2, mul_self_pos.2 hC ];
+      · exact ⟨ n, m, Or.inr ⟨ rfl, rfl ⟩ ⟩;
+    · -- From $b1^2 = A1C1$, we know that $b1 = \pm nm$.
+      have hb1_cases : b1 = n * m ∨ b1 = -n * m := by
+        simp_all +decide [ mul_pow ];
+        exact eq_or_eq_neg_of_sq_eq_sq _ _ <| mul_left_cancel₀ ( pow_ne_zero 2 hA.1 ) <| by linarith;
+      rcases hb1_cases with ( rfl | rfl ) <;> simp_all +decide [ mul_assoc ];
+      · exact ⟨ g, n, rfl, m, rfl, rfl ⟩;
+      · exact ⟨ g, n, rfl, -m, by ring, by ring ⟩;
+    · -- From $b1^2 = A1C1$, we know that $b1 = \pm nm$.
+      have hb1_cases : b1 = n * m ∨ b1 = -n * m := by
+        simp_all +decide [ mul_pow ];
+        exact eq_or_eq_neg_of_sq_eq_sq _ _ <| mul_left_cancel₀ ( pow_ne_zero 2 hA.1 ) <| by linarith;
+      cases' hb1_cases with hb1_cases hb1_cases <;> simp_all +decide [ mul_assoc ];
+      · exact ⟨ -g, n, by ring, -m, by ring, by ring ⟩;
+      · exact ⟨ -g, n, by ring, m, by ring, by ring ⟩
+/-- Given the degenerate factorisation, the form collapses to `k (n y + m z)²`. -/
+lemma degenerate_reduces {A B C k n m : ℤ}
+    (hA : A = k * n ^ 2) (hB : B = 2 * k * n * m) (hC : C = k * m ^ 2) (y z : ℤ) :
+    A * y ^ 2 + B * y * z + C * z ^ 2 = k * (n * y + m * z) ^ 2 := by
+  subst hA hB hC; ring
+/-
+**Degenerate case, infinitude criterion** (Section 4, eq. (33)).  If the linear form
+`(n, m)` is non-trivial, then `k (n y + m z)² = P(x)` has infinitely many integer solutions
+`(x, y, z)` if and only if the reduced equation `k t² = P(x)` has a solution `(x₀, t₀)` with
+`t₀` divisible by `gcd(n, m)`.
+-/
+theorem degenerate_infinite_iff {k n m : ℤ} (hnm : ¬ (n = 0 ∧ m = 0)) (P : ℤ → ℤ) :
+    {p : ℤ × ℤ × ℤ | k * (n * p.2.1 + m * p.2.2) ^ 2 = P p.1}.Infinite
+      ↔ ∃ x0 t0 : ℤ, k * t0 ^ 2 = P x0 ∧ (Int.gcd n m : ℤ) ∣ t0 := by
+  constructor;
+  · intro h_inf
+    obtain ⟨p, hp⟩ : ∃ p : ℤ × ℤ × ℤ, k * (n * p.2.1 + m * p.2.2) ^ 2 = P p.1 := by
+      exact h_inf.nonempty;
+    exact ⟨ p.1, n * p.2.1 + m * p.2.2, hp, Int.dvd_add ( dvd_mul_of_dvd_left ( Int.gcd_dvd_left _ _ ) _ ) ( dvd_mul_of_dvd_left ( Int.gcd_dvd_right _ _ ) _ ) ⟩;
+  · rintro ⟨ x0, t0, ht0, h ⟩;
+    obtain ⟨a, b, hab⟩ : ∃ a b : ℤ, n * a + m * b = Int.gcd n m := by
+      exact Int.gcd_eq_gcd_ab n m ▸ ⟨ _, _, rfl ⟩;
+    -- Let $g = \gcd(n, m)$ and write $t0 = g * s$ for some integer $s$.
+    obtain ⟨s, hs⟩ : ∃ s : ℤ, t0 = Int.gcd n m * s := h
+    set g := Int.gcd n m with hg
+    have hg_pos : 0 < g := by
+      exact Nat.pos_of_ne_zero ( mt Int.gcd_eq_zero_iff.mp hnm )
+    have hn' : n = g * (n / g) := by
+      rw [ mul_comm, Int.ediv_mul_cancel ( Int.gcd_dvd_left _ _ ) ]
+    have hm' : m = g * (m / g) := by
+      rw [ Int.mul_ediv_cancel' ( Int.gcd_dvd_right _ _ ) ]
+    have hn'm' : Int.gcd (n / g) (m / g) = 1 := by
+      rw [ Int.gcd_div ( Int.gcd_dvd_left _ _ ) ( Int.gcd_dvd_right _ _ ), Int.natAbs_natCast, Nat.div_self hg_pos ]
+    have hnm' : n / g * a + m / g * b = 1 := by
+      exact mul_left_cancel₀ ( Nat.cast_ne_zero.mpr hg_pos.ne' ) ( by linear_combination' hab - hn' * a - hm' * b );
+    -- Define the function $f : ℤ → ℤ × ℤ × ℤ$ by $f(w) = (x0, y0 + m' * w, z0 - n' * w)$.
+    set f : ℤ → ℤ × ℤ × ℤ := fun w => (x0, a * s + (m / g) * w, b * s - (n / g) * w) with hf_def
+    have hf_mem : ∀ w : ℤ, f w ∈ {p : ℤ × ℤ × ℤ | k * (n * p.2.1 + m * p.2.2) ^ 2 = P p.1} := by
+      grind +qlia
+    have hf_inj : Function.Injective f := by
+      norm_num [ Function.Injective ];
+      grind +qlia
+    exact Set.infinite_of_injective_forall_mem hf_inj hf_mem
+/-- **The degenerate case `Δ = 0`** (Section 4), stated for the form `A y² + B y z + C z²`.
+Combining the factorisation with the infinitude criterion: with factorisation data
+`(k, n, m)` and non-trivial linear part `(n, m)`, the equation `F(y,z) = P(x)` has
+infinitely many integer solutions iff the reduced equation `k t² = P(x)` has a solution
+whose `t`-coordinate is divisible by `gcd(n, m)`. -/
+theorem degenerate_case {A B C k n m : ℤ}
+    (hA : A = k * n ^ 2) (hB : B = 2 * k * n * m) (hC : C = k * m ^ 2)
+    (hnm : ¬ (n = 0 ∧ m = 0)) (P : ℤ → ℤ) :
+    {p : ℤ × ℤ × ℤ | A * p.2.1 ^ 2 + B * p.2.1 * p.2.2 + C * p.2.2 ^ 2 = P p.1}.Infinite
+      ↔ ∃ x0 t0 : ℤ, k * t0 ^ 2 = P x0 ∧ (Int.gcd n m : ℤ) ∣ t0 := by
+  have hset : {p : ℤ × ℤ × ℤ | A * p.2.1 ^ 2 + B * p.2.1 * p.2.2 + C * p.2.2 ^ 2 = P p.1}
+      = {p : ℤ × ℤ × ℤ | k * (n * p.2.1 + m * p.2.2) ^ 2 = P p.1} := by
+    ext p
+    simp only [Set.mem_setOf_eq, degenerate_reduces hA hB hC]
+  rw [hset, degenerate_infinite_iff hnm P]
 end SumSquaresPaper
