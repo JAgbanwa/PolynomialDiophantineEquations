@@ -1,1 +1,652 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+
+\title{Integer Solutions of \texorpdfstring{$y^2+x^2y+xz^2-2=0$}{y2+x2y+xz2-2=0}}
+\author{}
+\date{}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\Zge}{\mathbb Z_{\ge 0}}
+\newcommand{\Zpos}{\mathbb Z_{\ge 1}}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We give a complete elementary description of the integer solutions of
+\[
+        y^2+x^2y+xz^2-2=0.
+\]
+The solution set is split according to the sign of $x$.  The case $x=0$ is impossible.  For $x>0$, apart from two exceptional solutions, all solutions are obtained from a finite interval condition in the variable $y$.  For $x<0$, all solutions occur in two symmetric branches.  We also exhibit an explicit Pell-type infinite subfamily, proving in particular that the full solution set is infinite.
+\end{abstract}
+
+\section{Statement of the classification}
+
+We study the Diophantine equation
+\begin{equation}\label{eq:main}
+        y^2+x^2y+xz^2-2=0,
+\end{equation}
+with $x,y,z\in\Z$.  Equivalently,
+\begin{equation}\label{eq:factor-form}
+        y(y+x^2)+xz^2=2.
+\end{equation}
+
+The following theorem is the complete classification.
+
+\begin{theorem}\label{thm:classification}
+The integer solutions of \eqref{eq:main} are exactly the following.
+
+\begin{enumerate}[label=\textnormal{(\roman*)},leftmargin=2.1em]
+\item The two positive-$x$ exceptional solutions
+\[
+        (x,y,z)=(1,1,0),\qquad (x,y,z)=(1,-2,0).
+\]
+
+\item The positive-$x$ middle family: for integers
+\[
+        a\in\Zpos,
+        \qquad b\in\Z,
+        \qquad W\in\Zge,
+\]
+satisfying
+\begin{equation}\label{eq:positive-family-condition}
+        0\le b\le a^2,
+        \qquad
+        aW^2=b(a^2-b)+2,
+\end{equation}
+we obtain the solutions
+\begin{equation}\label{eq:positive-family}
+        (x,y,z)=(a,-b,\pm W).
+\end{equation}
+Here, if $W=0$, the two signs give the same solution.
+
+\item The negative-$x$ family: for integers
+\[
+        a\in\Zpos,
+        \qquad b\in\Zpos,
+        \qquad W\in\Zge,
+\]
+satisfying
+\begin{equation}\label{eq:negative-family-condition}
+        aW^2=b(b+a^2)-2,
+\end{equation}
+we obtain the two symmetric branches
+\begin{equation}\label{eq:negative-family-positive-branch}
+        (x,y,z)=(-a,b,\pm W),
+\end{equation}
+and
+\begin{equation}\label{eq:negative-family-negative-branch}
+        (x,y,z)=(-a,-a^2-b,\pm W).
+\end{equation}
+Again, if $W=0$, the two signs give the same solution.
+\end{enumerate}
+
+Conversely, every triple listed in \textnormal{(i)}, \textnormal{(ii)}, or \textnormal{(iii)} is an integer solution of \eqref{eq:main}, and there are no other integer solutions.
+\end{theorem}
+
+The rest of the note is a proof of Theorem \ref{thm:classification}, followed by an explicit infinite subfamily.
+
+\section{Elementary preliminaries}
+
+\begin{lemma}[No solution with $x=0$]\label{lem:x-zero}
+There is no integer solution of \eqref{eq:main} with $x=0$.
+\end{lemma}
+
+\begin{proof}
+If $x=0$, equation \eqref{eq:main} becomes
+\[
+        y^2-2=0,
+\]
+so $y^2=2$.  No integer square is equal to $2$.  Hence no integer solution has $x=0$.
+\end{proof}
+
+\begin{lemma}[The involution in $y$]\label{lem:involution}
+For fixed integers $x$ and $z$, the expression
+\[
+        y^2+x^2y+xz^2-2
+\]
+is invariant under the transformation
+\begin{equation}\label{eq:involution}
+        y\longmapsto -x^2-y.
+\end{equation}
+Consequently, if $(x,y,z)$ is a solution of \eqref{eq:main}, then so is
+\[
+        (x,-x^2-y,z).
+\]
+\end{lemma}
+
+\begin{proof}
+Let $y'=-x^2-y$.  Then
+\[
+        y'+x^2=-y.
+\]
+Therefore
+\[
+        y'(y'+x^2)=(-x^2-y)(-y)=y(y+x^2).
+\]
+Since \eqref{eq:main} is equivalent to
+\[
+        y(y+x^2)+xz^2=2,
+\]
+the value of the left-hand side is unchanged when $y$ is replaced by $y'=-x^2-y$.  This proves the claim.
+\end{proof}
+
+\begin{lemma}[Discriminant form]\label{lem:discriminant}
+Let $x,y,z\in\Z$.  Then $(x,y,z)$ satisfies \eqref{eq:main} if and only if, with
+\begin{equation}\label{eq:U-def}
+        U=2y+x^2,
+\end{equation}
+one has
+\begin{equation}\label{eq:discriminant-form}
+        U^2=x^4-4xz^2+8.
+\end{equation}
+Equivalently, the solutions are exactly the triples obtained as
+\begin{equation}\label{eq:y-from-discriminant}
+        y=\frac{-x^2+U}{2},
+\end{equation}
+where $x,z,U\in\Z$ satisfy \eqref{eq:discriminant-form}.
+In this equivalent formulation, the integrality of $y$ is automatic from \eqref{eq:discriminant-form}.
+\end{lemma}
+
+\begin{proof}
+Starting from \eqref{eq:main}, multiply by $4$:
+\[
+        4y^2+4x^2y+4xz^2-8=0.
+\]
+Since
+\[
+        (2y+x^2)^2=4y^2+4x^2y+x^4,
+\]
+we obtain
+\[
+        (2y+x^2)^2=x^4-4xz^2+8.
+\]
+Thus \eqref{eq:discriminant-form} holds with $U=2y+x^2$.
+
+Conversely, suppose $x,z,U\in\Z$ satisfy \eqref{eq:discriminant-form}.  We first check that $(-x^2+U)/2$ is an integer.  If $x$ is odd, then
+\[
+        x^4-4xz^2+8\equiv 1\pmod 4,
+\]
+so $U^2\equiv 1\pmod 4$, and therefore $U$ is odd.  Thus $U$ and $x^2$ have the same parity.  If $x$ is even, then
+\[
+        x^4-4xz^2+8\equiv 0\pmod 4,
+\]
+so $U^2\equiv 0\pmod 4$, and therefore $U$ is even.  Again $U$ and $x^2$ have the same parity.  Hence $y=(-x^2+U)/2\in\Z$.
+
+For this integer $y$, we have $U=2y+x^2$.  Substituting this identity into \eqref{eq:discriminant-form} gives
+\[
+        (2y+x^2)^2=x^4-4xz^2+8.
+\]
+Expanding and cancelling $x^4$ gives
+\[
+        4y^2+4x^2y=-4xz^2+8.
+\]
+Dividing by $4$ gives
+\[
+        y^2+x^2y+xz^2-2=0.
+\]
+Thus $(x,y,z)$ is a solution of \eqref{eq:main}.
+\end{proof}
+
+\begin{remark}
+Lemma \ref{lem:discriminant} is a compact complete description of the solution set: it says that $x,z$ may be chosen exactly when $x^4-4xz^2+8$ is a square, and then $y$ is forced up to the two choices $U=\pm\sqrt{x^4-4xz^2+8}$.  The sign-split theorem below is more structural because it records the exact ranges forced by the sign of $x$.
+\end{remark}
+
+\section{The positive-x case}
+
+\begin{lemma}[Positive $x$: the only outer solutions]\label{lem:positive-outer}
+Let $(x,y,z)$ be an integer solution of \eqref{eq:main} with $x>0$.  Write $x=a$, where $a\in\Zpos$.  If
+\[
+        y\notin [-a^2,0],
+\]
+then
+\[
+        (a,y,z)=(1,1,0)
+        \quad\text{or}\quad
+        (a,y,z)=(1,-2,0).
+\]
+\end{lemma}
+
+\begin{proof}
+With $x=a>0$, equation \eqref{eq:factor-form} becomes
+\begin{equation}\label{eq:positive-factor}
+        y(y+a^2)+az^2=2.
+\end{equation}
+Since $a>0$ and $z^2\ge 0$, we have
+\begin{equation}\label{eq:positive-product-bound}
+        y(y+a^2)\le 2.
+\end{equation}
+
+Assume first that $y\ge 1$.  Then
+\[
+        y(y+a^2)\ge 1(1+a^2)=a^2+1.
+\]
+Together with \eqref{eq:positive-product-bound}, this gives
+\[
+        a^2+1\le 2.
+\]
+Since $a\in\Zpos$, this forces $a=1$.  Then the inequalities above force $y=1$, because if $a=1$ and $y\ge 2$, then
+\[
+        y(y+1)\ge 2\cdot 3=6>2.
+\]
+Substituting $a=1$ and $y=1$ into \eqref{eq:positive-factor} gives
+\[
+        1\cdot 2+z^2=2,
+\]
+so $z^2=0$, hence $z=0$.  This gives $(a,y,z)=(1,1,0)$.
+
+Assume now that $y\le -a^2-1$.  Then $y=-a^2-t$ for some integer $t\ge 1$.  Hence
+\[
+        y+a^2=-t
+\]
+and therefore
+\[
+        y(y+a^2)=(-a^2-t)(-t)=t(a^2+t)\ge a^2+1.
+\]
+Again \eqref{eq:positive-product-bound} gives $a^2+1\le 2$, so $a=1$.  With $a=1$, if $t\ge 2$, then
+\[
+        t(1+t)\ge 2\cdot 3=6>2,
+\]
+which is impossible.  Hence $t=1$, so $y=-2$.  Substituting $a=1$ and $y=-2$ into \eqref{eq:positive-factor} gives
+\[
+        (-2)(-1)+z^2=2,
+\]
+so $z^2=0$, hence $z=0$.  This gives $(a,y,z)=(1,-2,0)$.
+
+The two alternatives $y\ge 1$ and $y\le -a^2-1$ are precisely the condition $y\notin[-a^2,0]$.  The lemma follows.
+\end{proof}
+
+\begin{lemma}[Positive $x$: the middle interval]\label{lem:positive-middle}
+Let $a\in\Zpos$.  The integer solutions of \eqref{eq:main} with
+\[
+        x=a,
+        \qquad -a^2\le y\le 0
+\]
+are exactly the triples
+\[
+        (x,y,z)=(a,-b,\pm W),
+\]
+where $b,W\in\Z$ satisfy
+\[
+        0\le b\le a^2,
+        \qquad W\ge 0,
+        \qquad aW^2=b(a^2-b)+2.
+\]
+\end{lemma}
+
+\begin{proof}
+Suppose first that $(a,y,z)$ is a solution with $-a^2\le y\le 0$.  Put
+\[
+        b=-y,
+        \qquad W=|z|.
+\]
+Then $0\le b\le a^2$ and $W\in\Zge$.  Substituting $y=-b$ and $z^2=W^2$ into \eqref{eq:main} gives
+\[
+        b^2-a^2b+aW^2-2=0.
+\]
+Equivalently,
+\[
+        aW^2=a^2b-b^2+2=b(a^2-b)+2.
+\]
+Thus every such solution gives parameters satisfying the stated condition.
+
+Conversely, suppose $a\in\Zpos$, $b\in\Z$, and $W\in\Zge$ satisfy
+\[
+        0\le b\le a^2,
+        \qquad aW^2=b(a^2-b)+2.
+\]
+Set
+\[
+        x=a,
+        \qquad y=-b,
+        \qquad z=\pm W.
+\]
+Then
+\[
+\begin{aligned}
+        y^2+x^2y+xz^2-2
+        &=b^2-a^2b+aW^2-2 \\
+        &=b^2-a^2b+\bigl(b(a^2-b)+2\bigr)-2 \\
+        &=0.
+\end{aligned}
+\]
+Hence each listed triple is indeed a solution.
+\end{proof}
+
+\begin{proposition}[Positive-$x$ classification]\label{prop:positive-classification}
+The integer solutions of \eqref{eq:main} with $x>0$ are exactly
+\[
+        (1,1,0),\qquad (1,-2,0),
+\]
+together with the family
+\[
+        (x,y,z)=(a,-b,\pm W)
+\]
+where $a\in\Zpos$, $W\in\Zge$, $0\le b\le a^2$, and
+\[
+        aW^2=b(a^2-b)+2.
+\]
+\end{proposition}
+
+\begin{proof}
+Let $(x,y,z)$ be a solution with $x>0$, and write $x=a\in\Zpos$.  If $y\notin[-a^2,0]$, Lemma \ref{lem:positive-outer} gives exactly the two exceptional solutions.  If $-a^2\le y\le 0$, Lemma \ref{lem:positive-middle} gives exactly the stated family.  The converse direction for the exceptional solutions is checked directly, and the converse direction for the family is proved in Lemma \ref{lem:positive-middle}.  Hence the proposition follows.
+\end{proof}
+
+\section{The negative-x case}
+
+\begin{lemma}[Negative $x$: allowed ranges for $y$]\label{lem:negative-ranges}
+Let $(x,y,z)$ be an integer solution of \eqref{eq:main} with $x<0$.  Write $x=-a$, where $a\in\Zpos$.  Then
+\[
+        y>0
+        \qquad\text{or}\qquad
+        y<-a^2.
+\]
+Equivalently, no solution with $x=-a$ has
+\[
+        -a^2\le y\le 0.
+\]
+\end{lemma}
+
+\begin{proof}
+With $x=-a$, equation \eqref{eq:factor-form} becomes
+\begin{equation}\label{eq:negative-factor}
+        y(y+a^2)-az^2=2.
+\end{equation}
+Thus
+\begin{equation}\label{eq:negative-product}
+        y(y+a^2)=2+az^2.
+\end{equation}
+Because $a\ge 1$ and $z^2\ge 0$, the right-hand side is at least $2$.  Hence
+\begin{equation}\label{eq:negative-product-positive}
+        y(y+a^2)\ge 2>0.
+\end{equation}
+If $-a^2\le y\le 0$, then $y\le 0$ and $y+a^2\ge 0$, so
+\[
+        y(y+a^2)\le 0,
+\]
+contradicting \eqref{eq:negative-product-positive}.  Therefore $y$ cannot lie in $[-a^2,0]$.  Since $y$ is an integer, this means $y>0$ or $y<-a^2$.
+\end{proof}
+
+\begin{lemma}[Negative $x$: parametrization of both branches]\label{lem:negative-branches}
+Let $a\in\Zpos$.  The integer solutions of \eqref{eq:main} with $x=-a$ are exactly the following triples.  Choose $b\in\Zpos$ and $W\in\Zge$ satisfying
+\[
+        aW^2=b(b+a^2)-2.
+\]
+Then take either
+\[
+        (x,y,z)=(-a,b,\pm W)
+\]
+or
+\[
+        (x,y,z)=(-a,-a^2-b,\pm W).
+\]
+\end{lemma}
+
+\begin{proof}
+Let $(x,y,z)$ be a solution with $x=-a$.  By Lemma \ref{lem:negative-ranges}, either $y>0$ or $y<-a^2$.
+
+First suppose $y>0$.  Put
+\[
+        b=y,
+        \qquad W=|z|.
+\]
+Then $b\in\Zpos$ and $W\in\Zge$.  Equation \eqref{eq:negative-factor} gives
+\[
+        b(b+a^2)-aW^2=2,
+\]
+that is,
+\[
+        aW^2=b(b+a^2)-2.
+\]
+Thus the solution is of the form $(-a,b,\pm W)$ with the stated condition.
+
+Now suppose $y<-a^2$.  Put
+\[
+        b=-a^2-y,
+        \qquad W=|z|.
+\]
+Then $b\in\Zpos$, and $y=-a^2-b$.  Hence
+\[
+        y+a^2=-b,
+\]
+so
+\[
+        y(y+a^2)=(-a^2-b)(-b)=b(b+a^2).
+\]
+Using \eqref{eq:negative-factor}, we again obtain
+\[
+        b(b+a^2)-aW^2=2,
+\]
+or equivalently
+\[
+        aW^2=b(b+a^2)-2.
+\]
+Thus the solution is of the form $(-a,-a^2-b,\pm W)$ with the stated condition.
+
+Conversely, suppose $a\in\Zpos$, $b\in\Zpos$, and $W\in\Zge$ satisfy
+\[
+        aW^2=b(b+a^2)-2.
+\]
+For the first branch, set $(x,y,z)=(-a,b,\pm W)$.  Then
+\[
+\begin{aligned}
+        y^2+x^2y+xz^2-2
+        &=b^2+a^2b-aW^2-2 \\
+        &=b(b+a^2)-aW^2-2 \\
+        &=0.
+\end{aligned}
+\]
+For the second branch, set $(x,y,z)=(-a,-a^2-b,\pm W)$.  Then
+\[
+        y+a^2=-b,
+\]
+so
+\[
+        y(y+a^2)=b(b+a^2).
+\]
+Therefore
+\[
+\begin{aligned}
+        y^2+x^2y+xz^2-2
+        &=y(y+a^2)-aW^2-2 \\
+        &=b(b+a^2)-aW^2-2 \\
+        &=0.
+\end{aligned}
+\]
+Hence every listed triple is a solution, and the lemma follows.
+\end{proof}
+
+\begin{proposition}[Negative-$x$ classification]\label{prop:negative-classification}
+The integer solutions of \eqref{eq:main} with $x<0$ are exactly the negative-$x$ family in Theorem \ref{thm:classification}\textnormal{(iii)}.
+\end{proposition}
+
+\begin{proof}
+This is precisely Lemma \ref{lem:negative-branches}.
+\end{proof}
+
+\section{Proof of the complete classification}
+
+\begin{proof}[Proof of Theorem \ref{thm:classification}]
+By Lemma \ref{lem:x-zero}, no solution has $x=0$.  Hence every integer solution has either $x>0$ or $x<0$.
+
+If $x>0$, Proposition \ref{prop:positive-classification} gives exactly the two exceptional solutions and the positive-$x$ middle family.  If $x<0$, Proposition \ref{prop:negative-classification} gives exactly the negative-$x$ family.  Each family has already been checked by direct substitution in the corresponding lemma.  Therefore the three lists in Theorem \ref{thm:classification} are necessary and sufficient, and there are no further integer solutions.
+\end{proof}
+
+\section{An explicit infinite subfamily}
+
+The classification above already gives a complete description.  We now show explicitly that the solution set is infinite.
+
+\begin{proposition}[A Pell-type infinite family]\label{prop:pell-family}
+Define integer sequences $(U_n)_{n\ge 0}$ and $(Z_n)_{n\ge 0}$ by
+\begin{equation}\label{eq:pell-init}
+        U_0=573,
+        \qquad Z_0=60,
+\end{equation}
+and
+\begin{equation}\label{eq:pell-recursion}
+        U_{n+1}=33U_n+272Z_n,
+        \qquad
+        Z_{n+1}=4U_n+33Z_n.
+\end{equation}
+Then, for every $n\ge 0$, the triples
+\begin{equation}\label{eq:pell-solutions-positive-y}
+        \left(-17,\frac{U_n-289}{2},\pm Z_n\right)
+\end{equation}
+and
+\begin{equation}\label{eq:pell-solutions-negative-y}
+        \left(-17,\frac{-U_n-289}{2},\pm Z_n\right)
+\end{equation}
+are integer solutions of \eqref{eq:main}.  These solutions are infinitely many and pairwise distinct as $n$ varies.
+\end{proposition}
+
+\begin{proof}
+Set $x=-17$.  Equation \eqref{eq:main} becomes
+\begin{equation}\label{eq:x-minus-17}
+        y^2+289y-17z^2-2=0.
+\end{equation}
+Equivalently,
+\begin{equation}\label{eq:x-minus-17-factor}
+        y^2+289y-17z^2=2.
+\end{equation}
+Multiplying by $4$ and completing the square gives
+\[
+        (2y+289)^2-68z^2=289^2+8.
+\]
+Since
+\[
+        289^2+8=83521+8=83529,
+\]
+we obtain the Pell-type equation
+\begin{equation}\label{eq:pell-target}
+        U^2-68z^2=83529,
+        \qquad U=2y+289.
+\end{equation}
+
+The initial pair $(U_0,Z_0)=(573,60)$ satisfies \eqref{eq:pell-target}, because
+\[
+        573^2-68\cdot 60^2
+        =328329-244800
+        =83529.
+\]
+Also
+\[
+        33^2-68\cdot 4^2=1089-1088=1.
+\]
+We claim that every pair $(U_n,Z_n)$ satisfies
+\begin{equation}\label{eq:pell-invariant}
+        U_n^2-68Z_n^2=83529.
+\end{equation}
+Indeed, using \eqref{eq:pell-recursion},
+\[
+\begin{aligned}
+        U_{n+1}^2-68Z_{n+1}^2
+        &=(33U_n+272Z_n)^2-68(4U_n+33Z_n)^2 \\
+        &=(33^2-68\cdot 4^2)U_n^2 \\
+        &\quad +\bigl(2\cdot 33\cdot 272-68\cdot 2\cdot 4\cdot 33\bigr)U_nZ_n \\
+        &\quad +(272^2-68\cdot 33^2)Z_n^2.
+\end{aligned}
+\]
+The mixed coefficient is zero because $272=68\cdot 4$.  Moreover,
+\[
+        33^2-68\cdot 4^2=1
+\]
+and
+\[
+        272^2-68\cdot 33^2
+        =68^2\cdot 4^2-68\cdot 33^2
+        =68(68\cdot 16-33^2)
+        =68(1088-1089)
+        =-68.
+\]
+Therefore
+\[
+        U_{n+1}^2-68Z_{n+1}^2=U_n^2-68Z_n^2.
+\]
+Since the value is $83529$ at $n=0$, induction proves \eqref{eq:pell-invariant} for all $n\ge 0$.
+
+Next we check integrality of the displayed $y$-coordinates.  The integer $U_0=573$ is odd.  If $U_n$ is odd, then
+\[
+        U_{n+1}=33U_n+272Z_n
+\]
+is odd, because $33U_n$ is odd and $272Z_n$ is even.  Hence every $U_n$ is odd.  Since $289$ is odd, both
+\[
+        \frac{U_n-289}{2}
+        \qquad\text{and}\qquad
+        \frac{-U_n-289}{2}
+\]
+are integers.
+
+By \eqref{eq:pell-invariant}, the pair $(U_n,Z_n)$ satisfies \eqref{eq:pell-target}.  Taking
+\[
+        U=U_n
+\]
+gives
+\[
+        y=\frac{U_n-289}{2},
+\]
+and taking
+\[
+        U=-U_n
+\]
+gives
+\[
+        y=\frac{-U_n-289}{2}.
+\]
+In both cases, \eqref{eq:pell-target} holds, and therefore the corresponding triples with $x=-17$ and $z=\pm Z_n$ satisfy \eqref{eq:main} by the completed-square equivalence above, or by Lemma \ref{lem:discriminant}.
+
+Finally, we show that these give infinitely many distinct solutions.  Since $U_0>0$ and $Z_0>0$, the recursion gives $U_n>0$ and $Z_n>0$ for every $n$.  Moreover,
+\[
+        U_{n+1}=33U_n+272Z_n>U_n.
+\]
+Thus the sequence $(U_n)$ is strictly increasing.  Consequently the numbers
+\[
+        \frac{U_n-289}{2}
+\]
+are pairwise distinct, and hence the corresponding triples are pairwise distinct.  Therefore \eqref{eq:main} has infinitely many integer solutions.
+\end{proof}
+
+\begin{example}
+The first values of Proposition \ref{prop:pell-family} give
+\[
+        (-17,142,\pm 60),
+        \qquad
+        (-17,-431,\pm 60),
+\]
+then
+\[
+        (-17,17470,\pm 4272),
+        \qquad
+        (-17,-17759,\pm 4272),
+\]
+and then
+\[
+        (-17,1162126,\pm 281892),
+        \qquad
+        (-17,-1162415,\pm 281892).
+\]
+Each negative-$y$ value is obtained from the corresponding positive-$y$ value by the involution $y\mapsto -289-y$ from Lemma \ref{lem:involution}.
+\end{example}
+
+\section{Final conclusion}
+
+Combining Theorem \ref{thm:classification} and Proposition \ref{prop:pell-family}, the equation
+\[
+        y^2+x^2y+xz^2-2=0
+\]
+has a complete elementary solution description and infinitely many integer solutions.  The complete description is the sign-split family in Theorem \ref{thm:classification}; the infinite Pell-type subfamily in Proposition \ref{prop:pell-family} is an explicit proper subfamily witnessing infinitude.
+
+\end{document}
 
