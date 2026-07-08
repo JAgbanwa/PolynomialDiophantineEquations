@@ -11,4 +11,6 @@ attempts (solutions at best) to this catalogue of open polynomial diophantine pr
 | [\[6\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/pellian_infinite_family_diophantine) | Prove that the equation: $y^2 + x^2 \cdot y + z^2 \cdot x + 1 = 0$ has infinitely many integer solutions| 🟡 Pending feedback |
 | [\[7\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_y_x3_z2_z_plus_1) | Prove that the equation: $y(x³ − z²) = z + 1$ has infinitely many integer solutions| 🟡 Pending feedback |
 | [\[8\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_y_x3_minus_z2_equals_x_minus_1) | Prove that the equation: $y(x³ − z²) = x - 1$ has infinitely many integer solutions| 🟡 Pending feedback |
+| [\[9\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_y2_x2y_xz2_minus2_solution) | Prove that the equation: $y(x³ − z²) = x - 1$ has infinitely many integer solutions| 🟡 Pending feedback |
+
 
