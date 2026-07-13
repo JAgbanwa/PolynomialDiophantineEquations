@@ -1,0 +1,849 @@
+\documentclass[a4paper,11pt]{amsart}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\hypersetup{
+  hidelinks,
+  pdftitle={Integral Solutions of z2-xy2=x3+2},
+  pdfauthor={Jamal Agbanwa},
+  pdfsubject={A complete effective classification of the integer solutions},
+  pdfkeywords={Diophantine equation, Pell equation, generalized Pell equation}
+}
+
+\allowdisplaybreaks
+\numberwithin{equation}{section}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\R}{\mathbb R}
+\newcommand{\N}{\mathbb N}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\Acal}{\mathcal A}
+\newcommand{\Rcal}{\mathcal R}
+\newcommand{\Norm}{\operatorname N}
+
+\title[Integral solutions of a cubic norm equation]
+{Integral Solutions of \texorpdfstring{$z^2-xy^2=x^3+2$}{z2-xy2=x3+2}}
+
+\author{}
+\address{}
+\date{}
+
+\subjclass[2020]{Primary 11D09; Secondary 11D25, 11D41}
+\keywords{Diophantine equation, Pell equation, generalized Pell equation, integral points, quadratic norm}
+
+\begin{document}
+
+\begin{abstract}
+We give a complete and effective description of the integer solutions of
+\(z^2-xy^2=x^3+2\).  The nonpositive and positive even values of \(x\) are
+settled completely, while positive square values of \(x\) reduce to a finite
+divisor factorization.  For every positive nonsquare value of \(x\), the
+solutions split uniquely into finitely many orbits under the positive
+norm-one units of \(\Z[\sqrt{x}]\), and the orbit representatives lie in an
+explicit bounded interval.  In particular, a single value, \(x=23\), already
+gives infinitely many integer solutions.
+\end{abstract}
+
+\maketitle
+
+\section{Statement of the classification}
+
+We study the equation
+\begin{equation}\label{eq:main}
+ z^2-xy^2=x^3+2,
+ \qquad (x,y,z)\in\Z^3.
+\end{equation}
+The equation is unchanged by either of the independent sign changes
+\(y\mapsto-y\) and \(z\mapsto-z\).  It is therefore natural to classify the
+pairs \((|y|,|z|)\) and restore signs at the end.
+
+Define
+\begin{equation}\label{eq:Adef}
+ \Acal=
+ \left\{
+ n\in\Z_{>0}:
+ n\text{ is odd and every prime }p\mid n
+ \text{ satisfies }p\equiv1\text{ or }7\pmod 8
+ \right\}.
+\end{equation}
+The integer \(1\) belongs to \(\Acal\), since the condition on its prime
+divisors is vacuous.
+
+For a positive nonsquare integer \(D\), let
+\begin{equation}\label{eq:fundamental-unit}
+ \eps_D=u_D+v_D\sqrt D>1
+\end{equation}
+be the least real number of the indicated form for which
+\begin{equation}\label{eq:pell-unit}
+ u_D,v_D\in\Z,
+ \qquad
+ u_D^2-Dv_D^2=1.
+\end{equation}
+We shall prove from first principles that \(\eps_D\) exists, that
+\(u_D,v_D>0\), and that every positive norm-one unit in \(\Z[\sqrt D]\) is a
+nonnegative power of \(\eps_D\).
+
+Put
+\begin{equation}\label{eq:ND}
+ N_D=D^3+2
+\end{equation}
+and define the reduced seed set
+\begin{equation}\label{eq:seed-set}
+ \Rcal_D=
+ \left\{
+ (A,B)\in\Z_{>0}\times\Z_{\geq0}:
+ \begin{array}{l}
+ A^2-DB^2=N_D,\\[2mm]
+ \sqrt{N_D}\leq A+B\sqrt D<\eps_D\sqrt{N_D}
+ \end{array}
+ \right\}.
+\end{equation}
+
+\begin{theorem}[Complete classification]\label{thm:main}
+All integer solutions of \eqref{eq:main} are exactly the following.
+
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=2.2em]
+\item The solutions with \(x\leq0\) are
+\begin{equation}\label{eq:negative-solutions}
+ (-1,0,1),\quad (-1,0,-1),\quad
+ (-1,1,0),\quad (-1,-1,0).
+\end{equation}
+There are no solutions with \(x=0\) or \(x\leq-2\).
+
+\item Let \(m\in\Acal\), put \(x=m^2\), and set
+\begin{equation}\label{eq:Nm}
+ N_m=m^6+2.
+\end{equation}
+For each positive divisor \(d\mid N_m\) satisfying
+\begin{equation}\label{eq:divisor-condition}
+ d<\sqrt{N_m},
+ \qquad
+ \frac{N_m}{d}\equiv d\pmod{2m},
+\end{equation}
+put
+\begin{equation}\label{eq:square-formulas}
+ Y_{m,d}=\frac{N_m/d-d}{2m},
+ \qquad
+ Z_{m,d}=\frac{N_m/d+d}{2}.
+\end{equation}
+Then
+\begin{equation}\label{eq:square-solutions}
+ (x,y,z)=\bigl(m^2,\,\sigma Y_{m,d},\,\tau Z_{m,d}\bigr),
+ \qquad \sigma,\tau\in\{1,-1\},
+\end{equation}
+are precisely the solutions for which \(x\) is a positive square.  For fixed
+\(m\), the divisor \(d\) is uniquely determined by \((|y|,|z|)\).
+
+\item Let \(D\in\Acal\) be nonsquare.  For a seed
+\((A_0,B_0)\in\Rcal_D\), define integer sequences by
+\begin{equation}\label{eq:pell-recurrence}
+ \begin{aligned}
+ A_{n+1}&=u_DA_n+Dv_DB_n,\\
+ B_{n+1}&=v_DA_n+u_DB_n
+ \end{aligned}
+ \qquad(n\geq0).
+\end{equation}
+Equivalently,
+\begin{equation}\label{eq:orbit-product}
+ A_n+B_n\sqrt D=(A_0+B_0\sqrt D)\eps_D^n.
+\end{equation}
+Then
+\begin{equation}\label{eq:nonsquare-solutions}
+ (x,y,z)=\bigl(D,\,\sigma B_n,\,\tau A_n\bigr),
+ \qquad
+ (A_0,B_0)\in\Rcal_D,
+ \quad n\in\Z_{\geq0},
+ \quad \sigma,\tau\in\{1,-1\},
+\end{equation}
+are precisely the solutions for which \(x\) is positive and nonsquare.
+Every pair \((|z|,|y|)\) has a unique representation
+\eqref{eq:orbit-product}.  Moreover, \(\Rcal_D\) is finite and every one of
+its elements satisfies
+\begin{equation}\label{eq:seed-bounds}
+ 0\leq B_0<v_D\sqrt{N_D},
+ \qquad
+ 0<A_0<u_D\sqrt{N_D}.
+\end{equation}
+\end{enumerate}
+
+There are no further solutions.  In particular, if \(x>0\) occurs in a
+solution, then \(x\in\Acal\).
+\end{theorem}
+
+The theorem is an effective classification.  In the square case, one tests
+the finitely many divisors of \(m^6+2\).  In the nonsquare case, one first
+finds the least Pell unit \(\eps_D\), and then the strict bound
+\(B_0^2<v_D^2N_D\) leaves only finitely many possible integers \(B_0\) to
+check in \eqref{eq:seed-set}.
+
+\section{Restrictions on the parameter \texorpdfstring{$x$}{x}}
+
+We begin with the nonpositive values.
+
+\begin{lemma}\label{lem:nonpositive}
+The only solutions of \eqref{eq:main} with \(x\leq0\) are those in
+\eqref{eq:negative-solutions}.
+\end{lemma}
+
+\begin{proof}
+If \(x=0\), then \eqref{eq:main} becomes \(z^2=2\), which has no integer
+solution.
+
+Now let \(x=-a\), where \(a\in\Z_{>0}\).  Substitution in
+\eqref{eq:main} gives
+\begin{equation}\label{eq:negative-x}
+ z^2+ay^2=2-a^3.
+\end{equation}
+If \(a\geq2\), then the left-hand side is nonnegative whereas
+\(2-a^3\leq-6\), a contradiction.  Hence \(a=1\), so that \(x=-1\) and
+\begin{equation}\label{eq:unit-circle-integral}
+ y^2+z^2=1.
+\end{equation}
+Since \(y^2,z^2\) are nonnegative integers whose sum is \(1\), one of them
+is \(1\) and the other is \(0\).  This gives exactly the four triples in
+\eqref{eq:negative-solutions}.
+\end{proof}
+
+The next elementary residue lemma is the only quadratic-residue input needed
+below.
+
+\begin{lemma}\label{lem:two-residue}
+Let \(p\) be an odd prime.  If the congruence
+\begin{equation}\label{eq:two-square-mod-p}
+ r^2\equiv2\pmod p
+\end{equation}
+has an integer solution, then
+\begin{equation}\label{eq:pmod8}
+ p\equiv1\quad\text{or}\quad7\pmod8.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Write \(h=(p-1)/2\).  For each \(j\in\{1,\ldots,h\}\), reduce \(2j\)
+modulo \(p\) to a signed representative
+\(\delta_j a_j\), where \(\delta_j\in\{1,-1\}\) and
+\(a_j\in\{1,\ldots,h\}\).  The numbers \(a_1,\ldots,a_h\) form a
+permutation of \(1,\ldots,h\).  Indeed, if
+\(a_i=a_j\), then \(2i\equiv\pm2j\pmod p\).  The plus sign gives \(i=j\),
+whereas the minus sign would give \(i+j\equiv0\pmod p\), which is impossible
+because \(2\leq i+j\leq p-1\).
+
+Let \(M\) be the number of negative signs \(\delta_j=-1\).  Multiplying all
+of the congruences \(2j\equiv\delta_ja_j\pmod p\), and then cancelling the
+nonzero residue \(h!\), yields
+\begin{equation}\label{eq:gauss-two}
+ 2^h\equiv(-1)^M\pmod p.
+\end{equation}
+Because \(2j\) lies between \(2\) and \(p-1\), the signed representative is
+negative precisely when \(2j>p/2\).  Therefore
+\begin{equation}\label{eq:Mcount}
+ M=h-\left\lfloor\frac p4\right\rfloor.
+\end{equation}
+A direct calculation in the four odd residue classes modulo \(8\) gives
+\begin{equation}\label{eq:Mparity}
+ M\equiv
+ \begin{cases}
+ 0\pmod2,&p\equiv1,7\pmod8,\\
+ 1\pmod2,&p\equiv3,5\pmod8.
+ \end{cases}
+\end{equation}
+
+Suppose now that \eqref{eq:two-square-mod-p} holds.  Then \(p\nmid r\).
+Multiplication by \(r\) permutes the nonzero residue classes modulo \(p\), so
+\begin{equation*}
+ r^{p-1}(p-1)!\equiv(p-1)!\pmod p.
+\end{equation*}
+Cancelling \((p-1)!\) proves \(r^{p-1}\equiv1\pmod p\).  Consequently
+\begin{equation}\label{eq:twoh-one}
+ 2^h\equiv(r^2)^h=r^{p-1}\equiv1\pmod p.
+\end{equation}
+Equations \eqref{eq:gauss-two}--\eqref{eq:Mparity} now force \(M\) to be
+even, and hence \(p\equiv1\) or \(7\pmod8\).
+\end{proof}
+
+\begin{proposition}\label{prop:positive-restrictions}
+If \((x,y,z)\) satisfies \eqref{eq:main} with \(x>0\), then \(x\) is odd and
+\(x\in\Acal\).  In particular, no positive even value of \(x\) occurs.
+\end{proposition}
+
+\begin{proof}
+Reduction of \eqref{eq:main} modulo \(x\) gives
+\begin{equation}\label{eq:z2modx}
+ z^2\equiv2\pmod x.
+\end{equation}
+Thus, for every odd prime \(p\mid x\), the congruence \(z^2\equiv2\pmod p\)
+holds.  Lemma~\ref{lem:two-residue} then gives
+\(p\equiv1\) or \(7\pmod8\).
+
+It remains to exclude even \(x\).  If \(4\mid x\), then
+\eqref{eq:z2modx} implies \(z^2\equiv2\pmod4\), impossible because a square
+modulo \(4\) is \(0\) or \(1\).  Hence any hypothetical even solution would
+have
+\begin{equation}\label{eq:x2m}
+ x=2m
+\end{equation}
+with \(m\) odd.  Equation \eqref{eq:main} becomes
+\begin{equation}\label{eq:even-x-equation}
+ z^2=2my^2+8m^3+2.
+\end{equation}
+If \(y\) were even, then the right-hand side would be congruent to \(2\)
+modulo \(8\), again impossible for a square.  Thus \(y\) is odd.  Every odd
+square is congruent to \(1\) or \(9\pmod{16}\), and therefore
+\(2my^2\equiv2m\pmod{16}\).  Since \(m\) is odd, also
+\(8m^3\equiv8\pmod{16}\).  It follows that
+\begin{equation}\label{eq:z2mod16}
+ z^2\equiv2m+10\pmod{16}.
+\end{equation}
+The right-hand side is even, so it must be one of the even square residues
+\(0,4\pmod{16}\).  Hence
+\begin{equation}\label{eq:m35}
+ m\equiv3\quad\text{or}\quad5\pmod8.
+\end{equation}
+
+On the other hand, reducing \eqref{eq:even-x-equation} modulo \(m\) gives
+\(z^2\equiv2\pmod m\).  By the first paragraph of the proof, every prime
+divisor of \(m\) is congruent to \(1\) or \(-1\pmod8\).  The product of
+arbitrarily many residues from \(\{1,-1\}\) is again \(1\) or \(-1\), even
+when prime powers are counted with multiplicity.  Therefore
+\begin{equation}\label{eq:mpm1}
+ m\equiv1\quad\text{or}\quad7\pmod8,
+\end{equation}
+contradicting \eqref{eq:m35}.  Thus \(x\) is odd.  Together with the prime
+restriction already proved, this says exactly that \(x\in\Acal\).
+\end{proof}
+
+\section{The positive square case}
+
+We now give a finite factorization of all solutions for which \(x\) is a
+square.
+
+\begin{proposition}\label{prop:square-case}
+Let \(m\in\Z_{>0}\).  Equation \eqref{eq:main} has a solution with
+\(x=m^2\) if and only if \(m\in\Acal\) and there is a positive divisor
+\(d\mid m^6+2\) satisfying \eqref{eq:divisor-condition}.  For every such
+\(d\), all corresponding solutions are given by
+\eqref{eq:square-formulas}--\eqref{eq:square-solutions}, and this
+parametrization is unique up to the independent signs of \(y\) and \(z\).
+\end{proposition}
+
+\begin{proof}
+Suppose first that \((m^2,y,z)\) is a solution.  By
+Proposition~\ref{prop:positive-restrictions}, \(m^2\in\Acal\), and hence
+\(m\in\Acal\).  In particular, \(m\) is odd.  The equation is
+\begin{equation}\label{eq:square-norm}
+ z^2-m^2y^2=m^6+2=N_m.
+\end{equation}
+The integer \(N_m\) is not a square, since
+\begin{equation}\label{eq:Nm-between-squares}
+ m^6<N_m=m^6+2<(m^3+1)^2=m^6+2m^3+1.
+\end{equation}
+In particular, \(y\neq0\), for otherwise \eqref{eq:square-norm} would make
+\(N_m=z^2\).
+
+Set
+\begin{equation}\label{eq:YZabs}
+ Y=|y|,
+ \qquad Z=|z|.
+\end{equation}
+Since \(Z^2-m^2Y^2=N_m>0\), we have \(Z>mY\).  Therefore
+\begin{equation}\label{eq:de-def}
+ d=Z-mY,
+ \qquad
+ e=Z+mY
+\end{equation}
+are positive integers satisfying
+\begin{equation}\label{eq:de-properties}
+ de=N_m,
+ \qquad d<e,
+ \qquad e-d=2mY.
+\end{equation}
+Thus \(d<\sqrt{N_m}\), \(e=N_m/d\), and
+\begin{equation}\label{eq:econgd}
+ \frac{N_m}{d}=e\equiv d\pmod{2m}.
+\end{equation}
+Solving \eqref{eq:de-def} for \(Y,Z\) gives
+\begin{equation}\label{eq:YZ-from-de}
+ Y=\frac{e-d}{2m}=\frac{N_m/d-d}{2m},
+ \qquad
+ Z=\frac{e+d}{2}=\frac{N_m/d+d}{2}.
+\end{equation}
+This proves the necessity of the stated formula.  It also proves uniqueness:
+from \((Y,Z)\), the divisor is forced to be \(d=Z-mY\).
+
+Conversely, suppose \(m\in\Acal\) and \(d\mid N_m\) satisfies
+\eqref{eq:divisor-condition}.  Put \(e=N_m/d\).  Since \(m\) is odd,
+\(N_m\), \(d\), and \(e\) are all odd.  The congruence
+\(e\equiv d\pmod{2m}\) shows that
+\begin{equation*}
+ Y=\frac{e-d}{2m}
+\end{equation*}
+is an integer, and the oddness of \(d,e\) shows that
+\begin{equation*}
+ Z=\frac{e+d}{2}
+\end{equation*}
+is an integer.  The strict inequality \(d<\sqrt{N_m}\) implies \(e>d\), so
+\(Y>0\).  Finally,
+\begin{align}\label{eq:factor-verification}
+ Z^2-m^2Y^2
+ &=\frac{(e+d)^2-(e-d)^2}{4}\notag\\
+ &=ed=N_m=m^6+2.
+\end{align}
+This is precisely \eqref{eq:main} with \(x=m^2\).  Independent choices of
+the signs of \(y\) and \(z\) give all solutions belonging to \((Y,Z)\).
+\end{proof}
+
+\begin{example}\label{ex:square}
+For \(m=1\), one has \(N_m=3\), and \(d=1\) gives
+\begin{equation*}
+ (x,y,z)=(1,\pm1,\pm2).
+\end{equation*}
+For \(m=7\), one has \(N_m=7^6+2=117651\).  Taking \(d=3\), so that
+\(N_m/d=39217\), gives
+\begin{equation*}
+ Y=\frac{39217-3}{14}=2801,
+ \qquad
+ Z=\frac{39217+3}{2}=19610.
+\end{equation*}
+Hence
+\begin{equation*}
+ (x,y,z)=(49,\pm2801,\pm19610)
+\end{equation*}
+is a fourfold sign family of solutions.
+\end{example}
+
+\section{Pell units and the nonsquare case}
+
+For a positive nonsquare \(D\), write
+\begin{equation}\label{eq:norm-definition}
+ \Norm(a+b\sqrt D)=(a+b\sqrt D)(a-b\sqrt D)=a^2-Db^2.
+\end{equation}
+We first prove all of the unit theory that will be used.
+
+\begin{proposition}[Positive Pell units]\label{prop:pell-units}
+Let \(D\in\Z_{>0}\) be nonsquare.  Then the following statements hold.
+
+\begin{enumerate}[label=\textup{(\alph*)},leftmargin=2em]
+\item There exist positive integers \(u,v\) such that
+\begin{equation}\label{eq:pell-existence}
+ u^2-Dv^2=1.
+\end{equation}
+
+\item Among all real numbers \(u+v\sqrt D>1\) with \(u,v\in\Z\) and
+\(u^2-Dv^2=1\), there is a least one, denoted
+\(\eps_D=u_D+v_D\sqrt D\).  Its coefficients satisfy
+\(u_D,v_D\in\Z_{>0}\).
+
+\item If \(\eta=a+b\sqrt D>1\), where \(a,b\in\Z\) and
+\(a^2-Db^2=1\), then there is a unique integer \(n\geq1\) such that
+\begin{equation}\label{eq:unit-power}
+ \eta=\eps_D^n.
+\end{equation}
+Together with \(1=\eps_D^0\), the nonnegative powers of \(\eps_D\) are
+exactly the positive norm-one units whose real value is at least \(1\).
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+We first prove existence.  For every integer \(T\geq2\), consider the
+\(T+1\) fractional parts
+\begin{equation*}
+ 0,\ \{\sqrt D\},\ \{2\sqrt D\},\ldots,\ \{T\sqrt D\}.
+\end{equation*}
+Divide \([0,1)\) into \(T\) half-open intervals of length \(1/T\).  Two of
+the displayed fractional parts lie in the same interval.  Subtracting the
+corresponding multiples of \(\sqrt D\), we obtain integers \(r,s\) such that
+\begin{equation}\label{eq:dirichlet-approx}
+ 1\leq s\leq T,
+ \qquad
+ |s\sqrt D-r|<\frac1T.
+\end{equation}
+Since \(s\sqrt D\geq\sqrt2\) and \(1/T\leq1/2\), every \(r\)
+satisfying \eqref{eq:dirichlet-approx} is positive.  The integer
+\begin{equation}\label{eq:kdef}
+ k=r^2-Ds^2
+\end{equation}
+is nonzero because \(\sqrt D\) is irrational.  Moreover,
+\begin{align}\label{eq:kbound}
+ |k|
+ &=|r-s\sqrt D|\,(r+s\sqrt D)\notag\\
+ &<\frac1T\left(2s\sqrt D+\frac1T\right)\notag\\
+ &\leq2\sqrt D+\frac1{T^2}
+ <2\sqrt D+1.
+\end{align}
+
+As \(T\) tends to infinity, the denominators \(s\) obtained in
+\eqref{eq:dirichlet-approx} cannot remain bounded.  Indeed, if
+\(1\leq s\leq S\), then each distance
+\begin{equation*}
+ \operatorname{dist}(s\sqrt D,\Z)
+\end{equation*}
+is positive; the minimum of these finitely many positive numbers would be a
+positive constant \(\delta\), contradicting
+\eqref{eq:dirichlet-approx} for \(T>1/\delta\).  Hence we obtain infinitely
+many distinct pairs \((r,s)\).
+
+By \eqref{eq:kbound}, the nonzero integer \(k=r^2-Ds^2\) lies in a fixed
+finite set.  Thus one fixed nonzero value of \(k\) occurs for infinitely many
+pairs.  Within this infinite fixed-\(k\) subsequence, \(s\) is again unbounded,
+because for each fixed \(s\) the equation \(r^2-Ds^2=k\) permits at most two
+integers \(r\).  Hence \(r+s\sqrt D\) is unbounded.  Among those pairs, two,
+say \((r_1,s_1)\) and \((r_2,s_2)\), have simultaneously
+\begin{equation}\label{eq:residue-pairs}
+ r_1\equiv r_2\pmod{|k|},
+ \qquad
+ s_1\equiv s_2\pmod{|k|}.
+\end{equation}
+We may label the two pairs so that
+\begin{equation}\label{eq:alpha-order}
+ r_1+s_1\sqrt D>r_2+s_2\sqrt D>0.
+\end{equation}
+Consider their quotient.  Since both numerator and denominator have norm
+\(k\),
+\begin{align}\label{eq:unit-quotient}
+ \frac{r_1+s_1\sqrt D}{r_2+s_2\sqrt D}
+ &=\frac{(r_1+s_1\sqrt D)(r_2-s_2\sqrt D)}{k}\notag\\
+ &=u+v\sqrt D,
+\end{align}
+where
+\begin{equation}\label{eq:uvquotient}
+ u=\frac{r_1r_2-Ds_1s_2}{k},
+ \qquad
+ v=\frac{s_1r_2-r_1s_2}{k}.
+\end{equation}
+The congruences \eqref{eq:residue-pairs} imply that both numerators in
+\eqref{eq:uvquotient} are divisible by \(|k|\), and hence \(u,v\in\Z\).
+Taking norms in \eqref{eq:unit-quotient} gives
+\begin{equation*}
+ u^2-Dv^2=1.
+\end{equation*}
+The quotient in \eqref{eq:unit-quotient} is greater than \(1\) by
+\eqref{eq:alpha-order}.  Its conjugate is its positive reciprocal.  Therefore
+\begin{equation*}
+ u=\frac{\eta+\eta^{-1}}2>0,
+ \qquad
+ v=\frac{\eta-\eta^{-1}}{2\sqrt D}>0,
+\end{equation*}
+where \(\eta\) denotes the quotient.  This proves part~\textup{(a)}.
+
+Let \(\mathcal U_D\) be the nonempty set of all integer-coefficient
+norm-one units with real value greater than \(1\).  Choose any
+\(\eta_0\in\mathcal U_D\).  There are only finitely many elements
+\(u+v\sqrt D\in\mathcal U_D\) satisfying
+\(1<u+v\sqrt D\leq\eta_0\), because then \(0<v<\eta_0/\sqrt D\) and
+\(0<u<\eta_0\).  That finite nonempty set has a least element; it is also the
+least element of all of \(\mathcal U_D\).  Denote it by \(\eps_D\).  The
+same formulas involving a unit and its positive reciprocal show that its
+coefficients \(u_D,v_D\) are positive.  This proves part~\textup{(b)}.
+
+Finally, let \(\eta\in\mathcal U_D\).  Since \(\eps_D>1\), there is a unique
+integer \(n\geq0\) such that
+\begin{equation}\label{eq:archimedean-reduction-unit}
+ \eps_D^n\leq\eta<\eps_D^{n+1}.
+\end{equation}
+The inverse \(\eps_D^{-1}=u_D-v_D\sqrt D\) again has integer coefficients
+and norm \(1\).  Hence
+\begin{equation*}
+ \theta=\eta\eps_D^{-n}
+\end{equation*}
+is an integer-coefficient norm-one unit satisfying
+\begin{equation}\label{eq:theta-range}
+ 1\leq\theta<\eps_D.
+\end{equation}
+If \(\theta>1\), then \(\theta\in\mathcal U_D\), contradicting the
+minimality of \(\eps_D\).  Thus \(\theta=1\), and
+\(\eta=\eps_D^n\).  Since \(\eta>1\), one has \(n\geq1\).  Uniqueness of
+\(n\) follows from the strict monotonicity of the powers of \(\eps_D>1\).
+This proves part~\textup{(c)}.
+\end{proof}
+
+We next prove a general orbit decomposition for a positive generalized Pell
+equation.  This is the exact mechanism behind part~\textup{(iii)} of
+Theorem~\ref{thm:main}.
+
+\begin{proposition}[Finite reduced-orbit decomposition]\label{prop:generalized-pell}
+Let \(D\in\Z_{>0}\) be nonsquare, let \(N\in\Z_{>0}\), and let
+\(\eps_D=u_D+v_D\sqrt D\) be as in
+Proposition~\ref{prop:pell-units}.  Define
+\begin{equation}\label{eq:RDN}
+ \Rcal(D,N)=
+ \left\{
+ (A,B)\in\Z_{>0}\times\Z_{\geq0}:
+ \begin{array}{l}
+ A^2-DB^2=N,\\[1mm]
+ \sqrt N\leq A+B\sqrt D<\eps_D\sqrt N
+ \end{array}
+ \right\}.
+\end{equation}
+Then multiplication induces a bijection
+\begin{equation}\label{eq:orbit-bijection}
+ \Rcal(D,N)\times\Z_{\geq0}
+ \longrightarrow
+ \left\{(A,B)\in\Z_{>0}\times\Z_{\geq0}:A^2-DB^2=N\right\},
+\end{equation}
+where \(((A_0,B_0),n)\) is sent to the coefficients of
+\begin{equation}\label{eq:general-orbit}
+ (A_0+B_0\sqrt D)\eps_D^n.
+\end{equation}
+The seed set \(\Rcal(D,N)\) is finite, and every seed satisfies
+\begin{equation}\label{eq:general-seed-bounds}
+ 0\leq B<v_D\sqrt N,
+ \qquad
+ 0<A<u_D\sqrt N.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Let \((A,B)\in\Z_{>0}\times\Z_{\geq0}\) satisfy
+\begin{equation}\label{eq:genpell-solution}
+ A^2-DB^2=N.
+\end{equation}
+Set
+\begin{equation}\label{eq:tdef}
+ t=A+B\sqrt D.
+\end{equation}
+Since \(A>0\), \(B\geq0\), and \eqref{eq:genpell-solution} has positive
+right-hand side, one has \(A>B\sqrt D\).  Thus both \(t\) and its conjugate
+\(t'=A-B\sqrt D\) are positive, and
+\begin{equation}\label{eq:ttprime}
+ tt'=N.
+\end{equation}
+Moreover, \(t\geq t'\), so \(t^2\geq tt'=N\), whence
+\begin{equation}\label{eq:t-lower}
+ t\geq\sqrt N.
+\end{equation}
+
+There is a unique integer \(n\geq0\) for which
+\begin{equation}\label{eq:nchoice}
+ \eps_D^n\leq\frac{t}{\sqrt N}<\eps_D^{n+1}.
+\end{equation}
+Put
+\begin{equation}\label{eq:t0def}
+ t_0=t\eps_D^{-n}.
+\end{equation}
+Since \(\eps_D^{-1}=u_D-v_D\sqrt D\), the number \(t_0\) has integer
+coefficients:
+\begin{equation}\label{eq:t0coeff}
+ t_0=A_0+B_0\sqrt D,
+ \qquad A_0,B_0\in\Z.
+\end{equation}
+Its norm is \(N\), and \eqref{eq:nchoice} gives
+\begin{equation}\label{eq:t0interval}
+ \sqrt N\leq t_0<\eps_D\sqrt N.
+\end{equation}
+Its conjugate is \(t_0'=N/t_0>0\).  In addition,
+\(t_0\geq\sqrt N\geq t_0'\), so
+\begin{equation}\label{eq:A0B0positive}
+ A_0=\frac{t_0+t_0'}2>0,
+ \qquad
+ B_0=\frac{t_0-t_0'}{2\sqrt D}\geq0.
+\end{equation}
+Thus \((A_0,B_0)\in\Rcal(D,N)\), and
+\begin{equation*}
+ t=(A_0+B_0\sqrt D)\eps_D^n.
+\end{equation*}
+This proves surjectivity of \eqref{eq:orbit-bijection}.
+
+The integer \(n\) is uniquely determined by \eqref{eq:nchoice}, after which
+\(t_0=t\eps_D^{-n}\) is uniquely determined.  Hence the representation is
+unique, proving injectivity.
+
+Conversely, start with a seed \((A_0,B_0)\in\Rcal(D,N)\).  Because
+\(\eps_D^n\in\Z[\sqrt D]\) and has norm \(1\), the product
+\eqref{eq:general-orbit} has integer coefficients \(A_n,B_n\) and norm
+\(N\).  Since \(A_0>0\), \(B_0\geq0\), and \(u_D,v_D>0\), its coefficients
+remain in \(\Z_{>0}\times\Z_{\geq0}\).  Explicitly they obey
+\begin{equation}\label{eq:general-recurrence}
+ A_{n+1}=u_DA_n+Dv_DB_n,
+ \qquad
+ B_{n+1}=v_DA_n+u_DB_n.
+\end{equation}
+This verifies directly that the map in \eqref{eq:orbit-bijection} is
+well-defined.
+
+It remains to establish the bounds and finiteness.  For a seed, let
+\(t=A+B\sqrt D\).  Since its conjugate equals \(N/t\),
+\begin{equation}\label{eq:ABfromt}
+ A=\frac{t+N/t}{2},
+ \qquad
+ B=\frac{t-N/t}{2\sqrt D}.
+\end{equation}
+On \([\sqrt N,\infty)\), the first right-hand side is nondecreasing and the
+second is strictly increasing.  Since \(t<\eps_D\sqrt N\), we obtain
+\begin{align}\label{eq:A-bound-calc}
+ A
+ &<\frac{\eps_D+\eps_D^{-1}}2\sqrt N
+ =u_D\sqrt N,
+\end{align}
+and
+\begin{align}\label{eq:B-bound-calc}
+ B
+ &<\frac{\eps_D-\eps_D^{-1}}{2\sqrt D}\sqrt N
+ =v_D\sqrt N.
+\end{align}
+Here we used
+\begin{equation*}
+ \eps_D^{-1}=u_D-v_D\sqrt D.
+\end{equation*}
+The bounds leave only finitely many integer pairs \((A,B)\), so
+\(\Rcal(D,N)\) is finite.
+\end{proof}
+
+\begin{proposition}\label{prop:nonsquare-case}
+Let \(D>0\) be nonsquare.  The solutions of \eqref{eq:main} with \(x=D\)
+are exactly those in \eqref{eq:nonsquare-solutions}.  If there is at least
+one such solution, then there are infinitely many.
+\end{proposition}
+
+\begin{proof}
+For \(x=D\), equation \eqref{eq:main} is
+\begin{equation}\label{eq:nonsquare-norm}
+ z^2-Dy^2=D^3+2=N_D.
+\end{equation}
+Given a solution, put \(A=|z|\) and \(B=|y|\).  Then
+\((A,B)\in\Z_{>0}\times\Z_{\geq0}\) and
+\begin{equation*}
+ A^2-DB^2=N_D.
+\end{equation*}
+Proposition~\ref{prop:generalized-pell}, applied with \(N=N_D\), gives a
+unique seed \((A_0,B_0)\in\Rcal_D\) and a unique \(n\geq0\) such that
+\begin{equation*}
+ A+B\sqrt D=(A_0+B_0\sqrt D)\eps_D^n.
+\end{equation*}
+This is exactly the representation in \eqref{eq:nonsquare-solutions} after
+the independent signs of \(y,z\) are restored.
+
+Conversely, each product in \eqref{eq:orbit-product} has norm \(N_D\), so
+its coefficients satisfy \eqref{eq:nonsquare-norm}; hence every listed triple
+is a solution.  The bounds \eqref{eq:seed-bounds} are the specialization of
+\eqref{eq:general-seed-bounds}.
+
+If a seed exists, then the positive real numbers
+\begin{equation*}
+ (A_0+B_0\sqrt D)\eps_D^n
+ \qquad(n\geq0)
+\end{equation*}
+are strictly increasing because \(\eps_D>1\).  Their coefficient pairs are
+therefore distinct, and so the seed produces infinitely many solutions.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Lemma~\ref{lem:nonpositive} proves part~\textup{(i)}.
+Proposition~\ref{prop:positive-restrictions} shows that every positive
+solution value of \(x\) belongs to \(\Acal\) and that no positive even value
+is possible.  Every positive integer is either a square or a nonsquare.
+Proposition~\ref{prop:square-case} gives the complete and unique description
+in the square case, while Proposition~\ref{prop:nonsquare-case} and
+Proposition~\ref{prop:generalized-pell} give the complete, unique, and finite
+seed-orbit description in the nonsquare case.  These mutually exclusive
+cases exhaust all integers \(x\), so no further solutions exist.
+\end{proof}
+
+\section{Consequences and examples}
+
+\begin{corollary}\label{cor:fixed-x}
+For each fixed integer \(x\), the following alternatives hold.
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=2.2em]
+\item If \(x<-1\), \(x=0\), or \(x>0\) is even, there are no solutions.
+\item If \(x=-1\), there are exactly four solutions.
+\item If \(x>0\) is a square, there are finitely many solutions, explicitly
+given by the divisor conditions \eqref{eq:divisor-condition}.
+\item If \(x>0\) is nonsquare, then there are either no solutions or
+infinitely many.  In the latter case the solutions are a disjoint finite
+union of Pell orbits, one orbit for each seed in \(\Rcal_x\).
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+Only the last assertion requires comment.  The seed set is finite by
+\eqref{eq:seed-bounds}; uniqueness in
+Proposition~\ref{prop:generalized-pell} makes the corresponding orbits
+disjoint; and Proposition~\ref{prop:nonsquare-case} shows that every nonempty
+orbit is infinite.
+\end{proof}
+
+\begin{corollary}[An explicit infinite family]\label{cor:x23}
+Define positive integers \(Y_n,Z_n\) by
+\begin{equation}\label{eq:x23initial}
+ (Y_0,Z_0)=(23,156)
+\end{equation}
+and
+\begin{equation}\label{eq:x23recurrence}
+ \begin{aligned}
+ Z_{n+1}&=24Z_n+115Y_n,\\
+ Y_{n+1}&=5Z_n+24Y_n
+ \end{aligned}
+ \qquad(n\geq0).
+\end{equation}
+Then, for every \(n\geq0\) and arbitrary signs
+\(\sigma,\tau\in\{1,-1\}\),
+\begin{equation}\label{eq:x23solutions}
+ (x,y,z)=(23,\sigma Y_n,\tau Z_n)
+\end{equation}
+is a solution of \eqref{eq:main}.  These give infinitely many distinct
+integer solutions.
+\end{corollary}
+
+\begin{proof}
+The two identities
+\begin{equation}\label{eq:x23norms}
+ 24^2-23\cdot5^2=1
+\end{equation}
+and
+\begin{equation}\label{eq:x23base}
+ 156^2-23\cdot23^2=12169=23^3+2
+\end{equation}
+show that
+\begin{equation}\label{eq:x23product}
+ Z_n+Y_n\sqrt{23}
+ =(156+23\sqrt{23})(24+5\sqrt{23})^n
+\end{equation}
+has norm \(23^3+2\) for every \(n\geq0\).  Equating coefficients after one
+further multiplication by \(24+5\sqrt{23}\) gives exactly the recurrence
+\eqref{eq:x23recurrence}.  Hence
+\begin{equation*}
+ Z_n^2-23Y_n^2=23^3+2,
+\end{equation*}
+which is \eqref{eq:main} with \(x=23\).  Moreover,
+\begin{equation*}
+ Y_{n+1}=5Z_n+24Y_n>Y_n,
+\end{equation*}
+so the pairs \((Y_n,Z_n)\) are distinct.  The first two are
+\begin{equation*}
+ (Y_0,Z_0)=(23,156),
+ \qquad
+ (Y_1,Z_1)=(1332,6389).
+\end{equation*}
+\end{proof}
+
+\begin{remark}[The local condition is not sufficient]\label{rem:x7}
+Membership in \(\Acal\) is a necessary restriction on a positive value of
+\(x\), but it is not sufficient.  For example, \(7\in\Acal\), yet \(x=7\)
+gives no solution.  Indeed, a solution would satisfy
+\begin{equation}\label{eq:x7}
+ z^2-7y^2=7^3+2=345.
+\end{equation}
+Modulo \(5\), this becomes \(z^2\equiv2y^2\pmod5\).  If \(5\nmid y\), then
+\((zy^{-1})^2\equiv2\pmod5\), impossible because the square residues modulo
+\(5\) are \(0,1,4\).  Thus \(5\mid y\), and then \(5\mid z\) as well.
+Consequently \(25\) divides the left-hand side of \eqref{eq:x7}, whereas
+\(25\nmid345\), a contradiction.  The finite seed condition
+\(\Rcal_D\neq\varnothing\) is the exact remaining global condition in the
+nonsquare case.
+\end{remark}
+
+\end{document}
