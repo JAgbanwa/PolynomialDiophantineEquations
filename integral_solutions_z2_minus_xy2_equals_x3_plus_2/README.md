@@ -2,10 +2,10 @@
 I made further attempts at stress-testing the correctness of these results by asking this specific question in three different windows of ChatGPT 5.5 Pro:
 
 ```
-This paper claims to describe all integer solutions to z² - x·y² = x³ + 2. How true is this statement? Rigorously verify such claim, let's see!
+This paper claims to prove the infinitude of integer solutions to the equation: z² + y²·z + 2x³ + 1 = 0. How true is this statement? Rigorously verify such claim, let's see!
 ```
 
-and the outcome is found here: [\[1\]](https://chatgpt.com/c/6a565e3c-a524-83eb-bcad-b4a5688ee2ea), [\[2\]](https://chatgpt.com/c/6a565e24-002c-83ed-b2af-b99163279ce0) and [\[3\]](https://chatgpt.com/c/6a565ddd-372c-83ed-8757-a4024a944175).
+and the outcome is found here: [\[1\]](https://chatgpt.com/c/6a567afb-d1e4-83eb-b23b-d8d6b05e5f7f), [\[2\]](https://chatgpt.com/c/6a567ab0-7140-83ed-bcb9-cd0777e80f93) and [\[3\]](https://chatgpt.com/c/6a567a8f-0bb0-83eb-af05-84d21daad97c).
 
 # Summary of changes for run e0c3f8af-5082-4654-aec9-73745f59480b
 The `omega` failure you were seeing was in the `pos_x_odd` theorem (in `RequestProject/IntegralSolutions.lean`), specifically the step that proves `z^2 % 16 = (2*m + 10) % 16`. That step relied on a chain of `push_cast`/`ring_nf`/`norm_num` rewrites and then a final `omega`. The trouble is that `omega` cannot reason about nonlinear terms like `m^3` or `y^2/8`; the earlier tactics were supposed to eliminate them, but the exact normal form they produce depends on the Mathlib version. On the online compiler that normalization comes out differently, leaving `omega` staring at the nonlinear `k`/`y^2/8`/`z^2 % 16` atoms shown in your counterexample, which it correctly cannot solve.
