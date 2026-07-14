@@ -2,7 +2,7 @@
 I made further attempts at stress-testing the correctness of these results by asking this specific question in three different windows of ChatGPT 5.5 Pro:
 
 ```
-This paper claims to describe all integer solutions to z² - x·y² = x³ + 2. How true is this statement? Rigorously verify such claim, let's see!
+This paper claims to describe all integer solutions to z² - x·y² = x³ - 2. How true is this statement? Rigorously verify such claim, let's see!
 ```
 
 and the outcome is found here: [\[1\]](https://chatgpt.com/c/6a565d1f-b4f8-83eb-8b3b-6c21029c9b0b), [\[2\]](https://chatgpt.com/c/6a565ce5-cd5c-83eb-8112-035dde901d55) and [\[3\]](https://chatgpt.com/c/6a565ca9-d550-83eb-89db-679252222e17).
