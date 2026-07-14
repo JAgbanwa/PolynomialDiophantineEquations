@@ -1,5 +1,5 @@
 Migrating to this repo because this [repository](https://github.com/JAgbanwa/miscellaneousmathproblems/tree/main) is very crowded and messy with many files and folders. This repo aims to store/contain 
-attempts (solutions at best) to this catalogue of open polynomial diophantine problems from this [paper](https://arxiv.org/pdf/2404.08518). Every folder contains a (potential) solution to an open problem from the aforementioned paper. Efforts to verify the correctness of this paper include Lean formalisations with no ``sorry``'s (with Aristotle) and I will soon include in each folder links leading to three different windows of ChatGPT 5.5 Pro where I stress-test the correctness of these results as an extra layer of verification.
+attempts (solutions at best) to this catalogue of open polynomial diophantine problems from this [paper](https://arxiv.org/pdf/2404.08518). Every folder contains a (potential) solution to an open problem from the aforementioned paper. Efforts to verify the correctness of this paper include Lean formalisations with no ``sorry``'s (with Aristotle) found in every folder and I will soon include in each folder links leading to three different windows of ChatGPT 5.5 Pro where I stress-test the correctness of these results as an extra layer of verification.
 
 | Folder | Goal | Progress |
 |--------|------|----------|
