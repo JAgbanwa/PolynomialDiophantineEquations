@@ -1,3 +1,12 @@
+# Extra attempts at verification
+I made further attempts at stress-testing the correctness of these results by asking this specific question in three different windows of ChatGPT 5.5 Pro:
+
+```
+This paper claims to describe all integer solutions to y² + x²y + xz² − 2 = 0. How true is this statement? Rigorously verify such claim, let's see!
+```
+
+and the outcome is found here: [\[1\]](https://chatgpt.com/c/6a565e3c-a524-83eb-bcad-b4a5688ee2ea), [\[2\]](https://chatgpt.com/c/6a565e24-002c-83ed-b2af-b99163279ce0) and [\[3\]](https://chatgpt.com/c/6a565ddd-372c-83ed-8757-a4024a944175).
+
 # Summary of changes for run 30c75eed-d95f-4d6e-9fe3-67c05d197f8a
 I formalised the paper *Integer Solutions of y² + x²y + xz² − 2 = 0* in Lean 4 (Mathlib), in `RequestProject/Main.lean`, and verified that its central claim — a complete classification of all integer solutions — genuinely holds. The file builds cleanly with no `sorry` and depends only on the standard axioms (`propext`, `Classical.choice`, `Quot.sound`).
 What was formalised (namespace `Diophantine`):
