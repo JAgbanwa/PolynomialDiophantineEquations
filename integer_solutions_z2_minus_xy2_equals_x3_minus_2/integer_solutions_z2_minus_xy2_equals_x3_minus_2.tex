@@ -1,0 +1,813 @@
+\documentclass[11pt,a4paper]{amsart}
+
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+\newcommand{\Acal}{\mathcal A}
+\newcommand{\Fcal}{\mathcal F}
+\newcommand{\Scal}{\mathcal S}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\leg}[2]{\left(\frac{#1}{#2}\right)}
+
+\numberwithin{equation}{section}
+
+\title{Integer Solutions of \texorpdfstring{$z^2-xy^2=x^3-2$}{z2 - xy2 = x3 - 2}}
+\author{}
+\address{}
+\date{}
+
+\subjclass[2020]{Primary 11D09; Secondary 11A15}
+\keywords{Diophantine equation, generalized Pell equation, Pell unit, quadratic residue}
+
+\begin{document}
+
+\begin{abstract}
+We give an unconditional and self-contained classification of all integer triples satisfying
+\(z^2-xy^2=x^3-2\).
+Elementary local arguments first force the positive integer \(x\) into a restricted set of residue classes and impose a splitting condition on every prime divisor of \(x\).
+For square \(x\), every solution is recovered from a finite divisor calculation; for nonsquare \(x\), every solution is recovered uniquely from one of finitely many reduced seeds followed by a Pell recurrence.
+The proof includes an elementary existence proof for positive solutions of Pell's equation, so no external theorem is required.
+\end{abstract}
+
+\maketitle
+
+\section{Statement of the classification}
+
+We study
+\begin{equation}
+ z^2-xy^2=x^3-2,
+ \label{eq:main}
+\end{equation}
+which is equivalently
+\begin{equation}
+ z^2+2=x(x^2+y^2).
+ \label{eq:norm-form}
+\end{equation}
+The equation is invariant under the independent sign changes \(y\mapsto-y\) and
+\(z\mapsto-z\).  It is therefore natural to classify first the normalized solutions
+with \(y,z\geq0\), and then restore the signs.
+
+Define the set of admissible positive integers
+\begin{equation}
+ \Acal=
+ \left\{
+ x\in\Z_{>0}:
+ \begin{array}{l}
+ x\text{ is odd},\
+ x\not\equiv2\pmod 3,\
+ p\mid x\text{ prime}\Longrightarrow p\equiv1\text{ or }3\pmod 8
+ \end{array}
+ \right\}.
+ \label{eq:admissible}
+\end{equation}
+The term ``admissible'' refers only to necessary local conditions; membership in
+\(\Acal\) is not sufficient for solubility.
+
+For an odd integer \(m\geq3\), put
+\begin{equation}
+ M_m=m^6-2
+ \label{eq:Mm}
+\end{equation}
+and define the finite set
+\begin{equation}
+ \Fcal_m=
+ \left\{
+ a\in\Z_{>0}:
+ a\mid M_m,\quad
+ a\leq \frac{M_m}{a},\quad
+ \frac{M_m}{a}\equiv a\pmod{2m}
+ \right\}.
+ \label{eq:Fm}
+\end{equation}
+For \(a\in\Fcal_m\), set
+\begin{equation}
+ Y_{m,a}=\frac{M_m/a-a}{2m},
+ \qquad
+ Z_{m,a}=\frac{M_m/a+a}{2}.
+ \label{eq:squareYZ}
+\end{equation}
+
+Now let \(x\geq2\) be nonsquare.  A positive Pell pair for \(x\) means a pair
+\((u,v)\in\Z_{>0}^2\) satisfying
+\begin{equation}
+ u^2-xv^2=1.
+ \label{eq:Pell-x}
+\end{equation}
+As will be proved in Section~\ref{sec:pell}, such pairs exist.  Among them there is a
+unique pair \((u_x,v_x)\) for which
+\begin{equation}
+ \eps_x=u_x+v_x\sqrt{x}
+ \label{eq:fundamental-unit}
+\end{equation}
+assumes its least value.  Put
+\begin{equation}
+ N_x=x^3-2
+ \label{eq:Nx}
+\end{equation}
+and define the reduced seed set
+\begin{equation}
+ \Scal_x=
+ \left\{
+ (r,s)\in\Z_{>0}\times\Z_{\geq0}:
+ r^2-xs^2=N_x,\quad s^2<v_x^2N_x
+ \right\}.
+ \label{eq:Sx}
+\end{equation}
+This set is finite.  For \((r,s)\in\Scal_x\) and \(n\geq0\), define
+\((Z_n,Y_n)=(Z_n(x;r,s),Y_n(x;r,s))\) by
+\begin{equation}
+ Z_n+Y_n\sqrt{x}=(r+s\sqrt{x})\eps_x^n.
+ \label{eq:Pell-param}
+\end{equation}
+Equivalently,
+\begin{equation}
+ \begin{aligned}
+ Z_0&=r, & Y_0&=s,\\
+ Z_{n+1}&=u_xZ_n+xv_xY_n,
+ &Y_{n+1}&=v_xZ_n+u_xY_n.
+ \end{aligned}
+ \label{eq:recurrence}
+\end{equation}
+
+\begin{theorem}[Complete classification]
+\label{thm:classification}
+Every integer solution of \eqref{eq:main} has \(x\in\Acal\), and all solutions are
+obtained as follows.
+
+\begin{enumerate}
+\item The solutions with \(x=1\) are precisely
+\begin{equation}
+ (x,y,z)=(1,\pm1,0).
+ \label{eq:x1-solutions}
+\end{equation}
+
+\item Let \(x=m^2\), where \(m\geq3\) and \(m^2\in\Acal\).  The solutions with this
+value of \(x\) are precisely
+\begin{equation}
+ (x,y,z)=\bigl(m^2,\sigma Y_{m,a},\tau Z_{m,a}\bigr),
+ \qquad
+ a\in\Fcal_m,
+ \quad \sigma,\tau\in\{\pm1\}.
+ \label{eq:square-classification}
+\end{equation}
+If \(\Fcal_m=\varnothing\), then this fiber has no solutions.
+
+\item Let \(x\in\Acal\) be nonsquare.  The solutions with this value of \(x\) are
+precisely
+\begin{equation}
+ (x,y,z)=\bigl(x,\sigma Y_n(x;r,s),\tau Z_n(x;r,s)\bigr),
+ \label{eq:nonsquare-classification}
+\end{equation}
+where \((r,s)\in\Scal_x\), \(n\in\Z_{\geq0}\), and
+\(\sigma,\tau\in\{\pm1\}\).  If \(\Scal_x=\varnothing\), then this fiber has no
+solutions.
+\end{enumerate}
+
+After replacing \(y,z\) by \(|y|,|z|\), the parameter \(a\) in the square case is
+unique, and the pair consisting of a reduced seed \((r,s)\) and an exponent \(n\) in
+the nonsquare case is unique.
+\end{theorem}
+
+The proof occupies the next three sections.
+
+\section{Local restrictions on \texorpdfstring{$x$}{x}}
+
+We begin with the elementary quadratic-residue fact needed below.  Its proof is
+included for completeness.
+
+\begin{lemma}[The residue class of primes representing minus two]
+\label{lem:minus-two}
+Let \(p\) be an odd prime.  The congruence
+\begin{equation}
+ t^2\equiv-2\pmod p
+ \label{eq:minus-two-congruence}
+\end{equation}
+has a solution if and only if
+\begin{equation}
+ p\equiv1\text{ or }3\pmod8.
+ \label{eq:minus-two-criterion}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+We give the standard elementary derivation.  For \(a\not\equiv0\pmod p\), write
+\(\leg ap\in\{\pm1\}\) for the Legendre symbol.
+
+First, Fermat's congruence
+\begin{equation}
+ a^{p-1}\equiv1\pmod p
+ \label{eq:Fermat}
+\end{equation}
+follows because multiplication by \(a\) permutes the nonzero residue classes modulo
+\(p\): multiplying all classes gives
+\(a^{p-1}(p-1)!\equiv(p-1)!\pmod p\), and \((p-1)!\) is invertible modulo \(p\).
+Define \(\leg ap=1\) when \(a\) is a nonzero square modulo \(p\), and
+\(\leg ap=-1\) otherwise.  The nonzero squares modulo \(p\) are exactly the
+\((p-1)/2\) roots of \(T^{(p-1)/2}-1\): every square is a root by
+\eqref{eq:Fermat}, the squares are pairwise distinct up to the identification
+\(b\sim-b\), and a nonzero polynomial of degree \(d\) over a field has at most
+\(d\) roots, by induction from the factor theorem.  If \(a\) is not a square,
+then \(a^{(p-1)/2}\not\equiv1\pmod p\), while its square is \(1\) by
+\eqref{eq:Fermat}; since \(p\) is odd, it must therefore be congruent to \(-1\).
+Consequently
+\begin{equation}
+ a^{(p-1)/2}\equiv\leg ap\pmod p.
+ \label{eq:Euler-criterion}
+\end{equation}
+This is Euler's criterion.  It also proves the multiplicativity of the Legendre
+symbol.
+
+We next prove the form of Gauss's lemma that we need.  Let \(\nu(a)\) be the number
+of integers \(j\in\{1,\ldots,(p-1)/2\}\) for which the least positive residue of
+\(aj\) is greater than \(p/2\).  Replacing each such residue by its negative, the
+least absolute residues of
+\(a,2a,\ldots,((p-1)/2)a\) are, up to order,
+\(1,2,\ldots,(p-1)/2\).  Indeed, equality up to sign between two of them would give
+\(a(i\mp j)\equiv0\pmod p\), impossible for distinct
+\(1\leq i,j\leq(p-1)/2\).  Multiplication and cancellation therefore give
+\begin{equation}
+ a^{(p-1)/2}\equiv(-1)^{\nu(a)}\pmod p.
+ \label{eq:Gauss-lemma}
+\end{equation}
+Together with \eqref{eq:Euler-criterion}, this is Gauss's lemma.
+
+For \(a=-1\), every one of the \((p-1)/2\) residues lies in the upper half, so
+\begin{equation}
+ \leg{-1}{p}=(-1)^{(p-1)/2}.
+ \label{eq:minus-one-symbol}
+\end{equation}
+For \(a=2\), the residues \(2j\), with \(1\leq j\leq(p-1)/2\), are all less than
+\(p\), and \(2j>p/2\) exactly when \(j>p/4\).  Thus
+\begin{equation}
+ \nu(2)=\frac{p-1}{2}-\left\lfloor\frac p4\right\rfloor.
+ \label{eq:nu-two}
+\end{equation}
+A direct check in the four odd residue classes modulo \(8\) yields
+\begin{equation}
+ \leg2p=
+ \begin{cases}
+ 1,&p\equiv1,7\pmod8,\\
+ -1,&p\equiv3,5\pmod8.
+ \end{cases}
+ \label{eq:two-symbol}
+\end{equation}
+Multiplicativity, \eqref{eq:minus-one-symbol}, and \eqref{eq:two-symbol} now give
+\begin{equation}
+ \leg{-2}{p}=1
+ \quad\Longleftrightarrow\quad
+ p\equiv1\text{ or }3\pmod8,
+\end{equation}
+which is equivalent to the asserted solvability criterion.
+\end{proof}
+
+\begin{proposition}[Necessary conditions on \(x\)]
+\label{prop:local-restrictions}
+If \((x,y,z)\in\Z^3\) satisfies \eqref{eq:main}, then \(x\in\Acal\).  In particular,
+\begin{equation}
+ x\equiv1,3,9,\text{ or }19\pmod{24}.
+ \label{eq:x-mod24}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Equation \eqref{eq:norm-form} shows first that \(x>0\).  Indeed, its left-hand side
+is positive, whereas its right-hand side is zero when \(x=0\) and negative when
+\(x<0\).
+
+Let \(p\) be an odd prime divisor of \(x\).  Reduction of
+\eqref{eq:norm-form} modulo \(p\) gives
+\begin{equation}
+ z^2\equiv-2\pmod p.
+ \label{eq:p-divides-x}
+\end{equation}
+By Lemma~\ref{lem:minus-two}, every such \(p\) satisfies
+\begin{equation}
+ p\equiv1\text{ or }3\pmod8.
+ \label{eq:prime-divisor-condition}
+\end{equation}
+
+We next prove that \(x\) is odd.  Suppose to the contrary that \(x\) is even.  Then
+\eqref{eq:norm-form} implies that \(z\) is even.  Writing \(z=2w\), we have
+\begin{equation}
+ z^2+2=2(2w^2+1),
+\end{equation}
+so the exact exponent of \(2\) dividing \(z^2+2\) is one.  Consequently
+\eqref{eq:norm-form} forces
+\begin{equation}
+ x=2u
+ \label{eq:x-2u}
+\end{equation}
+with \(u\) odd, and it also forces \(y\) to be odd: since \(x^2\) is even, the factor
+\(x^2+y^2\) must be odd.  Dividing \eqref{eq:norm-form} by \(2\) gives
+\begin{equation}
+ 2w^2+1=u(4u^2+y^2).
+ \label{eq:even-x-reduced}
+\end{equation}
+Because \(u\) and \(y\) are odd,
+\begin{equation}
+ 4u^2+y^2\equiv5\pmod8.
+\end{equation}
+The left-hand side of \eqref{eq:even-x-reduced} is congruent to \(1\) modulo \(8\)
+when \(w\) is even and to \(3\) modulo \(8\) when \(w\) is odd.  Hence
+\begin{equation}
+ 5u\equiv1\text{ or }3\pmod8,
+\end{equation}
+which gives
+\begin{equation}
+ u\equiv5\text{ or }7\pmod8.
+ \label{eq:u-bad}
+\end{equation}
+On the other hand, every prime divisor of \(u\) is an odd prime divisor of \(x\), so
+it is congruent to \(1\) or \(3\) modulo \(8\) by
+\eqref{eq:prime-divisor-condition}.  The set \(\{1,3\}\) is closed under
+multiplication modulo \(8\), because \(3^2\equiv1\pmod8\).  It follows that
+\(u\equiv1\) or \(3\pmod8\), contradicting \eqref{eq:u-bad}.  Thus \(x\) is odd.
+
+Finally, suppose that \(x\equiv2\pmod3\).  Reducing \eqref{eq:main} modulo \(3\)
+gives
+\begin{equation}
+ z^2+y^2\equiv0\pmod3.
+\end{equation}
+As the only quadratic residues modulo \(3\) are \(0\) and \(1\), this forces
+\(3\mid y\) and \(3\mid z\).  Thus the left-hand side of
+\(z^2-xy^2=x^3-2\) is divisible by \(9\).  But every integer congruent to \(2\)
+modulo \(3\) has cube congruent to \(8\) modulo \(9\), so
+\begin{equation}
+ x^3-2\equiv6\pmod9,
+\end{equation}
+a contradiction.  Therefore \(x\not\equiv2\pmod3\), and all conditions defining
+\(\Acal\) hold.
+
+Since \(x\) is odd and all its prime divisors are \(1\) or \(3\) modulo \(8\), one
+has \(x\equiv1\) or \(3\pmod8\).  Combining this with
+\(x\equiv0\) or \(1\pmod3\) gives exactly the four classes in
+\eqref{eq:x-mod24}.
+\end{proof}
+
+\section{A finite-seed theorem for generalized Pell equations}
+\label{sec:pell}
+
+We now develop, from first principles, the Pell machinery used in the nonsquare
+fibers.
+
+\begin{lemma}[Elementary rational approximation]
+\label{lem:approximation}
+Let \(\alpha\) be irrational.  For every integer \(Q\geq1\), there exist integers
+\(p,q\) such that
+\begin{equation}
+ 1\leq q\leq Q,
+ \qquad
+ |q\alpha-p|<\frac1Q\leq\frac1q.
+ \label{eq:Dirichlet}
+\end{equation}
+As \(Q\) varies, the resulting inequalities hold for infinitely many distinct
+positive integers \(q\).
+\end{lemma}
+
+\begin{proof}
+Consider the \(Q+1\) fractional parts
+\begin{equation}
+ \{0\alpha\},\{1\alpha\},\ldots,\{Q\alpha\}
+\end{equation}
+in the \(Q\) half-open intervals
+\([j/Q,(j+1)/Q)\), \(0\leq j<Q\).  Two fractional parts lie in the same interval.
+Subtracting them gives integers \(p,q\), with \(1\leq q\leq Q\), satisfying
+\(|q\alpha-p|<1/Q\).  The inequality \(1/Q\leq1/q\) follows from \(q\leq Q\).
+
+If only finitely many values of \(q\) occurred, then the nonzero numbers
+\(|q\alpha-p|\) arising from those finitely many denominators would have a positive
+minimum.  This contradicts the bound \(|q\alpha-p|<1/Q\) as \(Q\to\infty\).
+\end{proof}
+
+\begin{theorem}[Existence of positive Pell solutions]
+\label{thm:Pell-existence}
+For every positive nonsquare integer \(D\), there exist \(u,v\in\Z_{>0}\) satisfying
+\begin{equation}
+ u^2-Dv^2=1.
+ \label{eq:Pell-general}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Apply Lemma~\ref{lem:approximation} to \(\alpha=\sqrt D\).  Discarding finitely many
+pairs if necessary, we may assume \(p,q>0\).  There are infinitely many distinct
+pairs \((p,q)\) such that
+\begin{equation}
+ |q\sqrt D-p|<\frac1q.
+ \label{eq:Pell-approx}
+\end{equation}
+For each pair put
+\begin{equation}
+ k=p^2-Dq^2.
+\end{equation}
+The integer \(k\) is nonzero because \(D\) is not a square.  Moreover,
+\begin{align}
+ |k|
+ &=|p-q\sqrt D|\,(p+q\sqrt D)\notag\\
+ &<\frac1q\left(2q\sqrt D+\frac1q\right)
+ <2\sqrt D+1.
+ \label{eq:k-bound}
+\end{align}
+Thus \(k\) ranges over a finite set of nonzero integers.  One value of \(k\) occurs
+for infinitely many pairs \((p,q)\).  Among those pairs, two distinct pairs
+\((p_1,q_1)\) and \((p_2,q_2)\) are congruent componentwise modulo \(|k|\), by the
+pigeonhole principle.
+
+Define
+\begin{equation}
+ U=\frac{p_1p_2-Dq_1q_2}{k},
+ \qquad
+ V=\frac{q_1p_2-p_1q_2}{k}.
+ \label{eq:UV-construction}
+\end{equation}
+Both are integers.  Indeed, modulo \(|k|\),
+\begin{equation}
+ p_1p_2-Dq_1q_2\equiv p_1^2-Dq_1^2=k\equiv0,
+\end{equation}
+and
+\begin{equation}
+ q_1p_2-p_1q_2\equiv q_1p_1-p_1q_1=0.
+\end{equation}
+The identity
+\begin{equation}
+ U+V\sqrt D
+ =\frac{(p_1+q_1\sqrt D)(p_2-q_2\sqrt D)}{k}
+ \label{eq:UV-product}
+\end{equation}
+then gives, after multiplication by its conjugate,
+\begin{equation}
+ U^2-DV^2
+ =\frac{(p_1^2-Dq_1^2)(p_2^2-Dq_2^2)}{k^2}=1.
+ \label{eq:UV-norm}
+\end{equation}
+We have \(V\neq0\).  Otherwise \(p_1/q_1=p_2/q_2\).  Writing this common positive
+rational number in lowest terms as \(a/b\), there would be positive integers
+\(t_1,t_2\) with \((p_i,q_i)=t_i(a,b)\).  Since both pairs have the same nonzero
+value \(k\),
+\begin{equation}
+ t_1^2(a^2-Db^2)=t_2^2(a^2-Db^2),
+\end{equation}
+so \(t_1=t_2\), contrary to the pairs being distinct.  Equation
+\eqref{eq:UV-norm} also implies \(U\neq0\).  Therefore
+\((u,v)=(|U|,|V|)\) is a positive solution of \eqref{eq:Pell-general}.
+\end{proof}
+
+\begin{definition}[Least positive Pell unit]
+\label{def:fundamental}
+Let \(D\) be a positive nonsquare integer.  Among all positive solutions of
+\(u^2-Dv^2=1\), choose the one minimizing \(u+v\sqrt D\), and denote it by
+\((u_D,v_D)\).  We write
+\begin{equation}
+ \eps_D=u_D+v_D\sqrt D.
+ \label{eq:epsilon-D}
+\end{equation}
+This minimum exists: Theorem~\ref{thm:Pell-existence} supplies at least one positive
+solution, and below any fixed real bound there are only finitely many integer pairs
+\((u,v)\).  Since
+\(u_D^2-Dv_D^2=1\), one has
+\begin{equation}
+ \eps_D^{-1}=u_D-v_D\sqrt D\in\Z[\sqrt D].
+ \label{eq:epsilon-inverse}
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Finite-seed decomposition]
+\label{thm:finite-seed}
+Let \(D,N\in\Z_{>0}\), with \(D\) nonsquare.  Let
+\(\eps_D=u_D+v_D\sqrt D\) be as in Definition~\ref{def:fundamental}, and define
+\begin{equation}
+ \mathcal R(D,N)=
+ \left\{
+ (r,s)\in\Z_{>0}\times\Z_{\geq0}:
+ r^2-Ds^2=N,\quad s^2<v_D^2N
+ \right\}.
+ \label{eq:RDN}
+\end{equation}
+Then \(\mathcal R(D,N)\) is finite.  Every pair
+\((Z,Y)\in\Z_{>0}\times\Z_{\geq0}\) satisfying
+\begin{equation}
+ Z^2-DY^2=N
+ \label{eq:generalized-Pell}
+\end{equation}
+has a unique representation
+\begin{equation}
+ Z+Y\sqrt D=(r+s\sqrt D)\eps_D^n
+ \label{eq:finite-seed-representation}
+\end{equation}
+with \((r,s)\in\mathcal R(D,N)\) and \(n\in\Z_{\geq0}\).  Conversely, every
+right-hand side of \eqref{eq:finite-seed-representation} has nonnegative integral
+coefficients and yields a solution of \eqref{eq:generalized-Pell}.
+\end{theorem}
+
+\begin{proof}
+The set \(\mathcal R(D,N)\) is finite because
+\(0\leq s<v_D\sqrt N\), and for each such integer \(s\) the equation
+\(r^2=N+Ds^2\) determines at most one positive integer \(r\).
+
+Let \((Z,Y)\) satisfy \eqref{eq:generalized-Pell}, and put
+\begin{equation}
+ \alpha=Z+Y\sqrt D.
+\end{equation}
+Since \(N>0\), one has \(Z^2>DY^2\), hence
+\(Z>Y\sqrt D\).  Thus both \(\alpha\) and its conjugate are positive, their product
+is \(N\), and \(\alpha\geq\sqrt N\).  Because \(\eps_D>1\), there is a unique
+integer \(n\geq0\) such that
+\begin{equation}
+ \eps_D^n\sqrt N\leq\alpha<\eps_D^{n+1}\sqrt N.
+ \label{eq:reduction-interval-alpha}
+\end{equation}
+Set
+\begin{equation}
+ \gamma=\alpha\eps_D^{-n}.
+\end{equation}
+By \eqref{eq:epsilon-inverse}, \(\gamma\in\Z[\sqrt D]\), so
+\begin{equation}
+ \gamma=r+s\sqrt D
+ \label{eq:gamma-rs}
+\end{equation}
+for integers \(r,s\).  Its norm is \(N\), and
+\eqref{eq:reduction-interval-alpha} gives
+\begin{equation}
+ \sqrt N\leq\gamma<\eps_D\sqrt N.
+ \label{eq:gamma-interval}
+\end{equation}
+The conjugate of \(\gamma\) is \(N/\gamma\), so
+\begin{equation}
+ r=\frac12\left(\gamma+\frac N\gamma\right)>0,
+ \qquad
+ s=\frac1{2\sqrt D}\left(\gamma-\frac N\gamma\right)\geq0.
+ \label{eq:r-s-signs}
+\end{equation}
+
+It remains to translate the upper bound in \eqref{eq:gamma-interval}.  The function
+\begin{equation}
+ f(t)=t-\frac Nt
+\end{equation}
+is strictly increasing for \(t>0\), because
+\(f'(t)=1+N/t^2>0\).  Hence
+\begin{align}
+ 2s\sqrt D
+ &=\gamma-\frac N\gamma\notag\\
+ &<\eps_D\sqrt N-\frac{N}{\eps_D\sqrt N}\notag\\
+ &=\sqrt N\left(\eps_D-\eps_D^{-1}\right)
+ =2v_D\sqrt{DN}.
+ \label{eq:seed-bound-derived}
+\end{align}
+Therefore \(s<v_D\sqrt N\), equivalently \(s^2<v_D^2N\), and
+\((r,s)\in\mathcal R(D,N)\).  This proves existence of the representation.
+
+Conversely, let \((r,s)\in\mathcal R(D,N)\), and put
+\(\gamma=r+s\sqrt D\).  Since \(r^2-Ds^2=N>0\), one has
+\(r>s\sqrt D\), so the conjugate of \(\gamma\) is positive.  Moreover
+\(s\geq0\), and hence \(\gamma\geq\sqrt N\).  The seed inequality gives
+\begin{equation}
+ f(\gamma)=2s\sqrt D<2v_D\sqrt{DN}
+ =\sqrt N(\eps_D-\eps_D^{-1})=f(\eps_D\sqrt N).
+ \label{eq:seed-implies-interval}
+\end{equation}
+Since \(f\) is strictly increasing, it follows that
+\begin{equation}
+ \sqrt N\leq\gamma<\eps_D\sqrt N.
+ \label{eq:seed-reduction-interval}
+\end{equation}
+Thus every member of the stated seed set lies in the same half-open reduction
+interval used above.  Multiplication by \(\eps_D^n\) gives integral coefficients; more
+explicitly, if
+\begin{equation}
+ Z_n+Y_n\sqrt D=(r+s\sqrt D)\eps_D^n,
+\end{equation}
+then
+\begin{equation}
+ \begin{aligned}
+ Z_{n+1}&=u_DZ_n+Dv_DY_n,\\
+ Y_{n+1}&=v_DZ_n+u_DY_n,
+ \end{aligned}
+\end{equation}
+so induction gives \(Z_n>0\) and \(Y_n\geq0\).  Norm multiplicativity gives
+\begin{equation}
+ Z_n^2-DY_n^2=(r^2-Ds^2)(u_D^2-Dv_D^2)^n=N.
+\end{equation}
+
+For uniqueness, \eqref{eq:seed-reduction-interval} shows that any representation
+\(\alpha=(r+s\sqrt D)\eps_D^n\) with a stated seed satisfies
+\begin{equation}
+ \eps_D^n\sqrt N\leq\alpha<\eps_D^{n+1}\sqrt N.
+\end{equation}
+Hence \(n\) is the unique integer determined by
+\eqref{eq:reduction-interval-alpha}.  Once \(n\) is fixed,
+\(r+s\sqrt D=\alpha\eps_D^{-n}\) is fixed.  Thus both the seed and the exponent are
+unique.
+\end{proof}
+
+\begin{corollary}
+\label{cor:fiber-infinite}
+For fixed positive nonsquare \(D\) and positive \(N\), the equation
+\(Z^2-DY^2=N\) has either no solution in
+\(\Z_{>0}\times\Z_{\geq0}\) or infinitely many such solutions.
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:finite-seed}, a solution exists if and only if the finite seed
+set is nonempty.  From any seed, the quantities
+\((r+s\sqrt D)\eps_D^n\) are strictly increasing as \(n\) increases, and therefore
+give infinitely many distinct solutions.
+\end{proof}
+
+\section{Proof of the classification}
+
+\begin{proof}[Proof of Theorem~\ref{thm:classification}]
+Proposition~\ref{prop:local-restrictions} proves that every solution has
+\(x\in\Acal\).  It remains to classify each possible fiber.
+
+\smallskip
+\noindent\emph{The fiber \(x=1\).}
+Equation \eqref{eq:main} becomes
+\begin{equation}
+ z^2-y^2=-1,
+\end{equation}
+so
+\begin{equation}
+ (z-y)(z+y)=-1.
+\end{equation}
+The only ordered factor pairs of \(-1\) are \((1,-1)\) and \((-1,1)\).  Solving
+gives \(z=0\) and \(y=\pm1\), proving \eqref{eq:x1-solutions}.
+
+\smallskip
+\noindent\emph{Square fibers.}
+Suppose \(x=m^2\), with \(m\geq3\), and write
+\begin{equation}
+ Y=|y|,
+ \qquad
+ Z=|z|.
+\end{equation}
+Then
+\begin{equation}
+ Z^2-m^2Y^2=m^6-2=M_m.
+ \label{eq:square-factor-equation}
+\end{equation}
+Since \(M_m>0\), one has \(Z>mY\).  Thus
+\begin{equation}
+ a=Z-mY,
+ \qquad
+ b=Z+mY
+ \label{eq:a-b-definition}
+\end{equation}
+are positive integers satisfying
+\begin{equation}
+ ab=M_m,
+ \qquad
+ a\leq b,
+ \qquad
+ b-a=2mY.
+ \label{eq:a-b-properties}
+\end{equation}
+Therefore \(b=M_m/a\) and
+\begin{equation}
+ \frac{M_m}{a}\equiv a\pmod{2m},
+\end{equation}
+so \(a\in\Fcal_m\).  Solving \eqref{eq:a-b-definition} for \(Y,Z\) yields exactly
+\eqref{eq:squareYZ}.
+
+Conversely, let \(a\in\Fcal_m\), and put \(b=M_m/a\).  Because \(m\) is odd,
+\(M_m\) is odd; hence its positive divisors \(a,b\) are odd.  Thus
+\begin{equation}
+ Z=\frac{a+b}{2}\in\Z.
+\end{equation}
+The congruence in \eqref{eq:Fm} gives
+\begin{equation}
+ Y=\frac{b-a}{2m}\in\Z_{\geq0}.
+\end{equation}
+Moreover,
+\begin{equation}
+ Z-mY=a,
+ \qquad
+ Z+mY=b,
+\end{equation}
+and therefore
+\begin{equation}
+ Z^2-m^2Y^2=ab=M_m.
+\end{equation}
+This proves the square-fiber parameterization and its completeness.  The normalized
+factor \(a=Z-mY\) is determined uniquely by \((Y,Z)\).
+
+\smallskip
+\noindent\emph{Nonsquare fibers.}
+Let \(x\in\Acal\) be nonsquare.  Since \(x\geq2\), the integer
+\(N_x=x^3-2\) is positive.  With \(Y=|y|\) and \(Z=|z|\), equation
+\eqref{eq:main} becomes
+\begin{equation}
+ Z^2-xY^2=N_x.
+ \label{eq:fiber-generalized-Pell}
+\end{equation}
+Apply Theorem~\ref{thm:finite-seed} with \(D=x\) and \(N=N_x\).  Its seed set is
+precisely \(\Scal_x\), and its representation is precisely
+\eqref{eq:Pell-param}, equivalently \eqref{eq:recurrence}.  It gives every normalized
+solution and proves the uniqueness of the seed and exponent.  Restoring the
+independent signs of \(y\) and \(z\) completes the proof.
+\end{proof}
+
+\begin{corollary}[Structure of the fibers]
+\label{cor:fibers}
+Every square fiber of \eqref{eq:main} is finite.  Every nonsquare fiber is either
+empty or infinite.  The full equation has infinitely many integer solutions.
+\end{corollary}
+
+\begin{proof}
+The square assertion follows from the finiteness of the divisor set
+\(\Fcal_m\).  The nonsquare assertion follows from
+Corollary~\ref{cor:fiber-infinite}.  Infinitely many solutions occur already in the
+fiber \(x=3\), as shown explicitly below.
+\end{proof}
+
+\section{Examples and effective use of the theorem}
+
+The classification is effective for each fixed \(x\).  In a square fiber, one
+factors \(m^6-2\) and checks the finite congruence in \eqref{eq:Fm}.  In a nonsquare
+fiber, one searches for the least positive solution of \(u^2-xv^2=1\); existence is
+guaranteed by Theorem~\ref{thm:Pell-existence}.  One then checks the finitely many
+integers \(s\geq0\) satisfying \(s^2<v_x^2N_x\), retaining those for which
+\(N_x+xs^2\) is a square.
+
+\begin{example}[The complete fiber \(x=3\)]
+Here
+\begin{equation}
+ N_3=25,
+ \qquad
+ \eps_3=2+\sqrt3.
+\end{equation}
+Indeed, \(2^2-3\cdot1^2=1\), and no smaller positive Pell pair is possible because
+\(v\geq1\) and \(u^2=1+3v^2\geq4\).
+A reduced seed satisfies
+\begin{equation}
+ r^2-3s^2=25,
+ \qquad
+ 0\leq s<5.
+ \label{eq:x3-seed}
+\end{equation}
+Modulo \(5\), this gives \(r^2\equiv3s^2\pmod5\).  Since the nonzero squares modulo
+\(5\) are \(1\) and \(4\), the number \(3\) is a nonsquare; hence \(5\mid s\), and
+then \(5\mid r\).  The bound in \eqref{eq:x3-seed} forces \(s=0\), and then
+\(r=5\).  Thus all normalized solutions with \(x=3\) are
+\begin{equation}
+ Z_n+Y_n\sqrt3=5(2+\sqrt3)^n,
+ \qquad n\geq0.
+ \label{eq:x3-family}
+\end{equation}
+The first pairs \((Y_n,Z_n)\) are
+\begin{equation}
+ (0,5),\ (5,10),\ (20,35),\ (75,130),\ (280,485),\ldots.
+\end{equation}
+Independent signs give all integer solutions in this fiber.
+\end{example}
+
+\begin{example}[The complete fiber \(x=9\)]
+Here \(m=3\) and
+\begin{equation}
+ M_3=3^6-2=727.
+\end{equation}
+The integer \(727\) has no prime divisor at most \(\sqrt{727}<27\): it is not
+divisible by \(2,3,5,7,11,13,17,19\), or \(23\).  Hence it is prime.  The only
+normalized factor pair is \((a,b)=(1,727)\), and
+\(727\equiv1\pmod6\).  Formula \eqref{eq:squareYZ} gives
+\begin{equation}
+ Y=\frac{727-1}{6}=121,
+ \qquad
+ Z=\frac{727+1}{2}=364.
+\end{equation}
+Therefore all solutions with \(x=9\) are
+\begin{equation}
+ (9,\pm121,\pm364).
+\end{equation}
+\end{example}
+
+\begin{example}[Admissibility is not sufficient]
+The prime \(43\) belongs to \(\Acal\), because
+\(43\equiv3\pmod8\) and \(43\equiv1\pmod3\).  Nevertheless the fiber \(x=43\) is
+empty.  Indeed,
+\begin{equation}
+ 43^3-2=79505\equiv5\pmod{25}.
+\end{equation}
+If a solution existed, reduction modulo \(5\) would give
+\begin{equation}
+ z^2-3y^2\equiv0\pmod5.
+\end{equation}
+As \(3\) is a nonsquare modulo \(5\), this forces \(5\mid y\) and \(5\mid z\).
+The left-hand side \(z^2-43y^2\) would then be divisible by \(25\), whereas the
+right-hand side is congruent to \(5\pmod{25}\), a contradiction.
+\end{example}
+
+\end{document}
