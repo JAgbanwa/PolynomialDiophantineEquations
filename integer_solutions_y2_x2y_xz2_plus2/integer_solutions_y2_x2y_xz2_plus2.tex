@@ -1,0 +1,1211 @@
+\documentclass[11pt,a4paper]{amsart}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{microtype}
+\usepackage{booktabs}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+  pdftitle={Integer Solutions of y2+x2y+xz2+2=0},
+  pdfauthor={Jamal Agbanwa},
+  pdfsubject={A complete classification of the integer solutions of a cubic Diophantine equation}
+}
+
+\numberwithin{equation}{section}
+\allowdisplaybreaks
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\DeclareMathOperator{\sgn}{sgn}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\SL}{\operatorname{SL}}
+
+\title[Integer solutions of a cubic Diophantine equation]
+{Integer Solutions of \(y^2+x^2y+xz^2+2=0\)}
+\author{Jamal Agbanwa}
+\address{Independent Researcher}
+\date{}
+
+\begin{document}
+
+\begin{abstract}
+We determine all integer triples \((x,y,z)\) satisfying
+\(y^2+x^2y+xz^2+2=0\).
+The principal result is an exact divisor--square parametrization in which the parameter \(|x|\) is recovered uniquely from the solution.
+We then give a complete fixed-\(|x|\) description: the positive-\(x\) branch is finite, the negative branch with square \(|x|\) is governed by a finite divisor calculation, and every solvable negative branch with nonsquare \(|x|\) is a finite disjoint union of explicit Pell recurrences.
+We also prove the precise congruence obstruction on \(|x|\), a global unimodular parametrization, and an explicit infinite family with \(x=-2\).
+\end{abstract}
+
+\maketitle
+
+\section{Statement of the classification}
+
+We study the integral points on
+\begin{equation}
+ y^2+x^2y+xz^2+2=0,
+ \qquad x,y,z\in\Z.
+ \label{eq:E}
+\end{equation}
+Throughout, \(\N=\{1,2,3,\ldots\}\).  For \(m\in\N\) and
+\(y\in\Z\) such that \(m\mid y^2+2\), define
+\begin{equation}
+ F_m(y):=my+\frac{y^2+2}{m}.
+ \label{eq:Fdef}
+\end{equation}
+
+The following theorem is the basic complete parametrization.
+
+\begin{theorem}[Exact divisor--square parametrization]\label{thm:main}
+The integer solutions of \eqref{eq:E} are exactly the triples
+\begin{equation}
+ (x,y,z)=(-\varepsilon m,\,y,\,\nu t),
+ \label{eq:mainparam}
+\end{equation}
+where
+\begin{equation}
+ m,t\in\N,\qquad y\in\Z,\qquad
+ m\mid y^2+2,\qquad
+ F_m(y)=\varepsilon t^2,
+ \qquad \varepsilon,\nu\in\{\pm1\}.
+ \label{eq:mainconditions}
+\end{equation}
+For every solution, the parameters \(m=|x|\), \(y\),
+\(t=|z|\), and \(\varepsilon=-\sgn(x)\) are uniquely determined;
+only \(\nu=\sgn(z)\) records the choice of sign of \(z\).
+In particular, \(F_m(y)\) never vanishes for an admissible pair
+\((m,y)\) occurring in a solution.
+\end{theorem}
+
+Thus an equivalent concise description is
+\begin{equation}
+ (x,y,z)=
+ \left(-\sgn(F_m(y))m,\ y,\ \pm\sqrt{|F_m(y)|}\right),
+ \label{eq:signparam}
+\end{equation}
+where \(m\mid y^2+2\) and \(|F_m(y)|\) is a perfect square.
+The nonvanishing assertion in Theorem~\ref{thm:main} makes
+\eqref{eq:signparam} unambiguous.
+
+The later sections refine Theorem~\ref{thm:main} in three ways.
+First, we characterize exactly the positive integers \(m\) for which
+the necessary congruence \(y^2\equiv-2\pmod m\) is soluble.
+Second, for each fixed \(m\) we convert the remaining square condition
+into a positive-definite equation, a finite factorization, or a finite
+union of Pell orbits according to the sign of \(x\) and whether \(m\)
+is a square.  Third, we give a global parametrization by matrices in
+\(\SL_2(\Z)\).
+
+\section{Proof of the exact parametrization}
+
+We begin by excluding the two degeneracies that could otherwise cause
+ambiguity.
+
+\begin{lemma}\label{lem:nonzero}
+Every solution of \eqref{eq:E} satisfies \(x\ne0\) and \(z\ne0\).
+\end{lemma}
+
+\begin{proof}
+If \(x=0\), then \eqref{eq:E} becomes \(y^2+2=0\), which has no
+integer solution.
+
+Suppose next that \(z=0\).  Since \(x\ne0\), equation \eqref{eq:E}
+becomes
+\begin{equation}
+ y(y+x^2)=-2.
+ \label{eq:z0factor}
+\end{equation}
+Because \(x^2>0\), the second factor is strictly larger than the first.
+The only ordered pairs of integral factors of \(-2\) with this property
+are \((-2,1)\) and \((-1,2)\).  In either case their difference is
+\(3\), so \eqref{eq:z0factor} would force \(x^2=3\), impossible.
+Therefore \(z\ne0\).
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Let \((x,y,z)\) satisfy \eqref{eq:E}.  By Lemma~\ref{lem:nonzero},
+we may write
+\begin{equation}
+ x=\delta m,
+ \qquad m=|x|\in\N,
+ \qquad \delta\in\{\pm1\}.
+ \label{eq:xdelta}
+\end{equation}
+Then \(x^2=m^2\), and \eqref{eq:E} is
+\begin{equation}
+ y^2+m^2y+\delta mz^2+2=0.
+ \label{eq:mdeltaeq}
+\end{equation}
+Reduction modulo \(m\) gives
+\begin{equation}
+ y^2+2\equiv0\pmod m.
+ \label{eq:necessarycong}
+\end{equation}
+Consequently
+\begin{equation}
+ q:=\frac{y^2+2}{m}
+ \label{eq:qdef}
+\end{equation}
+is a positive integer.  Dividing \eqref{eq:mdeltaeq} by \(m\) yields
+\begin{equation}
+ q+my+\delta z^2=0.
+ \label{eq:linearized}
+\end{equation}
+By \eqref{eq:Fdef}, this says
+\begin{equation}
+ F_m(y)=-\delta z^2.
+ \label{eq:Ffromsolution}
+\end{equation}
+Set \(t=|z|\), \(\varepsilon=-\delta\), and
+\(\nu=\sgn(z)\).  Lemma~\ref{lem:nonzero} gives \(t\in\N\), and
+\eqref{eq:Ffromsolution} becomes \(F_m(y)=\varepsilon t^2\).
+Moreover \(x=\delta m=-\varepsilon m\) and \(z=\nu t\), proving that
+every solution occurs in \eqref{eq:mainparam}--\eqref{eq:mainconditions}.
+
+Conversely, suppose the data in \eqref{eq:mainconditions} are given and
+set \((x,y,z)\) by \eqref{eq:mainparam}.  Since \(x^2=m^2\) and
+\(z^2=t^2\), we have
+\begin{align*}
+ y^2+x^2y+xz^2+2
+ &=y^2+m^2y-\varepsilon mt^2+2\\
+ &=m\left(\frac{y^2+2}{m}+my-\varepsilon t^2\right)\\
+ &=m\bigl(F_m(y)-\varepsilon t^2\bigr)=0.
+\end{align*}
+Thus every parameter choice in the theorem gives a solution.
+
+For a given solution, \(m=|x|\), the displayed value of \(y\), and
+\(t=|z|\) are forced.  Equation \eqref{eq:Ffromsolution} then forces
+\(\varepsilon=-\sgn(x)\), while \(\nu\) is exactly the sign of \(z\).
+Finally, \(F_m(y)=\varepsilon t^2\ne0\) because \(t\in\N\).
+\end{proof}
+
+The two signs of \(x\) lead to useful specialized forms.
+
+\begin{corollary}[The positive branch]\label{cor:positivebranch}
+The solutions with \(x>0\) are exactly
+\begin{equation}
+ (x,y,z)=
+ \left(m,-a,\,\pm\sqrt{ma-\frac{a^2+2}{m}}\right),
+ \label{eq:positiveparam}
+\end{equation}
+where
+\begin{equation}
+ m\in\N,\qquad 1\le a\le m^2-1,
+ \qquad m\mid a^2+2,
+ \label{eq:positiveconditions1}
+\end{equation}
+and
+\begin{equation}
+ ma-\frac{a^2+2}{m}
+ \label{eq:positiveSquare}
+\end{equation}
+is a positive perfect square.
+For a fixed \(m\), the substitution
+\begin{equation}
+ a\longmapsto m^2-a
+ \label{eq:ainvolution}
+\end{equation}
+preserves the value in \eqref{eq:positiveSquare}.
+\end{corollary}
+
+\begin{proof}
+Put \(x=m>0\) in \eqref{eq:E}.  Then
+\begin{equation}
+ y(y+m^2)=-mz^2-2<0.
+ \label{eq:yrangeproof}
+\end{equation}
+The two factors on the left differ by the positive integer \(m^2\), so
+they have opposite signs exactly when
+\(-m^2<y<0\).  Write \(a=-y\); then
+\(1\le a\le m^2-1\).  Theorem~\ref{thm:main}, with
+\(F_m(-a)<0\), gives
+\begin{equation*}
+ z^2=-F_m(-a)=ma-\frac{a^2+2}{m},
+\end{equation*}
+which proves the parametrization and the square condition.  Conversely,
+these conditions are a specialization of Theorem~\ref{thm:main} and
+therefore produce a solution.
+
+Finally,
+\begin{align*}
+ m(m^2-a)-\frac{(m^2-a)^2+2}{m}
+ &=m^3-ma-\left(m^3-2ma+\frac{a^2+2}{m}\right)\\
+ &=ma-\frac{a^2+2}{m}.
+\end{align*}
+Also \((m^2-a)^2+2\equiv a^2+2\pmod m\), so divisibility is
+preserved.  This proves the final assertion.
+\end{proof}
+
+
+\begin{example}[Some positive branches]\label{ex:positivebranches}
+Corollary~\ref{cor:positivebranch} gives the following complete lists
+for three small positive values of $x$:
+\begin{align*}
+ x=2&:\qquad (y,z)=(-2,\pm1),\\
+ x=3&:\qquad (y,z)=(-2,\pm2),\ (-7,\pm2),\\
+ x=9&:\qquad (y,z)=(-22,\pm12),\ (-59,\pm12).
+\end{align*}
+For instance, when $m=9$ the only admissible values of $a$ for which
+\eqref{eq:positiveSquare} is a square are $a=22$ and $a=59$; the
+involution $a\mapsto81-a$ interchanges them.
+\end{example}
+
+\begin{corollary}[The negative branch]\label{cor:negativebranch}
+The solutions with \(x<0\) are exactly
+\begin{equation}
+ (x,y,z)=
+ \left(-m,y,\,\pm\sqrt{my+\frac{y^2+2}{m}}\right),
+ \label{eq:negativeparam}
+\end{equation}
+where \(m\in\N\), \(m\mid y^2+2\), and
+\begin{equation}
+ my+\frac{y^2+2}{m}
+ \label{eq:negativeSquare}
+\end{equation}
+is a positive perfect square.
+\end{corollary}
+
+\begin{proof}
+This is Theorem~\ref{thm:main} with \(\varepsilon=1\), equivalently
+with \(x=-m\).
+\end{proof}
+
+The quadratic nature of \eqref{eq:E} in \(y\) gives an elementary
+symmetry that is occasionally useful.
+
+\begin{proposition}[Vieta involution]\label{prop:vieta}
+If \((x,y,z)\) satisfies \eqref{eq:E}, then so does
+\begin{equation}
+ (x,-x^2-y,z).
+ \label{eq:vieta}
+\end{equation}
+This transformation is an involution.  On the parameters of
+Corollary~\ref{cor:positivebranch}, it is exactly
+\(a\mapsto m^2-a\).
+\end{proposition}
+
+\begin{proof}
+For fixed \(x,z\), equation \eqref{eq:E} is the monic quadratic
+\begin{equation*}
+ Y^2+x^2Y+(xz^2+2)=0.
+\end{equation*}
+The sum of its two roots is \(-x^2\).  Hence, if one root is \(y\), the
+other is \(-x^2-y\).  Applying the transformation twice returns \(y\),
+so it is an involution.  If \(x=m>0\) and \(y=-a\), the new value is
+\(-m^2+a=-(m^2-a)\), as claimed.
+\end{proof}
+
+\section{The exact congruence obstruction on \texorpdfstring{$|x|$}{|x|}}
+
+The divisibility condition in Theorem~\ref{thm:main} can itself be
+classified completely.
+
+
+For an odd prime $p$ and an integer $a$ not divisible by $p$, write
+$\left(\frac ap\right)=1$ when $a$ is a quadratic residue modulo $p$
+and $\left(\frac ap\right)=-1$ otherwise.
+
+\begin{lemma}[Gauss's lemma]\label{lem:gauss}
+Let $p$ be an odd prime, let $a\not\equiv0\pmod p$, and put
+$n=(p-1)/2$.  For $1\le j\le n$, let $r_j$ be the unique integer with
+\begin{equation*}
+ -\frac p2<r_j<\frac p2,
+ \qquad r_j\equiv aj\pmod p.
+\end{equation*}
+If exactly $N$ of the integers $r_j$ are negative, then
+\begin{equation}
+ \left(\frac ap\right)=(-1)^N.
+ \label{eq:gausslemma}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The absolute values $|r_1|,\ldots,|r_n|$ are distinct.  Indeed, if
+$|r_i|=|r_j|$, then $ai\equiv\pm aj\pmod p$, hence
+$i\equiv\pm j\pmod p$.  In the ranges $1\le i,j\le n$, the plus sign
+forces $i=j$, while the minus sign would give $i+j=p$, impossible
+because $i+j\le p-1$.  Therefore the $|r_j|$ are a permutation of
+$1,2,\ldots,n$.  Taking products modulo $p$ gives
+\begin{equation*}
+ a^n n!
+ \equiv\prod_{j=1}^n r_j
+ =(-1)^N\prod_{j=1}^n|r_j|
+ =(-1)^N n!\pmod p.
+\end{equation*}
+Since $p\nmid n!$, cancellation yields
+$a^n\equiv(-1)^N\pmod p$.
+
+It remains only to identify $a^n$ with the Legendre symbol.  Fermat's
+little theorem follows because multiplication by $a$ permutes the
+nonzero residue classes modulo $p$:
+\begin{equation*}
+ a^{p-1}(p-1)!\equiv(p-1)!\pmod p,
+\end{equation*}
+so $a^{p-1}\equiv1\pmod p$.  The $n$ nonzero squares modulo $p$ are
+distinct and are roots of $X^n-1$; since a nonzero polynomial of
+degree $n$ over a field has at most $n$ roots, these are all the roots.
+Thus $a^n\equiv1\pmod p$ exactly when $a$ is a square.  If $a$ is not
+a square, then $a^n\not\equiv1\pmod p$ while
+$(a^n)^2=a^{p-1}\equiv1\pmod p$, so $a^n\equiv-1\pmod p$.
+Consequently $a^n\equiv\left(\frac ap\right)\pmod p$.  Both sides of
+\eqref{eq:gausslemma} belong to $\{\pm1\}$, and the lemma follows.
+The same criterion also proves multiplicativity: for
+$a,b\not\equiv0\pmod p$,
+\begin{equation*}
+ \left(\frac{ab}{p}\right)
+ \equiv (ab)^n
+ \equiv a^n b^n
+ \equiv \left(\frac ap\right)\left(\frac bp\right)\pmod p,
+\end{equation*}
+and both sides are again in $\{\pm1\}$.
+\end{proof}
+
+\begin{lemma}[The residue of \(-2\) modulo an odd prime]\label{lem:minus2prime}
+Let \(p\) be an odd prime.  Then
+\begin{equation}
+ u^2\equiv-2\pmod p
+ \label{eq:minus2modp}
+\end{equation}
+has a solution if and only if
+\begin{equation}
+ p\equiv1\quad\text{or}\quad3\pmod8.
+ \label{eq:presidueclasses}
+\end{equation}
+When it is soluble, it has exactly two roots modulo \(p\).
+\end{lemma}
+
+\begin{proof}
+By Lemma~\ref{lem:gauss}, applied first to \(a=-1\) and then to
+\(a=2\), we obtain
+\begin{equation}
+ \left(\frac{-1}{p}\right)=(-1)^{(p-1)/2},
+ \qquad
+ \left(\frac{2}{p}\right)=(-1)^{(p^2-1)/8}.
+ \label{eq:supplementarylaws}
+\end{equation}
+For completeness, the second count is as follows.  The least positive
+residues of \(2,4,\ldots,p-1\) exceed \(p/2\) precisely for the
+integers \(j\) with \(p/4<j\le(p-1)/2\).  Their number is
+\begin{equation*}
+ \frac{p-1}{2}-\left\lfloor\frac p4\right\rfloor,
+\end{equation*}
+whose parity, checked in the four odd classes modulo \(8\), is the
+parity of \((p^2-1)/8\).  The first formula is immediate because all
+\((p-1)/2\) residues of \(-j\) are negative in least absolute form.
+
+By multiplicativity of the Legendre symbol,
+\begin{equation}
+ \left(\frac{-2}{p}\right)
+ =(-1)^{(p-1)/2+(p^2-1)/8}.
+ \label{eq:minus2symbol}
+\end{equation}
+Checking the four odd residue classes modulo \(8\), the exponent in
+\eqref{eq:minus2symbol} is even exactly for \(p\equiv1,3\pmod8\).
+Thus \(-2\) is a quadratic residue exactly in those two classes.
+If a root \(u\) exists, then \(-u\) is a distinct root because
+\(p\ne2\), and a nonzero quadratic polynomial over the field
+\(\Z/p\Z\) has at most two roots.  Hence there are exactly two.
+\end{proof}
+
+\begin{lemma}[Lifting roots through odd prime powers]\label{lem:lifting}
+Let \(p\) be an odd prime.  Every solution of
+\begin{equation}
+ u^2\equiv-2\pmod{p^k},\qquad k\ge1,
+ \label{eq:liftstart}
+\end{equation}
+lifts uniquely modulo \(p^{k+1}\) to a solution of the same congruence.
+Consequently, if \(-2\) is a quadratic residue modulo \(p\), then
+\(u^2\equiv-2\pmod{p^e}\) has exactly two roots for every \(e\ge1\).
+\end{lemma}
+
+\begin{proof}
+Write \(u^2+2=p^kc\).  A lift has the form \(u+tp^k\), with
+\(t\) considered modulo \(p\).  Since \(2k\ge k+1\),
+\begin{align*}
+ (u+tp^k)^2+2
+ &\equiv p^k(c+2ut)\pmod{p^{k+1}}.
+\end{align*}
+The residue of \(u\) modulo \(p\) is nonzero, because
+\(u^2\equiv-2\not\equiv0\pmod p\).  Hence \(2u\) is invertible modulo
+\(p\), and there is a unique \(t\pmod p\) satisfying
+\(c+2ut\equiv0\pmod p\).  This proves unique lifting.  Starting from
+the two roots modulo \(p\) supplied by Lemma~\ref{lem:minus2prime}
+and iterating gives exactly two roots modulo every \(p^e\).
+\end{proof}
+
+\begin{theorem}[Soluble moduli]\label{thm:moduli}
+For \(m\in\N\), the congruence
+\begin{equation}
+ y^2\equiv-2\pmod m
+ \label{eq:minus2modm}
+\end{equation}
+is soluble if and only if
+\begin{equation}
+ m=2^{\epsilon}\prod_{i=1}^r p_i^{e_i},
+ \qquad
+ \epsilon\in\{0,1\},
+ \qquad
+ p_i\equiv1\ \text{or}\ 3\pmod8,
+ \label{eq:mclassification}
+\end{equation}
+where the \(p_i\) are distinct odd primes and \(e_i\in\N\).
+For such an \(m\), the congruence has exactly \(2^r\) residue classes
+of solutions modulo \(m\).
+\end{theorem}
+
+\begin{proof}
+Suppose first that \eqref{eq:minus2modm} is soluble.  If \(4\mid m\),
+then it would imply \(y^2\equiv2\pmod4\), impossible because a square
+modulo \(4\) is \(0\) or \(1\).  Thus the exponent of \(2\) in \(m\)
+is at most one.  If an odd prime \(p\mid m\), reduction modulo \(p\)
+shows that \(-2\) is a quadratic residue modulo \(p\).  By
+Lemma~\ref{lem:minus2prime}, \(p\equiv1\) or \(3\pmod8\).  This proves
+the necessity of \eqref{eq:mclassification}.
+
+Conversely, assume \eqref{eq:mclassification}.  For each odd prime
+power \(p_i^{e_i}\), Lemmas~\ref{lem:minus2prime} and
+\ref{lem:lifting} provide exactly two roots.  Modulo \(2\), the unique
+root is \(0\).  The moduli \(2^{\epsilon},p_1^{e_1},\ldots,p_r^{e_r}\)
+are pairwise coprime, so the Chinese remainder theorem combines an
+arbitrary choice of one root for each odd prime power into a unique
+root modulo \(m\).  There are therefore exactly \(2^r\) roots.
+
+For completeness, the Chinese remainder theorem in this setting
+follows directly from Bezout's identity: for pairwise coprime moduli
+\(n_j\), put \(N=\prod_j n_j\), \(N_j=N/n_j\), and choose
+\(c_jN_j\equiv1\pmod{n_j}\); then
+\(\sum_j a_jc_jN_j\) has the prescribed residue \(a_j\) modulo each
+\(n_j\), and uniqueness holds modulo \(N\).
+\end{proof}
+
+\begin{corollary}[Restrictions on \(x,y,z\)]\label{cor:parity}
+If \((x,y,z)\) satisfies \eqref{eq:E}, then
+\begin{equation}
+ |x|=2^{\epsilon}\prod_{i=1}^r p_i^{e_i}
+ \label{eq:xrestriction}
+\end{equation}
+with the restrictions in Theorem~\ref{thm:moduli}.  Moreover,
+\begin{equation}
+ \begin{aligned}
+ |x|\text{ odd} &\quad\Longrightarrow\quad z\text{ even},\\
+ |x|\text{ even}&\quad\Longrightarrow\quad y\text{ even and }z\text{ odd}.
+ \end{aligned}
+ \label{eq:parityconclusions}
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+The factorization restriction follows from
+\eqref{eq:necessarycong} and Theorem~\ref{thm:moduli}.
+
+If \(|x|\) is odd, then reduction of \eqref{eq:E} modulo \(2\) gives
+\begin{equation*}
+ y^2+y+z^2\equiv0\pmod2.
+\end{equation*}
+Since \(y^2+y\) is always even, \(z^2\) is even, and hence \(z\) is
+even.
+
+If \(|x|\) is even, Theorem~\ref{thm:moduli} shows that its exact
+\(2\)-adic valuation is one, so \(x\equiv2\pmod4\).  Congruence
+\eqref{eq:necessarycong} modulo \(2\) forces \(y\) to be even.
+Reducing \eqref{eq:E} modulo \(4\), the terms \(y^2\) and \(x^2y\)
+vanish, and we obtain
+\begin{equation*}
+ 2z^2+2\equiv0\pmod4.
+\end{equation*}
+Thus \(z^2\equiv1\pmod2\), so \(z\) is odd.
+\end{proof}
+
+\section{Reduction to quadratic norm equations}
+
+The remaining square condition in Theorem~\ref{thm:main} has a useful
+symmetric form.
+
+\begin{proposition}[Quadratic norm form]\label{prop:normform}
+Let \(m\in\N\), \(\delta\in\{\pm1\}\), and put \(x=\delta m\).
+There is a bijection between solutions \((x,y,z)\) of \eqref{eq:E}
+with this fixed value of \(x\) and integer pairs \((U,V)\) satisfying
+\begin{equation}
+ U^2+\delta mV^2=m^4-8,
+ \label{eq:normequation}
+\end{equation}
+together with the parity conditions
+\begin{equation}
+ U\equiv m^2\pmod2,
+ \qquad V\equiv0\pmod2.
+ \label{eq:normparity}
+\end{equation}
+The bijection is
+\begin{equation}
+ U=2y+m^2,
+ \qquad V=2z,
+ \label{eq:UVforward}
+\end{equation}
+and
+\begin{equation}
+ y=\frac{U-m^2}{2},
+ \qquad z=\frac V2.
+ \label{eq:UVbackward}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+With \(x=\delta m\), equation \eqref{eq:E} is
+\begin{equation*}
+ y^2+m^2y+\delta mz^2+2=0.
+\end{equation*}
+Multiplying by \(4\) and completing the square in \(y\) gives
+\begin{equation*}
+ (2y+m^2)^2+\delta m(2z)^2=m^4-8,
+\end{equation*}
+which is \eqref{eq:normequation}.  The definitions in
+\eqref{eq:UVforward} imply \eqref{eq:normparity}.
+
+Conversely, the parity conditions make the quantities in
+\eqref{eq:UVbackward} integers.  Substituting them into
+\eqref{eq:normequation} and reversing the completion of the square
+gives \eqref{eq:E}.  The two constructions are inverse to one another.
+\end{proof}
+
+\subsection{Positive \texorpdfstring{\(x\)}{x}}
+
+For \(x=m>0\), the norm equation is positive definite.
+
+\begin{corollary}[Finiteness for fixed positive \(x\)]\label{cor:positivefinite}
+For every fixed positive integer \(m\), there are only finitely many
+solutions with \(x=m\).  More precisely, there are no such solutions
+for \(m=1\), and for \(m\ge2\) every corresponding pair \((U,V)\)
+satisfies
+\begin{equation}
+ |U|\le\sqrt{m^4-8},
+ \qquad
+ |V|\le\sqrt{\frac{m^4-8}{m}}.
+ \label{eq:positivebounds}
+\end{equation}
+Checking the finitely many pairs in this box subject to
+\eqref{eq:normparity} gives all solutions.
+\end{corollary}
+
+\begin{proof}
+When \(m=1\), equation \eqref{eq:normequation} is
+\(U^2+V^2=-7\), impossible.  For \(m\ge2\), it is
+\begin{equation*}
+ U^2+mV^2=m^4-8>0.
+\end{equation*}
+Both summands are nonnegative, giving the two bounds in
+\eqref{eq:positivebounds}.  A bounded subset of \(\Z^2\) is finite,
+and Proposition~\ref{prop:normform} completes the proof.
+\end{proof}
+
+\subsection{Negative \texorpdfstring{\(x\)}{x} with square \texorpdfstring{\(|x|\)}{|x|}}
+
+When \(x=-m\) and \(m\) is a square, the norm equation factors over
+\(\Z\).
+
+\begin{theorem}[Finite divisor parametrization for \(x=-d^2\)]
+\label{thm:squarem}
+Fix \(d\in\N\).  The solutions of \eqref{eq:E} with \(x=-d^2\) are
+in bijection with ordered pairs \((A,B)\in\Z^2\) satisfying
+\begin{equation}
+ AB=d^8-8,
+ \label{eq:ABproduct}
+\end{equation}
+\begin{equation}
+ A+B\equiv2d^4\pmod4,
+ \qquad
+ B-A\equiv0\pmod{4d}.
+ \label{eq:ABcongruences}
+\end{equation}
+The corresponding solution is
+\begin{equation}
+ (x,y,z)=
+ \left(-d^2,\ \frac{A+B-2d^4}{4},\ \frac{B-A}{4d}\right).
+ \label{eq:ABsolution}
+\end{equation}
+In particular, for each square value of \(|x|\), there are only
+finitely many solutions.
+\end{theorem}
+
+\begin{proof}
+Set \(m=d^2\) and \(\delta=-1\) in
+Proposition~\ref{prop:normform}.  The norm equation becomes
+\begin{equation}
+ U^2-d^2V^2=d^8-8.
+ \label{eq:squarefactorstart}
+\end{equation}
+Define
+\begin{equation}
+ A=U-dV,
+ \qquad B=U+dV.
+ \label{eq:ABdef}
+\end{equation}
+Then \eqref{eq:squarefactorstart} is exactly
+\eqref{eq:ABproduct}.  Since \(U=2y+d^4\) and \(V=2z\), we also have
+\begin{equation*}
+ A+B=4y+2d^4,
+ \qquad B-A=4dz,
+\end{equation*}
+which proves the congruences in \eqref{eq:ABcongruences} and the
+recovery formulas in \eqref{eq:ABsolution}.
+
+Conversely, suppose \((A,B)\) satisfies
+\eqref{eq:ABproduct}--\eqref{eq:ABcongruences}.  Put
+\begin{equation*}
+ U=\frac{A+B}{2},
+ \qquad V=\frac{B-A}{2d}.
+\end{equation*}
+The first congruence in \eqref{eq:ABcongruences} implies that \(U\) is
+an integer with \(U\equiv d^4=m^2\pmod2\); the second implies that
+\(V\) is an even integer.  Equation \eqref{eq:ABproduct} gives
+\(U^2-d^2V^2=d^8-8\).  Proposition~\ref{prop:normform} therefore
+produces the solution \eqref{eq:ABsolution}.  The two constructions are
+inverse.  Finally, the nonzero integer \(d^8-8\) has finitely many
+ordered factor pairs, proving finiteness.
+\end{proof}
+
+\begin{example}
+For \(d=1\), Theorem~\ref{thm:squarem} gives exactly
+\begin{equation}
+ (x,y,z)=(-1,1,\pm2),
+ \qquad
+ (-1,-2,\pm2).
+ \label{eq:xminusone}
+\end{equation}
+Indeed, in this case \((A,B)\) runs through the admissible ordered
+factor pairs of \(-7\).
+\end{example}
+
+\subsection{Negative \texorpdfstring{\(x\)}{x} with nonsquare \texorpdfstring{\(|x|\)}{|x|}}
+
+We first prove the elementary Pell fact needed to make the description
+self-contained.
+
+\begin{lemma}[Existence of a positive Pell unit]\label{lem:pell}
+If \(m\in\N\) is not a square, then there exist \(a,b\in\N\) such that
+\begin{equation}
+ a^2-mb^2=1.
+ \label{eq:pellunit}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+For every integer \(H\ge2\), apply the pigeonhole principle to the
+\(H+1\) fractional parts
+\begin{equation*}
+ 0,\{\sqrt m\},\{2\sqrt m\},\ldots,\{H\sqrt m\}
+\end{equation*}
+placed in \(H\) half-open intervals of length \(1/H\).  Two lie in the
+same interval.  Subtracting their indices gives integers \(p,q\) with
+\(1\le q\le H\) and
+\begin{equation}
+ |q\sqrt m-p|<\frac1H.
+ \label{eq:dirichlet}
+\end{equation}
+Because \(m\) is not a square,
+\begin{equation}
+ c:=p^2-mq^2
+ \label{eq:cdef}
+\end{equation}
+is a nonzero integer.  Also
+\begin{align}
+ |c|
+ &=|p-q\sqrt m|\,|p+q\sqrt m|\notag\\
+ &<\frac1H\left(2H\sqrt m+1\right)
+ <2\sqrt m+1.
+ \label{eq:cbound}
+\end{align}
+The pairs \((p,q)\) obtained as \(H\) varies cannot belong to a finite
+set: if they did, the positive numbers \(|q\sqrt m-p|\) arising from
+that finite set would have a positive minimum, contradicting
+\eqref{eq:dirichlet} for sufficiently large \(H\).  Thus infinitely
+many distinct pairs occur.  Since \eqref{eq:cbound} leaves only
+finitely many possible nonzero values of \(c\), one fixed value of
+\(c\) occurs for infinitely many pairs.  Passing to a further infinite
+subsequence, we may assume that \(p\) and \(q\) have fixed residue
+classes modulo \(|c|\).
+
+For all sufficiently large members of this subsequence, \(p>0\).
+Choose two distinct pairs \((p_1,q_1)\), \((p_2,q_2)\) from it such
+that
+\begin{equation*}
+ p_2+q_2\sqrt m>p_1+q_1\sqrt m>0.
+\end{equation*}
+Because the two pairs are congruent componentwise modulo \(|c|\), the
+integers
+\begin{equation}
+ A=\frac{p_2p_1-mq_2q_1}{c},
+ \qquad
+ B=\frac{q_2p_1-p_2q_1}{c}
+ \label{eq:ABpell}
+\end{equation}
+are well defined.  Indeed, modulo \(c\) the first numerator is
+\(p_1^2-mq_1^2=c\), and the second is zero.  In the real quadratic
+field,
+\begin{equation}
+ A+B\sqrt m
+ =\frac{p_2+q_2\sqrt m}{p_1+q_1\sqrt m}>1.
+ \label{eq:pellratio}
+\end{equation}
+The norm of this quotient is \(c/c=1\).  Its conjugate is therefore
+the positive number \((A+B\sqrt m)^{-1}<1\).  Hence
+\begin{equation*}
+ A=\frac{(A+B\sqrt m)+(A-B\sqrt m)}2>0,
+\end{equation*}
+and
+\begin{equation*}
+ B\sqrt m
+ =\frac{(A+B\sqrt m)-(A-B\sqrt m)}2>0.
+\end{equation*}
+Thus \(A,B\in\N\), and taking norms in \eqref{eq:pellratio} gives
+\(A^2-mB^2=1\).  Renaming \((A,B)\) as \((a,b)\) proves the lemma.
+\end{proof}
+
+\begin{theorem}[Complete Pell-orbit description]\label{thm:pellorbits}
+Fix a nonsquare integer \(m\ge2\), and set
+\begin{equation}
+ N_m=m^4-8,
+ \qquad R_m=\sqrt{N_m}.
+ \label{eq:NmRm}
+\end{equation}
+Choose \(a,b\in\N\) with \(a^2-mb^2=1\), and write
+\begin{equation}
+ \eta=(a+b\sqrt m)^2=P+Q\sqrt m.
+ \label{eq:etadef}
+\end{equation}
+Then
+\begin{equation}
+ P^2-mQ^2=1,
+ \qquad P\text{ is odd},
+ \qquad Q\text{ is even},
+ \qquad \eta>1.
+ \label{eq:etaProperties}
+\end{equation}
+Define the seed set
+\begin{align}
+ \mathcal B_m:=\bigl\{(U,V)\in\Z^2:\;&
+ U^2-mV^2=N_m,\quad
+ U\equiv m^2\pmod2,\quad V\equiv0\pmod2,\notag\\
+ &R_m\le |U+V\sqrt m|<\eta R_m\bigr\}.
+ \label{eq:seedset}
+\end{align}
+Then \(\mathcal B_m\) is finite, and every solution of \eqref{eq:E}
+with \(x=-m\) is obtained uniquely by choosing a seed
+\((U_0,V_0)\in\mathcal B_m\), an integer \(n\in\Z\), and setting
+\begin{equation}
+ U_n+V_n\sqrt m=(U_0+V_0\sqrt m)\eta^n,
+ \label{eq:pellorbit}
+\end{equation}
+followed by
+\begin{equation}
+ (x,y,z)=\left(-m,\frac{U_n-m^2}{2},\frac{V_n}{2}\right).
+ \label{eq:pellback}
+\end{equation}
+Equivalently, consecutive elements of each orbit satisfy
+\begin{equation}
+ \begin{aligned}
+ U_{n+1}&=PU_n+mQV_n,\\
+ V_{n+1}&=QU_n+PV_n.
+ \end{aligned}
+ \label{eq:pellrecurrence}
+\end{equation}
+Consequently, for every fixed nonsquare \(m\), the equation with
+\(x=-m\) has either no integer solutions or infinitely many integer
+solutions.
+\end{theorem}
+
+\begin{proof}
+Lemma~\ref{lem:pell} supplies \(a,b\).  Expanding
+\eqref{eq:etadef} gives
+\begin{equation*}
+ P=a^2+mb^2=1+2mb^2,
+ \qquad Q=2ab.
+\end{equation*}
+Thus \(P\) is odd, \(Q\) is even, and \(P,Q>0\).  The norm of
+\(\eta\) is \((a^2-mb^2)^2=1\), proving
+\eqref{eq:etaProperties}.
+
+We next prove that \(\mathcal B_m\) is finite.  For a seed put
+\begin{equation*}
+ \alpha=U+V\sqrt m,
+ \qquad \overline\alpha=U-V\sqrt m.
+\end{equation*}
+Its norm is \(N_m>0\).  Since \(|\alpha|\ge R_m\),
+\begin{equation*}
+ |\overline\alpha|=\frac{N_m}{|\alpha|}\le R_m.
+\end{equation*}
+Together with \(|\alpha|<\eta R_m\), this gives
+\begin{equation}
+ |U|<\frac{\eta+1}{2}R_m,
+ \qquad
+ |V|<\frac{\eta+1}{2\sqrt m}R_m.
+ \label{eq:seedbounds}
+\end{equation}
+Indeed, \(2U=\alpha+\overline\alpha\) and
+\(2V\sqrt m=\alpha-\overline\alpha\).  The bounds
+\eqref{eq:seedbounds} place all seeds in a bounded rectangle in
+\(\Z^2\), so there are finitely many.
+
+Multiplication by \(\eta\) preserves the norm equation because
+\(P^2-mQ^2=1\).  In coordinates it is exactly the recurrence
+\eqref{eq:pellrecurrence}.  Since \(P\) is odd and \(Q\) is even,
+\begin{equation*}
+ U_{n+1}\equiv U_n\pmod2,
+ \qquad V_{n+1}\equiv V_n\pmod2.
+\end{equation*}
+The inverse unit is \(\eta^{-1}=P-Q\sqrt m\), so the same conclusions
+hold for negative powers.  Thus every orbit in \eqref{eq:pellorbit}
+consists entirely of parity-compatible solutions of the norm equation.
+Proposition~\ref{prop:normform} then gives \eqref{eq:pellback}.
+
+Conversely, let \((U,V)\) be any parity-compatible solution of
+\(U^2-mV^2=N_m\), and put \(\alpha=U+V\sqrt m\ne0\).  Since
+\(\eta>1\), there is a unique integer \(k\) such that
+\begin{equation}
+ R_m\le |\alpha|\eta^k<\eta R_m.
+ \label{eq:fundamentalannulus}
+\end{equation}
+For example, one may take
+\begin{equation*}
+ k=-\left\lfloor\log_{\eta}(|\alpha|/R_m)\right\rfloor,
+\end{equation*}
+for then
+\(0\le\log_{\eta}(|\alpha|/R_m)+k<1\), which is exactly
+\eqref{eq:fundamentalannulus}.
+The element \(\alpha\eta^k\) still belongs to \(\Z[\sqrt m]\), has
+norm \(N_m\), and satisfies the required parity conditions.  It
+therefore corresponds to a unique seed in \(\mathcal B_m\).  Reversing
+the power shows that \((U,V)\) lies in the orbit of that seed.  The
+half-open interval in \eqref{eq:fundamentalannulus} also proves
+uniqueness of the seed and exponent.
+
+If \(\mathcal B_m\) is empty, there are no solutions.  If it contains
+a seed \(\alpha_0\), the elements \(\alpha_0\eta^n\), \(n\in\Z\),
+are pairwise distinct because \(\eta>1\) and \(\alpha_0\ne0\).
+Hence there are infinitely many solutions.
+\end{proof}
+
+\section{A global unimodular parametrization}
+
+The divisor--square parametrization can be encoded by the unique
+positive-definite integral binary quadratic form of discriminant
+\(-8\).  We include the reduction argument in full.
+
+\begin{lemma}[Forms of discriminant \(-8\)]\label{lem:formreduction}
+Every positive-definite integral binary quadratic form
+\begin{equation}
+ f(S,T)=AS^2+BST+CT^2
+ \label{eq:generalform}
+\end{equation}
+with discriminant
+\begin{equation}
+ B^2-4AC=-8
+ \label{eq:discminus8}
+\end{equation}
+is properly equivalent over \(\Z\) to
+\begin{equation}
+ S^2+2T^2.
+ \label{eq:principalform}
+\end{equation}
+That is, some matrix in \(\SL_2(\Z)\) transforms one form into the
+other.
+\end{lemma}
+
+\begin{proof}
+Because \(f\) is positive definite, it assumes a least positive value
+on \(\Z^2\setminus\{(0,0)\}\); denote this value by \(A_0\), attained
+at a vector \(e_1\).  The vector \(e_1\) is primitive, since otherwise
+\(e_1=de_1'\) with \(|d|>1\) would give
+\(f(e_1')=f(e_1)/d^2<A_0\).  By Bezout's identity, \(e_1\) extends to
+an oriented integral basis \((e_1,e_2)\) of \(\Z^2\).
+
+In this basis the form is
+\begin{equation*}
+ A_0S^2+B_0ST+C_0T^2.
+\end{equation*}
+Replace \(e_2\) by \(e_2+ke_1\), choosing \(k\in\Z\) nearest to
+\(-B_0/(2A_0)\).  This basis change has determinant one, leaves the
+first coefficient equal to \(A_0\), and changes the middle coefficient
+to
+\begin{equation*}
+ B_1=B_0+2kA_0
+\end{equation*}
+with \(|B_1|\le A_0\).  Let the new last coefficient be \(C_1\).
+Since the new second basis vector is nonzero and integral, the
+minimality of \(A_0\) gives \(C_1\ge A_0\).  The discriminant remains
+\(-8\), so
+\begin{equation*}
+ 8=4A_0C_1-B_1^2
+ \ge4A_0^2-A_0^2=3A_0^2.
+\end{equation*}
+As \(A_0\) is a positive integer, this forces \(A_0=1\).  Equation
+\eqref{eq:discminus8} also implies that \(B_1\) is even.  Since
+\(|B_1|\le1\), we get \(B_1=0\), and then
+\(4C_1=8\), so \(C_1=2\).  All basis changes used had determinant
+one, proving proper equivalence to \eqref{eq:principalform}.
+\end{proof}
+
+\begin{theorem}[Unimodular parametrization]\label{thm:SL2}
+Let
+\begin{equation}
+ G=\begin{pmatrix}r&u\\ s&v\end{pmatrix}\in\SL_2(\Z),
+ \qquad rv-su=1,
+ \label{eq:Gdef}
+\end{equation}
+and define
+\begin{equation}
+ M=r^2+2s^2,
+ \qquad Y=ru+2sv,
+ \qquad Q=u^2+2v^2,
+ \label{eq:MYQ}
+\end{equation}
+and
+\begin{equation}
+ T=MY+Q.
+ \label{eq:Tdef}
+\end{equation}
+Then
+\begin{equation}
+ MQ-Y^2=2
+ \label{eq:detidentity}
+\end{equation}
+and \(T\ne0\).  Whenever \(|T|=t^2\) is a perfect square, necessarily
+\(t\in\N\), and
+\begin{equation}
+ (x,y,z)=\bigl(-\sgn(T)M,\,Y,\,\pm t\bigr)
+ \label{eq:SL2solution}
+\end{equation}
+is a solution of \eqref{eq:E}.
+
+Conversely, every integer solution of \eqref{eq:E} is obtained from at
+least one matrix \(G\in\SL_2(\Z)\) in this way.
+\end{theorem}
+
+\begin{proof}
+Expanding the left side of \eqref{eq:detidentity} gives
+\begin{align*}
+ MQ-Y^2
+ &=(r^2+2s^2)(u^2+2v^2)-(ru+2sv)^2\\
+ &=2(r^2v^2+s^2u^2-2rsuv)\\
+ &=2(rv-su)^2=2.
+\end{align*}
+Suppose for contradiction that \(T=MY+Q=0\).  Since \(M,Q>0\), we
+have \(Y<0\).  Substitution of \(Q=-MY\) into
+\eqref{eq:detidentity} gives
+\begin{equation*}
+ -Y(M^2+Y)=2.
+\end{equation*}
+Writing \(a=-Y>0\), this becomes
+\begin{equation*}
+ a(M^2-a)=2.
+\end{equation*}
+Both factors are positive integers.  They must be \((1,2)\) or
+\((2,1)\), and either case gives \(M^2=3\), impossible.  Hence
+\(T\ne0\).
+
+Now suppose \(|T|=t^2\).  Since \(T\ne0\), \(t\in\N\).  For either
+choice of the sign of \(z\), set \((x,y,z)\) as in
+\eqref{eq:SL2solution}.  Then \(x^2=M^2\), \(z^2=t^2\), and
+\(\sgn(T)t^2=T\).  Therefore
+\begin{align*}
+ y^2+x^2y+xz^2+2
+ &=Y^2+M^2Y-MT+2\\
+ &=Y^2+M^2Y-M(MY+Q)+2\\
+ &=Y^2-MQ+2=0
+\end{align*}
+by \eqref{eq:detidentity}.
+
+For completeness, let \((x,y,z)\) be any solution.  Put
+\begin{equation*}
+ m=|x|,
+ \qquad q=\frac{y^2+2}{m}.
+\end{equation*}
+Theorem~\ref{thm:main} shows that \(q\in\N\), and
+\begin{equation}
+ mq-y^2=2.
+ \label{eq:mqidentity}
+\end{equation}
+Consider the positive-definite integral form
+\begin{equation}
+ f(S,T)=mS^2+2yST+qT^2.
+ \label{eq:solutionform}
+\end{equation}
+Its discriminant is \(4y^2-4mq=-8\).  By
+Lemma~\ref{lem:formreduction}, there is a matrix
+\(G\in\SL_2(\Z)\) such that
+\begin{equation}
+ f(S,T)=(rS+uT)^2+2(sS+vT)^2.
+ \label{eq:formmatrix}
+\end{equation}
+Comparing coefficients in \eqref{eq:formmatrix} gives
+\begin{equation*}
+ m=M,
+ \qquad y=Y,
+ \qquad q=Q.
+\end{equation*}
+The linearized equation \eqref{eq:linearized} says
+\begin{equation*}
+ T=MY+Q=my+q=-\sgn(x)z^2.
+\end{equation*}
+Thus \(|T|=z^2\) and
+\(-\sgn(T)M=x\).  The given solution is therefore recovered from
+\eqref{eq:SL2solution}.
+\end{proof}
+
+The dependence on the second column of \(G\) can be written as one
+explicit quadratic polynomial.
+
+\begin{corollary}[One-variable form of the square condition]
+\label{cor:Tk}
+Fix a primitive pair \((r,s)\in\Z^2\), choose one pair
+\((u_0,v_0)\in\Z^2\) with
+\begin{equation}
+ rv_0-su_0=1,
+ \label{eq:bezoutcolumn}
+\end{equation}
+and put
+\begin{equation}
+ M=r^2+2s^2,
+ \quad A=ru_0+2sv_0,
+ \quad Q_0=u_0^2+2v_0^2.
+ \label{eq:MAQ0}
+\end{equation}
+Every second column \((u,v)^T\) completing \((r,s)^T\) to a matrix in
+\(\SL_2(\Z)\) is uniquely of the form
+\begin{equation}
+ u=u_0+kr,
+ \qquad v=v_0+ks,
+ \qquad k\in\Z.
+ \label{eq:secondcolumns}
+\end{equation}
+For this matrix, the signed square \(T\) in
+Theorem~\ref{thm:SL2} is
+\begin{equation}
+ T(k)=Mk^2+(M^2+2A)k+MA+Q_0,
+ \label{eq:Tk}
+\end{equation}
+and the discriminant of this quadratic polynomial is
+\begin{equation}
+ \operatorname{disc}T=M^4-8.
+ \label{eq:Tkdisc}
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+If another pair \((u,v)\) satisfies \(rv-su=1\), subtracting
+\eqref{eq:bezoutcolumn} gives
+\begin{equation*}
+ r(v-v_0)=s(u-u_0).
+\end{equation*}
+Since \(\gcd(r,s)=1\), there is a unique \(k\in\Z\) with
+\(u-u_0=kr\) and \(v-v_0=ks\).  This proves
+\eqref{eq:secondcolumns}.
+
+For these values,
+\begin{equation*}
+ Y=A+kM,
+ \qquad Q=Q_0+2kA+k^2M.
+\end{equation*}
+Hence
+\begin{align*}
+ T(k)=MY+Q
+ &=M(A+kM)+Q_0+2kA+k^2M\\
+ &=Mk^2+(M^2+2A)k+MA+Q_0,
+\end{align*}
+which is \eqref{eq:Tk}.  Finally, the identity
+\(MQ_0-A^2=2\), which is \eqref{eq:detidentity} for the initial
+matrix, gives
+\begin{align*}
+ \operatorname{disc}T
+ &=(M^2+2A)^2-4M(MA+Q_0)\\
+ &=M^4+4(A^2-MQ_0)=M^4-8.
+\end{align*}
+\end{proof}
+
+\section{An explicit infinite family}
+
+The preceding classification shows structurally when a fixed negative
+value of \(x\) can support infinitely many solutions.  The smallest
+particularly transparent example is \(x=-2\).
+
+\begin{theorem}[An infinite family with \(x=-2\)]\label{thm:infinitefamily}
+Define positive integers \(A_n,B_n\) by
+\begin{equation}
+ A_n+B_n\sqrt2=(2+\sqrt2)(3+2\sqrt2)^n,
+ \qquad n\ge0.
+ \label{eq:AnBn}
+\end{equation}
+Then for every \(n\ge0\), all four triples
+\begin{equation}
+ (-2,A_n-2,\pm B_n),
+ \qquad
+ (-2,-A_n-2,\pm B_n)
+ \label{eq:explicitfamily}
+\end{equation}
+solve \eqref{eq:E}.  These give infinitely many distinct integer
+solutions.
+\end{theorem}
+
+\begin{proof}
+Both factors on the right side of \eqref{eq:AnBn} belong to
+\(\Z[\sqrt2]\), so \(A_n,B_n\in\Z\); they are positive because all
+coefficients in the product are positive.  Taking norms gives
+\begin{equation}
+ A_n^2-2B_n^2
+ =\bigl(2^2-2\cdot1^2\bigr)
+  \bigl(3^2-2\cdot2^2\bigr)^n
+ =2.
+ \label{eq:AnBnnorm}
+\end{equation}
+For \(x=-2\), equation \eqref{eq:E} is equivalent to
+\begin{equation}
+ (y+2)^2-2z^2=2.
+ \label{eq:xminus2pell}
+\end{equation}
+Taking \(y+2=\pm A_n\) and \(z=\pm B_n\) in
+\eqref{eq:AnBnnorm} proves \eqref{eq:explicitfamily}.
+
+Moreover, multiplication by \(3+2\sqrt2\) yields
+\begin{equation}
+ A_{n+1}=3A_n+4B_n,
+ \qquad B_{n+1}=2A_n+3B_n.
+ \label{eq:AnBnrec}
+\end{equation}
+In particular, \(A_{n+1}>A_n\), so the displayed solutions are
+distinct as \(n\) varies.  Hence there are infinitely many.
+\end{proof}
+
+The first few values are
+\begin{equation*}
+ (A_n,B_n)=(2,1),(10,7),(58,41),(338,239),\ldots,
+\end{equation*}
+and hence the family begins
+\begin{align*}
+ &(-2,0,\pm1),\quad (-2,-4,\pm1),\\
+ &(-2,8,\pm7),\quad (-2,-12,\pm7),\\
+ &(-2,56,\pm41),\quad (-2,-60,\pm41),\\
+ &(-2,336,\pm239),\quad (-2,-340,\pm239),\ldots.
+\end{align*}
+
+\section{Conclusion}
+
+Theorem~\ref{thm:main} is an exact and duplication-controlled global
+classification: choose \(m\mid y^2+2\), test whether
+\(F_m(y)=my+(y^2+2)/m\) is a nonzero signed square, and the sign of that
+square determines the sign of \(x\).  Theorem~\ref{thm:moduli} gives
+the precise prime-factor obstruction on \(m=|x|\).  For fixed \(m\),
+Proposition~\ref{prop:normform}, Theorem~\ref{thm:squarem}, and
+Theorem~\ref{thm:pellorbits} provide an effective exhaustive procedure
+in every case.  Finally, Theorem~\ref{thm:infinitefamily} proves
+unconditionally that the full equation has infinitely many integer
+solutions.
+
+\end{document}
