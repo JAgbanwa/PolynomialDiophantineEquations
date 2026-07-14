@@ -1,3 +1,13 @@
+# Extra attempts at verification
+I made further attempts at stress-testing the correctness of these results by asking this specific question in three different windows of ChatGPT 5.5 Pro:
+
+```
+This paper claims to describe all integer solutions to z² - x·y² = x³ + 2. How true is this statement? Rigorously verify such claim, let's see!
+```
+
+and the outcome is found here: [\[1\]](https://chatgpt.com/c/6a5681e5-9254-83eb-959a-2abdb0d452a8), [\[2\]](https://chatgpt.com/c/6a5681dc-baf4-83eb-b941-528d01b5aeb4) and [\[3\]](https://chatgpt.com/c/6a5681ab-b460-83eb-bdb9-0c54cc0861ce).
+
+
 # Summary of changes for run 0fc0490a-df7a-4d1f-b6b0-12d68ceed60b
 The Lean formalization in `RequestProject/Main.lean` (namespace `LjunggrenNagellReduction`) is now complete and sorry-free: the project builds cleanly with no warnings, and every proved result depends only on the standard axioms (`propext`, `Classical.choice`, `Quot.sound`). I verified this with a full build, a project-wide search confirming no `sorry`/`admit`/`axiom`/`native_decide`, and `#print axioms` on the main results.
 What was completed this session:
