@@ -1,3 +1,12 @@
+# Extra attempts at verification
+I made further attempts at stress-testing the correctness of these results by asking this specific question in three different windows of ChatGPT 5.5 Pro:
+
+```
+This paper claims to prove the infinitude of integer solutions to the equation: z² + y²·z + 2x³ + 1 = 0. How true is this statement? Rigorously verify such claim, let's see!
+```
+
+and the outcome is found here: [\[1\]](https://chatgpt.com/c/6a567afb-d1e4-83eb-b23b-d8d6b05e5f7f), [\[2\]](https://chatgpt.com/c/6a567ab0-7140-83ed-bcb9-cd0777e80f93) and [\[3\]](https://chatgpt.com/c/6a567a8f-0bb0-83eb-af05-84d21daad97c).
+
 # Summary of changes for run f14cc435-a11a-43f0-881c-4c7c0e3fb8ad
 I formalized the paper "An Infinite Family of Integer Solutions to z² + y²z + 2x³ + 1 = 0" in `RequestProject/Main.lean`. The file builds successfully with no `sorry`, and the main theorem depends only on the standard axioms (`propext`, `Classical.choice`, `Quot.sound`).
 The equation is captured by `IsSol x y z : z² + y²·z + 2x³ + 1 = 0`, and every result of the paper is formalized:
