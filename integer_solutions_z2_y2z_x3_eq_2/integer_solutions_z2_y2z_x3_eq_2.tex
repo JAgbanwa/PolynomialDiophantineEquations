@@ -1,0 +1,521 @@
+\documentclass[11pt,a4paper]{amsart}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{booktabs}
+\usepackage{microtype}
+\usepackage[overload]{textcase}
+\usepackage[hidelinks]{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\Zpos}{\mathbb Z_{>0}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\ind}{\mathbf 1}
+
+\title[Integer Solutions of a Cubic Equation]{Integer Solutions of \NoCaseChange{\texorpdfstring{$z^2+y^2z+x^3=2$}{z squared + y squared z + x cubed = 2}}}
+\author{Jamal Agbanwa}
+\address{Independent Researcher}
+\date{July 14, 2026}
+\keywords{Diophantine equation, integer solutions, divisor parametrization, cubic equation}
+\hypersetup{
+  pdftitle={Integer Solutions of z squared plus y squared z plus x cubed equals 2},
+  pdfauthor={Jamal Agbanwa},
+  pdfsubject={A complete divisor-theoretic classification of the integer solutions},
+  pdfkeywords={Diophantine equation, integer solutions, divisor parametrization, cubic equation}
+}
+
+\begin{document}
+
+\begin{abstract}
+We give an exact divisor-theoretic classification of every integer triple $(x,y,z)$ satisfying $z^2+y^2z+x^3=2$.  For $x\geq 2$, solutions correspond canonically to positive factor pairs of $x^3-2$ whose sum is a square; for $x\leq 1$, they correspond canonically to positive factor pairs of $2-x^3$ whose difference is a square.  The correspondence yields exact formulas for the number of solutions above each fixed value of $x$.  We also prove the natural symmetry, parity, congruence, coprimality, sign, and size restrictions satisfied by every solution.
+\end{abstract}
+
+\maketitle
+
+\section{The complete classification}
+
+We study the equation
+\begin{equation}\label{eq:main}
+ z^2+y^2z+x^3-2=0,
+ \qquad (x,y,z)\in\Z^3.
+\end{equation}
+Its decisive form is
+\begin{equation}\label{eq:factor}
+ z(z+y^2)=2-x^3.
+\end{equation}
+Since $x$ is an integer, exactly one of $x\leq 1$ and $x\geq 2$ holds.  These two ranges give opposite signs on the right-hand side of \eqref{eq:factor}, and this sign change accounts for the two forms in the classification below.
+
+\begin{theorem}[Complete classification]\label{thm:classification}
+All integer solutions of \eqref{eq:main} are given by the following two disjoint constructions.
+
+\medskip
+\noindent
+\textup{(i) The range $x\geq 2$.}
+Choose integers
+\[
+ x\geq 2,\qquad 1\leq d<e,\qquad m\geq 1
+\]
+such that
+\begin{equation}\label{eq:positive-data}
+ de=x^3-2,
+ \qquad d+e=m^2.
+\end{equation}
+Then the four triples
+\begin{equation}\label{eq:positive-solutions}
+ (x,m,-d),\quad (x,-m,-d),\quad
+ (x,m,-e),\quad (x,-m,-e)
+\end{equation}
+are solutions.  Conversely, every solution with $x\geq 2$ occurs in exactly one such four-element family.
+
+\medskip
+\noindent
+\textup{(ii) The range $x\leq 1$.}
+Choose integers
+\[
+ x\leq 1,\qquad 1\leq d\leq e,\qquad m\geq 0
+\]
+such that
+\begin{equation}\label{eq:negative-data}
+ de=2-x^3,
+ \qquad e-d=m^2.
+\end{equation}
+Then
+\begin{equation}\label{eq:negative-solutions}
+ (x,\eps m,d),\qquad (x,\eps m,-e),
+ \qquad \eps\in\{1,-1\},
+\end{equation}
+are solutions, with repetitions discarded when $m=0$.  Conversely, every solution with $x\leq 1$ occurs in exactly one family arising from an ordered factor pair $d\leq e$ satisfying \eqref{eq:negative-data}.  Such a family has four elements when $d<e$ and two elements when $d=e$.
+\end{theorem}
+
+\begin{proof}
+We prove both implications in each range and then verify the asserted uniqueness.
+
+Suppose first that $x\geq 2$, and set
+\[
+ N=x^3-2>0.
+\]
+Equation \eqref{eq:factor} becomes
+\begin{equation}\label{eq:opposite-signs}
+ z(z+y^2)=-N<0.
+\end{equation}
+Thus $z$ and $z+y^2$ have opposite signs.  Since $z+y^2\geq z$, the only possible ordering is
+\begin{equation}\label{eq:ordering-positive}
+ z<0<z+y^2.
+\end{equation}
+Define
+\[
+ a=-z,
+ \qquad b=z+y^2.
+\]
+Then $a,b\in\Zpos$, and \eqref{eq:opposite-signs} gives
+\begin{equation}\label{eq:ab-positive}
+ ab=(-z)(z+y^2)=N=x^3-2.
+\end{equation}
+Moreover,
+\begin{equation}\label{eq:sum-positive}
+ a+b=-z+(z+y^2)=y^2.
+\end{equation}
+Let
+\[
+ d=\min\{a,b\},\qquad e=\max\{a,b\},\qquad m=|y|.
+\]
+Then $de=x^3-2$ and $d+e=m^2$.  It remains to prove that $d\neq e$.  If $d=e$, then \eqref{eq:sum-positive} gives $m^2=2d$.  Hence $m$ is even, say $m=2r$, and then $d=2r^2$.  By \eqref{eq:ab-positive},
+\[
+ x^3=d^2+2=4r^4+2\equiv 2\pmod 4.
+\]
+This is impossible, because an integer cube modulo $4$ is congruent only to $0$, $1$, or $3$.  Therefore $d<e$.  Since $a$ is either $d$ or $e$, the equality $z=-a$ shows that the original solution is one of the four triples in \eqref{eq:positive-solutions}.
+
+Conversely, assume \eqref{eq:positive-data}.  If $y=\eps m$ and $z=-d$, then
+\[
+\begin{aligned}
+ z^2+y^2z+x^3-2
+ &=d^2-m^2d+(x^3-2)\\
+ &=d^2-d(d+e)+de\\
+ &=0.
+\end{aligned}
+\]
+The same calculation with $d$ and $e$ interchanged proves the assertion for $z=-e$.  The four triples are distinct because $m>0$ and $d<e$.
+
+The construction is canonical.  Indeed, the solution itself recovers
+\[
+ \{d,e\}=\{-z,z+y^2\},
+ \qquad m=|y|,
+\]
+with the two elements placed in increasing order.  Thus two different data sets satisfying \eqref{eq:positive-data} cannot yield the same solution.
+
+Now suppose that $x\leq 1$, and put
+\[
+ M=2-x^3>0.
+\]
+Equation \eqref{eq:factor} becomes
+\begin{equation}\label{eq:same-signs}
+ z(z+y^2)=M>0.
+\end{equation}
+Consequently, $z$ and $z+y^2$ are nonzero and have the same sign.
+
+If both are positive, set
+\[
+ d=z,
+ \qquad e=z+y^2.
+\]
+Then $1\leq d\leq e$, and
+\[
+ de=M,
+ \qquad e-d=y^2.
+\]
+If both are negative, set
+\[
+ d=-(z+y^2),
+ \qquad e=-z.
+\]
+Since $z+y^2\geq z$, we again have $1\leq d\leq e$, and
+\[
+ de=(-z-y^2)(-z)=z(z+y^2)=M,
+ \qquad e-d=-z+(z+y^2)=y^2.
+\]
+In either case, with $m=|y|$, the data satisfy \eqref{eq:negative-data}.  In the positive-sign case $z=d$, whereas in the negative-sign case $z=-e$, so the solution has one of the forms in \eqref{eq:negative-solutions}.
+
+Conversely, suppose \eqref{eq:negative-data} holds.  Since $x^3-2=-de$, for $y=\eps m$ and $z=d$ we obtain
+\[
+\begin{aligned}
+ z^2+y^2z+x^3-2
+ &=d^2+m^2d-de\\
+ &=d^2+d(e-d)-de\\
+ &=0.
+\end{aligned}
+\]
+For $z=-e$, we similarly obtain
+\[
+\begin{aligned}
+ z^2+y^2z+x^3-2
+ &=e^2-m^2e-de\\
+ &=e^2-e(e-d)-de\\
+ &=0.
+\end{aligned}
+\]
+If $d<e$, then $m^2=e-d>0$, so $m>0$ and the four displayed triples are distinct.  If $d=e$, then $m=0$, and the construction yields precisely the two distinct triples $(x,0,d)$ and $(x,0,-d)$.
+
+Finally, the data are again recovered canonically from a solution.  When $z>0$, one has
+\[
+ (d,e)=(z,z+y^2),
+\]
+and when $z+y^2<0$, one has
+\[
+ (d,e)=(-(z+y^2),-z).
+\]
+In both cases $m=|y|$.  This proves uniqueness and completes the proof.
+\end{proof}
+
+\begin{corollary}[Divisor tests and exact fiber sizes]\label{cor:counting}
+Fix $x\in\Z$, and let $S_x$ denote the set of pairs $(y,z)\in\Z^2$ for which $(x,y,z)$ satisfies \eqref{eq:main}.
+
+If $x\geq 2$, put $N=x^3-2$ and define
+\[
+ \mathcal D_+(x)=
+ \left\{
+ d\in\Zpos:
+ d\mid N,\quad d<\sqrt N,\quad
+ d+\frac Nd\text{ is a perfect square}
+ \right\}.
+\]
+Then
+\begin{equation}\label{eq:count-positive}
+ |S_x|=4|\mathcal D_+(x)|.
+\end{equation}
+
+If $x\leq 1$, put $M=2-x^3$ and define
+\[
+ \mathcal D_-(x)=
+ \left\{
+ d\in\Zpos:
+ d\mid M,\quad d<\sqrt M,\quad
+ \frac Md-d\text{ is a perfect square}
+ \right\}.
+\]
+Then
+\begin{equation}\label{eq:count-negative}
+ |S_x|
+ =4|\mathcal D_-(x)|
+ +2\,\ind_{\{M\text{ is a perfect square}\}}.
+\end{equation}
+In particular, $S_x$ is finite for every fixed integer $x$.
+\end{corollary}
+
+\begin{proof}
+Assume first that $x\geq 2$.  Every positive unordered factor pair of $N$ has a unique representation
+\[
+ \left(d,\frac Nd\right),
+ \qquad d\mid N,
+ \qquad d\leq\sqrt N.
+\]
+The equality case $d=\sqrt N$ cannot satisfy the square-sum condition occurring in Theorem~\ref{thm:classification}(i), because that would give an admissible pair with $d=e$, which was proved impossible.  Hence each admissible factor pair is represented by exactly one $d\in\mathcal D_+(x)$, and Theorem~\ref{thm:classification}(i) associates exactly four distinct solutions to it.  Canonical uniqueness shows that the resulting four-element families are disjoint.  This proves \eqref{eq:count-positive}.
+
+Now assume that $x\leq 1$.  Every positive factor pair $d\leq e$ of $M$ is represented uniquely by a divisor $d\leq\sqrt M$.  A pair with $d<e$ contributes four solutions exactly when $e-d=M/d-d$ is a square.  The central pair $d=e=\sqrt M$ exists exactly when $M$ is a square; its difference is $0$, and it contributes exactly the two solutions with $y=0$.  Again, canonical uniqueness makes all contributions disjoint.  Formula \eqref{eq:count-negative} follows.  Since a nonzero integer has only finitely many positive divisors, both fibers are finite.
+\end{proof}
+
+\begin{corollary}[Terminating exact procedure]\label{cor:algorithm}
+For any prescribed integer $x$, all corresponding pairs $(y,z)$ can be determined by a finite calculation: factor $|x^3-2|$, list one representative from each positive factor pair, and apply the square-sum test when $x\geq2$ or the square-difference test when $x\leq1$.
+\end{corollary}
+
+\begin{proof}
+This is precisely the construction in Theorem~\ref{thm:classification}, organized by the unique divisor representatives used in Corollary~\ref{cor:counting}.  The procedure terminates because $|x^3-2|$ is a positive integer and therefore has finitely many positive divisors.
+\end{proof}
+
+\section{Arithmetic consequences}
+
+\begin{proposition}[The two involutions]\label{prop:symmetry}
+The solution set of \eqref{eq:main} is invariant under
+\[
+ \sigma(x,y,z)=(x,-y,z)
+\]
+and
+\[
+ \tau(x,y,z)=(x,y,-y^2-z).
+\]
+The maps $\sigma$ and $\tau$ are commuting involutions.  A solution with $y\neq0$ belongs to an orbit of exactly four solutions under the group they generate, whereas a solution with $y=0$ belongs to an orbit of exactly two solutions.
+\end{proposition}
+
+\begin{proof}
+The equation depends on $y$ only through $y^2$, so it is invariant under $\sigma$.  Also,
+\[
+ (-y^2-z)\bigl((-y^2-z)+y^2\bigr)
+ =(-y^2-z)(-z)
+ =z(z+y^2),
+\]
+so the factorized equation \eqref{eq:factor} is invariant under $\tau$.  Direct substitution shows
+\[
+ \sigma^2=\tau^2=\operatorname{id},
+ \qquad \sigma\tau=\tau\sigma.
+\]
+
+We next prove that $\tau$ fixes no integer solution.  If $\tau(x,y,z)=(x,y,z)$, then
+\[
+ 2z=-y^2.
+\]
+Thus $y$ is even; write $y=2r$, so $z=-2r^2$.  Substitution into \eqref{eq:main} gives
+\[
+ x^3=4r^4+2\equiv2\pmod4,
+\]
+which is impossible for an integer cube.  Hence $\tau$ has no fixed solution.
+
+If $y\neq0$, then $\sigma$ has no fixed point, and $\sigma\tau$ cannot fix the solution because its second coordinate is $-y\neq y$.  Thus no nonidentity element of the four-element group $\{\operatorname{id},\sigma,\tau,\sigma\tau\}$ fixes the solution, so its orbit has four elements.
+
+If $y=0$, then $\sigma$ fixes the solution.  The equation becomes $z^2+x^3=2$, and $z\neq0$, since $z=0$ would force the impossible equality $x^3=2$.  Therefore $\tau(x,0,z)=(x,0,-z)$ is distinct from $(x,0,z)$, and the orbit has exactly two elements.
+\end{proof}
+
+\begin{proposition}[Parity and congruence restrictions]\label{prop:congruences}
+Every integer solution of \eqref{eq:main} satisfies the following assertions.
+
+\begin{enumerate}
+\item $x$ and $y$ have opposite parity.
+\item If $x$ is odd, then $y$ is even, $z$ is odd, and $x\equiv1\pmod4$.  More precisely,
+\[
+ \begin{cases}
+ x\equiv1\pmod8,&\text{if }4\mid y,\\
+ x\equiv5\pmod8,&\text{if }y\equiv2\pmod4.
+ \end{cases}
+\]
+\item If $x$ is even, then $y$ is odd and
+\[
+ z\equiv1\text{ or }6\pmod8.
+\]
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Reducing \eqref{eq:main} modulo $2$ and using $u^2\equiv u\pmod2$ gives
+\[
+ z+yz+x\equiv z(1+y)+x\equiv0\pmod2.
+\]
+If $y$ is odd, then $1+y\equiv0\pmod2$, so $x$ is even.
+
+Suppose instead that $y$ is even.  The same congruence gives $z\equiv x\pmod2$.  If $x$ were even, then $z$ would also be even.  In that event $z^2$, $y^2z$, and $x^3$ would all be divisible by $4$, contradicting the equality
+\[
+ z^2+y^2z+x^3=2.
+\]
+Therefore $x$ is odd.  This proves that $x$ and $y$ have opposite parity.  It also proves that when $x$ is odd, $y$ is even and $z$ is odd.
+
+Assume $x$ is odd.  Modulo $4$, one has $z^2\equiv1$ and $y^2z\equiv0$, so
+\[
+ 1+x^3\equiv2\pmod4.
+\]
+Hence $x^3\equiv1\pmod4$, and therefore $x\equiv1\pmod4$.
+
+For the refinement modulo $8$, recall that an odd integer satisfies $z^2\equiv1\pmod8$ and $x^3\equiv x\pmod8$.  If $4\mid y$, then $y^2z\equiv0\pmod8$, whence
+\[
+ 1+x\equiv2\pmod8
+\]
+and $x\equiv1\pmod8$.  If $y\equiv2\pmod4$, then $y^2\equiv4\pmod8$; because $z$ is odd, $y^2z\equiv4\pmod8$.  Hence
+\[
+ 1+4+x\equiv2\pmod8,
+\]
+which gives $x\equiv5\pmod8$.
+
+Finally, assume $x$ is even.  Then $y$ is odd by the first part.  Consequently $x^3\equiv0\pmod8$ and $y^2\equiv1\pmod8$, so \eqref{eq:main} gives
+\[
+ z^2+z\equiv2\pmod8.
+\]
+Checking the eight residue classes modulo $8$ shows that this congruence holds exactly for $z\equiv1$ and $z\equiv6\pmod8$.
+\end{proof}
+
+\begin{proposition}[Coprimality with the cubic variable]\label{prop:gcd}
+For every integer solution of \eqref{eq:main},
+\begin{equation}\label{eq:gcd-bounds}
+ \gcd(x,z)\mid2,
+ \qquad
+ \gcd(x,z+y^2)\mid2.
+\end{equation}
+In particular, if $x$ is odd, then
+\[
+ \gcd(x,z)=\gcd(x,z+y^2)=1.
+\]
+\end{proposition}
+
+\begin{proof}
+Let $g=\gcd(x,z)$.  Then $g$ divides $x^3$ and also divides $z(z+y^2)$.  By \eqref{eq:factor},
+\[
+ x^3+z(z+y^2)=2,
+\]
+so $g\mid2$.
+
+Likewise, if $h=\gcd(x,z+y^2)$, then $h$ divides $x^3$ and $z(z+y^2)$, and the same identity gives $h\mid2$.  When $x$ is odd, both greatest common divisors are odd divisors of $2$, hence equal to $1$.
+\end{proof}
+
+\begin{proposition}[Sign and size restrictions]\label{prop:size}
+Let $(x,y,z)$ be a solution of \eqref{eq:main}.
+
+\begin{enumerate}
+\item If $x\geq2$, then
+\begin{equation}\label{eq:z-range-positive}
+ -y^2<z<0
+\end{equation}
+and
+\begin{equation}\label{eq:y-bound-positive}
+ 2\sqrt{x^3-2}<y^2\leq x^3-1.
+\end{equation}
+\item If $x\leq1$, then exactly one of
+\begin{equation}\label{eq:z-range-negative}
+ z>0,
+ \qquad z<-y^2
+\end{equation}
+holds, and
+\begin{equation}\label{eq:y-bound-negative}
+ 0\leq y^2\leq1-x^3.
+\end{equation}
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Assume first that $x\geq2$.  The ordering \eqref{eq:ordering-positive} is exactly $-y^2<z<0$, proving \eqref{eq:z-range-positive}.  With the notation of Theorem~\ref{thm:classification}(i),
+\[
+ y^2=d+e,
+ \qquad de=x^3-2,
+ \qquad d<e.
+\]
+The strict arithmetic-geometric mean inequality gives
+\[
+ d+e>2\sqrt{de}=2\sqrt{x^3-2}.
+\]
+Also,
+\[
+ de+1-(d+e)=(d-1)(e-1)\geq0,
+\]
+so
+\[
+ y^2=d+e\leq de+1=x^3-1.
+\]
+This proves \eqref{eq:y-bound-positive}.
+
+Now assume that $x\leq1$.  By \eqref{eq:same-signs}, either both $z$ and $z+y^2$ are positive or both are negative.  In the first case $z>0$.  In the second case $z+y^2<0$, which is equivalent to $z<-y^2$.  The alternatives are mutually exclusive, proving \eqref{eq:z-range-negative}.
+
+With the notation of Theorem~\ref{thm:classification}(ii),
+\[
+ y^2=e-d,
+ \qquad de=2-x^3,
+ \qquad 1\leq d\leq e.
+\]
+Since $d\geq1$, one has $e\leq de=2-x^3$.  Therefore
+\[
+ 0\leq y^2=e-d\leq e-1\leq1-x^3,
+\]
+which proves \eqref{eq:y-bound-negative}.
+\end{proof}
+
+\begin{remark}\label{rem:quadratic-roots}
+For fixed $x$ and $y$, equation \eqref{eq:main} is quadratic in $z$.  If one root is $z$, the other is $-y^2-z$, exactly as in Proposition~\ref{prop:symmetry}.  Theorem~\ref{thm:classification} identifies these two roots as $-d,-e$ when $x\geq2$, and as $d,-e$ when $x\leq1$.
+\end{remark}
+
+\section{Certified examples}
+
+Each row below records a factor pair and the required square relation.  Theorem~\ref{thm:classification} then supplies all corresponding sign choices for $y$ and both values of $z$.
+
+\begin{center}
+\small
+\begin{tabular}{@{}rlll@{}}
+\toprule
+$x$ & factorization & square relation & resulting $(y,z)$ values \\
+\midrule
+$1$  & $2-1^3=1\cdot1$ & $1-1=0^2$
+     & $(0,1),(0,-1)$ \\
+$0$  & $2-0^3=1\cdot2$ & $2-1=1^2$
+     & $(\pm1,1),(\pm1,-2)$ \\
+$-2$ & $2-(-2)^3=1\cdot10$ & $10-1=3^2$
+     & $(\pm3,1),(\pm3,-10)$ \\
+$-7$ & $2-(-7)^3=5\cdot69$ & $69-5=8^2$
+     & $(\pm8,5),(\pm8,-69)$ \\
+$8$  & $8^3-2=15\cdot34$ & $15+34=7^2$
+     & $(\pm7,-15),(\pm7,-34)$ \\
+$20$ & $20^3-2=31\cdot258$ & $31+258=17^2$
+     & $(\pm17,-31),(\pm17,-258)$ \\
+$26$ & $26^3-2=87\cdot202$ & $87+202=17^2$
+     & $(\pm17,-87),(\pm17,-202)$ \\
+$26$ & $26^3-2=58\cdot303$ & $58+303=19^2$
+     & $(\pm19,-58),(\pm19,-303)$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The same criterion certifies solutions with much larger coordinates.  For example,
+\[
+ 483308^3-2
+ =84466\cdot1336564813335
+\]
+together with
+\[
+ 84466+1336564813335=1156099^2.
+\]
+Hence the four triples
+\[
+ (483308,\pm1156099,-84466),
+ \qquad
+ (483308,\pm1156099,-1336564813335)
+\]
+are exact integer solutions.
+
+\begin{remark}[Direct verification of every constructed triple]
+No example, and no solution in the classification, rests on numerical approximation.  In the range $x\geq2$, the identities $de=x^3-2$ and $d+e=m^2$ give
+\[
+ d^2-m^2d+x^3-2
+ =d^2-d(d+e)+de=0
+\]
+and the corresponding identity with $d$ and $e$ interchanged.  In the range $x\leq1$, the identities $de=2-x^3$ and $e-d=m^2$ give
+\[
+ d^2+m^2d+x^3-2
+ =d^2+d(e-d)-de=0
+\]
+and
+\[
+ e^2-m^2e+x^3-2
+ =e^2-e(e-d)-de=0.
+\]
+Thus the factor certificates displayed above verify the associated triples exactly.
+\end{remark}
+
+\end{document}
