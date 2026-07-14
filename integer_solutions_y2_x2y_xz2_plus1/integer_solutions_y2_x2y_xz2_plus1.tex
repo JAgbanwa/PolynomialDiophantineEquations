@@ -1,0 +1,844 @@
+\documentclass[a4paper,11pt]{amsart}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+\usepackage{aliascnt}
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+\newtheorem{theorem}{Theorem}[section]
+
+\newaliascnt{proposition}{theorem}
+\newtheorem{proposition}[proposition]{Proposition}
+\aliascntresetthe{proposition}
+
+\newaliascnt{lemma}{theorem}
+\newtheorem{lemma}[lemma]{Lemma}
+\aliascntresetthe{lemma}
+
+\newaliascnt{corollary}{theorem}
+\newtheorem{corollary}[corollary]{Corollary}
+\aliascntresetthe{corollary}
+
+\theoremstyle{definition}
+\newaliascnt{definition}{theorem}
+\newtheorem{definition}[definition]{Definition}
+\aliascntresetthe{definition}
+
+\newaliascnt{example}{theorem}
+\newtheorem{example}[example]{Example}
+\aliascntresetthe{example}
+
+\theoremstyle{remark}
+\newaliascnt{remark}{theorem}
+\newtheorem{remark}[remark]{Remark}
+\aliascntresetthe{remark}
+
+\crefname{theorem}{theorem}{theorems}
+\Crefname{theorem}{Theorem}{Theorems}
+\crefname{proposition}{proposition}{propositions}
+\Crefname{proposition}{Proposition}{Propositions}
+\crefname{lemma}{lemma}{lemmas}
+\Crefname{lemma}{Lemma}{Lemmas}
+\crefname{corollary}{corollary}{corollaries}
+\Crefname{corollary}{Corollary}{Corollaries}
+\crefname{definition}{definition}{definitions}
+\Crefname{definition}{Definition}{Definitions}
+\crefname{example}{example}{examples}
+\Crefname{example}{Example}{Examples}
+\crefname{remark}{remark}{remarks}
+\Crefname{remark}{Remark}{Remarks}
+
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\Norm}{\operatorname N}
+
+\title[Integer Solutions of a Ternary Equation]
+{Integer Solutions of \texorpdfstring{$y^2+x^2y+xz^2+1=0$}{y2+x2y+xz2+1=0}}
+\author{}
+\address{}
+\date{}
+
+\hypersetup{
+  pdftitle={Integer Solutions of y2 + x2y + xz2 + 1 = 0},
+  pdfauthor={Jamal Agbanwa}
+}
+
+\begin{document}
+
+\begin{abstract}
+We give a complete and effective classification of the integer solutions of
+\[
+y^2+x^2y+xz^2+1=0.
+\]
+For positive $x$, every solution is obtained from a finite quadratic-residue and square test.  For negative square $x$, the equation splits into a finite divisor problem, whereas for negative nonsquare $x$ it becomes a generalized Pell equation whose admissible solutions are partitioned into finitely many explicitly bounded orbits.  In particular, each fixed negative nonsquare value of $x$ supports either no solutions or infinitely many, and an explicit infinite orbit with $x=-145$ is exhibited.
+\end{abstract}
+
+\maketitle
+
+\section{Statement of the classification}
+
+We study the Diophantine equation
+\begin{equation}\label{eq:original}
+y^2+x^2y+xz^2+1=0,
+\qquad (x,y,z)\in\Z^3.
+\end{equation}
+For $n\ge 2$, define
+\begin{equation}\label{eq:Rn}
+\mathcal R_n
+ =\{r\in\{1,\dots,n-1\}:r^2\equiv-1\pmod n\},
+\end{equation}
+and, for $r\in\mathcal R_n$ and $0\le j\le n-1$, define
+\begin{equation}\label{eq:Hnrj}
+H_{n,r,j}
+ =jn(n-j)+r(n-2j)-\frac{r^2+1}{n}.
+\end{equation}
+The last expression is an integer because $n\mid r^2+1$.
+
+For the nonsquare negative case, put
+\begin{equation}\label{eq:Dn}
+D_n=n^4-4.
+\end{equation}
+When $n\ge2$ is nonsquare, choose any integers $p_n,q_n>0$ satisfying
+\begin{equation}\label{eq:pell-unit}
+p_n^2-nq_n^2=1,
+\end{equation}
+and write
+\begin{equation}\label{eq:lambda-def}
+\lambda_n=(p_n+q_n\sqrt n)^6=P_n+Q_n\sqrt n.
+\end{equation}
+We shall prove that such $p_n,q_n$ always exist and that
+\begin{equation}\label{eq:PQ-parity}
+P_n\equiv1\pmod2,
+\qquad Q_n\equiv0\pmod2.
+\end{equation}
+Define the reduced seed set
+\begin{equation}\label{eq:seed-set}
+\begin{split}
+\mathcal C_n=\biggl\{(A,B)\in\Z^2:\;&A^2-nB^2=D_n,\\
+&A\equiv n^2\pmod2,\quad B\equiv0\pmod2,\\
+&\sqrt{\frac{D_n}{\lambda_n}}
+ \le A+B\sqrt n
+ <\sqrt{D_n\lambda_n}\biggr\}.
+\end{split}
+\end{equation}
+Here and below, expressions involving $\sqrt n$ are compared in the usual real embedding.
+
+\begin{theorem}[Complete classification]\label{thm:main}
+Every integer solution of \eqref{eq:original} occurs in exactly one of the following three cases.
+
+\smallskip
+\noindent
+\textup{(I) Positive $x$.}
+For $n\ge2$, all solutions with $x=n$ are
+\begin{equation}\label{eq:positive-classification}
+(x,y,z)=\bigl(n,-(r+jn),\eps s\bigr),
+\end{equation}
+where
+\[
+r\in\mathcal R_n,
+\qquad 0\le j\le n-1,
+\qquad \eps\in\{\pm1\},
+\qquad s\in\Z_{>0},
+\]
+and
+\begin{equation}\label{eq:positive-square-condition}
+s^2=H_{n,r,j}.
+\end{equation}
+Conversely, every choice satisfying these conditions gives a solution.
+
+\smallskip
+\noindent
+\textup{(II) Negative square $x$.}
+For $a\ge1$, all solutions with $x=-a^2$ are
+\begin{equation}\label{eq:square-classification}
+(x,y,z)
+ =\left(-a^2,
+ \frac{A+B-2a^4}{4},
+ \frac{B-A}{4a}\right),
+\end{equation}
+where $A,B\in\Z$ satisfy
+\begin{equation}\label{eq:square-factor-conditions}
+AB=a^8-4,
+\qquad 4a\mid B-A,
+\qquad 4\mid A+B-2a^4.
+\end{equation}
+Conversely, every factor pair satisfying \eqref{eq:square-factor-conditions} gives a solution.
+
+\smallskip
+\noindent
+\textup{(III) Negative nonsquare $x$.}
+Let $n\ge2$ be nonsquare.  For every
+\[
+(A,B)\in\mathcal C_n,
+\qquad m\in\Z,
+\qquad \eps\in\{\pm1\},
+\]
+write uniquely
+\begin{equation}\label{eq:pell-orbit}
+U+V\sqrt n
+ =\eps(A+B\sqrt n)\lambda_n^m,
+\qquad U,V\in\Z.
+\end{equation}
+Then
+\begin{equation}\label{eq:nonsquare-classification}
+(x,y,z)
+ =\left(-n,\frac{U-n^2}{2},\frac V2\right)
+\end{equation}
+solves \eqref{eq:original}; and every solution with $x=-n$ arises uniquely in this fashion, once the chosen unit $\lambda_n$ is fixed.
+
+The set $\mathcal C_n$ is finite and can be found by a bounded search.  Consequently, for each fixed nonsquare $n\ge2$, the fiber $x=-n$ is either empty or infinite.
+\end{theorem}
+
+The classification is effective in the literal sense.  Case~\textup{(I)} requires finitely many tests of whether the integers in \eqref{eq:Hnrj} are positive squares; Case~\textup{(II)} requires only the finitely many divisors of $a^8-4$; and Case~\textup{(III)} requires a Pell unit and a search inside the explicit bounds proved in \cref{prop:seed-reduction} below.
+
+\section{Elementary reductions and congruence obstructions}
+
+\begin{lemma}[Symmetries and degenerate cases]\label{lem:symmetries}
+Equation \eqref{eq:original} is invariant under
+\begin{equation}\label{eq:symmetries}
+(x,y,z)\longmapsto(x,y,-z),
+\qquad
+(x,y,z)\longmapsto(x,-x^2-y,z).
+\end{equation}
+Moreover, every integer solution satisfies
+\begin{equation}\label{eq:xz-nonzero}
+x\ne0,
+\qquad z\ne0.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The first map in \eqref{eq:symmetries} leaves $z^2$ unchanged.  For the second map, if $y'=-x^2-y$, then
+\[
+(y')^2+x^2y'
+ =(-x^2-y)^2+x^2(-x^2-y)
+ =y^2+x^2y.
+\]
+Thus both maps preserve the left-hand side of \eqref{eq:original}.
+
+If $x=0$, then \eqref{eq:original} becomes $y^2+1=0$, which has no integer solution.  If $z=0$, then
+\[
+y(y+x^2)=-1.
+\]
+The only ordered pairs of integers with product $-1$ are $(1,-1)$ and $(-1,1)$.  In the first case $y=1$ and $y+x^2=-1$, giving $x^2=-2$; in the second, $y=-1$ and $y+x^2=1$, giving $x^2=2$.  Both are impossible in integers.  Hence \eqref{eq:xz-nonzero} holds.
+\end{proof}
+
+The basic completed-square transformation is the source of all three cases in \cref{thm:main}.
+
+\begin{lemma}[Norm-form reduction]\label{lem:norm-reduction}
+Let $(x,y,z)$ be an integer solution and write
+\[
+x=\delta n,
+\qquad n=|x|\ge1,
+\qquad \delta\in\{1,-1\}.
+\]
+Set
+\begin{equation}\label{eq:UV-def}
+U=2y+n^2,
+\qquad V=2z.
+\end{equation}
+Then
+\begin{equation}\label{eq:norm-reduction}
+U^2+\delta nV^2=n^4-4,
+\end{equation}
+with the parity conditions
+\begin{equation}\label{eq:UV-parity}
+U\equiv n^2\pmod2,
+\qquad V\equiv0\pmod2.
+\end{equation}
+Conversely, every pair $(U,V)\in\Z^2$ satisfying \eqref{eq:norm-reduction} and \eqref{eq:UV-parity} gives an integer solution through
+\begin{equation}\label{eq:UV-inverse}
+y=\frac{U-n^2}{2},
+\qquad z=\frac V2.
+\end{equation}
+Thus \eqref{eq:UV-def} is a bijection between the solutions with fixed $x=\delta n$ and the parity-admissible solutions of \eqref{eq:norm-reduction}.
+\end{lemma}
+
+\begin{proof}
+Multiplying \eqref{eq:original} by $4$ and completing the square in $y$ gives
+\[
+(2y+x^2)^2+4xz^2=x^4-4.
+\]
+Since $x^2=n^2$ and $x^4=n^4$, substitution of \eqref{eq:UV-def} yields \eqref{eq:norm-reduction}.  The congruences in \eqref{eq:UV-parity} follow immediately from the definitions.
+
+Conversely, \eqref{eq:UV-parity} makes the quantities in \eqref{eq:UV-inverse} integral.  Reversing the completed-square calculation then gives \eqref{eq:original}.  The two constructions are visibly inverse to each other.
+\end{proof}
+
+A second elementary restriction eliminates most possible values of $|x|$ before any further analysis is needed.
+
+\begin{proposition}[The $-1$ residue obstruction]\label{prop:residue-obstruction}
+If $(x,y,z)$ satisfies \eqref{eq:original} and $n=|x|$, then
+\begin{equation}\label{eq:y-root-minus-one}
+y^2\equiv-1\pmod n.
+\end{equation}
+For a positive integer $n$, the congruence $t^2\equiv-1\pmod n$ is solvable if and only if
+\begin{equation}\label{eq:n-form}
+n=2^\delta\prod_{i=1}^k p_i^{e_i},
+\qquad
+\delta\in\{0,1\},
+\qquad
+p_i\equiv1\pmod4,
+\end{equation}
+where the $p_i$ are distinct odd primes and the $e_i$ are positive integers.  In that event, the number of residue classes modulo $n$ satisfying $t^2\equiv-1\pmod n$ is $2^k$.
+\end{proposition}
+
+\begin{proof}
+Reducing \eqref{eq:original} modulo $n=|x|$ annihilates both terms containing $x$, and gives \eqref{eq:y-root-minus-one}.
+
+We now classify the moduli for which the latter congruence is solvable.  First suppose $t^2\equiv-1\pmod n$.  No square is congruent to $-1\equiv3\pmod4$, so $4\nmid n$.  If an odd prime $p$ divides $n$, then $t^2\equiv-1\pmod p$.  In the multiplicative group $(\Z/p\Z)^\times$, the residue class of $t$ has order exactly $4$: its square is $-1$, whereas neither $t$ nor $t^2$ is $1$.  The order of an element divides the order $p-1$ of the finite group, so $4\mid p-1$, or equivalently $p\equiv1\pmod4$.  This proves the necessity of \eqref{eq:n-form}.
+
+For the converse, let $p\equiv1\pmod4$ be prime.  We first recall the short proof of Wilson's congruence.  In $(\Z/p\Z)^\times$, every element other than $1$ and $-1$ can be paired with its distinct inverse; hence the product of all nonzero residue classes is $-1$.  Therefore
+\[
+(p-1)!\equiv-1\pmod p.
+\]
+On the other hand,
+\[
+(p-1)!
+ =\prod_{a=1}^{(p-1)/2}a(p-a)
+ \equiv(-1)^{(p-1)/2}
+ \left(\left(\frac{p-1}{2}\right)!\right)^2\pmod p.
+\]
+Because $p\equiv1\pmod4$, the exponent $(p-1)/2$ is even, and therefore
+\[
+\left(\left(\frac{p-1}{2}\right)!\right)^2\equiv-1\pmod p.
+\]
+Thus $-1$ has a square root modulo $p$.
+
+Such a root lifts to every prime power $p^e$.  Indeed, suppose
+\[
+r_e^2+1=c_ep^e
+\]
+for some integer $c_e$.  Since $p\nmid r_e$, there is a unique $h\pmod p$ satisfying
+\[
+c_e+2r_eh\equiv0\pmod p.
+\]
+Then
+\[
+(r_e+hp^e)^2+1
+ \equiv r_e^2+1+2r_ehp^e
+ \equiv0\pmod{p^{e+1}},
+\]
+so the root lifts inductively.  The two roots modulo $p$ lift to two roots modulo each $p^e$.  There are no others: if $r^2\equiv s^2\equiv-1\pmod{p^e}$, then
+\[
+p^e\mid(r-s)(r+s).
+\]
+The two factors cannot both be divisible by $p$, because that would imply $p\mid2r$ and hence $p\mid r$, contrary to $r^2\equiv-1\pmod p$.  Thus one factor is prime to $p$ and the other is divisible by $p^e$, so $r\equiv\pm s\pmod{p^e}$.
+
+Modulo $2$ there is exactly one root, namely $1$.  The Chinese remainder theorem now combines independently chosen roots modulo the pairwise coprime prime-power factors in \eqref{eq:n-form}.  This proves existence and gives exactly two choices for each odd prime factor and one choice for the factor $2$, hence $2^k$ roots in total.
+\end{proof}
+
+\begin{remark}\label{rem:candidate-x}
+By \cref{prop:residue-obstruction}, every solution of \eqref{eq:original} has
+\[
+|x|=2^\delta\prod_{i=1}^k p_i^{e_i}
+\quad\text{with}\quad
+\delta\in\{0,1\},\ p_i\equiv1\pmod4.
+\]
+This is only a necessary condition for the original equation; the subsequent square, divisor, or Pell conditions decide whether a given candidate actually occurs.
+\end{remark}
+
+\section{The positive and negative-square cases}
+
+We first treat $x>0$.  Here the norm equation in \cref{lem:norm-reduction} is positive definite, and a direct argument gives the sharper finite parametrization in Theorem~\ref{thm:main}\textup{(I)}.
+
+\begin{proposition}[Positive $x$]\label{prop:positive-x}
+The solutions with $x>0$ are exactly those in \eqref{eq:positive-classification}--\eqref{eq:positive-square-condition}.
+\end{proposition}
+
+\begin{proof}
+Write $x=n>0$.  Equation \eqref{eq:original} becomes
+\begin{equation}\label{eq:positive-product}
+y(y+n^2)=-(nz^2+1)<0.
+\end{equation}
+Therefore
+\[
+-n^2<y<0.
+\]
+In particular, $n=1$ is impossible, because there is no integer strictly between $-1$ and $0$.  Set
+\[
+a=-y.
+\]
+Then
+\begin{equation}\label{eq:a-range}
+1\le a\le n^2-1,
+\end{equation}
+and \eqref{eq:positive-product} is equivalent to
+\begin{equation}\label{eq:a-equation}
+a(n^2-a)=nz^2+1.
+\end{equation}
+Reducing modulo $n$ gives
+\begin{equation}\label{eq:a-root}
+a^2\equiv-1\pmod n.
+\end{equation}
+Let $r$ be the least positive residue of $a$ modulo $n$.  Equation \eqref{eq:a-root} implies $r\ne0$, so $r\in\mathcal R_n$.  By \eqref{eq:a-range}, there is a unique integer $j$ with
+\begin{equation}\label{eq:a-rj}
+a=r+jn,
+\qquad 0\le j\le n-1.
+\end{equation}
+Substituting \eqref{eq:a-rj} into \eqref{eq:a-equation} and dividing by $n$ gives
+\begin{align*}
+z^2
+&=\frac{(r+jn)(n^2-r-jn)-1}{n}\\
+&=jn(n-j)+r(n-2j)-\frac{r^2+1}{n}\\
+&=H_{n,r,j}.
+\end{align*}
+By \cref{lem:symmetries}, $z\ne0$, so $H_{n,r,j}$ must be a positive square, say $s^2$ with $s>0$, and $z=\eps s$ for a unique $\eps\in\{\pm1\}$.  Since $y=-a=-(r+jn)$, every solution has the asserted form.
+
+Conversely, suppose $n,r,j,s,\eps$ satisfy the conditions in Theorem~\ref{thm:main}\textup{(I)}, and put $a=r+jn$.  The identity $s^2=H_{n,r,j}$ is exactly
+\[
+a(n^2-a)=ns^2+1.
+\]
+Taking $x=n$, $y=-a$, and $z=\eps s$ therefore gives
+\[
+y^2+x^2y+xz^2+1
+ =a^2-n^2a+ns^2+1
+ =0.
+\]
+Thus every listed triple is a solution.
+\end{proof}
+
+\begin{example}\label{ex:positive-small}
+For $n=2$, one has $\mathcal R_2=\{1\}$, and the two admissible values $j=0,1$ both give $H_{2,1,j}=1$.  Thus
+\[
+(2,-1,\pm1),
+\qquad
+(2,-3,\pm1)
+\]
+are exactly the solutions with $x=2$.
+
+For $n=5$, one has $\mathcal R_5=\{2,3\}$.  The positive-square tests yield exactly
+\[
+(5,-2,\pm3),\quad
+(5,-7,\pm5),\quad
+(5,-18,\pm5),\quad
+(5,-23,\pm3).
+\]
+The pairing of the $y$-coordinates is the involution $y\mapsto-25-y$ from \cref{lem:symmetries}.
+\end{example}
+
+We next treat negative square values of $x$.  In this case the indefinite norm form splits over $\Z$ itself.
+
+\begin{proposition}[Negative square $x$]\label{prop:negative-square}
+The solutions with $x=-a^2$, $a\ge1$, are exactly those in \eqref{eq:square-classification}--\eqref{eq:square-factor-conditions}.  For each fixed $a$, there are only finitely many such solutions.
+\end{proposition}
+
+\begin{proof}
+Set $x=-a^2$.  In \cref{lem:norm-reduction}, $n=a^2$ and $\delta=-1$, so
+\begin{equation}\label{eq:square-norm}
+U^2-a^2V^2=a^8-4,
+\qquad
+U\equiv a^4\pmod2,
+\qquad V\equiv0\pmod2.
+\end{equation}
+Factor the left-hand side and put
+\begin{equation}\label{eq:AB-def}
+A=U-aV,
+\qquad B=U+aV.
+\end{equation}
+Then
+\begin{equation}\label{eq:AB-product}
+AB=a^8-4.
+\end{equation}
+Moreover,
+\[
+B-A=2aV=4az
+\]
+and
+\[
+A+B-2a^4=2U-2a^4=4y.
+\]
+Thus every solution determines a factor pair satisfying all three conditions in \eqref{eq:square-factor-conditions}, and solving \eqref{eq:AB-def} for $y,z$ gives precisely \eqref{eq:square-classification}.
+
+Conversely, suppose $A,B$ satisfy \eqref{eq:square-factor-conditions}, and define $x,y,z$ by \eqref{eq:square-classification}.  The divisibility assumptions make $y$ and $z$ integers.  Put
+\[
+U=2y+a^4=\frac{A+B}{2},
+\qquad
+V=2z=\frac{B-A}{2a}.
+\]
+Then
+\[
+U-aV=A,
+\qquad U+aV=B,
+\]
+so
+\[
+U^2-a^2V^2=AB=a^8-4.
+\]
+The inverse direction of \cref{lem:norm-reduction} now shows that $(x,y,z)$ solves \eqref{eq:original}.
+
+Finally, $a^8-4\ne0$ for every integer $a\ge1$.  Hence it has only finitely many integer divisors, and therefore only finitely many ordered factor pairs $(A,B)$.  This proves the finiteness assertion.
+\end{proof}
+
+\begin{example}\label{ex:x-minus-one}
+When $a=1$, one has $AB=-3$.  The divisibility conditions in \eqref{eq:square-factor-conditions} select exactly the four ordered factor pairs that produce
+\[
+(-1,0,\pm1),
+\qquad
+(-1,-1,\pm1).
+\]
+These are therefore all solutions with $x=-1$.
+\end{example}
+
+\section{The nonsquare Pell case}
+
+We now prove the machinery required for Theorem~\ref{thm:main}\textup{(III)}.  The first lemma supplies a positive unit of norm $1$ without appealing to continued fractions.
+
+\begin{lemma}[Elementary existence of a Pell unit]\label{lem:pell-existence}
+Let $n\ge2$ be nonsquare.  Then there exist positive integers $p,q$ such that
+\begin{equation}\label{eq:pell-existence}
+p^2-nq^2=1.
+\end{equation}
+Equivalently, $\Z[\sqrt n]$ contains a real unit $p+q\sqrt n>1$ of norm $1$.
+\end{lemma}
+
+\begin{proof}
+For each integer $N\ge1$, partition $[0,1)$ into $N$ half-open intervals of length $1/N$ and consider the $N+1$ fractional parts
+\[
+\{j\sqrt n\},
+\qquad 0\le j\le N.
+\]
+Two lie in the same interval.  Subtracting them gives integers $p_N,q_N$ with
+\begin{equation}\label{eq:dirichlet-approx}
+1\le q_N\le N,
+\qquad
+|q_N\sqrt n-p_N|<\frac1N.
+\end{equation}
+There are infinitely many distinct pairs $(p_N,q_N)$ satisfying such inequalities as $N$ varies.  Indeed, if only finitely many occurred, then, because $\sqrt n$ is irrational, the positive numbers $|q\sqrt n-p|$ attached to those pairs would have a positive minimum; choosing $N$ larger than its reciprocal would contradict \eqref{eq:dirichlet-approx}.
+
+For every such pair, put
+\[
+k_N=p_N^2-nq_N^2.
+\]
+This is a nonzero integer because $n$ is nonsquare.  From \eqref{eq:dirichlet-approx}, and from
+\[
+p_N<q_N\sqrt n+\frac1N,
+\]
+we obtain
+\begin{align*}
+|k_N|
+&=|p_N-q_N\sqrt n|\,(p_N+q_N\sqrt n)\\
+&<\frac1N\left(2N\sqrt n+\frac1N\right)\\
+&\le 2\sqrt n+1.
+\end{align*}
+Thus the nonzero integers $k_N$ range over a finite set.  Some fixed nonzero integer $k$ therefore occurs for infinitely many distinct pairs $(p,q)$.  Discarding finitely many terms if necessary, we may assume $p,q>0$.
+
+Among these infinitely many pairs with $p^2-nq^2=k$, two distinct pairs, say $(p_1,q_1)$ and $(p_2,q_2)$, are congruent coordinatewise modulo $|k|$.  Reorder them so that
+\[
+p_1+q_1\sqrt n>p_2+q_2\sqrt n.
+\]
+Define
+\begin{equation}\label{eq:unit-ratio}
+\eta
+ =\frac{(p_1+q_1\sqrt n)(p_2-q_2\sqrt n)}{k}
+ =P+Q\sqrt n.
+\end{equation}
+The coefficients are integers.  Indeed,
+\[
+P=\frac{p_1p_2-nq_1q_2}{k},
+\qquad
+Q=\frac{q_1p_2-p_1q_2}{k},
+\]
+and the two numerators are congruent modulo $|k|$ to
+\[
+p_2^2-nq_2^2=k
+\qquad\text{and}\qquad
+q_2p_2-p_2q_2=0,
+\]
+respectively.  Furthermore,
+\[
+\Norm(\eta)
+ =\frac{(p_1^2-nq_1^2)(p_2^2-nq_2^2)}{k^2}=1.
+\]
+Since $p_2-q_2\sqrt n=k/(p_2+q_2\sqrt n)$, formula \eqref{eq:unit-ratio} also gives
+\[
+\eta=\frac{p_1+q_1\sqrt n}{p_2+q_2\sqrt n}>1.
+\]
+Its conjugate is $\eta^{-1}\in(0,1)$, and therefore
+\[
+P=\frac{\eta+\eta^{-1}}2>0,
+\qquad
+Q=\frac{\eta-\eta^{-1}}{2\sqrt n}>0.
+\]
+Thus $P,Q$ are positive integers satisfying $P^2-nQ^2=1$.  Renaming them $p,q$ proves the lemma.
+\end{proof}
+
+\begin{lemma}[A parity-preserving unit]\label{lem:parity-unit}
+Let $n\ge2$ be nonsquare, and let $p+q\sqrt n>1$ be any integer solution of $p^2-nq^2=1$.  If
+\[
+\lambda=(p+q\sqrt n)^6=P+Q\sqrt n,
+\]
+then
+\[
+P\equiv1\pmod2,
+\qquad Q\equiv0\pmod2.
+\]
+Consequently, multiplication by every integral power of $\lambda$ preserves both congruence conditions
+\[
+U\equiv n^2\pmod2,
+\qquad V\equiv0\pmod2
+\]
+on coefficient pairs $U+V\sqrt n$.
+\end{lemma}
+
+\begin{proof}
+Multiplication by $p+q\sqrt n$ on the coefficient column vector $(U,V)^{\mathsf T}$ is represented by
+\[
+M=\begin{pmatrix}p&nq\\q&p\end{pmatrix}.
+\]
+Its determinant is $p^2-nq^2=1$, so its reduction modulo $2$ lies in the group $\operatorname{GL}_2(\mathbb F_2)$.  This group has
+\[
+(2^2-1)(2^2-2)=3\cdot2=6
+\]
+elements: there are three choices for a nonzero first column and then two choices for a second column outside its span.  By Lagrange's theorem, the order of the residue class of $M$ divides $6$, and hence
+\[
+M^6\equiv I\pmod2.
+\]
+On the other hand, multiplication by
+\[
+(p+q\sqrt n)^6=P+Q\sqrt n
+\]
+is represented by
+\[
+M^6=\begin{pmatrix}P&nQ\\Q&P\end{pmatrix}.
+\]
+Comparing the lower-left and diagonal entries modulo $2$ gives $Q\equiv0\pmod2$ and $P\equiv1\pmod2$.
+
+If $U'=PU+nQV$ and $V'=QU+PV$, then these congruences imply
+\[
+U'\equiv U\pmod2,
+\qquad V'\equiv V\pmod2.
+\]
+The inverse unit is $\lambda^{-1}=P-Q\sqrt n$, which has the same parity properties, so the conclusion holds for every positive or negative integral power.
+\end{proof}
+
+We next show that every parity-admissible solution of the generalized Pell equation has a unique representative in the finite window used in \eqref{eq:seed-set}.
+
+\begin{proposition}[Finite seed reduction]\label{prop:seed-reduction}
+Let $n\ge2$ be nonsquare, let $D_n=n^4-4$, and let $\lambda_n=P_n+Q_n\sqrt n>1$ be as in \eqref{eq:lambda-def}.  Then the set $\mathcal C_n$ in \eqref{eq:seed-set} is finite.  More precisely, every $(A,B)\in\mathcal C_n$ satisfies
+\begin{equation}\label{eq:seed-bounds}
+|A|\le\sqrt{D_n\lambda_n},
+\qquad
+|B|\le\sqrt{\frac{D_n\lambda_n}{n}}.
+\end{equation}
+
+Every pair $(U,V)\in\Z^2$ satisfying
+\begin{equation}\label{eq:generalized-pell-admissible}
+U^2-nV^2=D_n,
+\qquad
+U\equiv n^2\pmod2,
+\qquad
+V\equiv0\pmod2
+\end{equation}
+has a unique representation
+\begin{equation}\label{eq:unique-orbit-representation}
+U+V\sqrt n
+ =\eps(A+B\sqrt n)\lambda_n^m
+\end{equation}
+with
+\[
+\eps\in\{\pm1\},
+\qquad (A,B)\in\mathcal C_n,
+\qquad m\in\Z.
+\]
+Conversely, every expression on the right-hand side of \eqref{eq:unique-orbit-representation} has integral coefficients satisfying \eqref{eq:generalized-pell-admissible}.
+\end{proposition}
+
+\begin{proof}
+Set
+\[
+L=\sqrt{\frac{D_n}{\lambda_n}}.
+\]
+Then the defining window for $\mathcal C_n$ is
+\begin{equation}\label{eq:window-L}
+L\le\beta<L\lambda_n,
+\qquad \beta=A+B\sqrt n.
+\end{equation}
+Because $\Norm(\beta)=D_n>0$, its conjugate is
+\[
+\overline\beta=A-B\sqrt n=\frac{D_n}{\beta}>0.
+\]
+From \eqref{eq:window-L},
+\[
+L<\overline\beta\le L\lambda_n.
+\]
+Thus both $\beta$ and $\overline\beta$ are positive and at most
+\[
+L\lambda_n=\sqrt{D_n\lambda_n}.
+\]
+Since
+\[
+A=\frac{\beta+\overline\beta}{2},
+\qquad
+B=\frac{\beta-\overline\beta}{2\sqrt n},
+\]
+we obtain \eqref{eq:seed-bounds}.  Only finitely many integer pairs lie in these bounds, so $\mathcal C_n$ is finite.
+
+Now let $\alpha=U+V\sqrt n$ satisfy \eqref{eq:generalized-pell-admissible}.  Since
+\[
+\alpha\overline\alpha=D_n>0,
+\]
+the two real numbers $\alpha$ and $\overline\alpha$ have the same sign.  There is therefore a unique $\eps\in\{\pm1\}$ for which
+\[
+\gamma=\eps\alpha>0.
+\]
+The half-open intervals
+\[
+[L\lambda_n^m,L\lambda_n^{m+1}),
+\qquad m\in\Z,
+\]
+partition the positive real axis.  Hence there is a unique $m\in\Z$ such that
+\[
+L\lambda_n^m\le\gamma<L\lambda_n^{m+1}.
+\]
+Put
+\[
+\beta=\gamma\lambda_n^{-m}.
+\]
+Then $L\le\beta<L\lambda_n$.  Because
+\[
+\lambda_n^{-1}=P_n-Q_n\sqrt n\in\Z[\sqrt n],
+\]
+the element $\beta$ has integral coefficients, say $\beta=A+B\sqrt n$.  Its norm is still $D_n$.  By \cref{lem:parity-unit}, multiplication by $\lambda_n^{-m}$ preserves the parity conditions in \eqref{eq:generalized-pell-admissible}, so $(A,B)\in\mathcal C_n$.  This proves existence of \eqref{eq:unique-orbit-representation}.
+
+The sign $\eps$ is forced by the sign of $\alpha$, the integer $m$ is forced by the unique interval containing $\gamma$, and then $A+B\sqrt n=\gamma\lambda_n^{-m}$ is forced.  Hence the representation is unique.
+
+Conversely, take $(A,B)\in\mathcal C_n$, $m\in\Z$, and $\eps\in\{\pm1\}$.  Both $\lambda_n^m$ and $\lambda_n^{-m}$ lie in $\Z[\sqrt n]$, so the product in \eqref{eq:unique-orbit-representation} has integral coefficients.  Norms multiply, and $\Norm(\lambda_n)=1$, so its norm is $D_n$.  The parity conditions are preserved by \cref{lem:parity-unit}, and multiplication by $-1$ does not alter a congruence modulo $2$.  Thus \eqref{eq:generalized-pell-admissible} holds.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Cases~\textup{(I)} and~\textup{(II)} are exactly \cref{prop:positive-x,prop:negative-square}.  It remains to prove Case~\textup{(III)}.
+
+Let $x=-n$, where $n\ge2$ is nonsquare.  By \cref{lem:norm-reduction}, the map
+\[
+(x,y,z)\longmapsto U+V\sqrt n=(2y+n^2)+2z\sqrt n
+\]
+is a bijection from solutions with this fixed $x$ to the coefficient pairs satisfying \eqref{eq:generalized-pell-admissible}.  By \cref{lem:pell-existence}, a positive norm-$1$ unit exists, so $\lambda_n$ and $\mathcal C_n$ are defined.  Proposition~\ref{prop:seed-reduction} gives a unique expression
+\[
+U+V\sqrt n
+ =\eps(A+B\sqrt n)\lambda_n^m
+\]
+with $(A,B)\in\mathcal C_n$, $m\in\Z$, and $\eps\in\{\pm1\}$.  Applying the inverse formulas \eqref{eq:UV-inverse} gives exactly \eqref{eq:nonsquare-classification}.  Conversely, every expression in \eqref{eq:pell-orbit} is parity-admissible by \cref{prop:seed-reduction}, and hence gives a solution by \cref{lem:norm-reduction}.  This proves the classification and its uniqueness.
+
+The finiteness of $\mathcal C_n$ is part of \cref{prop:seed-reduction}.  If $\mathcal C_n$ is empty, there are no solutions with $x=-n$.  If it is nonempty, fix one seed $\beta=A+B\sqrt n$.  The elements
+\[
+\beta\lambda_n^m,
+\qquad m\in\Z,
+\]
+are pairwise distinct because $\beta\ne0$ and $\lambda_n>1$.  The bijection in \cref{lem:norm-reduction} then yields infinitely many distinct triples.  Thus the fiber is either empty or infinite.
+\end{proof}
+
+The orbit description can be written as an entirely integral recurrence.
+
+\begin{corollary}[Orbit recurrence]\label{cor:recurrence}
+Let $n\ge2$ be nonsquare and write
+\[
+\lambda_n=P_n+Q_n\sqrt n.
+\]
+If $(U_m,V_m)$ is one admissible orbit in \eqref{eq:pell-orbit}, then
+\begin{equation}\label{eq:UV-recurrence}
+\begin{aligned}
+U_{m+1}&=P_nU_m+nQ_nV_m,\\
+V_{m+1}&=Q_nU_m+P_nV_m.
+\end{aligned}
+\end{equation}
+In the original variables, the corresponding recurrence is
+\begin{equation}\label{eq:yz-recurrence}
+\begin{aligned}
+y_{m+1}
+ &=P_ny_m+nQ_nz_m+\frac{(P_n-1)n^2}{2},\\
+z_{m+1}
+ &=Q_ny_m+P_nz_m+\frac{Q_nn^2}{2}.
+\end{aligned}
+\end{equation}
+All coefficients and constant terms in \eqref{eq:yz-recurrence} are integers.
+\end{corollary}
+
+\begin{proof}
+Multiplying $U_m+V_m\sqrt n$ by $P_n+Q_n\sqrt n$ gives \eqref{eq:UV-recurrence}.  Substituting
+\[
+U_m=2y_m+n^2,
+\qquad V_m=2z_m
+\]
+and then solving for $y_{m+1},z_{m+1}$ gives \eqref{eq:yz-recurrence}.  The parity relations $P_n\equiv1\pmod2$ and $Q_n\equiv0\pmod2$ from \eqref{eq:PQ-parity} make the two displayed halves integral.
+\end{proof}
+
+\section{An explicit infinite orbit}
+
+The preceding theorem proves that any single solution with a fixed negative nonsquare value of $x$ generates infinitely many.  We finish with a concrete orbit.
+
+\begin{proposition}\label{prop:explicit-orbit}
+Set
+\[
+y_0=9263,
+\qquad z_0=1391,
+\]
+and define recursively, for $m\ge0$,
+\begin{equation}\label{eq:explicit-recurrence}
+\begin{aligned}
+y_{m+1}&=289y_m+3480z_m+3\,027\,600,\\
+z_{m+1}&=24y_m+289z_m+252\,300.
+\end{aligned}
+\end{equation}
+Then, for every $m\ge0$,
+\begin{equation}\label{eq:explicit-family}
+(-145,y_m,\pm z_m)
+\end{equation}
+solves \eqref{eq:original}.  The triples are pairwise distinct.  Their images under the second symmetry in \eqref{eq:symmetries}, namely
+\begin{equation}\label{eq:explicit-symmetric-family}
+(-145,-21025-y_m,\pm z_m),
+\end{equation}
+are solutions as well.
+\end{proposition}
+
+\begin{proof}
+A direct calculation gives
+\[
+9263^2+145^2\cdot9263-145\cdot1391^2+1=0,
+\]
+so $(-145,9263,1391)$ is a solution.  In norm-form coordinates,
+\[
+U_0=2y_0+145^2=39551,
+\qquad V_0=2z_0=2782,
+\]
+and therefore
+\[
+U_0^2-145V_0^2=145^4-4.
+\]
+Moreover,
+\[
+289^2-145\cdot24^2=1.
+\]
+The unit $289+24\sqrt{145}$ already has odd first coefficient and even second coefficient, so multiplication by it preserves the required parity conditions; taking a sixth power is unnecessary for this particular orbit.  The general recurrence \eqref{eq:yz-recurrence}, with
+\[
+n=145,
+\qquad P=289,
+\qquad Q=24,
+\]
+is exactly \eqref{eq:explicit-recurrence}, because
+\[
+145\cdot24=3480,
+\qquad
+\frac{(289-1)145^2}{2}=3\,027\,600,
+\qquad
+\frac{24\cdot145^2}{2}=252\,300.
+\]
+Induction using the norm-preserving multiplication now proves that every triple in \eqref{eq:explicit-family} is a solution.
+
+The associated positive real numbers
+\[
+U_m+V_m\sqrt{145}
+ =(U_0+V_0\sqrt{145})(289+24\sqrt{145})^m
+\]
+are strictly increasing, because both factors are positive and $289+24\sqrt{145}>1$.  Hence the coefficient pairs, and therefore the triples, are pairwise distinct.  Finally, \eqref{eq:explicit-symmetric-family} follows from the symmetry $y\mapsto-x^2-y=-21025-y$ in \cref{lem:symmetries}.
+\end{proof}
+
+The first new member of the positive-$y$ branch is
+\[
+(-145,10\,545\,287,876\,611).
+\]
+Thus \eqref{eq:original} has infinitely many integer solutions even after fixing $x=-145$.  Together with \cref{thm:main}, this completes the unconditional and effective description of all integer solutions.
+
+\end{document}
