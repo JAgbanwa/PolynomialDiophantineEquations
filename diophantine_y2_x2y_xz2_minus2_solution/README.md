@@ -5,7 +5,7 @@ I made further attempts at stress-testing the correctness of these results by as
 This paper claims to describe all integer solutions to y² + x²y + xz² − 2 = 0. How true is this statement? Rigorously verify such claim, let's see!
 ```
 
-and the outcome is found here: [\[1\]](https://chatgpt.com/c/6a56727a-dd60-83eb-b912-19d803c2dafd), [\[2\]](https://chatgpt.com/c/6a56728e-020c-83eb-be2e-4c21a0157513) and [\[3\]](https://chatgpt.com/c/6a5672a5-8134-83ed-b779-f6e11f232a5b).
+and the outcome is found here: [\[1\]](https://chatgpt.com/share/6a578b29-9018-83eb-8d71-cd50534d2ef1), [\[2\]](https://chatgpt.com/share/6a578b49-dd8c-83ed-a77a-3eee2a64bc5f) and [\[3\]](https://chatgpt.com/share/6a578b7e-e714-83ed-833e-fa44ef9fa412).
 
 # Summary of changes for run 30c75eed-d95f-4d6e-9fe3-67c05d197f8a
 I formalised the paper *Integer Solutions of y² + x²y + xz² − 2 = 0* in Lean 4 (Mathlib), in `RequestProject/Main.lean`, and verified that its central claim — a complete classification of all integer solutions — genuinely holds. The file builds cleanly with no `sorry` and depends only on the standard axioms (`propext`, `Classical.choice`, `Quot.sound`).
