@@ -16,6 +16,12 @@ attempts (solutions at best) to this catalogue of open polynomial diophantine pr
 | [\[11\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/integer_solutions_z2_minus_xy2_equals_x3_minus_2) | Describe all integer solutions of the equation: $z^2-xy^2-x^3+2=0$ (Table 5, Problem 2). | 🟡 Pending feedback |
 | [\[12\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/integer_solutions_y2_x2y_xz2_plus2) | Describe all integer solutions of the equation: $y^2+x^2y+xz^2+2=0$ (Table 5, Problem 2). | (Already solved) |
 | [\[13\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/integer_solutions_y2_x2y_xz2_plus1) | Describe all integer solutions of the equation: $y^2 + x^2 \cdot y + z^2 \cdot x + 1 = 0$ (Table 5, Problem 2). | (Already solved) |
-| [\[14\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/primitive_solutions_3y3_plus_z3_equals_x4) | Find all primitive integer solutions to the equation: $3Y^3+Z^3=X^4$ [MathOverflow](https://mathoverflow.net/questions/513113/what-are-the-primitive-solutions-to-3y3z3-x4). | 🟡 Pending feedback |
+| [\[14\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/primitive_solutions_3y3_plus_z3_equals_x4) | Find all primitive integer solutions to the equation: $3Y^3+Z^3=X^4$ [(MathOverflow)](https://mathoverflow.net/questions/513113/what-are-the-primitive-solutions-to-3y3z3-x4). | 🟡 Pending feedback |
+
+Since Version 8 (the latest) of this [paper](https://arxiv.org/pdf/2404.08518), these problem(s) have been solved:
+
+| Folder | Goal | Progress |
+|--------|------|----------|
+| [\[15\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_x3_x2y2_z2_plus1) | Prove that the equation: $x^3 + x^2 \cdot y^2+z^2 + 1=0$ has infinitely many integer solutions. | 🟡 Pending feedback |
 
 For the problems marked (Already solved), see the latest version of Dr. Grechuk's (aforementioned) [paper](https://arxiv.org/pdf/2404.08518). I used GPT-Codex to build a simple website to track the progress of solved equations in the aforementioned paper [here](https://jagbanwa.github.io/OpenDiophantineTracker/). This is its GitHub [repo](https://github.com/JAgbanwa/OpenDiophantineTracker).
