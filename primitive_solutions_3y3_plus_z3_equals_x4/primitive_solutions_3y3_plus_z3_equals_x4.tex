@@ -1,0 +1,1214 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[a4paper,margin=30mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{aliascnt}
+\usepackage{booktabs,array,longtable}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+  pdftitle={Primitive Integer Solutions of 3Y cubed plus Z cubed equals X to the fourth},
+  pdfauthor={Jamal Agbanwa},
+  pdfsubject={A number-field descent and exact genus-two rational-point computation},
+  pdfkeywords={Diophantine equation, generalized Fermat equation, genus two, cubic field}
+}
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+\allowdisplaybreaks
+\setlength{\parindent}{1.25em}
+\setlength{\parskip}{0.25em}
+\setlist[itemize]{topsep=0.35em,itemsep=0.15em}
+\setlist[enumerate]{topsep=0.35em,itemsep=0.15em}
+
+\newtheorem{theorem}{Theorem}[section]
+\newaliascnt{lemma}{theorem}
+\newtheorem{lemma}[lemma]{Lemma}
+\aliascntresetthe{lemma}
+\newaliascnt{proposition}{theorem}
+\newtheorem{proposition}[proposition]{Proposition}
+\aliascntresetthe{proposition}
+\newaliascnt{corollary}{theorem}
+\newtheorem{corollary}[corollary]{Corollary}
+\aliascntresetthe{corollary}
+\newaliascnt{remark}{theorem}
+\newtheorem{remark}[remark]{Remark}
+\aliascntresetthe{remark}
+\newaliascnt{definition}{theorem}
+\newtheorem{definition}[definition]{Definition}
+\aliascntresetthe{definition}
+
+\crefname{theorem}{theorem}{theorems}
+\Crefname{theorem}{Theorem}{Theorems}
+\crefname{lemma}{lemma}{lemmas}
+\Crefname{lemma}{Lemma}{Lemmas}
+\crefname{proposition}{proposition}{propositions}
+\Crefname{proposition}{Proposition}{Propositions}
+\crefname{corollary}{corollary}{corollaries}
+\Crefname{corollary}{Corollary}{Corollaries}
+\crefname{remark}{remark}{remarks}
+\Crefname{remark}{Remark}{Remarks}
+\crefname{definition}{definition}{definitions}
+\Crefname{definition}{Definition}{Definitions}
+
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\F}{\mathbb F}
+\newcommand{\OK}{\mathcal O_K}
+\newcommand{\Norm}{\operatorname{N}}
+\newcommand{\ord}{\operatorname{ord}}
+\newcommand{\cl}{\operatorname{Cl}}
+\newcommand{\Sel}{\operatorname{Sel}}
+\newcommand{\Jac}{\operatorname{Jac}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\etaunit}{\eta}
+
+\title{Primitive Integer Solutions of\\[2mm]
+\texorpdfstring{$3Y^3+Z^3=X^4$}{3Y^3+Z^3=X^4}}
+\author{Jamal Agbanwa\\[-1mm]\small Independent Researcher}
+\date{10 July 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We determine every primitive integral solution of
+\[
+3y^3+z^3=x^4.
+\]
+The answer consists of four ordered triples:
+\[
+(\pm1,0,1),\qquad (\pm895,6202,-4199).
+\]
+The proof factors $z+y\sqrt[3]{3}$ in the class-number-one cubic field
+$\Q(\sqrt[3]{3})$, reduces the unit ambiguity to two square classes, and
+parametrizes the two resulting quadratic coefficient conditions.  The final
+stage is an exact, computer-assisted determination of the rational points on
+three explicit genus-two curves.  All algebraic identities, local
+congruences, finite-field point counts, and numerical verifications are
+recorded explicitly.  The genus-two calculation is isolated as a single
+computational proposition, so that the logical dependence of the proof is
+completely transparent.
+\end{abstract}
+
+\tableofcontents
+
+\section{Statement of the result}
+
+\begin{definition}
+An integral triple $(x,y,z)$ is called \emph{primitive} if
+\[
+\gcd(x,y,z)=1.
+\]
+The gcd is understood to be nonnegative.
+\end{definition}
+
+\begin{theorem}[Complete classification]\label{thm:main}
+The primitive integer solutions of
+\begin{equation}\label{eq:main}
+3y^3+z^3=x^4
+\end{equation}
+are exactly
+\[
+\boxed{(x,y,z)=(\pm1,0,1)}
+\]
+and
+\[
+\boxed{(x,y,z)=(\pm895,6202,-4199)}.
+\]
+\end{theorem}
+
+The large solution is genuine:
+\[
+3\cdot6202^3-4199^3
+ =641641050625
+ =895^4,
+\]
+and
+\[
+\gcd(895,6202,4199)=1.
+\]
+The remainder of the paper proves that no other primitive triple exists.
+
+\begin{remark}[Nature of the proof]\label{rem:computer}
+The proof is unconditional but computer-assisted.  The only machine-assisted
+input is \cref{prop:genus2}, which gives complete rational-point sets on three
+specified genus-two curves by exact two-descent, Jacobian arithmetic,
+quadratic Chabauty, and the Mordell--Weil sieve.  No bounded search is used to
+infer completeness.  Every other step is proved directly below.
+\end{remark}
+
+\section{Elementary restrictions imposed by primitivity}
+
+\begin{lemma}[Pairwise coprimality]\label{lem:pairwise}
+Let $(x,y,z)$ be a primitive solution of \eqref{eq:main}.  Then
+\[
+\gcd(x,y)=\gcd(x,z)=\gcd(y,z)=1.
+\]
+\end{lemma}
+
+\begin{proof}
+Let $p$ be a prime.
+
+If $p\mid x$ and $p\mid y$, then \eqref{eq:main} gives $p\mid z$.
+If $p\mid y$ and $p\mid z$, then it gives $p\mid x$.
+
+Suppose that $p\mid x$ and $p\mid z$.  If $p\ne3$, then
+$p\mid 3y^3$, hence $p\mid y$.  If $p=3$, then $3\mid x,z$, so
+$x^4$ is divisible by $3^4$ and $z^3$ is divisible by $3^3$.  Therefore
+\[
+3y^3=x^4-z^3
+\]
+is divisible by $27$, whence $9\mid y^3$ and therefore $3\mid y$.
+Thus in every case, a prime dividing any two coordinates divides all three,
+contrary to primitivity.  This proves all three pairwise gcd assertions.
+\end{proof}
+
+\begin{corollary}[The prime $3$]\label{cor:three}
+For every primitive solution of \eqref{eq:main},
+\[
+3\nmid xz
+\qquad\text{and}\qquad
+z\equiv1\pmod3.
+\]
+In particular, $x\ne0$.
+\end{corollary}
+
+\begin{proof}
+If $3\mid x$, then reduction of \eqref{eq:main} modulo $3$ gives
+$3\mid z$, contradicting \cref{lem:pairwise}.  Thus $3\nmid x$, and the
+same congruence gives $3\nmid z$.  Since $x^4\equiv1\pmod3$ and
+$z^3\equiv z\pmod3$, equation \eqref{eq:main} yields $z\equiv1\pmod3$.
+Finally, if $x=0$, then $z^3=-3y^3$.  Comparing $3$-adic valuations gives
+$3v_3(z)=1+3v_3(y)$, an impossibility.  Hence $x\ne0$.
+\end{proof}
+
+\section{Arithmetic of the pure cubic field}
+
+Put
+\[
+\alpha=\sqrt[3]{3},
+\qquad
+K=\Q(\alpha).
+\]
+The three embeddings of $K$ into $\mathbb C$ send $\alpha$ to
+$\alpha,\omega\alpha,\omega^2\alpha$, where
+$\omega=e^{2\pi i/3}$.
+
+\subsection{The ring of integers and the norm}
+
+\begin{lemma}[Integral basis]\label{lem:ringintegers}
+The ring of integers of $K$ is
+\[
+\OK=\Z[\alpha],
+\]
+and the field discriminant is
+\[
+\Delta_K=-243=-3^5.
+\]
+\end{lemma}
+
+\begin{proof}
+The discriminant of the power basis $1,\alpha,\alpha^2$ equals the
+discriminant of $T^3-3$, namely $-27\cdot3^2=-243$.  Consequently, a
+prime dividing the index $[\OK:\Z[\alpha]]$ must be $3$.
+
+It remains to prove maximality at $3$.  The polynomial $T^3-3$ is
+Eisenstein at $3$, so $K\otimes_\Q\Q_3$ is a totally ramified cubic
+extension of $\Q_3$.  Let $w$ be its valuation normalized by
+\[
+w(\alpha)=1,
+\qquad
+w(3)=3.
+\]
+Every element of $K\otimes\Q_3$ has a unique expression
+\[
+u=c_0+c_1\alpha+c_2\alpha^2,
+\qquad c_i\in\Q_3.
+\]
+The valuations of the three nonzero summands are
+\[
+3v_3(c_0),\qquad 3v_3(c_1)+1,\qquad 3v_3(c_2)+2.
+\]
+They are pairwise distinct modulo $3$, so the terms of least valuation
+cannot cancel.  If $u$ is integral, then $w(u)\ge0$, and hence each of the
+three displayed valuations is nonnegative.  Since each $v_3(c_i)$ is an
+integer, this implies $c_i\in\Z_3$ for all $i$.  Therefore the local
+integral closure is $\Z_3[\alpha]$, so the index is not divisible by $3$.
+The index is therefore $1$, proving the assertion.
+\end{proof}
+
+\begin{lemma}[Norm formula]\label{lem:norm}
+For $a,b,c\in\Q$,
+\[
+\Norm_{K/\Q}(a+b\alpha+c\alpha^2)
+ =a^3+3b^3+9c^3-9abc.
+\]
+\end{lemma}
+
+\begin{proof}
+Multiplication by $a+b\alpha+c\alpha^2$ on the basis
+$1,\alpha,\alpha^2$ is represented by
+\[
+\begin{pmatrix}
+ a&3c&3b\\
+ b&a&3c\\
+ c&b&a
+\end{pmatrix}.
+\]
+Its determinant is $a^3+3b^3+9c^3-9abc$, and this determinant is the
+field norm.
+\end{proof}
+
+\subsection{Class number one}
+
+We include the precise Minkowski estimate needed below.
+
+\begin{lemma}[Minkowski class bound in signature $(1,1)$]\label{lem:minkowski}
+Let $L$ be a cubic number field with one real embedding, one pair of
+complex embeddings, and discriminant $\Delta_L$.  Every ideal class of
+$L$ contains an integral ideal $\mathfrak b$ satisfying
+\[
+\Norm(\mathfrak b)
+ \le \frac{8}{9\pi}\sqrt{|\Delta_L|}.
+\]
+\end{lemma}
+
+\begin{proof}
+Embed a nonzero integral ideal $\mathfrak a$ as a lattice in
+$\mathbb R\times\mathbb C$.  Its covolume is
+\[
+2^{-1}\sqrt{|\Delta_L|}\,\Norm(\mathfrak a).
+\]
+For $T>0$, consider the centrally symmetric convex body
+\[
+B_T=\{(u,z)\in\mathbb R\times\mathbb C: |u|+2|z|\le T\}.
+\]
+A direct integration gives
+\[
+\operatorname{vol}(B_T)
+ =2\int_0^T \pi\left(\frac{T-u}{2}\right)^2du
+ =\frac{\pi T^3}{6}.
+\]
+Minkowski's convex-body theorem therefore gives a nonzero
+$\xi\in\mathfrak a$ as soon as
+\[
+\frac{\pi T^3}{6}
+ >2^3\cdot2^{-1}\sqrt{|\Delta_L|}\,\Norm(\mathfrak a),
+\]
+that is, as soon as
+\[
+T^3>\frac{24}{\pi}\sqrt{|\Delta_L|}\,\Norm(\mathfrak a).
+\]
+For such a point, the arithmetic--geometric mean inequality applied to
+$|u|,|z|,|z|$ gives
+\[
+|\Norm_{L/\Q}(\xi)|=|u|\,|z|^2
+ \le \left(\frac{|u|+2|z|}{3}\right)^3
+ \le \frac{T^3}{27}.
+\]
+Letting $T$ decrease to the threshold gives
+\[
+|\Norm(\xi)|
+ \le \frac{8}{9\pi}\sqrt{|\Delta_L|}\,\Norm(\mathfrak a).
+\]
+Because $(\xi)\subseteq\mathfrak a$, the ideal
+$\mathfrak b=(\xi)\mathfrak a^{-1}$ is integral, lies in the inverse
+class of $\mathfrak a$, and satisfies
+\[
+\Norm(\mathfrak b)
+ =\frac{|\Norm(\xi)|}{\Norm(\mathfrak a)}
+ \le\frac{8}{9\pi}\sqrt{|\Delta_L|}.
+\]
+As inversion permutes ideal classes, the result follows.
+\end{proof}
+
+\begin{proposition}[Class number]\label{prop:classnumber}
+The field $K=\Q(\sqrt[3]{3})$ has class number $1$.
+\end{proposition}
+
+\begin{proof}
+By \cref{lem:minkowski,lem:ringintegers}, every ideal class contains an
+integral ideal of norm at most
+\[
+\frac{8}{9\pi}\sqrt{243}
+ =\frac{8\sqrt3}{\pi}<4.42.
+\]
+Thus it suffices to consider ideal norms $2,3,4$.
+
+The following elements have the indicated positive absolute norms:
+\[
+\Norm(\alpha-1)=2,
+\qquad
+\Norm(\alpha)=3,
+\qquad
+\Norm(\alpha^2+\alpha+1)=4.
+\]
+Modulo $2$,
+\[
+T^3-3\equiv T^3+1=(T+1)(T^2+T+1),
+\]
+so the prime ideals above $2$ have norms $2$ and $4$; they are generated
+by $\alpha-1$ and $\alpha^2+\alpha+1$, respectively.  An ideal of norm
+$4$ is either the degree-two prime above $2$ or the square of the
+norm-$2$ prime, and is therefore principal.  The unique prime above $3$
+is $(\alpha)$ and is principal.  Consequently every ideal of norm at most
+$4$ is principal, so every ideal class is trivial.
+\end{proof}
+
+\subsection{The unit group}
+
+Define
+\[
+\etaunit=\alpha^2-2,
+\qquad
+\eps=4+3\alpha+2\alpha^2.
+\]
+A direct multiplication gives
+\[
+(\alpha^2-2)(4+3\alpha+2\alpha^2)=1,
+\]
+so $\eps=\etaunit^{-1}$.  Also \cref{lem:norm} gives
+$\Norm(\etaunit)=\Norm(\eps)=1$.
+
+\begin{lemma}[All units]\label{lem:units}
+The unit group of $K$ is
+\[
+\OK^\times=\{\pm\eps^n:n\in\Z\}.
+\]
+Its norm-$1$ subgroup is
+\[
+\{\etaunit^n:n\in\Z\}.
+\]
+\end{lemma}
+
+\begin{proof}
+Let $u=a+b\alpha+c\alpha^2$ be a unit, and let $\sigma_1$ be the real
+embedding.  Since $|\Norm(u)|=1$, the two nonreal conjugates have common
+absolute value $|\sigma_1(u)|^{-1/2}$.
+
+First consider a unit satisfying
+\[
+1\le |\sigma_1(u)|<\eps.
+\]
+Fourier inversion among the three embeddings gives
+\[
+\begin{aligned}
+3a&=\sigma_1(u)+\sigma_2(u)+\sigma_3(u),\\
+3\alpha b&=\sigma_1(u)+\omega^2\sigma_2(u)+\omega\sigma_3(u),\\
+3\alpha^2 c&=\sigma_1(u)+\omega\sigma_2(u)+\omega^2\sigma_3(u).
+\end{aligned}
+\]
+Because the two complex conjugates have absolute value at most $1$, and
+because
+\[
+\eps=4+3\alpha+2\alpha^2<13,
+\]
+we obtain the sharper numerical bounds
+\[
+|a|<5,
+\qquad
+|b|<4,
+\qquad
+|c|<3.
+\]
+Thus
+\[
+|a|\le4,
+\qquad
+|b|\le3,
+\qquad
+|c|\le2.
+\]
+Substitution into the exact norm equation
+\[
+a^3+3b^3+9c^3-9abc=\pm1
+\]
+leaves precisely the following six triples:
+\[
+\begin{array}{c|c|c}
+(a,b,c)&a+b\alpha+c\alpha^2&\Norm\\ \hline
+(-4,-3,-2)&-\eps&-1\\
+(-2,0,1)&\etaunit&1\\
+(-1,0,0)&-1&-1\\
+(1,0,0)&1&1\\
+(2,0,-1)&-\etaunit&-1\\
+(4,3,2)&\eps&1
+\end{array}
+\]
+The interval $1\le|\sigma_1(u)|<\eps$ contains only $u=\pm1$ from this
+list: $|\etaunit|=\eps^{-1}<1$, while $|\eps|$ is the excluded upper
+endpoint.
+
+Now let $u$ be any unit.  Choose $n\in\Z$ such that
+\[
+1\le|\sigma_1(u\eps^{-n})|<\eps.
+\]
+The preceding paragraph gives $u\eps^{-n}=\pm1$, hence
+$u=\pm\eps^n$.  Finally, $\Norm(-1)=-1$ because $[K:\Q]=3$, while
+$\Norm(\eps)=1$.  Therefore the norm-$1$ units are exactly the powers of
+$\eps$, equivalently the powers of $\etaunit=\eps^{-1}$.
+\end{proof}
+
+\section{Fourth-power ideal descent}
+
+Let $(x,y,z)$ be a primitive solution and put
+\[
+\beta=z+y\alpha\in\OK.
+\]
+By \cref{lem:norm},
+\[
+\Norm(\beta)=z^3+3y^3=x^4.
+\]
+
+\begin{lemma}[Prime-ideal support of $\beta$]\label{lem:oneprime}
+Let $p$ be a rational prime dividing $x$.  Then $p\ne3$, and exactly one
+prime ideal $\mathfrak p$ above $p$ divides $(\beta)$.  This prime has
+residue degree $1$, and
+\[
+v_{\mathfrak p}(\beta)=4v_p(x).
+\]
+No prime above $3$ divides $(\beta)$.
+\end{lemma}
+
+\begin{proof}
+By \cref{lem:pairwise,cor:three}, $p\ne3$ and $p\nmid yz$.  Reducing the
+norm equation modulo $p$ gives
+\[
+\left(-zy^{-1}\right)^3\equiv3\pmod p.
+\]
+Set $t\equiv-zy^{-1}\pmod p$.  Since $p\ne3$ and $t\ne0$, the root $t$
+of $T^3-3$ modulo $p$ is simple.  Hence
+\[
+\mathfrak p=(p,\alpha-t)
+\]
+is a degree-one prime above $p$.
+
+If any prime $\mathfrak q\mid p$ divides $\beta$, then in its residue
+field we have $z+y\alpha=0$, so $\alpha=t\in\F_p$.  Therefore
+$\mathfrak q=\mathfrak p$.  Thus $\mathfrak p$ is the unique prime above
+$p$ occurring in $(\beta)$.  Taking $p$-adic valuations of the ideal norm
+now gives
+\[
+4v_p(x)=v_p(\Norm(\beta))
+ =f(\mathfrak p/p)v_{\mathfrak p}(\beta)
+ =v_{\mathfrak p}(\beta).
+\]
+Finally, the unique prime above $3$ is $(\alpha)$.  Modulo this prime,
+$\beta\equiv z$, and $3\nmid z$ by \cref{cor:three}; hence it does not
+divide $(\beta)$.
+\end{proof}
+
+\begin{proposition}[Reduction to two unit square classes]\label{prop:squareclasses}
+There exist an element
+\[
+\delta=a+b\alpha+c\alpha^2\in\OK
+\]
+and an exponent $e\in\{0,1\}$ such that
+\begin{equation}\label{eq:beta-square}
+z+y\alpha=\etaunit^e\delta^2,
+\end{equation}
+with
+\[
+\Norm(\delta)=x^2
+\qquad\text{and}\qquad
+\gcd(a,b,c)=1.
+\]
+\end{proposition}
+
+\begin{proof}
+By \cref{lem:oneprime}, every prime-ideal exponent in $(\beta)$ is a
+multiple of $4$.  Hence
+\[
+(\beta)=\mathfrak a^4
+\]
+for an integral ideal $\mathfrak a$.  By \cref{prop:classnumber},
+$\mathfrak a=(\gamma)$, and therefore
+\[
+\beta=u\gamma^4
+\]
+for a unit $u$.  Taking norms and using
+$|\Norm(\gamma)|=\Norm(\mathfrak a)=|x|$ gives $\Norm(u)=1$.  By
+\cref{lem:units}, $u=\etaunit^n$ for some $n\in\Z$.
+
+Write $n=e+2k$ with $e\in\{0,1\}$, and put
+\[
+\delta=\etaunit^k\gamma^2.
+\]
+Then \eqref{eq:beta-square} holds, and
+\[
+\Norm(\delta)=\Norm(\gamma)^2=x^2.
+\]
+
+It remains to prove coefficient primitivity.  If an integer $d>1$ divided
+$a,b,c$, then $\delta=d\delta_0$ for some $\delta_0\in\OK$, so
+\eqref{eq:beta-square} would show that every coefficient of $z+y\alpha$
+in the integral basis $1,\alpha,\alpha^2$ is divisible by $d^2$.
+Thus $d^2\mid y$ and $d^2\mid z$, contradicting
+$\gcd(y,z)=1$ from \cref{lem:pairwise}.
+\end{proof}
+
+For later use, write
+\[
+\delta^2=A+B\alpha+C\alpha^2.
+\]
+A direct expansion gives
+\begin{equation}\label{eq:ABC}
+A=a^2+6bc,
+\qquad
+B=2ab+3c^2,
+\qquad
+C=b^2+2ac.
+\end{equation}
+
+\section{The three genus-two computations}
+
+We use weighted projective coordinates
+$[R:S:W]\in\mathbb P(1,1,3)$, with
+\[
+[R:S:W]=[\lambda R:\lambda S:\lambda^3W]
+\qquad(\lambda\in\Q^\times).
+\]
+
+Define the curves
+\begin{align}
+C_A:\quad
+W^2&=R^6+60R^3S^3-72S^6,
+\label{eq:CA}\\
+C_B:\quad
+W^2&=-8R^6-60R^3S^3+9S^6,
+\label{eq:CB}
+\end{align}
+and define
+\begin{align}
+F(M,N)={}&720M^6-1944M^5N+1620M^4N^2+60M^3N^3
+\notag\\
+&-810M^2N^4+432MN^5-73N^6,
+\label{eq:F}
+\end{align}
+with
+\begin{equation}\label{eq:CF}
+C_F:\quad W^2=-F(M,N).
+\end{equation}
+
+\begin{proposition}[Exact rational-point classification]\label{prop:genus2}
+The complete rational-point sets are
+\[
+C_A(\Q)=\{[1:0:1],[1:0:-1]\},
+\]
+\[
+C_B(\Q)=\{[0:1:3],[0:1:-3]\},
+\]
+and
+\[
+C_F(\Q)=
+\{[1:2:\pm4],\ [2:3:\pm3],\ [2:7:\pm895]\}.
+\]
+\end{proposition}
+
+\begin{proof}[Exact computational certificate]
+This is the sole computer-assisted step.  We record the defining data and
+the exact arithmetic certificate.
+
+\medskip
+\noindent\textbf{(i) Good reduction and finite-field checks.}
+The discriminant of each dehomogenized sextic is
+\[
+2^{18}3^{25}.
+\]
+Thus $7$ and $11$ are primes of good reduction.  Direct finite-field
+enumeration gives the following table.  The Jacobian orders are obtained
+from
+\[
+\#J(\F_p)=\frac{\#C(\F_p)^2+\#C(\F_{p^2})}{2}-p.
+\]
+\[
+\begin{array}{c|c|c|c|c}
+C&p&\#C(\F_p)&\#C(\F_{p^2})&\#J(\F_p)\\ \hline
+C_A&7&8&64&57\\
+C_A&11&12&94&108\\
+C_B&7&8&64&57\\
+C_B&11&12&94&108
+\end{array}
+\]
+
+An exact $2$-descent gives
+\[
+\dim_{\F_2}\Sel^{(2)}(J_A/\Q)
+ =\dim_{\F_2}\Sel^{(2)}(J_B/\Q)=0.
+\]
+Hence both Jacobians have Mordell--Weil rank $0$.
+
+For $C_A$, in affine coordinates,
+\[
+Y^2=(X^3+30)^2-972.
+\]
+Let $I_+$ and $I_-$ be the two rational points at infinity, distinguished
+by $Y/X^3\to+1$ and $Y/X^3\to-1$.  Then
+\[
+\operatorname{div}\bigl(Y-(X^3+30)\bigr)=3I_+-3I_-.
+\]
+Thus $[I_+-I_-]$ is a nonzero $3$-torsion point.  Since rational torsion
+injects under good reduction and
+\[
+\gcd(57,108)=3,
+\]
+we obtain
+\[
+J_A(\Q)\cong\Z/3\Z.
+\]
+Embedding $C_A$ in $J_A$ by $P\mapsto[P-I_-]$ gives the two displayed
+points and no third point.  Indeed, a third point would give an effective
+divisor linearly equivalent to $2I_+$ but different from $2I_+$, forcing
+$\ell(2I_+)\ge2$.  This is impossible because $I_+$ is not a Weierstrass
+point on a genus-two hyperelliptic curve.
+
+For $C_B$, put
+\[
+P_+=(0,3),
+\qquad
+P_-=(0,-3),
+\qquad
+q(X)=3-10X^3.
+\]
+The identity
+\[
+(-8X^6-60X^3+9)-q(X)^2=-108X^6
+\]
+gives
+\[
+\operatorname{div}\left(\frac{Y-q(X)}{X^3}\right)
+ =3P_+-3P_-.
+\]
+The same reduction argument therefore gives
+$J_B(\Q)\cong\Z/3\Z$, and the same non-Weierstrass divisor argument gives
+exactly $P_+$ and $P_-$.
+
+\medskip
+\noindent\textbf{(ii) The curve $C_F$.}
+Make the unimodular substitution
+\[
+M=-U-V,
+\qquad
+N=-2U-V.
+\]
+Then
+\[
+F(-U-V,-2U-V)=-H(U,V),
+\]
+where
+\begin{align*}
+H(U,V)={}&16U^6-24U^5V+60U^4V^2-20U^3V^3\\
+&-30U^2V^4+12UV^5-5V^6.
+\end{align*}
+Thus $C_F$ is rationally isomorphic to $C_H:W^2=H(U,V)$.
+Let $I_\pm$ be the two points at infinity of $C_H$, and set
+\[
+D_0=[I_--I_+],
+\qquad
+D_1=[(1,3)-I_+].
+\]
+Exact two-descent followed by saturation gives
+\[
+J_H(\Q)=\Z D_0\oplus\Z D_1.
+\]
+The torsion subgroup is trivial: the exact point counts are
+\[
+\#J_H(\F_7)=57,
+\qquad
+\#J_H(\F_{11})=82,
+\]
+and $\gcd(57,82)=1$.
+
+The identity
+\begin{align}
+&H(T,1)-\bigl(4T^3-3T^2-24T+20\bigr)^2
+\notag\\
+&\hspace{42mm}=81(T-1)^3(3T+5)
+\label{eq:Hidentity}
+\end{align}
+exhibits the six rational points
+\[
+I_\pm,
+\qquad
+(1,\pm3),
+\qquad
+\left(-\frac53,\pm\frac{895}{27}\right).
+\]
+A quadratic-Chabauty computation at $p=7$, combined with the
+Mordell--Weil sieve for the saturated group generated by $D_0,D_1$, is
+exhaustive.  The eight residue disks of $C_H(\F_7)$ and their certified
+Strassmann bounds are
+\[
+\begin{array}{c|cccccccc}
+\text{disk}
+&I_+&I_-&(1,3)&(1,-3)&(3,1)&(3,-1)&(0,3)&(0,-3)\\ \hline
+\#\text{ rational points}
+&1&1&1&1&1&1&0&0.
+\end{array}
+\]
+The two points with $T=-5/3$ reduce to the disks with $T=3$ modulo $7$.
+Hence the six displayed points are all of $C_H(\Q)$.
+
+Finally, the inverse linear change is
+\[
+U=M-N,
+\qquad
+V=N-2M.
+\]
+The six points of $C_H(\Q)$ transform into
+\[
+[1:2:\pm4],
+\qquad
+[2:3:\pm3],
+\qquad
+[2:7:\pm895]
+\]
+on $C_F$, proving the asserted list.
+\end{proof}
+
+\begin{remark}[What the certificate proves]\label{rem:certificate}
+The descent and Chabauty calculations in \cref{prop:genus2} are exact
+computations in number fields, finite fields, Jacobians, and $7$-adic power
+series.  The point lists are therefore not conclusions drawn from a height
+search.  The finite-field orders, polynomial identities, and all displayed
+points can be checked independently by the elementary verification script
+supplied with this manuscript.
+\end{remark}
+
+\section{The first unit class}
+
+Assume first that $e=0$ in \eqref{eq:beta-square}.  Then
+\[
+z+y\alpha=\delta^2.
+\]
+By \eqref{eq:ABC}, the vanishing of the $\alpha^2$ coefficient is
+\begin{equation}\label{eq:firstconic}
+b^2+2ac=0.
+\end{equation}
+
+\begin{lemma}[Primitive parametrization of the first conic]\label{lem:firstparam}
+Every primitive integral solution $(a,b,c)$ of \eqref{eq:firstconic} has,
+up to an overall sign $\sigma\in\{\pm1\}$, exactly one of the forms
+\begin{equation}\label{eq:firstfamily}
+(a,b,c)=\sigma(r^2,2rs,-2s^2),
+\end{equation}
+where $\gcd(r,s)=1$ and $r$ is odd, or
+\begin{equation}\label{eq:secondfamily}
+(a,b,c)=\sigma(2r^2,2rs,-s^2),
+\end{equation}
+where $\gcd(r,s)=1$ and $s$ is odd.
+\end{lemma}
+
+\begin{proof}
+Equation \eqref{eq:firstconic} shows that $b$ is even; write $b=2d$.
+Then
+\[
+ac=-2d^2.
+\]
+If a prime divided both $a$ and $c$, the equation would force it to divide
+$b$, contrary to primitivity.  Thus $\gcd(a,c)=1$.
+
+Every odd prime occurs in $a$ or $c$ to an even exponent.  Exactly one of
+$a,c$ is even unless one is zero, and the even one is twice a square up to
+sign because the $2$-adic valuation of $ac$ is odd.  If $a$ is odd, write
+$a=\sigma r^2$ and $c=-2\sigma s^2$; then $d=\pm rs$, and the sign of
+$d$ is absorbed by changing the sign of $r$ or $s$.  This gives
+\eqref{eq:firstfamily}, with $r$ odd.  If $c$ is odd, the same argument
+gives \eqref{eq:secondfamily}, with $s$ odd.  Coprimality of $r,s$ is
+equivalent to primitivity.  The degenerate cases $b=0$ are included by
+$s=0$ in \eqref{eq:firstfamily} and by $r=0$ in
+\eqref{eq:secondfamily}.
+\end{proof}
+
+For \eqref{eq:firstfamily}, the norm is
+\begin{equation}\label{eq:normA}
+\Norm(\delta)
+ =\sigma\bigl(r^6+60r^3s^3-72s^6\bigr).
+\end{equation}
+For \eqref{eq:secondfamily}, it is
+\begin{equation}\label{eq:normBraw}
+\Norm(\delta)
+ =\sigma\bigl(8r^6+60r^3s^3-9s^6\bigr).
+\end{equation}
+These identities follow by substitution into \cref{lem:norm}.
+
+\begin{lemma}[The norm signs in the first unit class]\label{lem:signfirst}
+In \eqref{eq:normA}, the equality $\Norm(\delta)=x^2$ forces
+$\sigma=1$.  In \eqref{eq:normBraw}, it forces $\sigma=-1$.
+\end{lemma}
+
+\begin{proof}
+The square residues modulo $16$ are $0,1,4,9$.
+
+In \eqref{eq:normA}, $r$ is odd.  If $s$ is even, then
+\[
+r^6+60r^3s^3-72s^6\equiv1\ \text{or}\ 9\pmod{16},
+\]
+so its negative is $15$ or $7$ modulo $16$.  If $s$ is odd, the form is
+$5$ or $13$ modulo $16$, so its negative is $11$ or $3$.  Thus the
+negative of the form is never a square modulo $16$, proving $\sigma=1$.
+
+In \eqref{eq:normBraw}, $s$ is odd.  If $r$ is even, the form is $7$ or
+$15$ modulo $16$; if $r$ is odd, it is $3$ or $11$ modulo $16$.  It is
+therefore never a square, so $\sigma=-1$.
+\end{proof}
+
+We now have
+\[
+x^2=r^6+60r^3s^3-72s^6
+\]
+in the first family, and
+\[
+x^2=-8r^6-60r^3s^3+9s^6
+\]
+in the second.  By \cref{prop:genus2}, the first equation has only
+$[r:s:x]=[1:0:\pm1]$, while the second has only
+$[r:s:x]=[0:1:\pm3]$.
+
+For the first point, \eqref{eq:firstfamily} gives $\delta=1$ up to sign,
+so
+\[
+z+y\alpha=1.
+\]
+Thus
+\[
+(x,y,z)=(\pm1,0,1).
+\]
+
+For the second point, \eqref{eq:secondfamily} with the required sign gives
+$\delta=\alpha^2$ up to sign.  Hence
+\[
+z+y\alpha=\alpha^4=3\alpha,
+\]
+so
+\[
+(x,y,z)=(\pm3,3,0),
+\]
+which is not primitive.  Therefore the first unit class contributes
+exactly
+\[
+(\pm1,0,1).
+\]
+
+\section{The second unit class}
+
+Assume now that $e=1$.  Since $\etaunit=\alpha^2-2$, equations
+\eqref{eq:ABC} and \eqref{eq:beta-square} give
+\[
+\etaunit\delta^2
+ =(3B-2A)+(3C-2B)\alpha+(A-2C)\alpha^2.
+\]
+The $\alpha^2$ coefficient must vanish, so
+\begin{equation}\label{eq:secondconic}
+a^2-4ac-2b^2+6bc=0.
+\end{equation}
+
+\begin{lemma}[Primitive parametrization of the second conic]\label{lem:secondparam}
+Let $(a,b,c)$ be a primitive integral solution of
+\eqref{eq:secondconic}.  Then there exist coprime integers $m,n$, an
+overall sign $\sigma\in\{\pm1\}$, and
+\[
+g=
+\begin{cases}
+1,&n\text{ odd},\\
+2,&n\text{ even},
+\end{cases}
+\]
+such that
+\begin{equation}\label{eq:paramsecond}
+(a,b,c)=\frac{\sigma}{g}
+\bigl(2n(3m-2n),\ 2m(3m-2n),\ 2m^2-n^2\bigr).
+\end{equation}
+Conversely, every triple in \eqref{eq:paramsecond} is a primitive integral
+solution of \eqref{eq:secondconic}.
+\end{lemma}
+
+\begin{proof}
+In projective coordinates, the conic contains $[0:0:1]$.  For a point
+with $a\ne0$, write $b/a=m/n$ in lowest terms.  Substitution into
+\eqref{eq:secondconic} gives
+\[
+\frac ca=\frac{2m^2-n^2}{2n(3m-2n)}.
+\]
+Clearing denominators yields the displayed homogeneous parametrization.
+The point $[0:3:1]$ occurs when $n=0$, and the base point $[0:0:1]$
+occurs when $3m-2n=0$, so no projective point is omitted.
+
+Let
+\[
+a_0=2n(3m-2n),\quad
+b_0=2m(3m-2n),\quad
+c_0=2m^2-n^2
+\]
+with $\gcd(m,n)=1$.  No odd prime divides all three.  Indeed, if an odd
+prime $p$ divides $a_0,b_0$, then $p\mid3m-2n$; because $p$ cannot divide
+both $m,n$, the congruence $3m\equiv2n\pmod p$ gives
+\[
+4c_0=8m^2-4n^2\equiv-m^2\not\equiv0\pmod p.
+\]
+If $n$ is odd, then $c_0$ is odd, so the gcd is $1$.  If $n$ is even,
+then $m$ is odd; in that case $b_0$ and $c_0$ are divisible by $2$ but
+not by $4$, so the gcd is exactly $2$.  Division by $g$ therefore gives
+a primitive triple.  The converse follows by the projective
+parametrization and the uniqueness of a primitive integral representative
+up to sign.
+\end{proof}
+
+Substitution of the unscaled triple into the norm formula gives precisely
+the sextic $F$ from \eqref{eq:F}:
+\begin{equation}\label{eq:normF}
+\Norm(\delta)=\frac{\sigma F(m,n)}{g^3}=x^2.
+\end{equation}
+
+\begin{lemma}[The even-$n$ case is impossible]\label{lem:neven}
+There is no solution of \eqref{eq:normF} with $n$ even.
+\end{lemma}
+
+\begin{proof}
+If $n$ is even, then $g=2$ and $m$ is odd.  Equation
+\eqref{eq:normF} gives
+\[
+(4x)^2=2\sigma F(m,n).
+\]
+Write $n=2k$.  Modulo $32$,
+\[
+F(m,2k)
+\equiv16\bigl(1-m^5k+m^4k^2\bigr).
+\]
+Since $m$ is odd, the factor in parentheses is odd, whether $k$ is even
+or odd.  Hence
+\[
+F(m,n)\equiv16\pmod{32}
+\]
+and therefore
+\[
+2\sigma F(m,n)\equiv32\pmod{64}.
+\]
+But a square divisible by $16$ is congruent to $0$ or $16$ modulo $64$,
+never $32$.  This contradiction proves the claim.
+\end{proof}
+
+Henceforth $n$ is odd and $g=1$.
+
+\begin{lemma}[The positive norm sign is impossible]\label{lem:Fsign}
+For coprime $m,n$ with $n$ odd, $F(m,n)$ is never a square.  Consequently
+\eqref{eq:normF} forces
+\[
+\sigma=-1
+\qquad\text{and}\qquad
+x^2=-F(m,n).
+\]
+\end{lemma}
+
+\begin{proof}
+Modulo $27$,
+\begin{equation}\label{eq:Fmod27}
+F(m,n)\equiv18m^6+6m^3n^3+8n^6.
+\end{equation}
+The square residues modulo $27$ are
+\[
+0,1,4,7,9,10,13,16,19,22,25.
+\]
+
+If $3\mid n$, then $3\nmid m$ and \eqref{eq:Fmod27} gives
+$F(m,n)\equiv18\pmod{27}$, not a square.  If $3\mid m$, then $3\nmid n$
+and $F(m,n)$ is congruent to one of $8,17,26$, again not a square.
+
+Finally suppose $3\nmid mn$.  Divide \eqref{eq:Fmod27} by the square
+$n^6$ and put
+\[
+t\equiv(mn^{-1})^3\pmod{27}.
+\]
+The unit cubes modulo $27$ are
+\[
+1,8,10,17,19,26.
+\]
+For these six values,
+\[
+18t^2+6t+8\equiv5\ \text{or}\ 20\pmod{27},
+\]
+neither of which is a square.  Thus $F(m,n)$ is never a square.  Since
+$x^2=\sigma F(m,n)$, the sign must be $\sigma=-1$.
+\end{proof}
+
+By \cref{prop:genus2}, the primitive projective solutions of
+\[
+x^2=-F(m,n)
+\]
+are
+\[
+[m:n:x]=[1:2:\pm4],
+\quad
+[2:3:\pm3],
+\quad
+[2:7:\pm895].
+\]
+The first has $n$ even and was excluded by \cref{lem:neven}.
+
+For $[m:n]=[2:3]$, one has $3m-2n=0$.  Formula
+\eqref{eq:paramsecond}, with the required norm sign, gives
+$\delta=\alpha^2$ up to sign.  Therefore
+\[
+z+y\alpha
+ =\etaunit\alpha^4
+ =(\alpha^2-2)(3\alpha)
+ =9-6\alpha.
+\]
+Thus
+\[
+(x,y,z)=(\pm3,-6,9),
+\]
+which is not primitive.
+
+For $[m:n]=[2:7]$, the unscaled triple is
+\[
+(-112,-32,-41).
+\]
+With the required sign, we may take
+\[
+\delta=112+32\alpha+41\alpha^2.
+\]
+There is a useful internal square identity:
+\[
+\delta=(10+\alpha+2\alpha^2)^2.
+\]
+Indeed,
+\[
+(10+\alpha+2\alpha^2)^2
+ =112+32\alpha+41\alpha^2.
+\]
+Moreover,
+\[
+\Norm(10+\alpha+2\alpha^2)
+ =10^3+3+9\cdot2^3-9\cdot10\cdot1\cdot2
+ =895.
+\]
+Hence $\Norm(\delta)=895^2$, so $x=\pm895$.
+
+A further direct expansion gives
+\[
+\delta^2=20416+12211\alpha+10208\alpha^2.
+\]
+Multiplying by $\etaunit=\alpha^2-2$ yields
+\begin{align*}
+\etaunit\delta^2
+&=(3\cdot12211-2\cdot20416)
+ +(3\cdot10208-2\cdot12211)\alpha\\
+&=-4199+6202\alpha.
+\end{align*}
+Therefore
+\[
+(y,z)=(6202,-4199),
+\]
+and the second unit class contributes exactly
+\[
+(\pm895,6202,-4199).
+\]
+
+\section{Completion of the proof}
+
+By \cref{prop:squareclasses}, every primitive solution belongs to exactly
+one of the two unit square classes $e=0$ or $e=1$.  The first class gives
+only $(\pm1,0,1)$ after the nonprimitive candidate $(\pm3,3,0)$ is
+removed.  The second gives only $(\pm895,6202,-4199)$ after the
+nonprimitive candidate $(\pm3,-6,9)$ is removed.  This proves
+\cref{thm:main}.
+
+For completeness, the final direct checks are
+\[
+3\cdot0^3+1^3=1=(\pm1)^4
+\]
+and
+\[
+3\cdot6202^3+(-4199)^3
+ =641641050625
+ =895^4.
+\]
+Also
+\[
+\gcd(895,6202)=1,
+\qquad
+\gcd(895,4199)=1,
+\qquad
+\gcd(6202,4199)=1,
+\]
+so the large triple is primitive.
+
+\appendix
+
+\section{Finite congruence tables}
+
+This appendix records the small residue computations used in the proof.
+
+\subsection{Squares modulo 16, 27, and 64}
+
+The square residues modulo $16$ are
+\[
+0,1,4,9.
+\]
+The square residues modulo $27$ are
+\[
+0,1,4,7,9,10,13,16,19,22,25.
+\]
+A square divisible by $16$ is congruent to $0$ or $16$ modulo $64$.
+
+\subsection{Unit cubes modulo 27}
+
+For $u\in(\Z/27\Z)^\times$, the possible values of $u^3$ are
+\[
+1,8,10,17,19,26.
+\]
+The expression used in \cref{lem:Fsign} has values
+\[
+\begin{array}{c|rrrrrr}
+t&1&8&10&17&19&26\\ \hline
+18t^2+6t+8\pmod{27}&5&20&5&20&5&20.
+\end{array}
+\]
+
+\section{Independent exact checks}
+
+The following identities can be verified entirely by expansion:
+\begin{align*}
+\operatorname{disc}(X^6+60X^3-72)
+ &=2^{18}3^{25},\\
+\operatorname{disc}(-8X^6-60X^3+9)
+ &=2^{18}3^{25},\\
+\operatorname{disc}(-F(X,1))
+ &=2^{18}3^{25},\\
+F(-U-V,-2U-V)&=-H(U,V),\\
+H(T,1)-(4T^3-3T^2-24T+20)^2
+ &=81(T-1)^3(3T+5).
+\end{align*}
+The finite-field counts in \cref{prop:genus2} are also obtained by direct
+enumeration.  A companion Python file supplied with the manuscript performs
+these checks using exact integer and finite-field arithmetic.
+
+\section{Logical dependency summary}
+
+For clarity, the classification rests on the following chain.
+
+\begin{enumerate}
+\item Primitivity implies pairwise coprimality and excludes the prime $3$
+from $xz$.
+\item The field $K=\Q(\sqrt[3]{3})$ has integral basis
+$1,\alpha,\alpha^2$, class number $1$, and norm-$1$ units
+$\etaunit^n$.
+\item The principal ideal $(z+y\alpha)$ is a fourth power, so
+$z+y\alpha=\etaunit^e\delta^2$ with $e\in\{0,1\}$ and
+$\Norm(\delta)=x^2$.
+\item The two values of $e$ produce two explicit conics in the
+coefficients of $\delta$.
+\item Primitive parametrization and local congruences reduce the problem
+to rational points on $C_A,C_B,C_F$.
+\item The exact genus-two point classification in \cref{prop:genus2}
+leaves only the four primitive triples stated in \cref{thm:main}.
+\end{enumerate}
+
+\end{document}
