@@ -1,0 +1,918 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[margin=29mm]{geometry}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+  pdftitle={A Complete Classification of the Rational and Integral Solutions of y2 + z2 = x3 + 1},
+  pdfauthor={Jamal Agbanwa},
+  pdfsubject={A self-contained classification of all rational and integral solutions},
+  pdfkeywords={Diophantine equations, sums of two squares, Gaussian integers, rational points}
+}
+\usepackage{fancyhdr}
+
+\allowdisplaybreaks
+\numberwithin{equation}{section}
+\setlist[enumerate]{label=(\roman*),leftmargin=2.2em}
+\setlist[itemize]{leftmargin=2.2em}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\N}{\operatorname{N}}
+\newcommand{\vq}{v_q}
+\newcommand{\conj}[1]{\overline{#1}}
+\newcommand{\ii}{\mathrm{i}}
+\newcommand{\sumsq}{\Sigma_2}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Rational and integral solutions of $y^2+z^2=x^3+1$}
+\fancyhead[R]{\small Jamal Agbanwa}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\title{\bfseries A Complete Classification of the Rational and Integral Solutions of
+\texorpdfstring{$y^2+z^2=x^3+1$}{y2 + z2 = x3 + 1}}
+\author{}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We determine all rational triples $(x,y,z)$ satisfying
+\[
+ y^2+z^2=x^3+1.
+\]
+For a reduced fraction $x=a/b>-1$ with $b>0$, a rational point above $x$ exists if and only if both $b$ and $a^3+b^3$ are sums of two integral squares. Equivalently, every prime congruent to $3$ modulo $4$ occurs to an even exponent in each of these two integers. Once one representation
+\[
+ b=r^2+s^2,
+ \qquad
+ a^3+b^3=u^2+v^2
+\]
+is fixed, every rational point above $x$ is obtained by multiplying the Gaussian rational
+$(u+\ii v)/(r+\ii s)^3$ by an arbitrary norm-one element
+$(m+\ii n)/(m-\ii n)$. We prove that this parametrization is surjective. We also give a complete Gaussian-prime factorization of every integral solution, an exact formula for the number of ordered integral representations for each admissible integer $x$, and a factorwise refinement of the integral admissibility criterion. All required facts about sums of two squares and Gaussian integers are proved in the text.
+\end{abstract}
+
+\tableofcontents
+
+\section{Introduction and statement of the main result}
+
+Consider the affine surface
+\begin{equation}
+ \mathcal S:\qquad y^2+z^2=x^3+1.
+ \label{eq:surface}
+\end{equation}
+For fixed $x\in\Q$, the fiber of \eqref{eq:surface} is a circle over $\Q$. The first issue is therefore not the parametrization of a circle once one rational point is known, but the arithmetic question of whether the radius squared $x^3+1$ is a sum of two rational squares. The correct language for both questions is the norm map
+\[
+ \N:\Q(\ii)\longrightarrow\Q,
+ \qquad
+ \N(\alpha)=\alpha\conj{\alpha}.
+\]
+Indeed,
+\[
+ y^2+z^2=\N(y+\ii z).
+\]
+
+Write
+\[
+ \sumsq=\{r^2+s^2:r,s\in\Z\}.
+\]
+We include $0$ in $\sumsq$. The complete answer is the following.
+
+\begin{theorem}[Complete rational classification]
+\label{thm:main}
+Let $(x,y,z)\in\Q^3$. Then \eqref{eq:surface} holds precisely in the following cases.
+
+\begin{enumerate}
+\item The boundary fiber consists of the single point
+\begin{equation}
+ (x,y,z)=(-1,0,0).
+ \label{eq:boundary-point}
+\end{equation}
+There are no rational solutions with $x<-1$.
+
+\item Suppose $x>-1$, and write $x=a/b$ in lowest terms, where
+\begin{equation}
+ a,b\in\Z,
+ \qquad
+ b>0,
+ \qquad
+ \gcd(a,b)=1.
+ \label{eq:reduced-ab}
+\end{equation}
+Put
+\begin{equation}
+ c=a^3+b^3>0.
+ \label{eq:def-c}
+\end{equation}
+Then a rational point above $x$ exists if and only if
+\begin{equation}
+ b\in\sumsq
+ \qquad\text{and}\qquad
+ c\in\sumsq.
+ \label{eq:sum-square-condition}
+\end{equation}
+Equivalently, for every rational prime $q\equiv3\pmod4$,
+\begin{equation}
+ v_q(b)\equiv0\pmod2,
+ \qquad
+ v_q(c)\equiv0\pmod2.
+ \label{eq:valuation-condition}
+\end{equation}
+
+\item Whenever \eqref{eq:sum-square-condition} holds, choose any integers $r,s,u,v$ satisfying
+\begin{equation}
+ r^2+s^2=b,
+ \qquad
+ u^2+v^2=c.
+ \label{eq:base-representations}
+\end{equation}
+Then every rational solution above $x=a/b$ is given by
+\begin{equation}
+ \boxed{
+ x=\frac ab,
+ \qquad
+ y+\ii z=
+ \frac{u+\ii v}{(r+\ii s)^3}
+ \frac{m+\ii n}{m-\ii n},
+ }
+ \label{eq:gaussian-param}
+\end{equation}
+where $m,n\in\Z$ are not both zero. Conversely, every choice in \eqref{eq:gaussian-param} gives a rational solution of \eqref{eq:surface}.
+\end{enumerate}
+\end{theorem}
+
+The parametrization is deliberately stated using Gaussian numbers because its structure is then transparent: the first factor in \eqref{eq:gaussian-param} is one point on the required circle, and the second factor runs through every rational Gaussian number of norm $1$. An entirely real-coordinate version is derived in Corollary~\ref{cor:real-param}.
+
+The proof is elementary, but completeness requires care at three points: the rational two-squares criterion, the coprimality of the numerator and denominator occurring in $x^3+1$, and surjectivity of the norm-one parametrization. We treat each of these explicitly.
+
+\section{Gaussian integers and sums of two squares}
+
+\subsection{Euclideanity and unique factorization}
+
+For $\alpha=A+\ii B\in\Z[\ii]$, define
+\[
+ \N(\alpha)=A^2+B^2.
+\]
+The norm is multiplicative because
+\[
+ \N(\alpha\beta)=\alpha\beta\conj{\alpha}\conj{\beta}
+ =\alpha\conj{\alpha}\,\beta\conj{\beta}
+ =\N(\alpha)\N(\beta).
+\]
+
+\begin{proposition}
+\label{prop:gaussian-euclidean}
+The ring $\Z[\ii]$ is Euclidean with respect to $\N$. Consequently it is a principal ideal domain, every pair of Gaussian integers has a greatest common divisor satisfying a Bezout identity, and $\Z[\ii]$ is a unique factorization domain.
+\end{proposition}
+
+\begin{proof}
+Let $\alpha,\beta\in\Z[\ii]$ with $\beta\ne0$. Write
+\[
+ \frac{\alpha}{\beta}=u+\ii v,
+ \qquad u,v\in\R.
+\]
+Choose $m,n\in\Z$ such that
+\[
+ |u-m|\le\frac12,
+ \qquad
+ |v-n|\le\frac12,
+\]
+and put $q=m+\ii n$ and $r=\alpha-q\beta$. Then
+\[
+ \N(r)
+ =\N(\beta)\N\!\left(\frac{\alpha}{\beta}-q\right)
+ =\N(\beta)\bigl((u-m)^2+(v-n)^2\bigr)
+ \le\frac12\N(\beta)
+ <\N(\beta).
+\]
+Thus Euclidean division holds.
+
+For completeness, let $I\ne(0)$ be an ideal and choose $\delta\in I\setminus\{0\}$ of minimal norm. For any $\alpha\in I$, Euclidean division gives $\alpha=q\delta+r$ with either $r=0$ or $\N(r)<\N(\delta)$. Since $r\in I$, minimality forces $r=0$. Hence $I=(\delta)$, so $\Z[\ii]$ is a principal ideal domain. In particular, the ideal generated by two elements $\alpha,\beta$ has the form $(d)$, and $d=A\alpha+B\beta$ for some $A,B\in\Z[\ii]$; this gives a greatest common divisor and a Bezout identity.
+
+It remains only to justify unique factorization. In a principal ideal domain, every irreducible element $\pi$ is prime. Indeed, if $\pi\mid\alpha\beta$ and $\pi\nmid\alpha$, then $\gcd(\pi,\alpha)$ is a unit, so some $A,B\in\Z[\ii]$ satisfy $A\pi+B\alpha=1$. Multiplication by $\beta$ shows that $\pi\mid\beta$. Existence of a factorization into irreducibles follows by induction on the positive integer norm: a nonzero nonunit which is not irreducible factors into two elements of strictly smaller norm. Uniqueness follows from the primality of irreducibles by the usual cancellation argument. Thus $\Z[\ii]$ is a unique factorization domain.
+\end{proof}
+
+\subsection{The obstruction at primes congruent to 3 modulo 4}
+
+We normalize the $q$-adic valuation by $v_q(q)=1$.
+
+\begin{lemma}[Exact valuation of a sum of two squares]
+\label{lem:q3-valuation}
+Let $q$ be a rational prime with $q\equiv3\pmod4$, and let $A,B\in\Z$ be not both zero. Then
+\begin{equation}
+ v_q(A^2+B^2)=2\min\{v_q(A),v_q(B)\}.
+ \label{eq:exact-q-valuation}
+\end{equation}
+In particular, $v_q(A^2+B^2)$ is even.
+\end{lemma}
+
+\begin{proof}
+First we show that
+\begin{equation}
+ q\mid A^2+B^2
+ \quad\Longrightarrow\quad
+ q\mid A\ \text{and}\ q\mid B.
+ \label{eq:q-divides-both}
+\end{equation}
+Suppose, for example, that $q\nmid B$. Then $B$ is invertible modulo $q$, and
+\[
+ (AB^{-1})^2\equiv-1\pmod q.
+\]
+This is impossible. Indeed, if $t^2\equiv-1\pmod q$, then Fermat's little theorem gives
+\[
+ 1\equiv t^{q-1}=(t^2)^{(q-1)/2}
+ \equiv(-1)^{(q-1)/2}\equiv-1\pmod q,
+\]
+because $(q-1)/2$ is odd. Thus $q\mid B$, and then $q\mid A^2$, hence $q\mid A$. This proves \eqref{eq:q-divides-both}.
+
+Let
+\[
+ h=\min\{v_q(A),v_q(B)\},
+ \qquad
+ A=q^hA_0,
+ \qquad
+ B=q^hB_0.
+\]
+At least one of $A_0,B_0$ is not divisible by $q$. By \eqref{eq:q-divides-both}, this implies
+$q\nmid A_0^2+B_0^2$. Therefore
+\[
+ A^2+B^2=q^{2h}(A_0^2+B_0^2)
+\]
+has valuation exactly $2h$.
+\end{proof}
+
+\subsection{Primes congruent to 1 modulo 4}
+
+\begin{proposition}[Fermat's theorem on primes]
+\label{prop:fermat-prime}
+Every rational prime $p\equiv1\pmod4$ is a sum of two integral squares.
+\end{proposition}
+
+\begin{proof}
+We first produce a square root of $-1$ modulo $p$. Wilson's theorem follows by pairing each nonzero residue modulo $p$ with its inverse: all residues except $1$ and $-1$ occur in distinct inverse pairs, so
+\[
+ (p-1)!\equiv-1\pmod p.
+\]
+Set
+\[
+ h=\left(\frac{p-1}{2}\right)!.
+\]
+Pairing $k$ with $p-k$ for $1\le k\le(p-1)/2$ gives
+\[
+ (p-1)!
+ \equiv(-1)^{(p-1)/2}h^2
+ \equiv h^2\pmod p,
+\]
+because $(p-1)/2$ is even. Hence
+\begin{equation}
+ h^2\equiv-1\pmod p.
+ \label{eq:sqrt-minus-one}
+\end{equation}
+
+Take a greatest common divisor
+\[
+ \delta=\gcd(p,h+\ii)
+\]
+in $\Z[\ii]$, whose existence follows from Proposition~\ref{prop:gaussian-euclidean}. We claim that $\delta$ is not a unit. If it were a unit, a Bezout identity would give
+\[
+ Ap+B(h+\ii)=1
+\]
+for some $A,B\in\Z[\ii]$. Multiplying by $h-\ii$ yields
+\[
+ Ap(h-\ii)+B(h^2+1)=h-\ii.
+\]
+By \eqref{eq:sqrt-minus-one}, both terms on the left are divisible by $p$ in $\Z[\ii]$. Thus $p$ would divide $h-\ii$, which is impossible because the imaginary coefficient of $h-\ii$ is $-1$.
+
+The element $\delta$ is not associated to $p$ either, since otherwise $p$ would divide $h+\ii$, again impossible from its imaginary coefficient. Since $\delta\mid p$, write $p=\delta\eta$. Both $\delta$ and $\eta$ are nonunits, so
+\[
+ 1<\N(\delta),\N(\eta),
+ \qquad
+ \N(\delta)\N(\eta)=\N(p)=p^2.
+\]
+The only possible factorization of $p^2$ into two integers strictly larger than $1$ is $p\cdot p$. Therefore
+\[
+ \N(\delta)=p.
+\]
+Writing $\delta=A+\ii B$ gives $p=A^2+B^2$.
+\end{proof}
+
+\subsection{The integral and rational two-squares criteria}
+
+\begin{theorem}[Integral two-squares criterion]
+\label{thm:integer-two-squares}
+Let $M\ge1$ be an integer. Then $M$ is a sum of two integral squares if and only if every prime $q\equiv3\pmod4$ occurs to an even exponent in the prime factorization of $M$.
+\end{theorem}
+
+\begin{proof}
+If $M=A^2+B^2$, Lemma~\ref{lem:q3-valuation} shows that $v_q(M)$ is even for every $q\equiv3\pmod4$.
+
+Conversely, write the ordinary prime factorization as
+\[
+ M=2^e
+ \prod_{j=1}^{r}p_j^{e_j}
+ \prod_{k=1}^{s}q_k^{2f_k},
+\]
+where $p_j\equiv1\pmod4$ and $q_k\equiv3\pmod4$. By Proposition~\ref{prop:fermat-prime}, choose $A_j,B_j\in\Z$ such that
+\[
+ p_j=A_j^2+B_j^2=\N(A_j+\ii B_j).
+\]
+Also $2=\N(1+\ii)$ and $q_k^{2f_k}=\N(q_k^{f_k})$. Hence, by multiplicativity of the norm,
+\[
+ M=
+ \N\!\left(
+ (1+\ii)^e
+ \prod_{j=1}^{r}(A_j+\ii B_j)^{e_j}
+ \prod_{k=1}^{s}q_k^{f_k}
+ \right).
+\]
+The Gaussian integer inside the norm has the form $A+\ii B$, so $M=A^2+B^2$.
+\end{proof}
+
+\begin{theorem}[Rational two-squares criterion]
+\label{thm:rational-two-squares}
+Let $R\in\Q$.
+\begin{enumerate}
+\item If $R<0$, then $R$ is not a sum of two rational squares.
+\item If $R=0$, then its only representation is $0^2+0^2$.
+\item Suppose $R>0$, and write $R=M/N$ in lowest terms with $M,N\in\Z_{>0}$. The following are equivalent:
+\begin{enumerate}[label=(\alph*),leftmargin=2.4em]
+\item $R=Y^2+Z^2$ for some $Y,Z\in\Q$;
+\item $v_q(R)$ is even for every prime $q\equiv3\pmod4$;
+\item both $M$ and $N$ are sums of two integral squares.
+\end{enumerate}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The first two assertions follow from the ordering of $\Q$.
+
+Assume $R>0$. Suppose first that $R=Y^2+Z^2$. Choose a common denominator $D>0$ and write $Y=A/D$, $Z=B/D$ with $A,B\in\Z$. Then
+\[
+ R=\frac{A^2+B^2}{D^2}.
+\]
+For every $q\equiv3\pmod4$, Lemma~\ref{lem:q3-valuation} gives
+\[
+ v_q(R)=v_q(A^2+B^2)-2v_q(D),
+\]
+which is even. Thus (a) implies (b).
+
+Now write $R=M/N$ in lowest terms and assume (b). Since $\gcd(M,N)=1$, a prime $q$ divides at most one of $M,N$. Therefore the parity of
+\[
+ v_q(R)=v_q(M)-v_q(N)
+\]
+forces both $v_q(M)$ and $v_q(N)$ to be even. Theorem~\ref{thm:integer-two-squares} now shows that both $M$ and $N$ are sums of two integral squares. Thus (b) implies (c).
+
+Finally, assume
+\[
+ M=A^2+B^2=\N(A+\ii B),
+ \qquad
+ N=C^2+D^2=\N(C+\ii D).
+\]
+Since $N>0$, the Gaussian integer $C+\ii D$ is nonzero, and
+\[
+ R=\frac{M}{N}
+ =\N\!\left(\frac{A+\ii B}{C+\ii D}\right).
+\]
+Writing the quotient as $Y+\ii Z\in\Q(\ii)$ gives $R=Y^2+Z^2$. Hence (c) implies (a).
+\end{proof}
+
+\section{The rational norm-one circle}
+
+The following elementary form of Hilbert's Theorem 90 is exactly what is needed to prove that the main parametrization gives every point, not merely infinitely many points.
+
+\begin{lemma}[All rational Gaussian numbers of norm one]
+\label{lem:norm-one}
+For $\eta\in\Q(\ii)$, the following are equivalent:
+\begin{enumerate}
+\item $\N(\eta)=1$;
+\item there exists $\tau\in\Q(\ii)^\times$ such that
+\begin{equation}
+ \eta=\frac{\tau}{\conj{\tau}};
+ \label{eq:hilbert90}
+\end{equation}
+\item there exist integers $m,n$, not both zero, such that
+\begin{equation}
+ \eta=\frac{m+\ii n}{m-\ii n}.
+ \label{eq:norm-one-mn}
+\end{equation}
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+If \eqref{eq:hilbert90} holds, then
+\[
+ \N(\eta)=
+ \frac{\tau}{\conj{\tau}}
+ \frac{\conj{\tau}}{\tau}=1.
+\]
+Thus (ii) implies (i).
+
+Conversely, suppose $\N(\eta)=1$. Then $\eta\conj{\eta}=1$, so
+$\conj{\eta}=\eta^{-1}$. If $\eta\ne-1$, take $\tau=1+\eta$. This is nonzero, and
+\[
+ \conj{\tau}=1+\conj{\eta}
+ =1+\eta^{-1}
+ =\eta^{-1}(1+\eta)
+ =\eta^{-1}\tau.
+\]
+Therefore $\tau/\conj{\tau}=\eta$. If $\eta=-1$, take $\tau=\ii$, for which
+$\tau/\conj{\tau}=\ii/(-\ii)=-1$. Hence (i) implies (ii).
+
+Write $\tau=M+\ii N$ with $M,N\in\Q$, not both zero. Multiplying $M$ and $N$ by a common positive denominator does not change the quotient $\tau/\conj{\tau}$. We may therefore take $M=m$ and $N=n$ integral, proving (iii). The implication (iii) implies (ii) is immediate.
+\end{proof}
+
+\begin{corollary}[Classical rational parametrization of the unit circle]
+\label{cor:unit-circle}
+Every rational pair $(C,D)$ satisfying $C^2+D^2=1$ has the form
+\begin{equation}
+ C=\frac{m^2-n^2}{m^2+n^2},
+ \qquad
+ D=\frac{2mn}{m^2+n^2},
+ \label{eq:unit-circle-param}
+\end{equation}
+for integers $m,n$ not both zero, and every such pair satisfies $C^2+D^2=1$.
+\end{corollary}
+
+\begin{proof}
+Expand
+\[
+ \frac{m+\ii n}{m-\ii n}
+ =\frac{(m+\ii n)^2}{m^2+n^2}
+ =\frac{m^2-n^2}{m^2+n^2}
+ +\ii\frac{2mn}{m^2+n^2},
+\]
+and apply Lemma~\ref{lem:norm-one}. The identity $C^2+D^2=1$ also follows directly by expanding
+\[
+ (m^2-n^2)^2+(2mn)^2=(m^2+n^2)^2.
+\]
+\end{proof}
+
+\section{Proof of the complete rational classification}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Because $y^2+z^2\ge0$, every rational solution satisfies $x^3+1\ge0$, hence $x\ge-1$. If $x=-1$, then $y^2+z^2=0$, so $y=z=0$. This proves part (i).
+
+Now suppose $x>-1$ and write $x=a/b$ as in \eqref{eq:reduced-ab}. Then
+\begin{equation}
+ x^3+1=\frac{a^3+b^3}{b^3}=\frac{c}{b^3},
+ \qquad c=a^3+b^3>0.
+ \label{eq:rhs-reduced-shape}
+\end{equation}
+A crucial coprimality property is
+\begin{equation}
+ \gcd(b,c)=1.
+ \label{eq:gcd-bc}
+\end{equation}
+Indeed, a common prime divisor of $b$ and $c=a^3+b^3$ would divide $a^3$, hence $a$, contradicting $\gcd(a,b)=1$. In particular, the fraction $c/b^3$ in \eqref{eq:rhs-reduced-shape} is already in lowest terms.
+
+Assume first that a rational point $(y,z)$ exists. By Theorem~\ref{thm:rational-two-squares}, for every prime $q\equiv3\pmod4$,
+\begin{equation}
+ v_q(c)-3v_q(b)
+ =v_q\!\left(\frac{c}{b^3}\right)
+ \equiv0\pmod2.
+ \label{eq:combined-valuation}
+\end{equation}
+By \eqref{eq:gcd-bc}, at most one of $v_q(b)$ and $v_q(c)$ is nonzero. If $q\mid c$, then \eqref{eq:combined-valuation} says directly that $v_q(c)$ is even. If $q\mid b$, it says that $3v_q(b)$ is even; since $3$ is odd, $v_q(b)$ is even. Thus \eqref{eq:valuation-condition} holds. Theorem~\ref{thm:integer-two-squares} gives \eqref{eq:sum-square-condition}.
+
+Conversely, assume \eqref{eq:sum-square-condition}, and choose $r,s,u,v$ as in \eqref{eq:base-representations}. Put
+\[
+ \beta=r+\ii s,
+ \qquad
+ \gamma=u+\ii v,
+ \qquad
+ W_0=\frac{\gamma}{\beta^3}.
+\]
+Since $\N(\beta)=b>0$, the denominator is nonzero. Moreover,
+\begin{equation}
+ \N(W_0)
+ =\frac{\N(\gamma)}{\N(\beta)^3}
+ =\frac{c}{b^3}
+ =x^3+1.
+ \label{eq:base-point-norm}
+\end{equation}
+Thus $W_0=Y_0+\ii Z_0$ supplies one rational point on the fiber.
+
+For any integers $m,n$ not both zero, let
+\[
+ \eta_{m,n}=\frac{m+\ii n}{m-\ii n}.
+\]
+The denominator is nonzero and $\N(\eta_{m,n})=1$. Hence
+\[
+ W=W_0\eta_{m,n}
+\]
+has norm $x^3+1$, proving that every choice in \eqref{eq:gaussian-param} gives a solution.
+
+It remains to prove surjectivity. Let $W=y+\ii z\in\Q(\ii)$ be any Gaussian rational with
+\[
+ \N(W)=x^3+1=\N(W_0).
+\]
+Since $x>-1$, the common norm is positive, so $W_0\ne0$. Therefore
+\[
+ \eta=\frac{W}{W_0}
+\]
+is defined and satisfies $\N(\eta)=1$. By Lemma~\ref{lem:norm-one},
+\[
+ \eta=\frac{m+\ii n}{m-\ii n}
+\]
+for some integers $m,n$ not both zero. Consequently $W$ is exactly the value in \eqref{eq:gaussian-param}. This proves all parts of the theorem.
+\end{proof}
+
+\begin{corollary}[Explicit real-coordinate parametrization]
+\label{cor:real-param}
+Retain the hypotheses and notation of Theorem~\ref{thm:main}(ii)--(iii). Define
+\begin{equation}
+ P=r^3-3rs^2,
+ \qquad
+ Q=3r^2s-s^3.
+ \label{eq:PQ}
+\end{equation}
+Then
+\[
+ (r+\ii s)^3=P+\ii Q,
+ \qquad
+ P^2+Q^2=b^3.
+\]
+Put
+\begin{equation}
+ A=uP+vQ,
+ \qquad
+ B=vP-uQ.
+ \label{eq:AB-base}
+\end{equation}
+All rational solutions above $x=a/b$ are
+\begin{equation}
+ \boxed{
+ \begin{aligned}
+ x&=\frac ab,\\[2mm]
+ y&=\frac{(m^2-n^2)A-2mnB}{b^3(m^2+n^2)},\\[2mm]
+ z&=\frac{2mnA+(m^2-n^2)B}{b^3(m^2+n^2)},
+ \end{aligned}}
+ \label{eq:real-complete-param}
+\end{equation}
+where $m,n\in\Z$ are not both zero.
+\end{corollary}
+
+\begin{proof}
+Since $P^2+Q^2=\N((r+\ii s)^3)=b^3$,
+\[
+ \frac{u+\ii v}{(r+\ii s)^3}
+ =\frac{(u+\ii v)(P-\ii Q)}{b^3}
+ =\frac{A+\ii B}{b^3}.
+\]
+By Corollary~\ref{cor:unit-circle},
+\[
+ \frac{m+\ii n}{m-\ii n}
+ =\frac{(m^2-n^2)+2mn\ii}{m^2+n^2}.
+\]
+Multiplying these two expressions and equating real and imaginary parts gives \eqref{eq:real-complete-param}. Surjectivity is inherited from Theorem~\ref{thm:main}.
+\end{proof}
+
+\begin{corollary}[Exact set of rational $x$-coordinates]
+\label{cor:x-coordinates}
+The image of $\mathcal S(\Q)$ under projection to the $x$-coordinate is
+\begin{equation}
+ \{-1\}\cup
+ \left\{
+ \frac ab\in\Q:
+ \begin{array}{l}
+ b>0,\ \gcd(a,b)=1,\ a>-b,\\
+ v_q(b)\equiv v_q(a^3+b^3)\equiv0\pmod2\\
+ \text{for every prime }q\equiv3\pmod4
+ \end{array}
+ \right\}.
+ \label{eq:x-coordinate-set}
+\end{equation}
+For every admissible $x>-1$, the corresponding fiber is in bijection, noncanonically, with the rational unit circle.
+\end{corollary}
+
+\begin{proof}
+The description of the $x$-coordinates is exactly Theorem~\ref{thm:main}. Once a base point $W_0$ is chosen, multiplication by $W_0$ gives a bijection from the norm-one elements of $\Q(\ii)$ to the Gaussian rationals of norm $x^3+1$. Corollary~\ref{cor:unit-circle} identifies the former with the rational unit circle.
+\end{proof}
+
+\begin{remark}[Redundancy of the parameters]
+The parametrization is complete but intentionally not injective. Multiplying $(m,n)$ by any nonzero integer leaves the quotient $(m+\ii n)/(m-\ii n)$ unchanged. Different choices of the representations of $b$ and $c$ merely choose a different base point on the same fiber; Lemma~\ref{lem:norm-one} then shows that the resulting family is still the entire fiber.
+\end{remark}
+
+\section{Complete classification of the integral solutions}
+
+We now classify all triples in $\Z^3$. We first record the factorization of rational primes in the Gaussian integers.
+
+\begin{lemma}[Rational primes in the Gaussian integers]
+\label{lem:gaussian-primes}
+The following statements hold.
+\begin{enumerate}
+\item The units of $\Z[\ii]$ are $\{1,-1,\ii,-\ii\}$.
+\item The element $1+\ii$ is a Gaussian prime and
+\begin{equation}
+ 2=-\ii(1+\ii)^2.
+ \label{eq:two-ramifies}
+\end{equation}
+\item If $p\equiv1\pmod4$ is prime and $p=c^2+d^2$, then
+\begin{equation}
+ p=(c+\ii d)(c-\ii d),
+ \label{eq:p-splits}
+\end{equation}
+and the two factors are nonassociate Gaussian primes.
+\item Every rational prime $q\equiv3\pmod4$ remains prime in $\Z[\ii]$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+A Gaussian integer is a unit if and only if its norm is $1$, which gives (i). Since $\N(1+\ii)=2$ is a rational prime, any factorization of $1+\ii$ would induce a factorization of $2$ into two positive integer norms; one factor must have norm $1$. Thus $1+\ii$ is irreducible, hence prime by Proposition~\ref{prop:gaussian-euclidean}. The identity \eqref{eq:two-ramifies} follows from $(1+\ii)^2=2\ii$.
+
+For (iii), Proposition~\ref{prop:fermat-prime} supplies $c,d$. The identity \eqref{eq:p-splits} is immediate. Each factor has norm $p$, so each is irreducible and hence prime. They cannot be associates. Indeed, if $c+\ii d=\varepsilon(c-\ii d)$ for a unit $\varepsilon$, comparison of real and imaginary parts forces either $c=0$, $d=0$, or $|c|=|d|$. The first two alternatives would make the odd prime $p$ a square, while the last would give $p=2c^2$, all impossible.
+
+Finally, let $q\equiv3\pmod4$. If $q=\alpha\beta$ with both factors nonunits, then
+\[
+ q^2=\N(q)=\N(\alpha)\N(\beta),
+ \qquad
+ \N(\alpha),\N(\beta)>1.
+\]
+Thus $\N(\alpha)=\N(\beta)=q$. This would express $q$ as a sum of two squares, contradicting Lemma~\ref{lem:q3-valuation} or Theorem~\ref{thm:integer-two-squares}. Hence $q$ is irreducible and therefore prime.
+\end{proof}
+
+\begin{theorem}[All integral solutions]
+\label{thm:integer-classification}
+The integral solutions of \eqref{eq:surface} are classified as follows.
+
+\begin{enumerate}
+\item For $x=-1$, the only solution is $(-1,0,0)$. There are no solutions for $x<-1$.
+
+\item Let $x\ge0$ and put
+\[
+ M=x^3+1.
+\]
+An integral pair $(y,z)$ exists if and only if every prime $q\equiv3\pmod4$ occurs to an even exponent in $M$.
+
+Assume this condition and write
+\begin{equation}
+ M=2^{e_0}
+ \prod_{j=1}^{r}p_j^{e_j}
+ \prod_{k=1}^{s}q_k^{2f_k},
+ \label{eq:M-factorization}
+\end{equation}
+where the $p_j$ are distinct primes congruent to $1$ modulo $4$ and the $q_k$ are distinct primes congruent to $3$ modulo $4$. For each $j$, choose
+\[
+ p_j=c_j^2+d_j^2,
+ \qquad
+ \pi_j=c_j+\ii d_j.
+\]
+Then every integral pair $(y,z)$ with $y^2+z^2=M$ is given uniquely by
+\begin{equation}
+ \boxed{
+ y+\ii z=
+ \varepsilon(1+\ii)^{e_0}
+ \left(\prod_{k=1}^{s}q_k^{f_k}\right)
+ \left(\prod_{j=1}^{r}
+ \pi_j^{h_j}\conj{\pi_j}^{\,e_j-h_j}
+ \right),
+ }
+ \label{eq:all-integer-representations}
+\end{equation}
+where
+\begin{equation}
+ \varepsilon\in\{1,-1,\ii,-\ii\},
+ \qquad
+ 0\le h_j\le e_j.
+ \label{eq:integer-parameters}
+\end{equation}
+Here uniqueness means uniqueness of $\varepsilon$ and of all exponents $h_j$ after the Gaussian primes $\pi_j$ have been fixed.
+
+\item The exact number of ordered integral pairs $(y,z)$ above an admissible $x\ge0$ is
+\begin{equation}
+ \boxed{
+ r_2(x^3+1)=4\prod_{j=1}^{r}(e_j+1).
+ }
+ \label{eq:r2-count}
+\end{equation}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The first assertion follows exactly as in Theorem~\ref{thm:main}. For $x\ge0$, the existence criterion is Theorem~\ref{thm:integer-two-squares}.
+
+Assume the criterion holds, and let $\alpha=y+\ii z\in\Z[\ii]$ satisfy $\N(\alpha)=M$. By unique factorization, every Gaussian prime $\rho$ dividing $\alpha$ also divides
+\[
+ \alpha\conj{\alpha}=M.
+\]
+Writing $M$ as the product of the rational prime powers in \eqref{eq:M-factorization} and using that $\rho$ is prime, we see that $\rho$ divides at least one rational prime divisor of $M$. Lemma~\ref{lem:gaussian-primes} factors each such rational prime in $\Z[\ii]$ and therefore lists all possible associate classes of $\rho$.
+
+Let the exponent of $1+\ii$ in $\alpha$ be $t$. Since $\N(1+\ii)=2$, comparison of norms gives $t=e_0$. For a prime $q_k\equiv3\pmod4$, the Gaussian prime $q_k$ has norm $q_k^2$. If its exponent in $\alpha$ is $g_k$, then norm comparison gives
+\[
+ 2g_k=2f_k,
+ \qquad
+ g_k=f_k.
+\]
+For a split prime $p_j=\pi_j\conj{\pi_j}$, let the exponents of $\pi_j$ and $\conj{\pi_j}$ in $\alpha$ be $h_j$ and $h'_j$. Since both have norm $p_j$, comparison of norms gives
+\[
+ h_j+h'_j=e_j.
+\]
+Thus $h'_j=e_j-h_j$ with $0\le h_j\le e_j$. The remaining factor has norm $1$ and is therefore a unit $\varepsilon$. This proves that every representation has the form \eqref{eq:all-integer-representations}.
+
+Conversely, the norm of the right side of \eqref{eq:all-integer-representations} is
+\[
+ 2^{e_0}
+ \prod_{k=1}^{s}q_k^{2f_k}
+ \prod_{j=1}^{r}p_j^{h_j+e_j-h_j}
+ =M,
+\]
+so every displayed Gaussian integer yields a valid pair $(y,z)$. Uniqueness follows from unique factorization and from the fact that the primes $\pi_j$ and $\conj{\pi_j}$ are nonassociate.
+
+There are four choices for the unit $\varepsilon$ and $e_j+1$ choices for each $h_j$. Distinct choices yield distinct nonzero Gaussian integers by uniqueness of factorization. Hence the number of ordered pairs is \eqref{eq:r2-count}.
+\end{proof}
+
+\subsection{A factorwise criterion for integral x-coordinates}
+
+The condition on $x^3+1$ can be refined using
+\begin{equation}
+ x^3+1=(x+1)(x^2-x+1).
+ \label{eq:cubic-factorization}
+\end{equation}
+
+\begin{proposition}[Factorwise integral admissibility]
+\label{prop:factorwise}
+Let $x\ge0$ be an integer. Then $x^3+1$ is a sum of two integral squares if and only if all of the following hold.
+\begin{enumerate}
+\item For every prime $q\equiv3\pmod4$ with $q\ne3$, the exponent $v_q(x+1)$ is even.
+\item For every prime $q\equiv3\pmod4$ with $q\ne3$, the exponent $v_q(x^2-x+1)$ is even. Any such prime actually satisfies $q\equiv7\pmod{12}$.
+\item If $3\mid x+1$, then $v_3(x+1)$ is odd. If $3\nmid x+1$, no extra condition at $3$ is needed.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+First,
+\begin{equation}
+ \gcd(x+1,x^2-x+1)=\gcd(x+1,3),
+ \label{eq:gcd-two-factors}
+\end{equation}
+for reducing the second factor modulo $x+1$ means substituting $x\equiv-1$, which gives $3$. Thus a prime $q\ne3$ divides at most one of the two factors in \eqref{eq:cubic-factorization}. Consequently, for every $q\equiv3\pmod4$, $q\ne3$, the valuation of the product is even if and only if the valuation in the unique factor it divides is even. This proves the equivalence of the conditions away from $3$.
+
+Suppose additionally that $q\ne3$ divides $x^2-x+1$. Then
+\[
+ (x+1)(x^2-x+1)=x^3+1\equiv0\pmod q.
+\]
+The congruence $x\equiv-1\pmod q$ is impossible, because it would give
+$x^2-x+1\equiv3\pmod q$ and hence $q=3$. Therefore $x^3\equiv-1\pmod q$ while $x\not\equiv-1\pmod q$. The multiplicative order of $x$ modulo $q$ is consequently exactly $6$: it divides $6$, it does not divide $3$ because $x^3\equiv-1$, and it does not equal $2$ because $x\not\equiv-1$. Hence $6\mid q-1$. Combining $q\equiv1\pmod6$ with $q\equiv3\pmod4$ gives $q\equiv7\pmod{12}$.
+
+It remains to analyze $q=3$. If $3\nmid x+1$, then $x\equiv0$ or $1\pmod3$, so $x^3+1\not\equiv0\pmod3$ and $v_3(x^3+1)=0$. If $3\mid x+1$, put
+\[
+ t=v_3(x+1)\ge1,
+ \qquad
+ x=-1+3^t u,
+ \qquad
+ 3\nmid u.
+\]
+A direct expansion gives
+\[
+ x^2-x+1
+ =3\left(1-3^tu+3^{2t-1}u^2\right).
+\]
+The expression in parentheses is congruent to $1$ modulo $3$, so
+\[
+ v_3(x^2-x+1)=1.
+\]
+Therefore
+\[
+ v_3(x^3+1)=v_3(x+1)+v_3(x^2-x+1)=t+1,
+\]
+which is even exactly when $t$ is odd. Theorem~\ref{thm:integer-two-squares} now proves the proposition.
+\end{proof}
+
+\section{Examples and infinite families}
+
+\begin{example}[The boundary point]
+For $x=-1$, the right side of \eqref{eq:surface} is $0$, and the only rational or integral point is
+\[
+ (-1,0,0).
+\]
+No point exists for $x<-1$.
+\end{example}
+
+\begin{example}[A negative rational $x$]
+Take
+\[
+ x=-\frac34,
+ \qquad
+ a=-3,
+ \qquad
+ b=4,
+ \qquad
+ c=a^3+b^3=37.
+\]
+We may choose
+\[
+ 4=2^2+0^2,
+ \qquad
+ 37=6^2+1^2.
+\]
+With $r=2$, $s=0$, $u=6$, $v=1$, and $m=1$, $n=0$, formula \eqref{eq:gaussian-param} gives
+\[
+ y+\ii z=\frac{6+\ii}{8},
+\]
+so
+\[
+ \left(x,y,z\right)=
+ \left(-\frac34,\frac34,\frac18\right).
+\]
+Indeed,
+\[
+ \left(\frac34\right)^2+\left(\frac18\right)^2
+ =\frac{37}{64}
+ =\left(-\frac34\right)^3+1.
+\]
+\end{example}
+
+\begin{example}[A denominator obstruction]
+Let $x=1/3$. Then
+\[
+ x^3+1=\frac{28}{27}.
+\]
+The prime $3\equiv3\pmod4$ has valuation
+\[
+ v_3\!\left(\frac{28}{27}\right)=-3,
+\]
+which is odd. Theorem~\ref{thm:rational-two-squares} therefore proves that no rational $y,z$ can satisfy \eqref{eq:surface} for $x=1/3$.
+\end{example}
+
+\begin{example}[An inadmissible integer]
+For $x=3$,
+\[
+ x^3+1=28=2^2\cdot7.
+\]
+The prime $7\equiv3\pmod4$ occurs to an odd exponent, so there are no rational or integral $y,z$ above $x=3$.
+\end{example}
+
+\begin{example}[An admissible nonsquare integer]
+For $x=11$,
+\[
+ x^3+1=1332=2^2\cdot3^2\cdot37.
+\]
+All primes congruent to $3$ modulo $4$ occur to even exponent. One representation is
+\[
+ 1332=6^2+36^2,
+\]
+so $(11,6,36)$ is an integral solution. Since $37\equiv1\pmod4$ occurs to exponent $1$, formula \eqref{eq:r2-count} shows that there are exactly
+\[
+ 4(1+1)=8
+\]
+ordered integral pairs $(y,z)$ above $x=11$.
+\end{example}
+
+\begin{proposition}[An infinite polynomial family]
+\label{prop:infinite-family}
+For every $t\in\Q$,
+\begin{equation}
+ (x,y,z)=(t^2,1,t^3)
+ \label{eq:basic-family}
+\end{equation}
+is a rational solution. More generally, for every $t\in\Q$ and all integers $m,n$ not both zero,
+\begin{equation}
+ \boxed{
+ \begin{aligned}
+ x&=t^2,\\
+ y&=\frac{m^2-n^2-2mnt^3}{m^2+n^2},\\
+ z&=\frac{2mn+(m^2-n^2)t^3}{m^2+n^2}
+ \end{aligned}}
+ \label{eq:rotated-family}
+\end{equation}
+is a rational solution. In particular, taking $t\in\Z$ in \eqref{eq:basic-family} gives infinitely many integral solutions.
+\end{proposition}
+
+\begin{proof}
+The identity
+\[
+ 1^2+(t^3)^2=t^6+1=(t^2)^3+1
+\]
+proves \eqref{eq:basic-family}. Multiplying $1+\ii t^3$ by the norm-one number
+\[
+ \frac{m+\ii n}{m-\ii n}
+ =\frac{m^2-n^2+2mn\ii}{m^2+n^2}
+\]
+and equating real and imaginary parts yields \eqref{eq:rotated-family}. Since multiplication by a norm-one element preserves the norm, every displayed triple is a solution.
+\end{proof}
+
+\section{Conclusion}
+
+The rational and integral solution sets of \eqref{eq:surface} are governed exactly by the norm map from $\Q(\ii)$. For a reduced rational $x=a/b>-1$, the two independent arithmetic obstructions are that the denominator $b$ and the coprime numerator $a^3+b^3$ of $x^3+1$ must each be integral sums of two squares. Once these obstructions vanish, a single Gaussian-rational point generates the entire rational fiber by multiplication with norm-one elements. In the integral case, unique factorization in $\Z[\ii]$ not only decides existence but lists every solution and counts them exactly.
+
+\end{document}
