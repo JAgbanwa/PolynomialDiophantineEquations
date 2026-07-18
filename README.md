@@ -22,7 +22,7 @@ Since Version 8 (the latest) of this [paper](https://arxiv.org/pdf/2404.08518), 
 
 | Folder | Goal | Progress |
 |--------|------|----------|
-| [\[15\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_x3_x2y2_z2_plus1) | Prove that the equation: $x^3 + x^2 \cdot y^2+z^2 + 1=0$ has infinitely many integer solutions (Table 12). | 🟡 Pending feedback |
+| [\[15\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_x3_x2y2_z2_plus1) | Prove that the equation: $x^3 + x^2 \cdot y^2+z^2 + 1=0$ has infinitely many integer solutions (Table 12). |  ✅ Success! |
 | [\[16\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/Rational_and_Integral_Solutions_y2_plus_z2_equals_x3_plus_1) | Describe all rational/integer solutions to the equation: $y^2 + z^2 = x^3 + 1$. | 🟡 Pending feedback |
 | [\[17\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/rational_integral_solutions_y2_z2_x3_minus_1) | Describe all rational/integer solutions to the equation: $y^2 + z^2 = x^3 - 1$. | 🟡 Pending feedback |
 | [\[18\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/rational_points_y2_minus_x2y_plus_z2_plus_1) | Describe all rational/integer solutions to the equation: $y^2 - x^2 \cdot y + z^2 + 1 = 0$. | 🟡 Pending feedback |
