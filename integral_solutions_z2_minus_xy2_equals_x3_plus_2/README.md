@@ -1,5 +1,5 @@
 # Extra attempts at verification
-I made further attempts at stress-testing the correctness of these results by asking this specific question in three different windows of ChatGPT 5.5 Pro:
+I made further attempts at stress-testing the correctness of these results by asking this specific question in three different windows of ChatGPT 5.6 Pro:
 
 ```
 This paper claims to describe all integer solutions to z² - x·y² = x³ + 2. How true is this statement? Rigorously verify such claim, let's see!
