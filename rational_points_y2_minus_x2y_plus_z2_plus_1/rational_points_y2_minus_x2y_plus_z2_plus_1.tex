@@ -1,0 +1,735 @@
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[a4paper,margin=30mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{bookmark}
+\hypersetup{
+  pdftitle={Rational and Integral Points on y2 - x2 y + z2 + 1 = 0},
+  pdfauthor={Jamal Agbanwa},
+  pdfsubject={A complete self-contained classification of the rational solutions and a proof that no integral solutions exist}
+}
+
+\allowdisplaybreaks
+\numberwithin{equation}{section}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Pone}{\mathbb{P}^{1}}
+\newcommand{\ord}{\operatorname{ord}}
+\newcommand{\eps}{\varepsilon}
+
+\title{Rational and Integral Points on\\[3pt]
+\texorpdfstring{$y^{2}-x^{2}y+z^{2}+1=0$}{y^2 - x^2 y + z^2 + 1 = 0}}
+\author{Jamal Agbanwa}
+\date{18 July 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We give a complete, unconditional, and self-contained description of the
+rational solutions of
+\[
+ y^{2}-x^{2}y+z^{2}+1=0.
+\]
+If a nonzero rational number is written in lowest terms as
+$x=\eps a/b$, where $a,b>0$, $\gcd(a,b)=1$, and $\eps\in\{\pm1\}$,
+then the fibre above $x$ has a rational point if and only if
+$N_{a,b}=a^{4}-4b^{4}$ is positive and every prime congruent to $3$
+modulo $4$ occurs in $N_{a,b}$ with even exponent.  Whenever this
+criterion holds, an integral representation $N_{a,b}=C^{2}+D^{2}$
+exists, and a homogeneous rational parametrisation of the entire fibre
+is written down explicitly.  We then prove that every admissible
+reduced fraction $a/b$ has odd numerator and even denominator.  It
+follows, more strongly than the absence of integral triples, that no
+rational solution can have integral $x$.  A second independent
+congruence proof of the integral obstruction is included.  Finally, we
+exhibit both a complete one-parameter fibre over $x=\pm3/2$ and a Pell
+recurrence producing infinitely many distinct rational
+$x$-coordinates.
+\end{abstract}
+
+\section{Statement of the classification}
+
+Let
+\[
+ \mathcal S(F)=\bigl\{(x,y,z)\in F^{3}:
+ y^{2}-x^{2}y+z^{2}+1=0\bigr\}
+\]
+for a subfield $F\subseteq\mathbb R$.  For coprime positive integers
+$a,b$, put
+\[
+ N_{a,b}=a^{4}-4b^{4}.
+\]
+For a prime $p$ and a nonzero integer $n$, let $\ord_{p}(n)$ denote the
+exponent of $p$ in the prime factorisation of $|n|$.
+
+\begin{theorem}[Complete rational classification]\label{thm:main}
+Let $a,b\in\Z_{>0}$ satisfy $\gcd(a,b)=1$, and let
+$\eps\in\{\pm1\}$.  The fibre
+\[
+ \mathcal S_{\eps a/b}(\Q)
+ =\{(y,z)\in\Q^{2}:(\eps a/b,y,z)\in\mathcal S(\Q)\}
+\]
+is nonempty if and only if
+\begin{equation}\label{eq:criterion}
+ N_{a,b}>0
+ \quad\text{and}\quad
+ \ord_{q}(N_{a,b})\equiv0\pmod 2
+ \quad\text{for every prime }q\equiv3\pmod4.
+\end{equation}
+
+Assume \eqref{eq:criterion}.  Choose integers $C,D$ such that
+\begin{equation}\label{eq:CD}
+ C^{2}+D^{2}=N_{a,b}.
+\end{equation}
+For $[u:v]\in\Pone(\Q)$, set
+\[
+ U=u^{2}+v^{2}.
+\]
+Then $U\ne0$, and every rational point in the fibre, exactly once, is
+obtained from
+\begin{align}
+ x&=\eps\frac ab,\label{eq:param-x}\\
+ y&=\frac{a^{2}U+C(u^{2}-v^{2})-2Duv}
+ {2b^{2}U},\label{eq:param-y}\\
+ z&=\frac{D(u^{2}-v^{2})+2Cuv}
+ {2b^{2}U}.\label{eq:param-z}
+\end{align}
+Here ``exactly once'' refers to a fixed choice of $a,b,\eps,C,D$ and
+the usual projective identification $[u:v]=[\lambda u:\lambda v]$ for
+$\lambda\in\Q^{\times}$.
+
+Moreover, every pair $(a,b)$ satisfying \eqref{eq:criterion} obeys
+\begin{equation}\label{eq:parity-conclusion}
+ a\equiv1\pmod2,
+ \qquad
+ b\equiv0\pmod2.
+\end{equation}
+Consequently no point of $\mathcal S(\Q)$ has integral $x$, and in
+particular
+\[
+ \mathcal S(\Z)=\varnothing.
+\]
+\end{theorem}
+
+The proof is assembled from elementary identities, the two-square
+criterion, and the rational parametrisation of a circle.  All of these
+ingredients are proved below.
+
+\section{Elementary reductions}
+
+\begin{proposition}[Completion of the square]\label{prop:completion}
+For all real $x,y,z$ one has the identity
+\begin{equation}\label{eq:master-identity}
+4\bigl(y^{2}-x^{2}y+z^{2}+1\bigr)
+=(2y-x^{2})^{2}+(2z)^{2}-(x^{4}-4).
+\end{equation}
+Thus
+\begin{equation}\label{eq:norm-equation}
+ y^{2}-x^{2}y+z^{2}+1=0
+ \quad\Longleftrightarrow\quad
+ (2y-x^{2})^{2}+(2z)^{2}=x^{4}-4.
+\end{equation}
+Every rational solution satisfies
+\begin{equation}\label{eq:real-inequalities}
+ 0<y<x^{2}
+ \qquad\text{and}\qquad
+ x^{4}>4.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Expanding the right-hand side of \eqref{eq:master-identity} gives
+\[
+4y^{2}-4x^{2}y+x^{4}+4z^{2}-x^{4}+4,
+\]
+which is the left-hand side.  This proves \eqref{eq:norm-equation}.
+
+If the original equation holds, then
+\begin{equation}\label{eq:product-form}
+ y(x^{2}-y)=z^{2}+1>0.
+\end{equation}
+If $y\le0$, then $x^{2}-y\ge0$, so the left-hand side of
+\eqref{eq:product-form} is nonpositive, a contradiction.  Hence $y>0$;
+then \eqref{eq:product-form} forces $x^{2}-y>0$.  This proves
+$0<y<x^{2}$.
+
+Equation \eqref{eq:norm-equation} gives $x^{4}\ge4$.  Equality would
+force $2y-x^{2}=0$ and $z=0$, and hence $x^{2}=2$.  A rational number
+cannot have square $2$: if $x=r/s$ in lowest terms and $r^{2}=2s^{2}$,
+then $r$ is even, after which $s$ is also even, contradicting
+$\gcd(r,s)=1$.  Therefore a rational solution has $x^{4}>4$.
+\end{proof}
+
+\section{The two-square criterion over \texorpdfstring{$\Q$}{Q}}
+
+We prove the precise arithmetic criterion needed later.  The argument
+also proves that allowing rational squares does not enlarge the class
+of positive integers representable as a sum of two squares.
+
+\begin{lemma}\label{lem:3mod4-divides-both}
+Let $q\equiv3\pmod4$ be prime.  If $A,B\in\Z$ and
+$q\mid A^{2}+B^{2}$, then $q\mid A$ and $q\mid B$.
+\end{lemma}
+
+\begin{proof}
+If $q\mid B$, then $q\mid A^{2}$ and hence $q\mid A$.  Suppose instead
+that $q\nmid B$.  Modulo $q$, let $r\equiv AB^{-1}$.  Then
+$r^{2}\equiv-1\pmod q$.
+
+For completeness, multiplication by the nonzero residue $r$ permutes
+the nonzero residues modulo $q$.  Multiplying all these residues and
+cancelling the nonzero product gives
+$r^{q-1}\equiv1\pmod q$.  On the other hand,
+\[
+ r^{q-1}=(r^{2})^{(q-1)/2}
+ \equiv(-1)^{(q-1)/2}\equiv-1\pmod q,
+\]
+because $(q-1)/2$ is odd.  This contradiction proves that $q\mid B$,
+and then also $q\mid A$.
+\end{proof}
+
+\begin{corollary}\label{cor:valuation-even}
+If $q\equiv3\pmod4$ is prime and $A,B\in\Z$ are not both zero, then
+\[
+ \ord_{q}(A^{2}+B^{2})
+\]
+is even.
+\end{corollary}
+
+\begin{proof}
+Let
+\[
+ e=\min\{\ord_{q}(A),\ord_{q}(B)\},
+\]
+where $\ord_q(0)$ may be regarded as $+\infty$.  Write
+$A=q^{e}A_{0}$ and $B=q^{e}B_{0}$, with at least one of $A_{0},B_{0}$
+not divisible by $q$.  By Lemma~\ref{lem:3mod4-divides-both},
+$q\nmid A_{0}^{2}+B_{0}^{2}$.  Therefore
+\[
+ \ord_{q}(A^{2}+B^{2})=2e.
+\]
+\end{proof}
+
+\begin{lemma}[Primes congruent to $1$ modulo $4$]\label{lem:fermat-two-square}
+Every prime $p\equiv1\pmod4$ can be written as a sum of two integer
+squares.
+\end{lemma}
+
+\begin{proof}
+Write $p=4k+1$ and put
+\[
+ m=\frac{p-1}{2}=2k.
+\]
+We first produce a square root of $-1$ modulo $p$.  Wilson's congruence
+\begin{equation}\label{eq:wilson}
+ (p-1)!\equiv-1\pmod p
+\end{equation}
+follows by pairing every nonzero residue with its multiplicative
+inverse: the only self-inverse nonzero residues are $1$ and $-1$, since
+$t^{2}\equiv1\pmod p$ implies $(t-1)(t+1)\equiv0\pmod p$.
+
+Pairing $j$ with $p-j$ for $1\le j\le m$, and using that $m$ is even,
+we obtain
+\[
+ (p-1)!
+ =\prod_{j=1}^{m}j(p-j)
+ \equiv(-1)^{m}(m!)^{2}
+ =(m!)^{2}\pmod p.
+\]
+Together with \eqref{eq:wilson}, this gives
+\begin{equation}\label{eq:sqrt-minus-one}
+ r^{2}\equiv-1\pmod p,
+ \qquad r\equiv m!\pmod p.
+\end{equation}
+
+Let $M=\lfloor\sqrt p\rfloor$.  Since a prime is not a perfect square,
+\[
+ M^{2}<p<(M+1)^{2}.
+\]
+There are $(M+1)^{2}>p$ pairs $(u,v)$ with
+$0\le u,v\le M$, but only $p$ residue classes of $u-rv$ modulo $p$.
+By the pigeonhole principle, two distinct such pairs have the same
+residue.  Subtracting them yields integers $A,B$, not both zero, such
+that
+\[
+ |A|\le M,
+ \qquad |B|\le M,
+ \qquad A\equiv rB\pmod p.
+\]
+By \eqref{eq:sqrt-minus-one},
+\[
+ A^{2}+B^{2}\equiv(r^{2}+1)B^{2}\equiv0\pmod p.
+\]
+Moreover,
+\[
+ 0<A^{2}+B^{2}\le2M^{2}<2p.
+\]
+Thus $A^{2}+B^{2}$ is a positive multiple of $p$ strictly smaller than
+$2p$, so it equals $p$.
+\end{proof}
+
+\begin{theorem}[Two-square criterion]\label{thm:two-square}
+For a positive integer $N$, the following conditions are equivalent:
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=2.5em]
+ \item $N$ is a sum of two rational squares;
+ \item $N$ is a sum of two integer squares;
+ \item $\ord_{q}(N)$ is even for every prime $q\equiv3\pmod4$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Condition (ii) immediately implies (i).  Suppose (i) holds, say
+\[
+ N=\left(\frac{A}{M}\right)^{2}
+  +\left(\frac{B}{M}\right)^{2}
+\]
+for integers $A,B$ and a positive integer $M$.  Then
+\[
+ NM^{2}=A^{2}+B^{2}.
+\]
+For every prime $q\equiv3\pmod4$, Corollary~\ref{cor:valuation-even}
+gives
+\[
+ \ord_{q}(N)+2\ord_{q}(M)
+ =\ord_{q}(A^{2}+B^{2})\equiv0\pmod2.
+\]
+Hence $\ord_{q}(N)$ is even, proving (iii).
+
+Now assume (iii).  In the prime factorisation of $N$, every prime
+$q\equiv3\pmod4$ therefore occurs as $q^{2e}$, which is
+$(q^{e})^{2}+0^{2}$.  Also $2=1^{2}+1^{2}$, and every prime
+$p\equiv1\pmod4$ is a sum of two integer squares by
+Lemma~\ref{lem:fermat-two-square}.  Finally, the identity
+\begin{equation}\label{eq:brahmagupta}
+ (A^{2}+B^{2})(C^{2}+D^{2})
+ =(AC-BD)^{2}+(AD+BC)^{2}
+\end{equation}
+shows that a product of sums of two integer squares is again such a
+sum.  Repeated application of \eqref{eq:brahmagupta} to the prime
+factorisation of $N$ proves (ii).
+\end{proof}
+
+\section{A rational parametrisation of every circle fibre}
+
+\begin{lemma}[The rational unit circle]\label{lem:unit-circle}
+The map
+\begin{equation}\label{eq:unit-param}
+ \Phi:\Pone(\Q)\longrightarrow
+ \{(A,B)\in\Q^{2}:A^{2}+B^{2}=1\},
+ \qquad
+ [u:v]\longmapsto
+ \left(\frac{u^{2}-v^{2}}{u^{2}+v^{2}},
+       \frac{2uv}{u^{2}+v^{2}}\right)
+\end{equation}
+is a bijection.
+\end{lemma}
+
+\begin{proof}
+A nonzero rational pair $(u,v)$ cannot satisfy $u^{2}+v^{2}=0$, so the
+map is well-defined.  It is invariant under replacing $(u,v)$ by
+$(\lambda u,\lambda v)$ with $\lambda\ne0$, and direct expansion shows
+that its image lies on the unit circle.
+
+Conversely, let $(A,B)\in\Q^{2}$ satisfy $A^{2}+B^{2}=1$.  If $A=-1$,
+then $B=0$, and $(A,B)=\Phi([0:1])$.  If $A\ne-1$, take
+\[
+ [u:v]=[1+A:B].
+\]
+Since
+\[
+ (1+A)^{2}+B^{2}=2(1+A),
+\]
+a direct calculation gives
+\[
+ \frac{(1+A)^{2}-B^{2}}{(1+A)^{2}+B^{2}}=A,
+ \qquad
+ \frac{2(1+A)B}{(1+A)^{2}+B^{2}}=B.
+\]
+This also gives an explicit inverse to $\Phi$, so the map is bijective.
+\end{proof}
+
+\begin{lemma}[A circle with a rational base point]\label{lem:general-circle}
+Let $N>0$, and let $C,D\in\Q$ satisfy $C^{2}+D^{2}=N$.  Then the map
+\begin{align}
+ \Psi_{C,D}:\Pone(\Q)&\longrightarrow
+ \{(R,S)\in\Q^{2}:R^{2}+S^{2}=N\},\label{eq:general-circle-map}\\
+ [u:v]&\longmapsto
+ \left(
+ \frac{C(u^{2}-v^{2})-2Duv}{u^{2}+v^{2}},
+ \frac{D(u^{2}-v^{2})+2Cuv}{u^{2}+v^{2}}
+ \right)
+\end{align}
+is a bijection.
+\end{lemma}
+
+\begin{proof}
+Let $(A,B)=\Phi([u:v])$ as in Lemma~\ref{lem:unit-circle}.  The displayed
+map is equivalently
+\begin{equation}\label{eq:rotation-matrix}
+ \binom{R}{S}
+ =
+ \begin{pmatrix}C&-D\\D&C\end{pmatrix}
+ \binom{A}{B}.
+\end{equation}
+Consequently
+\[
+ R^{2}+S^{2}=(C^{2}+D^{2})(A^{2}+B^{2})=N.
+\]
+Conversely, if $R^{2}+S^{2}=N$, define
+\begin{equation}\label{eq:rotation-inverse}
+ A=\frac{CR+DS}{N},
+ \qquad
+ B=\frac{CS-DR}{N}.
+\end{equation}
+Then $A,B\in\Q$ and
+\[
+ A^{2}+B^{2}
+ =\frac{(C^{2}+D^{2})(R^{2}+S^{2})}{N^{2}}=1.
+\]
+Equations \eqref{eq:rotation-matrix} and
+\eqref{eq:rotation-inverse} are inverse transformations.  The result
+therefore follows from the bijectivity of $\Phi$.
+\end{proof}
+
+\section{Proof of the complete classification}
+
+\begin{proposition}[Bijection with a two-square equation]\label{prop:fibre-bijection}
+Let $a,b\in\Z_{>0}$ be coprime, let $\eps\in\{\pm1\}$, and put
+$x=\eps a/b$.  The assignments
+\begin{equation}\label{eq:RS-definition}
+ R=b^{2}(2y-x^{2})=2b^{2}y-a^{2},
+ \qquad
+ S=2b^{2}z
+\end{equation}
+give a bijection
+\[
+ \mathcal S_{\eps a/b}(\Q)
+ \longleftrightarrow
+ \{(R,S)\in\Q^{2}:R^{2}+S^{2}=N_{a,b}\}.
+\]
+The inverse map is
+\begin{equation}\label{eq:RS-inverse}
+ y=\frac{a^{2}+R}{2b^{2}},
+ \qquad
+ z=\frac{S}{2b^{2}}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Multiplying \eqref{eq:norm-equation} by $b^{4}$ gives
+\[
+ \bigl(b^{2}(2y-x^{2})\bigr)^{2}
+ +(2b^{2}z)^{2}
+ =b^{4}(x^{4}-4)=a^{4}-4b^{4}.
+\]
+This is precisely $R^{2}+S^{2}=N_{a,b}$.  The formulas in
+\eqref{eq:RS-definition} are visibly inverted by
+\eqref{eq:RS-inverse}, proving the bijection.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+By Proposition~\ref{prop:fibre-bijection}, the fibre is nonempty if and
+only if the positive integer $N_{a,b}$ is a sum of two rational squares.
+The positivity is necessary because Proposition~\ref{prop:completion}
+shows $x^{4}>4$.  Theorem~\ref{thm:two-square} proves that nonemptiness is
+equivalent to \eqref{eq:criterion}, and also guarantees integers $C,D$
+satisfying \eqref{eq:CD}.
+
+For such $C,D$, Lemma~\ref{lem:general-circle} parametrises every pair
+$(R,S)$ with $R^{2}+S^{2}=N_{a,b}$ exactly once.  Substitution into
+\eqref{eq:RS-inverse} gives precisely
+\eqref{eq:param-y}--\eqref{eq:param-z}.  Thus the asserted formulas are
+complete and introduce no extraneous solutions.
+
+It remains to prove the parity assertion \eqref{eq:parity-conclusion};
+this is Proposition~\ref{prop:parity} below.  Once it is known, a
+rational solution with integral $x$ is impossible, because the reduced
+denominator of an integer is $1$, whereas every admissible denominator
+is even.  In particular no triple in $\mathcal S(\Z)$ exists.
+\end{proof}
+
+\section{The numerator--denominator obstruction}
+
+We use the elementary observation that every positive integer
+congruent to $3$ modulo $4$ has at least one prime congruent to $3$
+modulo $4$ occurring to odd exponent.  Indeed, if all such exponents
+were even, its odd part would be congruent to $1$ modulo $4$.
+
+\begin{proposition}\label{prop:parity}
+Let $a,b\in\Z_{>0}$ be coprime.  If $N_{a,b}>0$ and every prime
+$q\equiv3\pmod4$ occurs in $N_{a,b}$ with even exponent, then $a$ is odd
+and $b$ is even.
+\end{proposition}
+
+\begin{proof}
+Suppose first that $a$ is even.  Coprimality forces $b$ to be odd.  Write
+$a=2k$.  Then
+\begin{equation}\label{eq:a-even-factor}
+ N_{a,b}=4(4k^{4}-b^{4}).
+\end{equation}
+The positive odd integer $4k^{4}-b^{4}$ is congruent to $3$ modulo $4$.
+It therefore contains a prime $q\equiv3\pmod4$ to odd exponent.  Since
+$q$ is odd, \eqref{eq:a-even-factor} shows that the same exponent occurs
+in $N_{a,b}$, a contradiction.
+
+It remains to exclude the possibility that both $a$ and $b$ are odd.
+Since $N_{a,b}>0$, one has $a^{2}>2b^{2}$, and
+\begin{equation}\label{eq:factor-N}
+ N_{a,b}=(a^{2}-2b^{2})(a^{2}+2b^{2}).
+\end{equation}
+Both factors are positive and congruent to $3$ modulo $4$.  They are
+coprime.  Indeed, any common divisor $d$ is odd and divides
+\[
+ (a^{2}+2b^{2})+(a^{2}-2b^{2})=2a^{2}
+\]
+and
+\[
+ (a^{2}+2b^{2})-(a^{2}-2b^{2})=4b^{2}.
+\]
+Thus $d\mid a^{2}$ and $d\mid b^{2}$, whence $d=1$ because
+$\gcd(a,b)=1$.
+
+Each factor in \eqref{eq:factor-N}, being $3$ modulo $4$, contains a
+prime congruent to $3$ modulo $4$ to odd exponent.  Coprimality of the
+factors prevents that exponent from being altered by the other factor.
+Hence $N_{a,b}$ has a prime congruent to $3$ modulo $4$ to odd exponent,
+again a contradiction.  Therefore $a$ is odd and $b$ is even.
+\end{proof}
+
+\begin{corollary}[Factorwise form of the criterion]\label{cor:factorwise}
+Let $a,b\in\Z_{>0}$ be coprime.  The fibre above $x=\pm a/b$ is nonempty
+over $\Q$ if and only if
+\begin{enumerate}[label=\textup{(\alph*)},leftmargin=2.5em]
+ \item $a$ is odd and $b$ is even;
+ \item $a^{2}>2b^{2}$;
+ \item each of $a^{2}-2b^{2}$ and $a^{2}+2b^{2}$ is a sum of two
+ integer squares.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+Assume first that the fibre is nonempty.  Conditions (a) and (b) follow
+from Proposition~\ref{prop:parity} and $N_{a,b}>0$.  Put
+\[
+ A=a^{2}-2b^{2},
+ \qquad
+ B=a^{2}+2b^{2}.
+\]
+Because $a$ is odd and $b$ is even, both $A$ and $B$ are odd.  The same
+greatest-common-divisor argument used in Proposition~\ref{prop:parity}
+shows $\gcd(A,B)=1$.  Since $AB=N_{a,b}$ and every prime
+$q\equiv3\pmod4$ occurs in $AB$ with even exponent, coprimality implies
+that it occurs with even exponent in each of $A$ and $B$.  Theorem
+\ref{thm:two-square} proves (c).
+
+Conversely, if (a)--(c) hold, then $N_{a,b}=AB>0$, and the product
+identity \eqref{eq:brahmagupta} shows that $N_{a,b}$ is a sum of two
+integer squares.  Proposition~\ref{prop:fibre-bijection} then gives a
+rational point in the fibre.
+\end{proof}
+
+\begin{corollary}\label{cor:no-integral-x}
+No rational solution has $x\in\Z$.  Consequently
+\[
+ \mathcal S(\Z)=\varnothing.
+\]
+\end{corollary}
+
+\begin{proof}
+If $x\in\Z$, its expression $x=\eps a/b$ in lowest terms has $b=1$.
+Proposition~\ref{prop:parity} requires $b$ to be even, which is
+impossible.
+\end{proof}
+
+\section{An independent congruence proof of the integral obstruction}
+
+The preceding proof gives the stronger statement that integral $x$ is
+impossible even when $y$ and $z$ are merely rational.  We record a
+second proof of the weaker assertion $\mathcal S(\Z)=\varnothing$ that
+uses only divisibility and congruences.
+
+\begin{lemma}\label{lem:divisor-z2plus1}
+Let $z\in\Z$, and let $d>0$ divide $z^{2}+1$.  Then
+\begin{equation}\label{eq:d-form}
+ d=2^{\delta}m,
+ \qquad \delta\in\{0,1\},
+\end{equation}
+where every prime divisor of the odd integer $m$ is congruent to $1$
+modulo $4$.  In particular, $m\equiv1\pmod4$.
+\end{lemma}
+
+\begin{proof}
+Let $p$ be an odd prime divisor of $z^{2}+1$.  Then $p\nmid z$ and
+$z^{2}\equiv-1\pmod p$.  If $p\equiv3\pmod4$, the argument in
+Lemma~\ref{lem:3mod4-divides-both}, applied to $z^{2}+1^{2}$, would force
+$p\mid1$, which is impossible.  Hence $p\equiv1\pmod4$.
+
+For the power of $2$, if $z$ is even then $z^{2}+1$ is odd.  If $z$ is
+odd, then $z^{2}\equiv1\pmod8$, so $z^{2}+1\equiv2\pmod8$ and its
+$2$-adic valuation is exactly $1$.  Every positive divisor therefore
+has the form \eqref{eq:d-form}.  Since all prime divisors of $m$ are
+$1$ modulo $4$, so is $m$.
+\end{proof}
+
+\begin{theorem}[Direct integral obstruction]\label{thm:direct-integral}
+There are no integers $x,y,z$ satisfying
+\[
+ y^{2}-x^{2}y+z^{2}+1=0.
+\]
+\end{theorem}
+
+\begin{proof}
+Assume an integral solution exists.  Equation \eqref{eq:product-form}
+shows that $y>0$ and
+\[
+ y\mid z^{2}+1.
+\]
+By Lemma~\ref{lem:divisor-z2plus1}, write
+$y=2^{\delta}m$, where $\delta\in\{0,1\}$ and $m\equiv1\pmod4$.
+
+First suppose $\delta=0$.  Then $y$ is odd and $y\equiv1\pmod4$.
+Rearrange the equation as
+\begin{equation}\label{eq:integer-rearranged}
+ x^{2}y=y^{2}+z^{2}+1.
+\end{equation}
+If $x$ were even, the left side would be $0$ modulo $4$, whereas the
+right side would be $2$ or $3$ modulo $4$, according as $z$ is even or
+odd.  Thus $x$ is odd.  If $z$ were even, the right side of
+\eqref{eq:integer-rearranged} would be $2$ modulo $4$, while the left
+side would be odd.  Hence $z$ is odd.  Reducing
+\eqref{eq:integer-rearranged} modulo $4$ now gives
+\[
+ y\equiv1+1+1\equiv3\pmod4,
+\]
+contradicting $y\equiv1\pmod4$.
+
+Now suppose $\delta=1$.  Then $y=2m\equiv2\pmod8$.  Since $y$ divides
+$z^{2}+1$, the latter is even, so $z$ is odd.  Reducing the right side
+of \eqref{eq:integer-rearranged} modulo $8$ gives
+\[
+ y^{2}+z^{2}+1\equiv4+1+1\equiv6\pmod8.
+\]
+If $x$ is even, then $x^{2}y\equiv0\pmod8$; if $x$ is odd, then
+$x^{2}y\equiv2\pmod8$.  Neither possibility is $6$ modulo $8$, a final
+contradiction.
+\end{proof}
+
+\section{Explicit infinite families}
+
+\begin{example}[The complete fibre over $x=\pm3/2$]\label{ex:three-halves}
+Take $a=3$ and $b=2$.  Then
+\[
+ N_{3,2}=3^{4}-4\cdot2^{4}=17=1^{2}+4^{2}.
+\]
+With $C=1$, $D=4$, and $[u:v]=[1:t]$, formulas
+\eqref{eq:param-y}--\eqref{eq:param-z} become
+\begin{align}
+ x&=\pm\frac32,\label{eq:explicit-x}\\
+ y&=\frac{4t^{2}-4t+5}{4(t^{2}+1)},\label{eq:explicit-y}\\
+ z&=\frac{-2t^{2}+t+2}{4(t^{2}+1)},\label{eq:explicit-z}
+\end{align}
+where $t\in\Q$.  The missing projective parameter $[0:1]$, customarily
+written $t=\infty$, gives
+\[
+ (x,y,z)=\left(\pm\frac32,1,-\frac12\right).
+\]
+By Theorem~\ref{thm:main}, these formulas give not merely infinitely
+many examples but every rational point in either fibre $x=3/2$ or
+$x=-3/2$.  For instance, $t=0$ gives
+\[
+ \left(\frac32,\frac54,\frac12\right).
+\]
+\end{example}
+
+The preceding example already proves that $\mathcal S(\Q)$ is infinite.
+The next construction shows that infinitely many distinct rational
+$x$-coordinates occur.
+
+\begin{proposition}[A Pell subfamily]\label{prop:pell-family}
+Define positive integer pairs $(a_n,b_n)$ recursively by
+\begin{equation}\label{eq:pell-recurrence}
+ (a_1,b_1)=(3,2),
+ \qquad
+ a_{n+1}=3a_n+4b_n,
+ \qquad
+ b_{n+1}=2a_n+3b_n.
+\end{equation}
+Then, for every $n\ge1$,
+\begin{equation}\label{eq:pell-invariant}
+ a_n^{2}-2b_n^{2}=1,
+\end{equation}
+$\gcd(a_n,b_n)=1$, and the fibre above $x=\pm a_n/b_n$ is nonempty.
+More explicitly, for every $[u:v]\in\Pone(\Q)$, with
+$U=u^{2}+v^{2}$,
+\begin{align}
+ x&=\pm\frac{a_n}{b_n},\label{eq:pell-x}\\
+ y&=\frac{a_n^{2}U+(u^{2}-v^{2})-4b_nuv}
+ {2b_n^{2}U},\label{eq:pell-y}\\
+ z&=\frac{2b_n(u^{2}-v^{2})+2uv}
+ {2b_n^{2}U}\label{eq:pell-z}
+\end{align}
+solves the equation.  The positive numbers $a_n/b_n$ are pairwise
+distinct.
+\end{proposition}
+
+\begin{proof}
+A direct calculation shows that the recurrence preserves the quadratic
+form $a^{2}-2b^{2}$:
+\begin{align*}
+ &(3a+4b)^{2}-2(2a+3b)^{2}\\
+ &\qquad=9a^{2}+24ab+16b^{2}
+ -8a^{2}-24ab-18b^{2}\\
+ &\qquad=a^{2}-2b^{2}.
+\end{align*}
+Since $3^{2}-2\cdot2^{2}=1$, induction proves
+\eqref{eq:pell-invariant}.  Any common divisor of $a_n$ and $b_n$ would
+have square dividing the left side of \eqref{eq:pell-invariant}, so it
+must be $1$.  The recurrence also gives
+$b_{n+1}=2a_n+3b_n>b_n$, so the sequence $(b_n)$ is strictly increasing.
+
+From \eqref{eq:pell-invariant},
+\begin{align}
+ N_{a_n,b_n}
+ &=(a_n^{2}-2b_n^{2})(a_n^{2}+2b_n^{2})\notag\\
+ &=1\cdot(1+4b_n^{2})
+ =1^{2}+(2b_n)^{2}.\label{eq:pell-N}
+\end{align}
+Thus one may choose $C=1$ and $D=2b_n$ in
+Theorem~\ref{thm:main}; formulas
+\eqref{eq:pell-x}--\eqref{eq:pell-z} are exactly the resulting
+parametrisation.
+
+Finally,
+\[
+ \left(\frac{a_n}{b_n}\right)^{2}
+ =2+\frac{1}{b_n^{2}}.
+\]
+Since the positive integers $b_n$ strictly increase, these squares, and
+hence the positive ratios $a_n/b_n$, are pairwise distinct.
+\end{proof}
+
+The first few pairs are
+\[
+ (a_n,b_n)=(3,2),\ (17,12),\ (99,70),\ (577,408),\ldots.
+\]
+Thus rational points occur on infinitely many distinct circle fibres,
+while every such $x$ necessarily has an even reduced denominator.
+
+\end{document}
