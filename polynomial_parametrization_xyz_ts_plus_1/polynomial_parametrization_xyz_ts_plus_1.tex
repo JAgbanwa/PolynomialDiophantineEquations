@@ -1,0 +1,187 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[a4paper,margin=28mm]{geometry}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+  pdftitle={A Polynomial Parametrization of xyz+ts+1=0},
+  pdfauthor={Jamal Agbanwa}
+}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\K}{K}
+\newcommand{\A}{\mathbb A}
+
+\title{A Polynomial Parametrization of \(xyz+ts+1=0\)}
+\author{}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We give a four-parameter polynomial family of integral solutions to
+\(xyz+ts+1=0\).  The construction is proved by a polynomial identity.
+Over every field, its restriction to the locus where \(xy\neq 0\) is an
+exact rational parametrization, with an explicit inverse.  We also record
+the precise integral congruence condition governing membership in the
+family and cover the degenerate locus \(xy=0\).
+\end{abstract}
+
+\section{The polynomial identity}
+
+Throughout, a \emph{polynomial parametrization} means a tuple of
+integer-coefficient polynomials whose substitution makes the defining
+equation vanish identically.  Exhaustivity of integral points is a
+separate question, addressed below.
+
+\begin{theorem}[Four-parameter polynomial family]\label{thm:family}
+Fix \(\varepsilon\in\{1,-1\}\).  For arbitrary
+\(a,b,m,n\in\Z\), define
+\begin{equation}\label{eq:param}
+\begin{aligned}
+ x&=a, & y&=b,\\
+ z&=\varepsilon(m+n)+abmn, &
+ t&=\varepsilon+abm, &
+ s&=-\varepsilon-abn.
+\end{aligned}
+\end{equation}
+Then
+\[
+xyz+ts+1=0.
+\]
+Equivalently, the five polynomials in \eqref{eq:param} define a
+polynomial map \(\Phi_\varepsilon:\A^4_{\Z}\to\A^5_{\Z}\) whose image
+is contained in the hypersurface \(xyz+ts+1=0\).
+\end{theorem}
+
+\begin{proof}
+Put \(q=ab\).  Since \(\varepsilon^2=1\), one has the identity
+\begin{align*}
+(\varepsilon+qm)(\varepsilon+qn)
+ &=\varepsilon^2+\varepsilon q(m+n)+q^2mn\\
+ &=1+q\bigl(\varepsilon(m+n)+qmn\bigr).
+\end{align*}
+Under \eqref{eq:param}, \(xy=q\),
+\(z=\varepsilon(m+n)+qmn\), and
+\(ts=-(\varepsilon+qm)(\varepsilon+qn)\).  Therefore
+\begin{align*}
+xyz+ts+1
+ &=q\bigl(\varepsilon(m+n)+qmn\bigr)
+   -(\varepsilon+qm)(\varepsilon+qn)+1\\
+ &=q\bigl(\varepsilon(m+n)+qmn\bigr)
+   -\Bigl[1+q\bigl(\varepsilon(m+n)+qmn\bigr)\Bigr]+1\\
+ &=0.
+\end{align*}
+This is an identity in \(\Z[a,b,m,n]\), so every integral
+specialization gives an integral solution.
+\end{proof}
+
+For \(\varepsilon=1\), the family is
+\[
+(x,y,z,t,s)=
+\bigl(a,b,m+n+abmn,1+abm,-1-abn\bigr).
+\]
+For example, \((a,b,m,n)=(1,1,1,1)\) gives
+\((x,y,z,t,s)=(1,1,3,2,-2)\).
+
+\section{Exactness on the nondegenerate locus}
+
+\begin{theorem}[Explicit inverse over a field]\label{thm:inverse}
+Let \(K\) be a field, fix \(\varepsilon\in\{1,-1\}\), and set
+\[
+X(K)=\{(x,y,z,t,s)\in K^5:xyz+ts+1=0\}.
+\]
+Then \(\Phi_\varepsilon\) restricts to a bijection
+\[
+(K^\times)^2\times K^2
+   \longrightarrow
+\{(x,y,z,t,s)\in X(K):xy\neq0\}.
+\]
+Its inverse is
+\begin{equation}\label{eq:inverse}
+ a=x,\qquad b=y,\qquad
+ m=\frac{t-\varepsilon}{xy},\qquad
+ n=-\frac{s+\varepsilon}{xy}.
+\end{equation}
+Consequently, the hypersurface is rational, and \eqref{eq:param} is
+an exact rational parametrization on the principal open set \(xy\neq0\).
+\end{theorem}
+
+\begin{proof}
+If \(a,b\neq0\), then the point supplied by Theorem~\ref{thm:family}
+has \(xy=ab\neq0\).  Conversely, take a point of \(X(K)\) with
+\(q:=xy\neq0\) and define \(a,b,m,n\) by \eqref{eq:inverse}.  The
+formulas for \(x,y,t,s\) in \eqref{eq:param} are then immediate.  For
+\(z\), direct calculation gives
+\begin{align*}
+\varepsilon(m+n)+qmn
+ &=\frac{\varepsilon(t-\varepsilon-s-\varepsilon)
+          -(t-\varepsilon)(s+\varepsilon)}{q}\\
+ &=\frac{-ts-1}{q}.
+\end{align*}
+Because the given point satisfies \(qz+ts+1=0\), the last expression
+is exactly \(z\).  Thus \eqref{eq:inverse} is a two-sided inverse.
+Uniqueness also follows at once: \(a,b\) are recovered from \(x,y\),
+and then \(m,n\) are recovered from \(t,s\).  Thus the displayed maps
+are mutually inverse regular maps on the indicated open sets.
+
+For completeness, the defining polynomial is irreducible.  Indeed, put
+\(R=K[x,y,t,s]\) and view \(xyz+ts+1\) as an element of \(R[z]\).
+The two coefficients \(xy\) and \(ts+1\) have no common nonunit divisor.
+If the linear polynomial factored in \(R[z]\), one factor would have
+\(z\)-degree zero and would therefore divide both coefficients; it would
+have to be a unit.  Hence the hypersurface is irreducible.  Its nonempty
+open set \(xy\neq0\) is therefore dense and is isomorphic to
+\((K^\times)^2\times K^2\), proving rationality.
+\end{proof}
+
+\section{The integral image}
+
+\begin{proposition}[Exact congruence criterion]\label{prop:integral}
+Let \((x,y,z,t,s)\in\Z^5\) satisfy \(xyz+ts+1=0\) and suppose
+\(q:=xy\neq0\).  For fixed \(\varepsilon\in\{1,-1\}\), this point is
+in \(\Phi_\varepsilon(\Z^4)\) if and only if
+\[
+q\mid(t-\varepsilon)
+\qquad\text{and}\qquad
+q\mid(s+\varepsilon).
+\]
+\end{proposition}
+
+\begin{proof}
+Every point produced by \eqref{eq:param} satisfies
+\(t-\varepsilon=qm\) and \(s+\varepsilon=-qn\), proving necessity.
+Conversely, the two divisibilities make the parameters in
+\eqref{eq:inverse} integers.  The proof of Theorem~\ref{thm:inverse}
+then shows that these integral parameters reproduce the given point,
+including its \(z\)-coordinate.
+\end{proof}
+
+\begin{proposition}[Degenerate integral locus]\label{prop:degenerate}
+All integral solutions with \(xy=0\) are covered by the union
+\(\Phi_1(\Z^4)\cup\Phi_{-1}(\Z^4)\).
+\end{proposition}
+
+\begin{proof}
+When \(xy=0\), the equation becomes \(ts=-1\).  Hence either
+\((t,s)=(1,-1)\) or \((t,s)=(-1,1)\), while \(z\) is arbitrary.
+Choose \(\varepsilon=t\), set \(a=x\), \(b=y\), \(n=0\), and
+\(m=\varepsilon z\).  Since \(ab=0\) and \(\varepsilon^2=1\),
+\eqref{eq:param} gives
+\[
+z=\varepsilon m=z,\qquad t=\varepsilon,
+\qquad s=-\varepsilon,
+\]
+and recovers the prescribed solution.
+\end{proof}
+
+
+\end{document}
