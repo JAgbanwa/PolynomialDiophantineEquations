@@ -1,0 +1,816 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[a4paper,margin=30mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{mathrsfs}
+\usepackage{booktabs,array,tabularx}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+  pdftitle={An Exact Divisor-Theoretic Classification of the Integer Solutions of z squared plus y squared z plus x cubed minus 2 equals 0},
+  pdfauthor={Jamal Agbanwa},
+  pdfsubject={A complete divisor-theoretic classification of the integer solutions},
+  pdfkeywords={Diophantine equation, integer solutions, divisor parametrization}
+}
+\usepackage{fancyhdr}
+
+\allowdisplaybreaks
+\setlength{\emergencystretch}{2em}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Integer solutions of $z^2+y^2z+x^3-2=0$}
+\fancyhead[R]{J. Agbanwa}
+\fancyfoot[C]{\thepage}
+\setlength{\headheight}{14pt}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+\newcommand{\Sols}{\mathscr S}
+\newcommand{\Yset}{\mathcal Y}
+\newcommand{\eqE}{\textup{(E)}}
+
+\title{\textbf{An Exact Divisor-Theoretic Classification of the Integer Solutions of}
+\\[3mm]
+$z^2+y^2z+x^3-2=0$}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We give a complete elementary classification of the triples
+$(x,y,z)\in\Z^3$ satisfying
+\[
+ z^2+y^2z+x^3-2=0.
+\]
+The central observation is not merely a construction but an explicit
+bijection: a solution corresponds uniquely to an ordered pair of integer
+factors $a,b$ satisfying
+$ab=x^3-2$ and $a+b=y^2$, through
+$a=-z$ and $b=z+y^2$.  Resolving the signs of these two factors yields a
+canonical description in two exhaustive cases, $x\geq 2$ and $x\leq 1$.
+We prove both directions of the classification, its uniqueness statement,
+the treatment of all diagonal and zero-square cases, a compact ordered-divisor
+formulation, a root-swapping involution, and a terminating divisor algorithm
+which enumerates all solutions for each fixed value of $x$.
+\end{abstract}
+
+\medskip
+\noindent\textbf{Keywords.}
+Diophantine equation; integer solutions; divisor parametrization; quadratic
+factorization; integral points.
+
+\section{Introduction and notation}
+
+We study the Diophantine equation
+\begin{equation*}
+ z^2+y^2z+x^3-2=0,
+ \qquad (x,y,z)\in\Z^3.
+ \tag{E}
+\end{equation*}
+The purpose of this note is to describe its entire integer solution set by an
+exact divisor criterion.  The word ``exact'' is important: every triple
+produced by the criterion is verified to satisfy \eqE, and every
+integer solution of \eqE is proved to arise from the criterion with
+uniquely determined factor data, up to the explicitly stated coincidences.
+
+We use
+\[
+ \N=\{1,2,3,\ldots\},
+ \qquad
+ \Z_{\geq 0}=\{0,1,2,\ldots\}.
+\]
+For $s\in\Z_{\geq0}$, define
+\begin{equation}
+ \Yset(s)=
+ \begin{cases}
+  \{0\},&s=0,\\
+  \{-s,s\},&s>0.
+ \end{cases}
+ \label{eq:Yset}
+\end{equation}
+Thus $\Yset(s)$ is exactly the set of integers whose absolute value is $s$;
+the definition avoids counting $+0$ and $-0$ as different values.
+
+Let
+\[
+ \Sols=\{(x,y,z)\in\Z^3:z^2+y^2z+x^3-2=0\}
+\]
+and, for a fixed $x\in\Z$, let
+\[
+ \Sols_x=\{(x,y,z)\in\Sols\}.
+\]
+
+The factorization driving the entire argument is
+\begin{equation}
+ (-z)(z+y^2)=x^3-2.
+ \label{eq:factorization}
+\end{equation}
+The main work is to formulate this identity as a bijection and then resolve
+all possible signs without losing or duplicating solutions.
+
+\section{The exact factor-pair correspondence}
+
+We begin by ruling out a degenerate value which could otherwise make one of
+the factors in \eqref{eq:factorization} vanish.
+
+\begin{lemma}\label{lem:no-cube-two}
+For every integer $x$, one has $x^3\neq2$.
+Consequently, if $(x,y,z)\in\Sols$, then
+\[
+ z\neq0
+ \qquad\text{and}\qquad
+ z+y^2\neq0.
+\]
+\end{lemma}
+
+\begin{proof}
+If $x\leq1$, then $x^3\leq1<2$.  If $x\geq2$, then
+$x^3\geq8>2$.  Since every integer lies in exactly one of these two cases,
+$x^3=2$ has no integer solution.
+
+Now suppose $(x,y,z)\in\Sols$.  Rearranging \eqE gives
+\[
+ z(z+y^2)=2-x^3.
+\]
+By the first part, the right-hand side is nonzero.  A product of two integers
+is nonzero only when both factors are nonzero, so $z\neq0$ and
+$z+y^2\neq0$.
+\end{proof}
+
+The next proposition is the precise logical core of the classification.
+
+\begin{proposition}[Factor-pair bijection]\label{prop:bijection}
+Let
+\[
+ \mathscr T=
+ \bigl\{(x,y,a,b)\in\Z^4:
+       ab=x^3-2\ \text{and}\ a+b=y^2\bigr\}.
+\]
+Define
+\begin{align*}
+ \Phi:\Sols&\longrightarrow\mathscr T,
+ &\Phi(x,y,z)&=(x,y,-z,z+y^2),\\
+ \Psi:\mathscr T&\longrightarrow\Sols,
+ &\Psi(x,y,a,b)&=(x,y,-a).
+\end{align*}
+Then $\Phi$ and $\Psi$ are well-defined mutually inverse bijections.
+In particular, for every solution $(x,y,z)$, the associated ordered factor
+pair is uniquely
+\begin{equation}
+ a=-z,
+ \qquad
+ b=z+y^2.
+ \label{eq:unique-ab}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+First let $(x,y,z)\in\Sols$ and put
+$a=-z$ and $b=z+y^2$.  Then
+\[
+ a+b=-z+z+y^2=y^2.
+\]
+Moreover, using \eqE,
+\[
+ ab=(-z)(z+y^2)
+    =-z^2-y^2z
+    =x^3-2.
+\]
+Thus $(x,y,a,b)\in\mathscr T$, so $\Phi$ is well-defined.
+
+Conversely, let $(x,y,a,b)\in\mathscr T$ and put $z=-a$.
+Since $a+b=y^2$ and $ab=x^3-2$, we obtain
+\begin{align*}
+ z^2+y^2z+x^3-2
+ &=a^2-a(a+b)+ab\\
+ &=a^2-a^2-ab+ab\\
+ &=0.
+\end{align*}
+Hence $(x,y,-a)\in\Sols$, so $\Psi$ is well-defined.
+
+It remains to verify that the two maps are inverse to one another.  For
+$(x,y,z)\in\Sols$,
+\[
+ (\Psi\circ\Phi)(x,y,z)
+ =\Psi(x,y,-z,z+y^2)
+ =(x,y,z).
+\]
+For $(x,y,a,b)\in\mathscr T$, the relation $a+b=y^2$ gives
+\begin{align*}
+ (\Phi\circ\Psi)(x,y,a,b)
+ &=\Phi(x,y,-a)\\
+ &=(x,y,a,-a+y^2)\\
+ &=(x,y,a,b).
+\end{align*}
+Therefore $\Phi$ and $\Psi$ are mutually inverse bijections.  Formula
+\eqref{eq:unique-ab} follows directly from the definition of $\Phi$ and also
+shows uniqueness of the ordered factor pair.
+\end{proof}
+
+\section{Sign analysis and direct verification}
+
+The sign restrictions needed below are elementary, but we state and prove
+them explicitly so that no case is hidden.
+
+\begin{lemma}[Positive product]\label{lem:positive-product}
+Let $a,b\in\Z$.  If $ab>0$ and $a+b\geq0$, then $a>0$ and $b>0$.
+\end{lemma}
+
+\begin{proof}
+The inequality $ab>0$ implies that $a$ and $b$ have the same sign and are
+both nonzero.  If they were both negative, then $a+b<0$, contradicting the
+hypothesis.  Hence both are positive.
+\end{proof}
+
+\begin{lemma}[Negative product]\label{lem:negative-product}
+Let $a,b\in\Z$.  If $ab<0$ and $a+b\geq0$, then there exist unique integers
+$d,e\in\N$ with $d\leq e$ such that
+\[
+ \{a,b\}=\{-d,e\}.
+\]
+For these integers,
+\[
+ |ab|=de,
+ \qquad
+ a+b=e-d.
+\]
+\end{lemma}
+
+\begin{proof}
+Since $ab<0$, exactly one of $a,b$ is positive and the other is negative.
+Let $e$ be the positive one and write the negative one as $-d$, where
+$d,e\in\N$.  Then
+\[
+ a+b=e-d.
+\]
+The assumption $a+b\geq0$ implies $e-d\geq0$, hence $d\leq e$.
+Furthermore,
+\[
+ |ab|=|-de|=de.
+\]
+The positive member of the set $\{a,b\}$ is uniquely determined, as is the
+absolute value of its negative member; therefore $d$ and $e$ are unique.
+\end{proof}
+
+We shall use the following direct substitution in the soundness part of the
+main theorem.
+
+\begin{lemma}[Direct verification of the two constructions]
+\label{lem:direct-verification}
+Let $x\in\Z$ and let $d,e\in\N$.
+
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item If
+\[
+ de=x^3-2,
+ \qquad
+ d+e=s^2
+\]
+for some $s\in\Z_{\geq0}$, then, for every $y\in\Yset(s)$, both
+\[
+ (x,y,-d)
+ \qquad\text{and}\qquad
+ (x,y,-e)
+\]
+satisfy \eqE.
+
+\item If
+\[
+ de=2-x^3,
+ \qquad
+ e-d=s^2
+\]
+for some $s\in\Z_{\geq0}$, then, for every $y\in\Yset(s)$, both
+\[
+ (x,y,d)
+ \qquad\text{and}\qquad
+ (x,y,-e)
+\]
+satisfy \eqE.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+In each case $y^2=s^2$ by the definition of $\Yset(s)$.
+
+For part (a), if $z=-d$, then
+\begin{align*}
+ z^2+y^2z+x^3-2
+ &=d^2-d(d+e)+de\\
+ &=d^2-d^2-de+de\\
+ &=0.
+\end{align*}
+If $z=-e$, then similarly
+\begin{align*}
+ z^2+y^2z+x^3-2
+ &=e^2-e(d+e)+de\\
+ &=e^2-ed-e^2+de\\
+ &=0.
+\end{align*}
+
+For part (b), the identity $de=2-x^3$ is equivalent to
+$x^3-2=-de$.  If $z=d$, then
+\begin{align*}
+ z^2+y^2z+x^3-2
+ &=d^2+d(e-d)-de\\
+ &=d^2+de-d^2-de\\
+ &=0.
+\end{align*}
+If $z=-e$, then
+\begin{align*}
+ z^2+y^2z+x^3-2
+ &=e^2-e(e-d)-de\\
+ &=e^2-e^2+ed-de\\
+ &=0.
+\end{align*}
+This proves both assertions.
+\end{proof}
+
+\section{The complete canonical classification}
+
+We now give the promised description of all integer solutions.
+
+\begin{theorem}[Complete classification]\label{thm:classification}
+The integer solutions of \eqE are exactly the triples described in
+one of the following two mutually exclusive cases.
+
+\medskip
+\noindent\textup{\textbf{I. The case $x\geq2$.}}
+Choose integers $d,e,s$ satisfying
+\begin{equation}
+ d,e\in\N,
+ \qquad
+ s\in\Z_{\geq0},
+ \qquad
+ d\leq e,
+ \qquad
+ de=x^3-2,
+ \qquad
+ d+e=s^2.
+ \label{eq:case-positive-data}
+\end{equation}
+Then $s>0$, and for every $y\in\Yset(s)$ the triples
+\begin{equation}
+ (x,y,-d)
+ \qquad\text{and}\qquad
+ (x,y,-e)
+ \label{eq:case-positive-solutions}
+\end{equation}
+are solutions.  Conversely, every solution with $x\geq2$ is of this form.
+For a given solution, the canonical data $(d,e,s)$ are unique.  If $d=e$,
+the two displayed values of $z$ in \eqref{eq:case-positive-solutions}
+coincide and are to be retained only once.
+
+\medskip
+\noindent\textup{\textbf{II. The case $x\leq1$.}}
+Choose integers $d,e,s$ satisfying
+\begin{equation}
+ d,e\in\N,
+ \qquad
+ s\in\Z_{\geq0},
+ \qquad
+ d\leq e,
+ \qquad
+ de=2-x^3,
+ \qquad
+ e-d=s^2.
+ \label{eq:case-negative-data}
+\end{equation}
+Then for every $y\in\Yset(s)$ the triples
+\begin{equation}
+ (x,y,d)
+ \qquad\text{and}\qquad
+ (x,y,-e)
+ \label{eq:case-negative-solutions}
+\end{equation}
+are solutions.  Conversely, every solution with $x\leq1$ is of this form.
+For a given solution, the canonical data $(d,e,s)$ are unique.  When $d=e$,
+one has $s=0$, so the only value of $y$ is $0$; the two values of $z$ are
+$d$ and $-d$, which are distinct because $d>0$.
+\end{theorem}
+
+\begin{proof}
+We prove soundness, completeness, and uniqueness in each case.
+
+\smallskip
+\noindent\emph{Case I: $x\geq2$.}
+Here $x^3-2\geq6>0$.
+
+Suppose first that data $d,e,s$ satisfy
+\eqref{eq:case-positive-data}.  The asserted triples are solutions by
+Lemma~\ref{lem:direct-verification}(a).  Since $d,e\in\N$, one has
+$d+e\geq2$, and therefore $s^2=d+e>0$; hence $s>0$.
+This proves soundness.
+
+Conversely, let $(x,y,z)\in\Sols$ with $x\geq2$.  By
+Proposition~\ref{prop:bijection}, define
+\[
+ a=-z,
+ \qquad
+ b=z+y^2.
+\]
+Then
+\[
+ ab=x^3-2>0,
+ \qquad
+ a+b=y^2\geq0.
+\]
+Lemma~\ref{lem:positive-product} gives $a,b>0$.  Put
+\[
+ d=\min\{a,b\},
+ \qquad
+ e=\max\{a,b\},
+ \qquad
+ s=|y|.
+\]
+Then $d,e\in\N$, $d\leq e$, and
+\[
+ de=ab=x^3-2,
+ \qquad
+ d+e=a+b=y^2=s^2.
+\]
+Moreover, $z=-a$, so $z=-d$ or $z=-e$.  Thus the given solution appears in
+\eqref{eq:case-positive-solutions}.  This proves completeness.
+
+For uniqueness, Proposition~\ref{prop:bijection} shows that the ordered pair
+$(a,b)=(-z,z+y^2)$ is uniquely determined by the solution.  Hence its
+canonically ordered version $(d,e)=(\min\{a,b\},\max\{a,b\})$ is unique, and
+$s=|y|$ is unique.  If $d=e$, then $-d=-e$, so the two displayed choices of
+$z$ are the same; if $d<e$, they are distinct.
+
+\smallskip
+\noindent\emph{Case II: $x\leq1$.}
+Here $x^3-2\leq-1<0$, or equivalently $2-x^3>0$.
+
+Suppose first that data $d,e,s$ satisfy
+\eqref{eq:case-negative-data}.  The asserted triples are solutions by
+Lemma~\ref{lem:direct-verification}(b).  This proves soundness.
+
+Conversely, let $(x,y,z)\in\Sols$ with $x\leq1$, and again put
+\[
+ a=-z,
+ \qquad
+ b=z+y^2.
+\]
+Proposition~\ref{prop:bijection} gives
+\[
+ ab=x^3-2<0,
+ \qquad
+ a+b=y^2\geq0.
+\]
+By Lemma~\ref{lem:negative-product}, there exist unique $d,e\in\N$ with
+$d\leq e$ and
+\[
+ \{a,b\}=\{-d,e\}.
+\]
+It follows that
+\[
+ de=|ab|=2-x^3,
+ \qquad
+ e-d=a+b=y^2.
+\]
+With $s=|y|$, we therefore have $e-d=s^2$.  Since $z=-a$, there are precisely
+two possibilities:
+\[
+ a=-d\ \Longrightarrow\ z=d,
+ \qquad
+ a=e\ \Longrightarrow\ z=-e.
+\]
+Thus the given solution appears in \eqref{eq:case-negative-solutions}, proving
+completeness.
+
+Uniqueness of $d,e$ follows from Lemma~\ref{lem:negative-product}, or directly
+from the unique ordered pair $(a,b)$ supplied by
+Proposition~\ref{prop:bijection}; again $s=|y|$ is unique.  If $d=e$, then
+$s^2=e-d=0$, so $s=0$ and $y=0$.  The corresponding values $z=d$ and
+$z=-e=-d$ are distinct because $d\in\N$.
+
+Finally, every integer $x$ satisfies exactly one of $x\geq2$ and $x\leq1$.
+Thus the two cases together are exhaustive and mutually exclusive.
+\end{proof}
+
+\begin{remark}[Logical content of the theorem]\label{rem:logical-content}
+Theorem~\ref{thm:classification} contains all three ingredients required for
+a genuine classification:
+
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=2.5em]
+\item every listed triple satisfies the original equation;
+\item every integer solution is recovered by the construction;
+\item the canonical factor data attached to a solution are unique, with all
+possible presentational coincidences explicitly identified.
+\end{enumerate}
+No unproved existence assumption is used in any direction.
+\end{remark}
+
+\section{Equivalent compact formulations and symmetry}
+
+The canonical form of Theorem~\ref{thm:classification} is convenient for sign
+analysis.  The following ordered-divisor form is more compact.
+
+\begin{corollary}[Ordered-divisor parametrization]\label{cor:ordered-divisor}
+A triple $(x,y,z)\in\Z^3$ satisfies \eqE if and only if there exist
+$a\in\Z\setminus\{0\}$ and $s\in\Z_{\geq0}$ such that
+\begin{equation}
+ a\mid x^3-2,
+ \qquad
+ a+\frac{x^3-2}{a}=s^2,
+ \qquad
+ y\in\Yset(s),
+ \qquad
+ z=-a.
+ \label{eq:ordered-divisor-form}
+\end{equation}
+For a given solution, the parameter $a$ is uniquely $a=-z$, and
+$s=|y|$.
+\end{corollary}
+
+\begin{proof}
+Suppose $(x,y,z)$ is a solution.  By Lemma~\ref{lem:no-cube-two}, $z\neq0$,
+so $a=-z$ is nonzero.  Proposition~\ref{prop:bijection} gives
+\[
+ a\left(z+y^2\right)=x^3-2,
+\]
+so $a\mid x^3-2$, and
+\[
+ z+y^2=\frac{x^3-2}{a}.
+\]
+As $z=-a$, this becomes
+\[
+ a+\frac{x^3-2}{a}=y^2.
+\]
+Taking $s=|y|$ gives \eqref{eq:ordered-divisor-form}.
+
+Conversely, suppose \eqref{eq:ordered-divisor-form} holds.  Put
+$b=(x^3-2)/a$.  Then $ab=x^3-2$ and $a+b=s^2=y^2$.  The inverse map
+$\Psi$ in Proposition~\ref{prop:bijection} therefore shows that
+$(x,y,-a)$ is a solution.  Uniqueness of $a=-z$ and $s=|y|$ is immediate.
+\end{proof}
+
+For fixed $x$ and $y$, the equation is quadratic in $z$.  Its two roots are
+interchanged by a simple involution.
+
+\begin{proposition}[Root-swapping involution]\label{prop:involution}
+Define
+\[
+ \iota:\Sols\longrightarrow\Sols,
+ \qquad
+ \iota(x,y,z)=(x,y,-y^2-z).
+\]
+Then $\iota$ is an involution: $\iota^2$ is the identity on $\Sols$.
+Under the bijection of Proposition~\ref{prop:bijection}, $\iota$ exchanges the
+ordered factors $a$ and $b$.
+
+A solution is fixed by $\iota$ if and only if
+\[
+ 2z+y^2=0,
+\]
+equivalently if and only if its associated factors satisfy $a=b$.
+Such a fixed point can occur only in the case $x\geq2$.
+\end{proposition}
+
+\begin{proof}
+Let $(x,y,z)\in\Sols$ and put $z'=-y^2-z$.  Then
+\begin{align*}
+ (z')^2+y^2z'
+ &=(-y^2-z)^2+y^2(-y^2-z)\\
+ &=(y^2+z)^2-y^2(y^2+z)\\
+ &=z(y^2+z)\\
+ &=z^2+y^2z.
+\end{align*}
+Therefore
+\[
+ (z')^2+y^2z'+x^3-2
+ =z^2+y^2z+x^3-2
+ =0,
+\]
+so $\iota$ maps $\Sols$ to itself.  Applying the map twice gives
+\[
+ -y^2-(-y^2-z)=z,
+\]
+so $\iota^2$ is the identity.
+
+For the factor correspondence, if
+$a=-z$ and $b=z+y^2$, then for $z'=-y^2-z$ one has
+\[
+ -z'=y^2+z=b,
+ \qquad
+ z'+y^2=-z=a.
+\]
+Thus $a$ and $b$ are exchanged.
+
+The fixed-point condition $z' = z$ is exactly
+$-y^2-z=z$, or $2z+y^2=0$.  Since $\iota$ exchanges $a$ and $b$, this is also
+equivalent to $a=b$.  But $a=b$ implies $ab=a^2>0$ because
+$a\neq0$ by Lemma~\ref{lem:no-cube-two}.  Hence $x^3-2=ab>0$, which forces
+$x\geq2$.
+\end{proof}
+
+\section{Effective enumeration for fixed \texorpdfstring{$x$}{x}}
+
+The classification immediately yields a finite, terminating procedure for
+each fixed integer $x$.
+
+\begin{proposition}[Complete divisor algorithm]\label{prop:algorithm}
+For a fixed $x\in\Z$, all elements of $\Sols_x$ are obtained by the following
+finite procedure.
+
+\begin{enumerate}[leftmargin=2.2em]
+\item If $x\geq2$, set $N=x^3-2$.  Enumerate every positive divisor $d$ of
+$N$ satisfying $d\leq N/d$, and put $e=N/d$.  Retain the pair $(d,e)$ exactly
+when $d+e$ is a square, say $d+e=s^2$.  For each retained pair output
+\[
+ (x,y,-d),\quad (x,y,-e)
+ \qquad (y\in\Yset(s)),
+\]
+with repeated triples removed.
+
+\item If $x\leq1$, set $N=2-x^3$.  Enumerate every positive divisor $d$ of
+$N$ satisfying $d\leq N/d$, and put $e=N/d$.  Retain the pair $(d,e)$ exactly
+when $e-d$ is a square, say $e-d=s^2$.  For each retained pair output
+\[
+ (x,y,d),\quad (x,y,-e)
+ \qquad (y\in\Yset(s)).
+\]
+\end{enumerate}
+The procedure terminates, outputs only solutions, and outputs every solution
+with the prescribed value of $x$.
+\end{proposition}
+
+\begin{proof}
+In either case, $N$ is a positive integer, so it has only finitely many
+positive divisors.  The enumeration therefore terminates.  Every output is a
+solution by Lemma~\ref{lem:direct-verification}.  Conversely, the completeness
+part of Theorem~\ref{thm:classification} says that every solution in
+$\Sols_x$ has exactly one of the retained canonical factor pairs.  Hence no
+solution is omitted.
+\end{proof}
+
+For completeness, we record an exact counting formula in terms of admissible
+factor pairs and a simple universal bound for each fiber.
+
+\begin{corollary}[Finiteness and a divisor bound]\label{cor:counting}
+For every $x\in\Z$, the set $\Sols_x$ is finite.  Define the set of admissible
+canonical factor pairs by
+\[
+ \mathcal Q_x=
+ \begin{cases}
+ \{(d,e)\in\N^2:d\leq e,\ de=x^3-2,\ d+e\text{ is a square}\},
+   &x\geq2,\\[1mm]
+ \{(d,e)\in\N^2:d\leq e,\ de=2-x^3,\ e-d\text{ is a square}\},
+   &x\leq1.
+ \end{cases}
+\]
+Then
+\begin{equation}
+ \#\Sols_x
+ =4\,\#\{(d,e)\in\mathcal Q_x:d<e\}
+  +2\,\#\{(d,d)\in\mathcal Q_x\}.
+ \label{eq:exact-count}
+\end{equation}
+If $\tau(n)$ denotes the number of positive divisors of $n$, then
+\begin{equation}
+ \#\Sols_x\leq 2\tau\bigl(|x^3-2|\bigr).
+ \label{eq:divisor-bound}
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+Finiteness follows at once from Proposition~\ref{prop:algorithm}.
+
+Let $(d,e)\in\mathcal Q_x$.  If $d<e$, then the relevant square is positive:
+for $x\geq2$ it is $d+e>0$, and for $x\leq1$ it is $e-d>0$.  Hence there are
+two values of $y$.  There are also two distinct values of $z$, because
+$-d\neq-e$ in the first case and $d\neq-e$ in the second.  Thus the pair
+contributes exactly four solutions.
+
+If $d=e$, then the pair contributes exactly two solutions.  Indeed, for
+$x\geq2$ the two displayed values of $z$ coincide, while $d+e=2d>0$ gives
+two values of $y$ whenever the pair is admissible.  For $x\leq1$, one has
+$e-d=0$, so $y=0$ is the only value, while the two values of $z$ are $d$ and
+$-d$.  The uniqueness assertion in Theorem~\ref{thm:classification} ensures
+that contributions from distinct canonical pairs do not overlap.  This
+proves \eqref{eq:exact-count}.
+
+Put $n=|x^3-2|$.  The positive factor pairs $d\leq e$ with $de=n$ are the
+orbits of the positive divisors under $d\mapsto n/d$.  If $n$ is not a
+square, then $\tau(n)=2r$ and there are $r$ pairs, all with $d<e$; even if all
+were admissible, \eqref{eq:exact-count} would give at most
+$4r=2\tau(n)$ solutions.  If $n$ is a square, then $\tau(n)=2r+1$; there are
+$r$ pairs with $d<e$ and one diagonal pair.  The maximum possible
+contribution is then
+\[
+ 4r+2=2(2r+1)=2\tau(n).
+\]
+This proves \eqref{eq:divisor-bound}.
+\end{proof}
+
+\section{Illustrative examples}
+
+The following table displays selected admissible factor pairs and the
+solutions contributed by each pair.  Each row is justified immediately by
+Theorem~\ref{thm:classification}; no separate search in $z$ is needed.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\textwidth}{@{}c>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+$x$ & Factor identity & Square identity & Solutions contributed \\
+\midrule
+$1$
+& $2-1^3=1\cdot1$
+& $1-1=0^2$
+& $(1,0,1)$ and $(1,0,-1)$ \\
+
+$0$
+& $2-0^3=1\cdot2$
+& $2-1=1^2$
+& $(0,\pm1,1)$ and $(0,\pm1,-2)$ \\
+
+$-2$
+& $2-(-2)^3=1\cdot10$
+& $10-1=3^2$
+& $(-2,\pm3,1)$ and $(-2,\pm3,-10)$ \\
+
+$-7$
+& $2-(-7)^3=5\cdot69$
+& $69-5=8^2$
+& $(-7,\pm8,5)$ and $(-7,\pm8,-69)$ \\
+
+$8$
+& $8^3-2=15\cdot34$
+& $15+34=7^2$
+& $(8,\pm7,-15)$ and $(8,\pm7,-34)$ \\
+
+$20$
+& $20^3-2=31\cdot258$
+& $31+258=17^2$
+& $(20,\pm17,-31)$ and $(20,\pm17,-258)$ \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+A single value of $x$ can admit more than one canonical factor pair.  For
+example,
+\[
+ 26^3-2=17574=58\cdot303=87\cdot202,
+\]
+and
+\[
+ 58+303=361=19^2,
+ \qquad
+ 87+202=289=17^2.
+\]
+Consequently these two factor pairs yield the eight solutions
+\begin{align*}
+ &(26,\pm19,-58),\qquad (26,\pm19,-303),\\
+ &(26,\pm17,-87),\qquad (26,\pm17,-202).
+\end{align*}
+The uniqueness clause of Theorem~\ref{thm:classification} shows that the two
+factor pairs account for disjoint sets of triples.
+
+\section{Conclusion}
+
+The substitution
+\[
+ a=-z,
+ \qquad
+ b=z+y^2
+\]
+turns \eqE into the simultaneous relations
+\[
+ ab=x^3-2,
+ \qquad
+ a+b=y^2,
+\]
+and Proposition~\ref{prop:bijection} proves that this transformation is a
+bijection, not merely a necessary condition.  The sign of $x^3-2$ then forces
+exactly the two canonical alternatives in
+Theorem~\ref{thm:classification}.  Therefore the theorem gives an exhaustive,
+sound, and unique divisor-theoretic description of every integer solution.
+For each fixed $x$, the classification is effective and finite, as made
+explicit by Proposition~\ref{prop:algorithm}.
+
+The result should be understood precisely in this sense: it completely
+classifies the triples through an exact factor-pair criterion and a finite
+algorithm on every fiber $\Sols_x$.  It does not require, and does not claim,
+a separate closed-form description of the set of all $x$ for which
+$\Sols_x$ is nonempty.
+
+\end{document}
