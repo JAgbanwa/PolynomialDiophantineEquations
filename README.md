@@ -28,6 +28,7 @@ Since Version 8 (the latest) of this [paper](https://arxiv.org/pdf/2404.08518), 
 | [\[18\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/rational_points_y2_minus_x2y_plus_z2_plus_1) | Describe all rational/integer solutions to the equation: $y^2 - x^2 \cdot y + z^2 + 1 = 0$. | 🔴 Still needs working on |
 | [\[19\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/polynomial_parametrization_xyz_ts_plus_1) | Provide a polynomial parametrisation to the equation: $xyz + ts + 1 = 0$. | 🟡 Pending feedback |
 | [\[20\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/polynomial_parametrization_xyz_t2_plus_1) | Provide a polynomial parametrisation to the equation: $xyz + t^2 + 1 = 0$. | 🟡 Pending feedback |
+| [\[21\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/polynomial_parametrization_xyz_t2_minus_1) | Provide a polynomial parametrisation to the equation: $xyz + t^2 - 1 = 0$. | 🟡 Pending feedback |
 
 
 
