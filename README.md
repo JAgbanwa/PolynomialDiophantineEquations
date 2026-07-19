@@ -29,6 +29,9 @@ Since Version 8 (the latest) of this [paper](https://arxiv.org/pdf/2404.08518), 
 | [\[19\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/polynomial_parametrization_xyz_ts_plus_1) | Provide a polynomial parametrisation to the equation: $xyz + ts + 1 = 0$. | 🟡 Pending feedback |
 | [\[20\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/polynomial_parametrization_xyz_t2_plus_1) | Provide a polynomial parametrisation to the equation: $xyz + t^2 + 1 = 0$. | 🟡 Pending feedback |
 | [\[21\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/polynomial_parametrization_xyz_t2_minus_1) | Provide a polynomial parametrisation to the equation: $xyz + t^2 - 1 = 0$. | 🟡 Pending feedback |
+| [\[22\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/polynomial_parametrization_x3_yz_plus_1) | Provide a polynomial parametrisation to the equation: $x^3 + yz + 1 = 0$. | 🟡 Pending feedback |
+
+
 
 
 
