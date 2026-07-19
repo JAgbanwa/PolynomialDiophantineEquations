@@ -1,0 +1,1 @@
+This [folder](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_x3_x2y2_z2_plus1/diophantine_x3_x2y2_z2_plus1%20(new)) contains a new document which provides a more concise resolution to this problem and elaborates on the methodology that brought us to this conclusion.
