@@ -1,0 +1,158 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=0.88in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[hidelinks]{hyperref}
+\usepackage{microtype}
+
+\newtheorem{theorem}{Theorem}
+
+\title{An Infinite Family of Integer Solutions to
+\texorpdfstring{$z^2+y^2z+2x^3+1=0$}{z^2+y^2z+2x^3+1=0}}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\vspace{-1.2em}
+
+\begin{abstract}
+We give an explicit polynomial family of integer solutions to
+\(z^2+y^2z+2x^3+1=0\).  The proof is a direct substitution.  We then
+briefly explain the sequence of ansatzes from which the family was found.
+\end{abstract}
+
+\section{The family}
+
+\begin{theorem}\label{thm:main}
+For every odd integer \(r\geq 3\), put
+\[
+\begin{aligned}
+ x_r&=-\frac{r^8-8r^6+22r^4-22r^2+5}{2},\\
+ y_r&=r^3-3r,\\
+ z_r&=\frac{r^{12}-12r^{10}+57r^8-134r^6
+              +159r^4-84r^2+11}{2}.
+\end{aligned}
+\]
+Then \((x_r,y_r,z_r)\in\mathbb Z^3\) and
+\[
+        z_r^2+y_r^2z_r+2x_r^3+1=0.
+\]
+Consequently, the equation has infinitely many integer solutions.
+\end{theorem}
+
+\begin{proof}
+Set
+\[
+ a=r^2-2,\qquad n=\frac{a^2-1}{2},\qquad
+ T=\frac{r(a-1)}2,
+\]
+\[
+ X=2n^2+a,\qquad M=4n^3+3an+1.
+\]
+Since \(r\) and \(a\) are odd, all five quantities are integers.  Direct
+expansion gives
+\[
+ -X=x_r,\qquad 2T=y_r,\qquad M-2T^2=z_r,
+\]
+and
+\[
+ M^2-2X^3+1
+ =\frac{(a-1)^4(a+2)^2}{4}
+ =4\left(\frac{r(a-1)}2\right)^4
+ =4T^4.
+\]
+Therefore, with \((x,y,z)=(-X,2T,M-2T^2)\),
+\begin{align*}
+ z^2+y^2z+2x^3+1
+ &=z(z+y^2)-2X^3+1\\
+ &=(M-2T^2)(M+2T^2)-2X^3+1\\
+ &=M^2-2X^3+1-4T^4=0.
+\end{align*}
+Finally, \(y_r=r^3-3r\) is strictly increasing for \(r\geq3\), so the
+solutions obtained from distinct odd values of \(r\) are distinct.
+\end{proof}
+
+\section{How the construction was found}\label{sec:discovery}
+
+This section records the search that led to the formulas; it is not an
+additional proof.
+
+Write \(x=-X\).  The equation becomes
+\[
+        z(z+y^2)=2X^3-1.
+\]
+Thus the aim is to factor \(2X^3-1\) into two integers whose difference is
+a square.  Taking \(y=2T\) and centering the factors symmetrically,
+\[
+        z=M-2T^2,\qquad z+y^2=M+2T^2,
+\]
+reduces the problem to
+\begin{equation}\label{eq:target}
+        M^2-2X^3+1=4T^4.
+\end{equation}
+
+There is an obvious polynomial solution of the unperturbed relation
+\(M^2=2X^3\):
+\[
+        X=2n^2,\qquad M=4n^3.
+\]
+This suggests perturbing it by writing
+\[
+        X=2n^2+a,
+        \qquad
+        M=4n^3+bn+c.
+\]
+In the expansion of \(M^2-2X^3+1\), the coefficient of \(n^4\) is
+\(8(b-3a)\).  Choosing \(b=3a\) removes this highest-order error, and the
+simple choice \(c=1\) gives
+\[
+        X=2n^2+a,
+        \qquad
+        M=4n^3+3an+1,
+\]
+with residual
+\[
+        M^2-2X^3+1
+        =8n^3-3a^2n^2+6an-2a^3+2.
+\]
+
+The leading terms indicate that \(n\) should be approximately \(a^2/2\).
+Accordingly, one tries
+\[
+        n=\frac{a^2+pa+q}{2}
+\]
+and asks that four times the residual be the square of a monic cubic in
+\(a\).  Elementary coefficient matching gives the particularly simple
+choice
+\[
+        p=0,\qquad q=-1,
+\]
+so that
+\[
+        n=\frac{a^2-1}{2}
+\]
+and
+\begin{align*}
+ 4(M^2-2X^3+1)
+   &=(a^3-3a+2)^2\\
+   &=(a-1)^4(a+2)^2.
+\end{align*}
+The factor \((a-1)^4\) is already a fourth power.  To make the remaining
+factor a fourth power as well, impose
+\[
+        a+2=r^2,
+        \qquad\text{that is,}\qquad
+        a=r^2-2.
+\]
+Then
+\[
+        M^2-2X^3+1
+        =4\left(\frac{r(a-1)}2\right)^4,
+\]
+which is exactly \eqref{eq:target} with
+\(T=r(a-1)/2\).  Reversing the substitutions produces the family in
+Theorem \ref{thm:main}.  The large polynomials in \(r\) arise only from
+eliminating the intermediate variables \(a,n,T,X,M\).
+
+\end{document}
