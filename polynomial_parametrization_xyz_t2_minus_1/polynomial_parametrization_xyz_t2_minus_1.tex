@@ -1,0 +1,276 @@
+\documentclass[11pt]{amsart}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage[margin=1.15in]{geometry}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+  pdftitle={A Polynomial Parametrization of xyz + t2 = 1},
+  pdfauthor={Jamal Agbanwa}
+}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\A}{\mathbb A}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\Z}{\mathbb Z}
+
+\title[A polynomial parametrization of $xyz+t^2=1$]
+{A Polynomial Parametrization of the Diophantine Hypersurface $xyz+t^2=1$}
+\author{}
+\date{\today}
+
+\begin{document}
+
+\begin{abstract}
+We give an explicit three-parameter polynomial construction for the equation
+\[
+xyz+t^2-1=0.
+\]
+For each sign $\varepsilon\in\{1,-1\}$, the polynomial map
+\[
+\Phi_{\varepsilon}(a,b,c)
+ =\bigl(a,b,c(2-abc),\varepsilon(1-abc)\bigr)
+\]
+takes integer parameters to integer solutions.  Over $\Q$, either map is an
+isomorphism onto the dense open set on which $xy\ne0$, and the two maps
+together cover every rational solution.  We also determine exactly which
+integral points arise from integral parameters in either chart.
+\end{abstract}
+
+\maketitle
+
+\section{The polynomial construction}
+
+Let
+\[
+X:\quad xyz+t^2-1=0
+\]
+be the affine hypersurface in four variables.  For a fixed
+$\varepsilon\in\{1,-1\}$, define
+\[
+\Phi_{\varepsilon}:\A^3\longrightarrow\A^4,
+\qquad
+\Phi_{\varepsilon}(a,b,c)
+ =\bigl(a,b,c(2-abc),\varepsilon(1-abc)\bigr).
+\]
+
+\begin{theorem}\label{thm:polynomial-family}
+For every commutative ring $R$, every $a,b,c\in R$, and either sign
+$\varepsilon\in\{1,-1\}$, the point $\Phi_{\varepsilon}(a,b,c)$ lies on
+$X(R)$.  In particular,
+\[
+\boxed{
+ x=a,\qquad
+ y=b,\qquad
+ z=c(2-abc),\qquad
+ t=\varepsilon(1-abc)
+}
+\]
+is a three-parameter polynomial family of integer solutions when
+$a,b,c\in\Z$.
+\end{theorem}
+
+\begin{proof}
+Put $s=abc$.  For the point given above,
+\[
+xyz=ab\,c(2-abc)=s(2-s),
+\]
+whereas
+\[
+t^2-1=(1-s)^2-1=s^2-2s=-s(2-s).
+\]
+Consequently,
+\[
+xyz+t^2-1=s(2-s)-s(2-s)=0.
+\]
+This is a polynomial identity over $\Z$, so it remains valid over every
+commutative ring.
+\end{proof}
+
+The construction is obtained directly from the factorization
+\[
+1-t^2=(1-t)(1+t).
+\]
+For the positive-sign chart, impose $1-t=abc$.  Then
+$t=1-abc$ and $1+t=2-abc$, whence
+\[
+1-t^2=abc(2-abc).
+\]
+Taking $x=a$, $y=b$, and $z=c(2-abc)$ gives the formula above.  Replacing
+$t$ by $-t$ gives the negative-sign chart.
+
+\begin{corollary}
+The equation $xyz+t^2-1=0$ has infinitely many integer solutions with all
+four coordinates nonzero.
+\end{corollary}
+
+\begin{proof}
+For every integer $n\notin\{0,1,2\}$, Theorem~\ref{thm:polynomial-family}
+with $(a,b,c)=(1,1,n)$ and $\varepsilon=1$ gives
+\[
+(x,y,z,t)=\bigl(1,1,n(2-n),1-n\bigr).
+\]
+All four coordinates are nonzero, and the resulting points are distinct
+because their fourth coordinates are distinct.
+\end{proof}
+
+\section{Rational completeness}
+
+The polynomial $xyz+t^2-1$ is irreducible over $\Q$.  Indeed, viewed as a
+polynomial in $z$ over the unique factorization domain $\Q[x,y,t]$, it is
+primitive and has degree one; it is therefore irreducible by Gauss's
+lemma.  Hence $X_{\Q}$ is irreducible.
+
+Let
+\[
+U=\{(x,y,z,t)\in X(\Q):xy\ne0\}
+\]
+and let
+\[
+V=\{(a,b,c)\in\A^3(\Q):ab\ne0\}.
+\]
+Both are dense open sets in their respective affine varieties; for example,
+$(1,1,1,0)\in U$.
+
+\begin{proposition}\label{prop:isomorphism}
+For either sign $\varepsilon\in\{1,-1\}$, the restriction
+\[
+\Phi_{\varepsilon}\big|_V:V\longrightarrow U
+\]
+is an isomorphism.  Its inverse is
+\[
+\Psi_{\varepsilon}(x,y,z,t)
+ =\left(x,y,\frac{1-\varepsilon t}{xy}\right).
+\]
+Thus either $\Phi_{\varepsilon}$ is a birational parametrization of $X$.
+\end{proposition}
+
+\begin{proof}
+If $(a,b,c)\in V$, then the first two coordinates of
+$\Phi_{\varepsilon}(a,b,c)$ have product $ab\ne0$, so the image lies in
+$U$ by Theorem~\ref{thm:polynomial-family}.  Moreover, if
+$t=\varepsilon(1-abc)$, then
+\[
+1-\varepsilon t=abc,
+\]
+and therefore
+\[
+\Psi_{\varepsilon}(\Phi_{\varepsilon}(a,b,c))
+ =\left(a,b,\frac{abc}{ab}\right)=(a,b,c).
+\]
+
+Conversely, take $(x,y,z,t)\in U$ and set
+\[
+c=\frac{1-\varepsilon t}{xy}.
+\]
+Then $xyc=1-\varepsilon t$, and hence
+\[
+\varepsilon(1-xyc)=\varepsilon(\varepsilon t)=t.
+\]
+For the third coordinate, the defining equation of $X$ gives
+$xyz=1-t^2$, so
+\begin{align*}
+c(2-xyc)
+ &=\frac{1-\varepsilon t}{xy}
+   \bigl(2-(1-\varepsilon t)\bigr)\\
+ &=\frac{(1-\varepsilon t)(1+\varepsilon t)}{xy}\\
+ &=\frac{1-t^2}{xy}=z.
+\end{align*}
+Thus
+$\Phi_{\varepsilon}(\Psi_{\varepsilon}(x,y,z,t))=(x,y,z,t)$.
+\end{proof}
+
+\begin{corollary}\label{cor:rational-surjectivity}
+The two polynomial maps $\Phi_{1}$ and $\Phi_{-1}$ together cover all of
+$X(\Q)$.
+\end{corollary}
+
+\begin{proof}
+Every rational point with $xy\ne0$ is covered by either map by
+Proposition~\ref{prop:isomorphism}.  Suppose instead that $xy=0$.  The
+defining equation then gives $t^2=1$, so $t\in\{1,-1\}$.  Since $2$ is
+invertible in $\Q$,
+\[
+(x,y,z,t)=\Phi_t\left(x,y,\frac z2\right).
+\]
+Indeed, $xy=0$ implies that the final two coordinates on the right are
+$2(z/2)=z$ and $t(1-0)=t$.
+\end{proof}
+
+\section{The exact integral image}
+
+Rational completeness does not imply that every integer point is obtained
+from integer parameters.  The precise obstruction is elementary
+divisibility.
+
+\begin{proposition}\label{prop:integer-image}
+Let $P=(x,y,z,t)\in X(\Z)$, and fix
+$\varepsilon\in\{1,-1\}$.
+
+\begin{enumerate}
+\item If $xy\ne0$, then
+\[
+P\in\Phi_{\varepsilon}(\Z^3)
+\quad\Longleftrightarrow\quad
+xy\mid 1-\varepsilon t.
+\]
+In that case the unique parameter triple mapping to $P$ is
+\[
+(a,b,c)=\left(x,y,\frac{1-\varepsilon t}{xy}\right).
+\]
+
+\item If $xy=0$, then
+\[
+P\in\Phi_{\varepsilon}(\Z^3)
+\quad\Longleftrightarrow\quad
+t=\varepsilon\ \text{ and }\ 2\mid z.
+\]
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Suppose first that $xy\ne0$.  Any preimage must satisfy $a=x$ and $b=y$.
+The fourth coordinate then forces
+\[
+abc=1-\varepsilon t,
+\qquad\text{hence}
+\qquad
+c=\frac{1-\varepsilon t}{xy}.
+\]
+Thus integrality of $c$ is necessary.  It is also sufficient: if the
+stated divisibility holds, choose this integer $c$.  The computation in
+the proof of Proposition~\ref{prop:isomorphism}, using
+$xyz=1-t^2$, shows that the resulting third coordinate is exactly $z$.
+Uniqueness follows from the displayed formula for $c$.
+
+Now suppose that $xy=0$.  Again $a=x$ and $b=y$, so $abc=0$.  Therefore
+\[
+\Phi_{\varepsilon}(a,b,c)=(x,y,2c,\varepsilon).
+\]
+This equals $P$ precisely when $t=\varepsilon$ and $z=2c$ for some
+$c\in\Z$, which is equivalent to $t=\varepsilon$ and $2\mid z$.
+\end{proof}
+
+\begin{remark}\label{rem:not-integrally-surjective}
+Neither chart, nor their union, is surjective on $X(\Z)$.  For example,
+\[
+(3,4,-2,5)\in X(\Z),
+\]
+because $3\cdot4\cdot(-2)+5^2-1=-24+24=0$.  However,
+$xy=12$ divides neither $1-t=-4$ nor $1+t=6$.  By
+Proposition~\ref{prop:integer-image}, this point lies in neither
+$\Phi_1(\Z^3)$ nor $\Phi_{-1}(\Z^3)$.
+
+Since the equation is symmetric in $x,y,z$, one may instead place
+$c(2-abc)$ in either of the other two coordinates.  This gives the two
+corresponding permuted chart types for each sign.
+\end{remark}
+
+\end{document}
