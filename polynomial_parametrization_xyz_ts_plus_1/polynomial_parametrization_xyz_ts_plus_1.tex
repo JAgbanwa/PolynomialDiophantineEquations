@@ -1,187 +1,224 @@
-\documentclass[11pt,a4paper]{article}
+\documentclass[11pt]{article}
 
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{microtype}
-\usepackage{amsmath,amssymb,amsthm,mathtools}
-\usepackage[a4paper,margin=28mm]{geometry}
 \usepackage[hidelinks]{hyperref}
-\hypersetup{
-  pdftitle={A Polynomial Parametrization of xyz+ts+1=0},
-  pdfauthor={Jamal Agbanwa}
-}
 
 \newtheorem{theorem}{Theorem}
-\newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
 
-\newcommand{\Z}{\mathbb Z}
-\newcommand{\K}{K}
 \newcommand{\A}{\mathbb A}
+\newcommand{\Z}{\mathbb Z}
 
-\title{A Polynomial Parametrization of \(xyz+ts+1=0\)}
+\title{A Four-Parameter Polynomial Parametrization for
+\texorpdfstring{\(xyz+ts+1=0\)}{xyz+ts+1=0}}
 \author{}
-\date{\today}
+\date{}
 
 \begin{document}
+
 \maketitle
+\vspace{-2.5em}
 
 \begin{abstract}
-We give a four-parameter polynomial family of integral solutions to
-\(xyz+ts+1=0\).  The construction is proved by a polynomial identity.
-Over every field, its restriction to the locus where \(xy\neq 0\) is an
-exact rational parametrization, with an explicit inverse.  We also record
-the precise integral congruence condition governing membership in the
-family and cover the degenerate locus \(xy=0\).
+We give an explicit four-parameter polynomial family of integer solutions to
+\(xyz+ts+1=0\).  The construction comes from a two-factor identity for
+\(1+xyz\).  Over any field, the resulting map is an isomorphism on the open
+set where \(xy\neq0\); thus it is a birational parametrization with the
+expected number of parameters.  We also characterize exactly which integral
+points are obtained from integral parameters.
 \end{abstract}
 
-\section{The polynomial identity}
+\section{The polynomial family}
 
-Throughout, a \emph{polynomial parametrization} means a tuple of
-integer-coefficient polynomials whose substitution makes the defining
-equation vanish identically.  Exhaustivity of integral points is a
-separate question, addressed below.
-
-\begin{theorem}[Four-parameter polynomial family]\label{thm:family}
-Fix \(\varepsilon\in\{1,-1\}\).  For arbitrary
+\begin{theorem}\label{thm:main}
+Fix \(\varepsilon\in\{1,-1\}\).  For arbitrary parameters
 \(a,b,m,n\in\Z\), define
-\begin{equation}\label{eq:param}
+\begin{equation}\label{eq:param-epsilon}
 \begin{aligned}
- x&=a, & y&=b,\\
+ x&=a, &\qquad y&=b,\\
  z&=\varepsilon(m+n)+abmn, &
- t&=\varepsilon+abm, &
- s&=-\varepsilon-abn.
+ t&=\varepsilon+abm,\\
+ &&s&=-\varepsilon-abn.
 \end{aligned}
 \end{equation}
 Then
 \[
 xyz+ts+1=0.
 \]
-Equivalently, the five polynomials in \eqref{eq:param} define a
-polynomial map \(\Phi_\varepsilon:\A^4_{\Z}\to\A^5_{\Z}\) whose image
-is contained in the hypersurface \(xyz+ts+1=0\).
+Equivalently, the five polynomials in \eqref{eq:param-epsilon} satisfy the
+identity \(xyz+ts+1\equiv0\) in \(\Z[a,b,m,n]\).
 \end{theorem}
 
 \begin{proof}
-Put \(q=ab\).  Since \(\varepsilon^2=1\), one has the identity
-\begin{align*}
+Put \(q=ab\).  Since \(\varepsilon^2=1\),
+\begin{equation}\label{eq:keyidentity}
 (\varepsilon+qm)(\varepsilon+qn)
- &=\varepsilon^2+\varepsilon q(m+n)+q^2mn\\
- &=1+q\bigl(\varepsilon(m+n)+qmn\bigr).
-\end{align*}
-Under \eqref{eq:param}, \(xy=q\),
-\(z=\varepsilon(m+n)+qmn\), and
-\(ts=-(\varepsilon+qm)(\varepsilon+qn)\).  Therefore
-\begin{align*}
-xyz+ts+1
- &=q\bigl(\varepsilon(m+n)+qmn\bigr)
-   -(\varepsilon+qm)(\varepsilon+qn)+1\\
- &=q\bigl(\varepsilon(m+n)+qmn\bigr)
-   -\Bigl[1+q\bigl(\varepsilon(m+n)+qmn\bigr)\Bigr]+1\\
- &=0.
-\end{align*}
-This is an identity in \(\Z[a,b,m,n]\), so every integral
-specialization gives an integral solution.
-\end{proof}
-
-For \(\varepsilon=1\), the family is
-\[
-(x,y,z,t,s)=
-\bigl(a,b,m+n+abmn,1+abm,-1-abn\bigr).
-\]
-For example, \((a,b,m,n)=(1,1,1,1)\) gives
-\((x,y,z,t,s)=(1,1,3,2,-2)\).
-
-\section{Exactness on the nondegenerate locus}
-
-\begin{theorem}[Explicit inverse over a field]\label{thm:inverse}
-Let \(K\) be a field, fix \(\varepsilon\in\{1,-1\}\), and set
-\[
-X(K)=\{(x,y,z,t,s)\in K^5:xyz+ts+1=0\}.
-\]
-Then \(\Phi_\varepsilon\) restricts to a bijection
-\[
-(K^\times)^2\times K^2
-   \longrightarrow
-\{(x,y,z,t,s)\in X(K):xy\neq0\}.
-\]
-Its inverse is
-\begin{equation}\label{eq:inverse}
- a=x,\qquad b=y,\qquad
- m=\frac{t-\varepsilon}{xy},\qquad
- n=-\frac{s+\varepsilon}{xy}.
+ =1+\varepsilon q(m+n)+q^2mn
+ =1+q\bigl(\varepsilon(m+n)+qmn\bigr).
 \end{equation}
-Consequently, the hypersurface is rational, and \eqref{eq:param} is
-an exact rational parametrization on the principal open set \(xy\neq0\).
-\end{theorem}
+Under \eqref{eq:param-epsilon}, the last expression is \(1+xyz\), whereas
+\[
+ts=-(\varepsilon+qm)(\varepsilon+qn).
+\]
+Thus \(ts=-(1+xyz)\), which is equivalent to the required equation.
+\end{proof}
+
+Taking \(\varepsilon=1\) gives the particularly simple parametrization
+\begin{equation}\label{eq:main-param}
+\boxed{
+(x,y,z,t,s)
+ =\bigl(a,b,m+n+abmn,\,1+abm,\,-1-abn\bigr),
+\qquad a,b,m,n\in\Z.
+}
+\end{equation}
+For instance, setting \(a=b=1\), \(m=0\), and \(n=r\) yields the infinite
+subfamily
+\[
+(x,y,z,t,s)=(1,1,r,1,-1-r),\qquad r\in\Z.
+\]
+
+\section{How the construction was found}
+
+The equation may be rewritten as
+\begin{equation}\label{eq:factor-target}
+1+xyz=-ts.
+\end{equation}
+Write \(q=xy\).  A direct way to enforce \eqref{eq:factor-target} is to make
+\(1+qz\) split into two polynomial factors.  Introduce two free parameters
+\(m,n\) and seek a factorization of the form
+\[
+1+qz=(\varepsilon+qm)(\varepsilon+qn),
+\qquad \varepsilon^2=1.
+\]
+Expanding the right-hand side gives
+\[
+1+\varepsilon q(m+n)+q^2mn,
+\]
+so the factorization holds precisely when
+\[
+z=\varepsilon(m+n)+qmn.
+\]
+One may then take one factor to be \(t\) and the negative of the other to be
+\(s\):
+\[
+t=\varepsilon+qm,
+\qquad
+s=-\varepsilon-qn.
+\]
+Finally, writing \(q=ab\) leaves \(x=a\) and \(y=b\) as independent
+parameters.  This produces exactly \eqref{eq:param-epsilon}.
+
+For \(\varepsilon=1\), the central identity can also be expressed through the
+binary operation
+\[
+m\mathbin{\oplus_q}n:=m+n+qmn.
+\]
+It is designed so that
+\[
+1+q(m\mathbin{\oplus_q}n)=(1+qm)(1+qn).
+\]
+Thus the nonlinear-looking term \(m+n+qmn\) is not guessed: it is forced by
+multiplying two expressions congruent to \(1\) modulo \(q\).
+
+\section{Generic completeness}
+
+Let
+\[
+V:\ xyz+ts+1=0
+\]
+be the affine hypersurface in \(\A^5\), and let \(\Phi_\varepsilon:\A^4\to V\)
+be the polynomial map defined by \eqref{eq:param-epsilon}.  For every field
+\(K\), the polynomial \(xyz+ts+1\) is irreducible in
+\(K[x,y,z,t,s]\): viewed as a polynomial in \(z\), it is primitive over
+\(K[x,y,t,s]\) and linear over that ring's fraction field.  Hence the
+nonempty open subset \(xy\neq0\) is dense in \(V\).
+
+\begin{proposition}\label{prop:birational}
+Over any field \(K\), the restriction of \(\Phi_\varepsilon\) to \(ab\neq0\)
+is an isomorphism onto the open subset of \(V\) on which \(xy\neq0\).  Its
+inverse is
+\begin{equation}\label{eq:inverse}
+ a=x,
+ \qquad b=y,
+ \qquad m=\frac{t-\varepsilon}{xy},
+ \qquad n=-\frac{s+\varepsilon}{xy}.
+\end{equation}
+In particular, \(\Phi_\varepsilon\) is a birational parametrization of \(V\).
+\end{proposition}
 
 \begin{proof}
-If \(a,b\neq0\), then the point supplied by Theorem~\ref{thm:family}
-has \(xy=ab\neq0\).  Conversely, take a point of \(X(K)\) with
-\(q:=xy\neq0\) and define \(a,b,m,n\) by \eqref{eq:inverse}.  The
-formulas for \(x,y,t,s\) in \eqref{eq:param} are then immediate.  For
-\(z\), direct calculation gives
+Let \((x,y,z,t,s)\in V(K)\) with \(q:=xy\neq0\), and define
+\(a,b,m,n\) by \eqref{eq:inverse}.  The formulas for \(x,y,t,s\) in
+\eqref{eq:param-epsilon} are then immediate.  Moreover,
 \begin{align*}
-\varepsilon(m+n)+qmn
- &=\frac{\varepsilon(t-\varepsilon-s-\varepsilon)
-          -(t-\varepsilon)(s+\varepsilon)}{q}\\
- &=\frac{-ts-1}{q}.
+q\bigl(\varepsilon(m+n)+qmn\bigr)
+&=\varepsilon(t-\varepsilon)-\varepsilon(s+\varepsilon)
+  -(t-\varepsilon)(s+\varepsilon)\\
+&=-ts-1.
 \end{align*}
-Because the given point satisfies \(qz+ts+1=0\), the last expression
-is exactly \(z\).  Thus \eqref{eq:inverse} is a two-sided inverse.
-Uniqueness also follows at once: \(a,b\) are recovered from \(x,y\),
-and then \(m,n\) are recovered from \(t,s\).  Thus the displayed maps
-are mutually inverse regular maps on the indicated open sets.
-
-For completeness, the defining polynomial is irreducible.  Indeed, put
-\(R=K[x,y,t,s]\) and view \(xyz+ts+1\) as an element of \(R[z]\).
-The two coefficients \(xy\) and \(ts+1\) have no common nonunit divisor.
-If the linear polynomial factored in \(R[z]\), one factor would have
-\(z\)-degree zero and would therefore divide both coefficients; it would
-have to be a unit.  Hence the hypersurface is irreducible.  Its nonempty
-open set \(xy\neq0\) is therefore dense and is isomorphic to
-\((K^\times)^2\times K^2\), proving rationality.
+Since the point lies on \(V\), one has \(-ts-1=xyz=qz\).  Division by
+\(q\) therefore gives
+\[
+z=\varepsilon(m+n)+qmn.
+\]
+Hence \eqref{eq:inverse} is indeed the inverse map.  Both maps are regular on
+the indicated principal open subsets.
 \end{proof}
 
-\section{The integral image}
+The proposition explains why four independent parameters arise naturally:
+one equation in five affine variables has four-dimensional generic freedom,
+and the construction realizes that freedom without redundancy on
+\(xy\neq0\).
 
-\begin{proposition}[Exact congruence criterion]\label{prop:integral}
-Let \((x,y,z,t,s)\in\Z^5\) satisfy \(xyz+ts+1=0\) and suppose
-\(q:=xy\neq0\).  For fixed \(\varepsilon\in\{1,-1\}\), this point is
-in \(\Phi_\varepsilon(\Z^4)\) if and only if
-\[
-q\mid(t-\varepsilon)
-\qquad\text{and}\qquad
-q\mid(s+\varepsilon).
-\]
+\section{Integral image and the boundary
+\texorpdfstring{\(xy=0\)}{xy=0}}
+
+The preceding proposition is a completeness statement over a field.  For
+integer parameters, divisibility enters because the inverse formulas in
+\eqref{eq:inverse} need not be integral.
+
+\begin{proposition}\label{prop:integer-image}
+Let \((x,y,z,t,s)\in\Z^5\) satisfy \(xyz+ts+1=0\), and suppose \(xy\neq0\).
+For fixed \(\varepsilon\in\{1,-1\}\), this point belongs to
+\(\Phi_\varepsilon(\Z^4)\) if and only if
+\begin{equation}\label{eq:congruence}
+ t\equiv\varepsilon\pmod{xy}.
+\end{equation}
+Equivalently, one may require \(s\equiv-\varepsilon\pmod{xy}\).
 \end{proposition}
 
 \begin{proof}
-Every point produced by \eqref{eq:param} satisfies
-\(t-\varepsilon=qm\) and \(s+\varepsilon=-qn\), proving necessity.
-Conversely, the two divisibilities make the parameters in
-\eqref{eq:inverse} integers.  The proof of Theorem~\ref{thm:inverse}
-then shows that these integral parameters reproduce the given point,
-including its \(z\)-coordinate.
+If the point is obtained from integral parameters, then
+\(t-\varepsilon=xy\,m\) and \(s+\varepsilon=-xy\,n\), so both congruences
+hold.
+
+Conversely, assume \eqref{eq:congruence}.  Reducing the original equation
+modulo \(xy\) gives \(ts\equiv-1\pmod{xy}\).  Since
+\(t\equiv\varepsilon\) and \(\varepsilon^2=1\), it follows that
+\(s\equiv-\varepsilon\pmod{xy}\).  Hence the values of \(m,n\) in
+\eqref{eq:inverse} are integers, and Proposition~\ref{prop:birational} shows
+that these parameters recover the given point.
 \end{proof}
 
-\begin{proposition}[Degenerate integral locus]\label{prop:degenerate}
-All integral solutions with \(xy=0\) are covered by the union
-\(\Phi_1(\Z^4)\cup\Phi_{-1}(\Z^4)\).
-\end{proposition}
+If \(xy=0\), the equation reduces to \(ts=-1\).  Hence an integral solution
+has either \((t,s)=(1,-1)\) or \((t,s)=(-1,1)\), while \(z\) is arbitrary.
+The family \(\Phi_1\) covers the first case and \(\Phi_{-1}\) covers the
+second.  Thus the two sign choices cover the entire degenerate integral locus
+\(xy=0\).
 
-\begin{proof}
-When \(xy=0\), the equation becomes \(ts=-1\).  Hence either
-\((t,s)=(1,-1)\) or \((t,s)=(-1,1)\), while \(z\) is arbitrary.
-Choose \(\varepsilon=t\), set \(a=x\), \(b=y\), \(n=0\), and
-\(m=\varepsilon z\).  Since \(ab=0\) and \(\varepsilon^2=1\),
-\eqref{eq:param} gives
-\[
-z=\varepsilon m=z,\qquad t=\varepsilon,
-\qquad s=-\varepsilon,
-\]
-and recovers the prescribed solution.
-\end{proof}
-
+\begin{remark}
+The formulas above give a polynomial family of integral solutions and a
+birational parametrization of the full hypersurface.  They are not asserted
+to send integral parameters onto every integral point with \(xy\neq0\);
+Proposition~\ref{prop:integer-image} gives the exact congruence criterion for
+such integral lifting.
+\end{remark}
 
 \end{document}
