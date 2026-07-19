@@ -1,0 +1,571 @@
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{geometry}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+\usepackage{aliascnt}
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+\geometry{margin=1.08in}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\allowdisplaybreaks
+
+\newtheorem{theorem}{Theorem}[section]
+\newaliascnt{proposition}{theorem}
+\newtheorem{proposition}[proposition]{Proposition}
+\aliascntresetthe{proposition}
+\newaliascnt{lemma}{theorem}
+\newtheorem{lemma}[lemma]{Lemma}
+\aliascntresetthe{lemma}
+\newaliascnt{corollary}{theorem}
+\newtheorem{corollary}[corollary]{Corollary}
+\aliascntresetthe{corollary}
+\theoremstyle{remark}
+\newaliascnt{remark}{theorem}
+\newtheorem{remark}[remark]{Remark}
+\aliascntresetthe{remark}
+
+\crefname{theorem}{theorem}{theorems}
+\crefname{proposition}{proposition}{propositions}
+\crefname{lemma}{lemma}{lemmas}
+\crefname{corollary}{corollary}{corollaries}
+\crefname{remark}{remark}{remarks}
+
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Norm}{\operatorname{N}}
+
+\title{Infinitely Many Integer Solutions of\\[0.25em]
+\texorpdfstring{$x^3+x^2y^2+z^2+1=0$}{x^3 + x^2 y^2 + z^2 + 1 = 0}}
+\author{}
+\date{}
+\hypersetup{
+  pdftitle={Infinitely Many Integer Solutions of x3 + x2 y2 + z2 + 1 = 0},
+  pdfauthor={}
+}
+
+\begin{document}
+\maketitle
+\vspace{-2.5em}
+
+\begin{abstract}
+We prove, unconditionally and by an entirely elementary argument, that
+\[
+ x^3+x^2y^2+z^2+1=0
+\]
+has infinitely many integer solutions.  The construction combines a norm identity in the Gaussian integers with an explicitly verified polynomial identity.  A self-contained, congruence-controlled Pell argument then shows that an associated quadratic polynomial assumes square values at infinitely many integer arguments.  Every numerical identity used in the construction is checked coefficient by coefficient.
+\end{abstract}
+
+\section{Statement and preliminary reduction}
+
+We establish the following result.
+
+\begin{theorem}[Main theorem]\label{thm:main}
+The Diophantine equation
+\begin{equation}\label{eq:original}
+ x^3+x^2y^2+z^2+1=0
+\end{equation}
+has infinitely many pairwise distinct solutions $(x,y,z)\in\Z^3$.
+\end{theorem}
+
+A solution of \eqref{eq:original} necessarily has $x<0$, since all four terms on the left are nonnegative when $x\ge 0$.  Writing
+\[
+ a=-x>0,
+\]
+we obtain the equivalent equation
+\begin{equation}\label{eq:reduced}
+ z^2+1=a^2(a-y^2).
+\end{equation}
+In particular, every solution satisfies $a>y^2$.  Our task is therefore to construct infinitely many triples $(a,y,z)$ satisfying \eqref{eq:reduced}.
+
+The signs of $y$ and $z$ are immaterial in \eqref{eq:original}.  Once one solution is found, the four sign choices $(x,\pm y,\pm z)$ are again solutions.  We shall nevertheless prove infinitude already at the level of the $x$-coordinates.
+
+\section{A Gaussian norm construction}
+
+The basic algebraic mechanism is the following lemma.
+
+\begin{lemma}[Gaussian norm mechanism]\label{lem:gaussian}
+Let $P,Q,R,S,Y\in\Z$ satisfy
+\begin{align}
+ 2PQR+(P^2-Q^2)S&=1, \label{eq:bezout-condition}\\
+ P^2+Q^2-R^2-S^2&=Y^2. \label{eq:square-difference}
+\end{align}
+Define
+\begin{align}
+ X&=-(P^2+Q^2), \label{eq:X-definition}\\
+ Z&=(P^2-Q^2)R-2PQS. \label{eq:Z-definition}
+\end{align}
+Then
+\[
+ X^3+X^2Y^2+Z^2+1=0.
+\]
+\end{lemma}
+
+\begin{proof}
+Put
+\[
+ A_0=P^2-Q^2,
+ \qquad
+ B_0=2PQ.
+\]
+Condition \eqref{eq:bezout-condition} says that
+\[
+ B_0R+A_0S=1,
+\]
+whereas \eqref{eq:Z-definition} says that
+\[
+ Z=A_0R-B_0S.
+\]
+The elementary two-square identity gives
+\begin{align*}
+ Z^2+1
+ &= (A_0R-B_0S)^2+(B_0R+A_0S)^2\\
+ &= (A_0^2+B_0^2)(R^2+S^2).
+\end{align*}
+Now
+\[
+ A_0^2+B_0^2
+ =(P^2-Q^2)^2+4P^2Q^2
+ =(P^2+Q^2)^2.
+\]
+Writing $a=P^2+Q^2$, condition \eqref{eq:square-difference} becomes
+\[
+ R^2+S^2=a-Y^2.
+\]
+Consequently,
+\begin{equation}\label{eq:norm-conclusion}
+ Z^2+1=a^2(a-Y^2).
+\end{equation}
+Condition \eqref{eq:bezout-condition} also shows that $P$ and $Q$ cannot both vanish, so $a>0$.  Since $X=-a$, equation \eqref{eq:norm-conclusion} yields
+\begin{align*}
+ X^3+X^2Y^2+Z^2+1
+ &=-a^3+a^2Y^2+a^2(a-Y^2)\\
+ &=0.
+\end{align*}
+This proves the lemma.
+\end{proof}
+
+Equivalently, \cref{lem:gaussian} is the norm identity obtained from
+\[
+ (P+iQ)^2(R+iS)=Z+i.
+\]
+We shall not need any theory of Gaussian integers beyond the explicitly expanded identity above.
+
+\section{The polynomial identities}
+
+For $t\in\Z$, define four integral linear polynomials
+\begin{align}
+ P(t)&=31487t+15586, \label{eq:P-poly}\\
+ Q(t)&=-36963t-18295, \label{eq:Q-poly}\\
+ R(t)&=-3400t-1682, \label{eq:R-poly}\\
+ S(t)&=21114t+10451. \label{eq:S-poly}
+\end{align}
+The following proposition records the exact identities that make the construction work.
+
+\begin{proposition}[Explicit polynomial identities]\label{prop:poly-identities}
+For every integer $t$,
+\begin{equation}\label{eq:identity-one}
+ 2P(t)Q(t)R(t)+\bigl(P(t)^2-Q(t)^2\bigr)S(t)=1,
+\end{equation}
+and
+\begin{equation}\label{eq:identity-two}
+ P(t)^2+Q(t)^2-R(t)^2-S(t)^2=F(t),
+\end{equation}
+where
+\begin{equation}\label{eq:F-definition}
+ F(t)=1900333542t^2+1881226506t+465577896.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The verification is a direct calculation.  To make every cancellation auditable, we list the coefficient of each power of $t$.
+
+For \eqref{eq:identity-one}, the two cubic polynomials on the left have the following coefficients:
+\begin{center}
+\small
+\begin{tabular}{c r r r}
+\toprule
+power & $[t^j]\,2PQR$ & $[t^j]\,(P^2-Q^2)S$ & sum \\
+\midrule
+$j=3$ & $ 7914207070800$ & $-7914207070800$ & $0$ \\
+$j=2$ & $11749892676484$ & $-11749892676484$ & $0$ \\
+$j=1$ & $ 5814858098812$ & $-5814858098812$ & $0$ \\
+$j=0$ & $  959230706680$ & $ -959230706679$ & $1$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+Thus every nonconstant coefficient cancels and the constant coefficient is $1$, proving \eqref{eq:identity-one}.
+
+For \eqref{eq:identity-two}, the corresponding quadratic coefficients are
+\begin{center}
+\small
+\begin{tabular}{c r r r}
+\toprule
+power & $[t^j]\,(P^2+Q^2)$ & $[t^j]\,(R^2+S^2)$ & difference \\
+\midrule
+$j=2$ & $2357694538$ & $457360996$ & $1900333542$ \\
+$j=1$ & $2333988934$ & $452762428$ & $1881226506$ \\
+$j=0$ & $ 577630421$ & $112052525$ & $ 465577896$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+This proves \eqref{eq:identity-two} and \eqref{eq:F-definition} coefficient by coefficient.
+\end{proof}
+
+Indeed, if $F(t)=y^2$ for some integers $t$ and $y$, then \eqref{eq:identity-one} and \eqref{eq:identity-two} are exactly the two hypotheses of \cref{lem:gaussian}.  The problem is therefore reduced to proving that $F(t)$ is a square for infinitely many integers $t$.  We give a fully self-contained Pell-type argument.
+
+\section{A self-contained Pell propagation theorem}
+
+For a fixed positive nonsquare integer $D$ and an element $\alpha=u+v\sqrt D$, define
+\[
+ \overline\alpha=u-v\sqrt D,
+ \qquad
+ \Norm(\alpha)=\alpha\overline\alpha=u^2-Dv^2.
+\]
+Direct multiplication gives $\overline{\alpha\beta}=\overline\alpha\,\overline\beta$ and hence
+\begin{equation}\label{eq:norm-multiplicative}
+ \Norm(\alpha\beta)=\Norm(\alpha)\Norm(\beta).
+\end{equation}
+We first prove the only existence fact about Pell equations that will be used.
+
+\begin{lemma}[Existence of a nontrivial Pell unit]\label{lem:pell-existence}
+Let $D>0$ be a nonsquare integer.  Then there exist integers $r>1$ and $s>0$ such that
+\begin{equation}\label{eq:pell-basic}
+ r^2-Ds^2=1.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Since $D$ is a positive nonsquare integer, $\sqrt D$ is irrational.  For each integer $N\ge 2$, consider the $N+1$ fractional parts
+\[
+ \{0\sqrt D\},\{1\sqrt D\},\ldots,\{N\sqrt D\}
+\]
+in the interval $[0,1)$.  Partition $[0,1)$ into $N$ half-open intervals of length $1/N$.  By the pigeonhole principle, two of the fractional parts lie in the same interval.  Subtracting them, we obtain integers $p$ and $q$ such that
+\begin{equation}\label{eq:dirichlet-approx}
+ 1\le q\le N,
+ \qquad
+ |q\sqrt D-p|<\frac1N.
+\end{equation}
+For all sufficiently large $N$, the integer $p$ is positive.
+
+Infinitely many distinct pairs $(p,q)$ occur in this way.  Indeed, if only finitely many occurred, the finitely many positive numbers $|q\sqrt D-p|$ would have a positive minimum; this would contradict \eqref{eq:dirichlet-approx} for sufficiently large $N$.
+
+For every such pair, put
+\[
+ k=p^2-Dq^2.
+\]
+The integer $k$ is nonzero, because $D$ is not a square and $q\ne0$.  Moreover, using \eqref{eq:dirichlet-approx}, $q\le N$, and
+$p<q\sqrt D+1/N$, we obtain
+\begin{align*}
+ |k|
+ &=|p-q\sqrt D|\,(p+q\sqrt D)\\
+ &<\frac1N\left(2N\sqrt D+1\right)\\
+ &<2\sqrt D+1.
+\end{align*}
+Thus $k$ belongs to a fixed finite set of nonzero integers.  One value of $k$ must therefore occur for infinitely many distinct positive pairs $(p,q)$.
+
+Among those infinitely many pairs, choose two distinct pairs $(p_1,q_1)$ and $(p_2,q_2)$ that are componentwise congruent modulo $|k|$.  This is possible because there are only $|k|^2$ residue classes.  Define
+\begin{equation}\label{eq:pell-rs-construction}
+ r_0=\frac{p_1p_2-Dq_1q_2}{k},
+ \qquad
+ s_0=\frac{q_1p_2-p_1q_2}{k}.
+\end{equation}
+The congruences imply that both numerators in \eqref{eq:pell-rs-construction} are divisible by $k$, so $r_0,s_0\in\Z$.  Multiplying in $\Z[\sqrt D]$ gives
+\begin{align*}
+ r_0+s_0\sqrt D
+ &=\frac{(p_1+q_1\sqrt D)(p_2-q_2\sqrt D)}{k}.
+\end{align*}
+Taking norms therefore yields
+\[
+ r_0^2-Ds_0^2
+ =\frac{(p_1^2-Dq_1^2)(p_2^2-Dq_2^2)}{k^2}
+ =1.
+\]
+We also have $s_0\ne0$.  Otherwise $q_1p_2=p_1q_2$, so the two positive pairs are positive rational multiples of one another.  Since both have the same nonzero norm $k$, the square of that multiplier is $1$, forcing the multiplier to be $1$ and the two pairs to be equal, a contradiction.
+
+Finally, set $r=|r_0|$ and $s=|s_0|$.  Then $s>0$ and
+$r^2=1+Ds^2>1$, so $r>1$.  Equation \eqref{eq:pell-basic} follows.
+\end{proof}
+
+We next arrange the congruences needed to return from a generalized Pell equation to an integral value of the original variable.
+
+\begin{lemma}[Congruence-controlled Pell unit]\label{lem:congruence-unit}
+Let $D>0$ be a nonsquare integer and let $M\ge1$.  There exist integers $\rho>1$ and $\sigma>0$ such that
+\begin{align}
+ \rho^2-D\sigma^2&=1, \label{eq:controlled-norm}\\
+ \rho&\equiv1\pmod M, \label{eq:controlled-rho}\\
+ \sigma&\equiv0\pmod M. \label{eq:controlled-sigma}
+\end{align}
+\end{lemma}
+
+\begin{proof}
+Choose $r>1$ and $s>0$ as in \cref{lem:pell-existence}.  If $M=1$, the congruence conditions are vacuous, and $(\rho,\sigma)=(r,s)$ is sufficient.  Hence assume $M\ge2$ and put
+\[
+ \varepsilon=r+s\sqrt D.
+\]
+Consider the finite ring
+\[
+ \mathcal R_M=(\Z/M\Z)[w]/(w^2-D).
+\]
+Because the defining polynomial is monic of degree $2$, every class has a unique representative $a+bw$ with $a,b\in\Z/M\Z$; in particular, $\mathcal R_M$ has exactly $M^2$ elements.  The residue class of $\varepsilon$ is a unit in $\mathcal R_M$, because its inverse is the residue class of $r-s\sqrt D$ and
+\[
+ (r+s\sqrt D)(r-s\sqrt D)=1.
+\]
+The unit group of the finite ring $\mathcal R_M$ is finite.  Hence the class of $\varepsilon$ has finite multiplicative order: for some $h\ge1$,
+\[
+ \varepsilon^h\equiv1\pmod M
+\]
+coefficientwise in the basis $1,\sqrt D$.  Write
+\[
+ \varepsilon^h=\rho+\sigma\sqrt D.
+\]
+Then \eqref{eq:controlled-rho} and \eqref{eq:controlled-sigma} hold.  Norms are multiplicative, so \eqref{eq:controlled-norm} holds as well.  Finally, because $r>1$ and $s>0$, every positive power of $r+s\sqrt D$ has positive integral coefficients; hence $\rho>1$ and $\sigma>0$.
+\end{proof}
+
+We can now prove the square-value theorem needed later.
+
+\begin{proposition}[Pell propagation for quadratic square values]\label{prop:pell-propagation}
+Let
+\[
+ f(T)=AT^2+BT+C\in\Z[T],
+\]
+where $A>0$ is not a square.  Assume that
+\begin{equation}\label{eq:nonzero-discriminant}
+ \Delta=B^2-4AC\ne0
+\end{equation}
+and that there is at least one pair $(T_0,Y_0)\in\Z^2$ satisfying
+\begin{equation}\label{eq:initial-square}
+ Y_0^2=f(T_0).
+\end{equation}
+Then $Y^2=f(T)$ has infinitely many integer solutions $(T,Y)$.  More precisely, the resulting integer values of $T$ are unbounded in absolute value.
+\end{proposition}
+
+\begin{proof}
+Completing the square shows that \eqref{eq:initial-square} is equivalent to
+\begin{equation}\label{eq:generalized-pell-initial}
+ U_0^2-AV_0^2=\Delta,
+\end{equation}
+where
+\begin{equation}\label{eq:UV-initial}
+ U_0=2AT_0+B,
+ \qquad
+ V_0=2Y_0.
+\end{equation}
+Indeed,
+\begin{align*}
+ (2AT+B)^2-A(2Y)^2
+ &=B^2+4A(AT^2+BT-Y^2),
+\end{align*}
+and this equals $B^2-4AC$ precisely when $Y^2=AT^2+BT+C$.
+
+Apply \cref{lem:congruence-unit} with $D=A$ and $M=2A$.  We obtain $\rho>1$ and $\sigma>0$ such that
+\begin{equation}\label{eq:prop-unit}
+ \rho^2-A\sigma^2=1,
+ \qquad
+ \rho\equiv1\pmod{2A},
+ \qquad
+ \sigma\equiv0\pmod{2A}.
+\end{equation}
+For $n\ge0$, define $U_n,V_n\in\Z$ by
+\begin{equation}\label{eq:pell-orbit}
+ U_n+V_n\sqrt A=(U_0+V_0\sqrt A)(\rho+\sigma\sqrt A)^n.
+\end{equation}
+Equivalently, they satisfy the integral recurrence
+\begin{align}
+ U_{n+1}&=\rho U_n+A\sigma V_n, \label{eq:U-recurrence}\\
+ V_{n+1}&=\sigma U_n+\rho V_n. \label{eq:V-recurrence}
+\end{align}
+Taking norms in \eqref{eq:pell-orbit} and using \eqref{eq:prop-unit} gives
+\begin{equation}\label{eq:orbit-norm}
+ U_n^2-AV_n^2=\Delta
+ \qquad(n\ge0).
+\end{equation}
+The congruences in \eqref{eq:prop-unit}, together with \eqref{eq:U-recurrence} and \eqref{eq:V-recurrence}, imply inductively that
+\begin{equation}\label{eq:orbit-congruences}
+ U_n\equiv U_0\pmod{2A},
+ \qquad
+ V_n\equiv V_0\pmod{2A}.
+\end{equation}
+Since $U_0\equiv B\pmod{2A}$ and $V_0$ is even, the quantities
+\begin{equation}\label{eq:TY-orbit}
+ T_n=\frac{U_n-B}{2A},
+ \qquad
+ Y_n=\frac{V_n}{2}
+\end{equation}
+are integers.  Substituting \eqref{eq:TY-orbit} into \eqref{eq:orbit-norm}, and reversing the completed-square calculation, yields
+\[
+ Y_n^2=AT_n^2+BT_n+C=f(T_n).
+\]
+It remains to prove that infinitely many of these solutions are distinct.
+
+Set
+\[
+ \alpha=U_0+V_0\sqrt A,
+ \qquad
+ \varepsilon=\rho+\sigma\sqrt A>1.
+\]
+Because $\Norm(\alpha)=\Delta\ne0$, we have $\alpha\ne0$.  The conjugate of $\varepsilon$ is $\varepsilon^{-1}$, since $\Norm(\varepsilon)=1$.  Hence \eqref{eq:pell-orbit} and its conjugate give
+\begin{equation}\label{eq:Un-growth}
+ U_n=\frac{\alpha\varepsilon^n+\overline\alpha\,\varepsilon^{-n}}{2}.
+\end{equation}
+The first term on the right of \eqref{eq:Un-growth} tends to infinity in absolute value, while the second tends to $0$.  Thus $|U_n|\to\infty$, and therefore $|T_n|\to\infty$ by \eqref{eq:TY-orbit}.  In particular, the pairs $(T_n,Y_n)$ include infinitely many distinct integer solutions.
+\end{proof}
+
+\begin{remark}\label{rem:why-discriminant}
+The hypothesis $\Delta\ne0$ in \cref{prop:pell-propagation} is used only to ensure that the initial generalized-Pell element $U_0+V_0\sqrt A$ is nonzero, which makes the orbit unbounded.  In the application below, the discriminant is explicitly negative and nonzero.
+\end{remark}
+
+\section{Infinitely many square values of the auxiliary quadratic}
+
+We apply \cref{prop:pell-propagation} to the polynomial $F$ in \eqref{eq:F-definition}.  Set
+\begin{equation}\label{eq:ABC-values}
+ A=1900333542,
+ \qquad
+ B=1881226506,
+ \qquad
+ C=465577896.
+\end{equation}
+First, $A$ is not a square, because
+\begin{equation}\label{eq:A-nonsquare}
+ 43592^2=1900262464
+ <1900333542
+ <1900349649=43593^2.
+\end{equation}
+Second, the discriminant is
+\begin{equation}\label{eq:F-discriminant}
+ B^2-4AC=-1853382492\ne0.
+\end{equation}
+Third, $F$ has the following integral square value:
+\begin{align}
+ F(-659)
+ &=1900333542\cdot659^2-1881226506\cdot659+465577896 \notag\\
+ &=825278750953302-1239728267454+465577896 \notag\\
+ &=824039488263744 \notag\\
+ &=28706088^2. \label{eq:initial-F-square}
+\end{align}
+All hypotheses of \cref{prop:pell-propagation} are therefore satisfied.
+
+\begin{corollary}\label{cor:F-infinitely-many-squares}
+There exist infinitely many pairs $(t,y)\in\Z^2$ satisfying
+\begin{equation}\label{eq:F-square}
+ y^2=F(t).
+\end{equation}
+Moreover, the corresponding integers $t$ are unbounded in absolute value.
+\end{corollary}
+
+\begin{proof}
+Apply \cref{prop:pell-propagation} using \eqref{eq:ABC-values}, \eqref{eq:A-nonsquare}, \eqref{eq:F-discriminant}, and \eqref{eq:initial-F-square}.
+\end{proof}
+
+For completeness, the Pell orbit in this application begins with
+\begin{align*}
+ U_0&=2A(-659)+B=-2502758381850,\\
+ V_0&=2\cdot28706088=57412176,
+\end{align*}
+and it satisfies
+\[
+ U_0^2-AV_0^2=-1853382492.
+\]
+Any norm-one Pell unit $\rho+\sigma\sqrt A$ satisfying
+\[
+ \rho\equiv1\pmod{2A},
+ \qquad
+ \sigma\equiv0\pmod{2A}
+\]
+then gives the explicit recurrence \eqref{eq:U-recurrence}, \eqref{eq:V-recurrence}, and \eqref{eq:TY-orbit}.  The existence of such a unit was proved in \cref{lem:congruence-unit}; no unproved appeal to the classical Pell theorem remains.
+
+\section{Proof of the main theorem}
+
+\begin{proof}[Proof of \cref{thm:main}]
+Let $(t,y)$ be any of the infinitely many integer pairs supplied by \cref{cor:F-infinitely-many-squares}.  Define $P=P(t)$, $Q=Q(t)$, $R=R(t)$, and $S=S(t)$ by equations \eqref{eq:P-poly}--\eqref{eq:S-poly}.  By \cref{prop:poly-identities},
+\[
+ 2PQR+(P^2-Q^2)S=1
+ \quad\text{and}\quad
+ P^2+Q^2-R^2-S^2=F(t)=y^2.
+\]
+Therefore the hypotheses of \cref{lem:gaussian} hold.  Define
+\begin{align}
+ x(t)&=-\bigl(P(t)^2+Q(t)^2\bigr), \label{eq:x-family}\\
+ z(t)&=\bigl(P(t)^2-Q(t)^2\bigr)R(t)-2P(t)Q(t)S(t). \label{eq:z-family}
+\end{align}
+For reference, the latter polynomial expands to
+\begin{equation}\label{eq:z-expanded}
+ z(t)=50421655389668t^3+74872031013786t^2
+      +37059612550518t+6114499038718.
+\end{equation}
+Then
+\[
+ x(t)^3+x(t)^2y^2+z(t)^2+1=0.
+\]
+In fact, the same calculation before specializing $F(t)$ to the square $y^2$ gives the polynomial identity
+\begin{equation}\label{eq:master-polynomial-identity}
+ x(t)^3+x(t)^2F(t)+z(t)^2+1=0
+ \qquad\text{in }\Z[t].
+\end{equation}
+
+It remains only to verify that infinitely many distinct triples arise.  From the coefficient calculation in \cref{prop:poly-identities},
+\begin{equation}\label{eq:a-polynomial}
+ P(t)^2+Q(t)^2
+ =2357694538t^2+2333988934t+577630421.
+\end{equation}
+This quadratic has positive leading coefficient, so it tends to $+\infty$ as $|t|\to\infty$.  By \cref{cor:F-infinitely-many-squares}, the admissible values of $t$ are unbounded in absolute value.  Consequently, \eqref{eq:a-polynomial} assumes infinitely many values on those admissible integers, and hence the integers $x(t)$ in \eqref{eq:x-family} assume infinitely many distinct values.  The resulting solution triples are therefore pairwise distinct along an infinite subsequence.
+\end{proof}
+
+
+
+\section{Concrete solutions and independent checks}
+
+Taking the initial Pell point $t=-659$ gives
+\begin{align*}
+ P(-659)&=-20734347,
+ &Q(-659)&=24340322,\\
+ R(-659)&=2238918,
+ &S(-659)&=-13903675,
+\end{align*}
+and \eqref{eq:initial-F-square} gives $y=\pm28706088$.  The definitions \eqref{eq:x-family} and \eqref{eq:z-family} yield
+\begin{align*}
+ x&=-1022364420580093,\\
+ z&=-14397741918770263093350.
+\end{align*}
+Thus, for example,
+\begin{equation}\label{eq:large-example}
+ \boxed{
+ (x,y,z)=
+ (-1022364420580093,\ 28706088,\ -14397741918770263093350)
+ }
+\end{equation}
+is an integer solution.  Its validity follows from the proved identities, but it may also be checked directly by exact integer arithmetic.
+
+There is also a much smaller solution not needed for the infinite-family proof:
+\begin{equation}\label{eq:small-example}
+ (x,y,z)=(-493,12,9210).
+\end{equation}
+Indeed,
+\[
+ 493-12^2=349
+ \quad\text{and}\quad
+ 9210^2+1=84824101=493^2\cdot349.
+\]
+Hence
+\[
+ (-493)^3+(-493)^2\cdot12^2+9210^2+1=0.
+\]
+By sign symmetry, both signs of $12$ and both signs of $9210$ give solutions.
+
+\section{Conclusion}
+
+The proof supplies an unconditional infinite construction.  The essential points are:
+\begin{enumerate}
+ \item the two-square identity in \cref{lem:gaussian}, which converts the conditions \eqref{eq:bezout-condition} and \eqref{eq:square-difference} into a solution of the original equation;
+ \item the exact linear-polynomial identities in \cref{prop:poly-identities}; and
+ \item the self-contained Pell propagation theorem, which forces the quadratic $F(t)$ to be a square for infinitely many unbounded integer values of $t$.
+\end{enumerate}
+Therefore \eqref{eq:original} has infinitely many integer solutions, as claimed.
+
+\end{document}
