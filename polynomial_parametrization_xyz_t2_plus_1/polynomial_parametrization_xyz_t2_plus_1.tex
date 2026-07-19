@@ -1,0 +1,259 @@
+documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[margin=0.9in]{geometry}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={A Dominant Polynomial Parametrization of xyz plus t squared plus 1 equals 0}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\A}{\mathbb A}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\Q}{\mathbb Q}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries A Dominant Polynomial Parametrization of\\[0.2em]
+$xyz+t^2+1=0$\par}
+\end{center}
+\vspace{-0.7em}
+
+\begin{abstract}
+We construct an explicit three-parameter polynomial family of integral
+solutions to $xyz+t^2+1=0$. The resulting polynomial map
+$\A^3_{\Q}\to V(xyz+t^2+1)$ is dominant, so the family is Zariski dense.
+A one-parameter specialization in which all four coordinates are nonzero
+is also recorded.
+\end{abstract}
+
+\section{The polynomial construction}
+
+\begin{lemma}[Factorization identity]\label{lem:identity}
+For arbitrary elements $U,V$ of any commutative ring,
+\begin{equation}\label{eq:identity}
+ \bigl(U+V(U^2+1)\bigr)^2+1
+   =(U^2+1)\bigl((1+UV)^2+V^2\bigr).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Expanding the left-hand side and extracting the common factor $U^2+1$
+gives
+\begin{align*}
+\bigl(U+V(U^2+1)\bigr)^2+1
+ &=U^2+1+2UV(U^2+1)+V^2(U^2+1)^2\\
+ &=(U^2+1)\bigl(1+2UV+V^2(U^2+1)\bigr)\\
+ &=(U^2+1)\bigl((1+UV)^2+V^2\bigr).
+\end{align*}
+\end{proof}
+
+\begin{theorem}[Three-parameter integral family]\label{thm:family}
+Let $a,b,c\in\Z$, and put
+\begin{equation}\label{eq:rdef}
+ r=a+b(a^2+1).
+\end{equation}
+Define
+\begin{equation}\label{eq:param}
+\begin{aligned}
+ X&=-\bigl((1+cr)^2+c^2\bigr),\\
+ Y&=(1+ab)^2+b^2,\\
+ Z&=a^2+1,\\
+ T&=r+c(r^2+1).
+\end{aligned}
+\end{equation}
+Then
+\begin{equation}\label{eq:surface}
+ XYZ+T^2+1=0.
+\end{equation}
+Moreover, $X<0$, $Y>0$, and $Z>0$; in particular, $XYZ\ne0$.
+Thus \eqref{eq:param} defines a polynomial map $\Z^3\to\Z^4$ whose
+image consists of integral points on \eqref{eq:surface}.
+\end{theorem}
+
+\begin{proof}
+Apply Lemma~\ref{lem:identity} first with $(U,V)=(a,b)$. By
+\eqref{eq:rdef},
+\begin{equation}\label{eq:firstfactor}
+ r^2+1=(a^2+1)\bigl((1+ab)^2+b^2\bigr)=ZY.
+\end{equation}
+Apply the same identity again with $(U,V)=(r,c)$. Using
+\eqref{eq:firstfactor} and the definition of $X$, we obtain
+\begin{align*}
+ T^2+1
+  &=(r^2+1)\bigl((1+cr)^2+c^2\bigr)\\
+  &=ZY(-X)=-XYZ,
+\end{align*}
+which is exactly \eqref{eq:surface}.
+
+Finally, $Z=a^2+1\ge1$. The integer $Y$ is a sum of two squares and
+cannot vanish: if $Y=0$, then $b=0$ and $1+ab=0$, which would give
+$1=0$. Hence $Y\ge1$. Similarly, $-X$ is a sum of two squares and
+cannot vanish: if it vanished, then $c=0$ and $1+cr=0$, again giving
+$1=0$. Therefore $-X\ge1$, so $X<0$.
+\end{proof}
+
+The family is infinite, since its $Z$-coordinate, $a^2+1$, is unbounded
+as $a$ ranges over $\Z$.
+
+\section{Dominance}
+
+\begin{lemma}[Jacobian criterion used here]\label{lem:jacobian}
+Let $k$ be a field of characteristic zero and let
+$f_1,\dots,f_n\in k[u_1,\dots,u_n]$. If
+\[
+ \det\left(\frac{\partial f_i}{\partial u_j}\right)_{1\le i,j\le n}
+\]
+is not the zero polynomial, then $f_1,\dots,f_n$ are algebraically
+independent over $k$. Equivalently, the polynomial map
+$(f_1,\dots,f_n):\A_k^n\to\A_k^n$ is dominant.
+\end{lemma}
+
+\begin{proof}
+Suppose, to the contrary, that a nonzero polynomial
+$P\in k[s_1,\dots,s_n]$ satisfies $P(f_1,\dots,f_n)=0$. Choose such a
+$P$ of least total degree. Differentiating this relation with respect
+to $u_1,\dots,u_n$ and applying the chain rule yields
+\[
+ \bigl(P_{s_1}(f),\dots,P_{s_n}(f)\bigr)
+ \left(\frac{\partial f_i}{\partial u_j}\right)_{i,j}=0.
+\]
+The Jacobian matrix is invertible over the rational function field
+$k(u_1,\dots,u_n)$, because its determinant is nonzero. Consequently
+$P_{s_i}(f)=0$ for every $i$. By the minimality of $P$, each nonzero
+partial derivative $P_{s_i}$ is impossible, since it has smaller total
+degree. Hence every $P_{s_i}$ is the zero polynomial. Characteristic
+zero then forces $P$ to be constant, contradicting the choice of a
+nonzero relation. Thus the $f_i$ are algebraically independent.
+
+For the final assertion, the ideal of the Zariski closure of the image
+is precisely the kernel of the induced homomorphism
+$k[s_1,\dots,s_n]\to k[u_1,\dots,u_n]$, $s_i\mapsto f_i$. Algebraic
+independence says that this kernel is zero, so the closure is all of
+$\A_k^n$.
+\end{proof}
+
+\begin{proposition}[Zariski density]\label{prop:dominance}
+Let
+\[
+ H=V(xyz+t^2+1)\subset\A^4_{\Q}.
+\]
+The polynomial map $\Phi:\A^3_{\Q}\to H$ defined by
+\eqref{eq:rdef}--\eqref{eq:param} is dominant. Hence the family in
+Theorem~\ref{thm:family} is a dominant polynomial parametrization of
+$H$.
+\end{proposition}
+
+\begin{proof}
+First, $H$ is irreducible. Indeed, set $R=\Q[y,z,t]$ and regard
+\[
+ F=xyz+t^2+1=(yz)x+(t^2+1)
+\]
+as a polynomial in $R[x]$. If $F=AB$ were a nontrivial factorization,
+then $\deg_x F=1$ would force one factor, say $A$, to lie in $R$.
+It would then divide both coefficients $yz$ and $t^2+1$. These
+coefficients are coprime in $R$: every irreducible divisor of $yz$ is
+associated to $y$ or to $z$, and neither $y$ nor $z$ divides $t^2+1$.
+Thus $A$ is a unit, a contradiction.
+
+Consider the composite of $\Phi$ with projection to the $(z,y,t)$
+coordinates:
+\[
+ \psi=(Z,Y,T):\A^3_{\Q}\longrightarrow\A^3_{\Q}.
+\]
+Since $Z$ and $Y$ are independent of $c$, while
+$\partial T/\partial c=r^2+1=ZY$, its Jacobian matrix has the form
+\[
+ \frac{\partial(Z,Y,T)}{\partial(a,b,c)}=
+ \begin{pmatrix}
+  2a & 0 & 0\\
+  2b(1+ab) & 2r & 0\\
+  * & * & ZY
+ \end{pmatrix}.
+\]
+Here
+\[
+ \frac{\partial Y}{\partial b}
+ =2a(1+ab)+2b=2\bigl(a+b(a^2+1)\bigr)=2r.
+\]
+Therefore
+\begin{equation}\label{eq:jacdet}
+ \det\frac{\partial(Z,Y,T)}{\partial(a,b,c)}=4arZY,
+\end{equation}
+which is not the zero polynomial. Lemma~\ref{lem:jacobian} shows that
+$\psi$ is dominant.
+
+Let $U=\{(z,y,t):yz\ne0\}\subset\A^3_{\Q}$ and
+$H^{\circ}=H\cap\{yz\ne0\}$. Projection
+\[
+ \pi:H^{\circ}\longrightarrow U,\qquad (x,y,z,t)\longmapsto(z,y,t),
+\]
+is an isomorphism, with inverse
+\[
+ (z,y,t)\longmapsto
+ \left(-\frac{t^2+1}{yz},\,y,\,z,\,t\right).
+\]
+On $\psi^{-1}(U)$, the identity already proved gives
+$\Phi=\pi^{-1}\circ\psi$. Since $\psi$ has dense image, its image in
+$U$ is dense in $U$; hence the image of $\Phi$ is dense in
+$H^{\circ}$. The set $H^{\circ}$ is a nonempty open subset of the
+irreducible variety $H$ (it contains $(-1,1,1,0)$), and is therefore
+dense in $H$. Thus $\Phi$ is dominant. Since $\Z^3$ is Zariski dense
+in $\A^3_{\Q}$, the integral set $\Phi(\Z^3)$ is itself Zariski dense
+in $H$.
+\end{proof}
+
+\section{A one-parameter specialization}
+
+\begin{corollary}\label{cor:oneparameter}
+For every $n\in\Z$, set
+\begin{equation}\label{eq:oneparam}
+\begin{aligned}
+ x_n&=-\bigl((n^2-n)^2+1\bigr),\\
+ y_n&=(n-1)^2+1,\\
+ z_n&=n^2+1,\\
+ t_n&=n^4-2n^3+2n^2-n+1.
+\end{aligned}
+\end{equation}
+Then
+\[
+ x_ny_nz_n+t_n^2+1=0,
+\]
+and all four coordinates are nonzero.
+\end{corollary}
+
+\begin{proof}
+In Theorem~\ref{thm:family}, substitute $a=n$, $b=-1$, and $c=1$.
+Then
+\[
+ r=n-(n^2+1)=-(n^2-n+1),
+\]
+and direct simplification gives exactly \eqref{eq:oneparam}. The
+asserted equation follows from Theorem~\ref{thm:family}. Its proof
+already gives $x_n<0$, $y_n>0$, and $z_n>0$. If
+$q=n^2-n+1$, then $q\ge1$ and $t_n=q^2-q+1\ge1$, so $t_n\ne0$ as well.
+\end{proof}
+
+Equivalently, Corollary~\ref{cor:oneparameter} supplies the polynomial
+identity
+\[
+\bigl(n^4-2n^3+2n^2-n+1\bigr)^2+1
+ =\bigl((n^2-n)^2+1\bigr)\bigl((n-1)^2+1\bigr)(n^2+1).
+\]
+For example, $n=2$ gives $(x,y,z,t)=(-5,2,5,7)$.
+
+\begin{remark}[Scope]
+Dominance is a geometric density statement. No claim is made that
+\eqref{eq:param} represents every integral point of $H$; it gives an
+explicit Zariski-dense polynomial family of such points.
+\end{remark}
+
+\end{document}
