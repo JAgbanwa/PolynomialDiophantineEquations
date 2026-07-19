@@ -1,0 +1,372 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=28mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+
+\title{A Polynomial Parametrization of the Surface\\[2mm]
+\texorpdfstring{$x^3+yz+1=0$}{x^3+yz+1=0}}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\vspace{-1.5em}
+
+\begin{abstract}
+We construct an explicit two-parameter polynomial family of integral
+solutions to
+\[
+ x^3+yz+1=0.
+\]
+More precisely, the polynomial map
+\[
+ (a,b)\longmapsto
+ \bigl(ab-1,\ a,\ -b(a^2b^2-3ab+3)\bigr)
+\]
+takes $\Z^2$ into the set of integral solutions.  Over $\Q$, the same
+map is a bijection onto the full set of rational solutions.  We prove
+these assertions, characterize exactly which integral points arise
+from integral parameter values, record two useful one-parameter
+families, and explain in detail the factorization and
+parameter-splitting idea that leads naturally to the construction.
+\end{abstract}
+
+\section{The polynomial construction}
+
+For a commutative ring $R$, write
+\[
+ S(R)=\bigl\{(x,y,z)\in R^3:x^3+yz+1=0\bigr\}.
+\]
+The elementary identity underlying the construction is
+\begin{equation}\label{eq:factorization}
+ X^3+1=(X+1)(X^2-X+1).
+\end{equation}
+
+\begin{theorem}[Two-parameter polynomial family]\label{thm:main}
+For arbitrary $a,b\in\Z$, define
+\begin{equation}\label{eq:parametrization}
+ \boxed{
+ \begin{aligned}
+ x&=ab-1,\\
+ y&=a,\\
+ z&=-b\bigl(a^2b^2-3ab+3\bigr).
+ \end{aligned}}
+\end{equation}
+Then $(x,y,z)\in S(\Z)$.  Equivalently, the following identity holds
+in the polynomial ring $\Z[a,b]$:
+\[
+ (ab-1)^3
+ +a\bigl[-b(a^2b^2-3ab+3)\bigr]+1=0.
+\]
+\end{theorem}
+
+\begin{proof}
+Set $X=ab-1$.  Then
+\[
+ X+1=ab
+\]
+and
+\begin{align*}
+ X^2-X+1
+ &=(ab-1)^2-(ab-1)+1\\
+ &=a^2b^2-3ab+3.
+\end{align*}
+Applying \eqref{eq:factorization} gives
+\[
+ X^3+1
+ =ab\bigl(a^2b^2-3ab+3\bigr).
+\]
+On the other hand, the definitions of $y$ and $z$ give
+\[
+ yz
+ =a\left[-b\bigl(a^2b^2-3ab+3\bigr)\right]
+ =-ab\bigl(a^2b^2-3ab+3\bigr).
+\]
+Hence $X^3+yz+1=0$.  Since all three coordinates in
+\eqref{eq:parametrization} are polynomials with integer coefficients,
+they are integers whenever $a$ and $b$ are integers.
+\end{proof}
+
+\begin{corollary}[Infinitely many integral solutions]\label{cor:infinite}
+For every $t\in\Z$,
+\begin{equation}\label{eq:oneparameter}
+ \boxed{(x,y,z)=\bigl(t,\ t+1,\ -(t^2-t+1)\bigr)}
+\end{equation}
+is an integral solution.  These solutions are pairwise distinct as
+$t$ varies; in particular, $S(\Z)$ is infinite.
+\end{corollary}
+
+\begin{proof}
+In Theorem~\ref{thm:main}, take $a=t+1$ and $b=1$.  Then
+$x=(t+1)-1=t$, while
+\[
+ a^2-3a+3=(t+1)^2-3(t+1)+3=t^2-t+1,
+\]
+which gives \eqref{eq:oneparameter}.  Distinct values of $t$ give
+distinct values of the first coordinate $x=t$.
+\end{proof}
+
+\section{Completeness over the rational numbers}
+
+The polynomial family above is not merely a convenient source of
+solutions.  With rational parameters it describes every rational
+point on the surface.
+
+\begin{theorem}[All rational solutions]\label{thm:rational}
+Define
+\[
+ \Phi:\Q^2\longrightarrow S(\Q),\qquad
+ \Phi(a,b)=
+ \bigl(ab-1,\ a,\ -b(a^2b^2-3ab+3)\bigr).
+\]
+Then $\Phi$ is a bijection.  Its inverse is given explicitly by
+\begin{equation}\label{eq:inverse}
+ \Phi^{-1}(x,y,z)=
+ \begin{cases}
+ \displaystyle\left(y,\frac{x+1}{y}\right),&y\ne0,\\[3mm]
+ \displaystyle\left(0,-\frac{z}{3}\right),&y=0.
+ \end{cases}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Theorem~\ref{thm:main} proves the defining relation as a polynomial
+identity, so it remains valid for $a,b\in\Q$.  Thus $\Phi$ is
+well-defined.
+
+Let $(x,y,z)\in S(\Q)$.  First suppose that $y\ne0$, and put
+\[
+ a=y,
+ \qquad
+ b=\frac{x+1}{y}.
+\]
+Then $ab=x+1$, and hence $ab-1=x$.  Moreover,
+\begin{align*}
+ a^2b^2-3ab+3
+ &=(x+1)^2-3(x+1)+3\\
+ &=x^2-x+1.
+\end{align*}
+Consequently,
+\begin{align*}
+ -b(a^2b^2-3ab+3)
+ &=-\frac{x+1}{y}(x^2-x+1)\\
+ &=-\frac{x^3+1}{y}\\
+ &=z,
+\end{align*}
+where the last equality is exactly the equation
+$x^3+yz+1=0$.  Hence $\Phi(a,b)=(x,y,z)$.
+
+Now suppose that $y=0$.  The defining equation becomes $x^3+1=0$.
+Over $\Q$ this forces $x=-1$.  Taking
+\[
+ a=0,
+ \qquad
+ b=-\frac{z}{3},
+\]
+we obtain
+\[
+ \Phi(a,b)=(-1,0,-3b)=(-1,0,z).
+\]
+Thus $\Phi$ is surjective and \eqref{eq:inverse} is a right inverse.
+
+To prove injectivity, suppose $\Phi(a,b)=\Phi(a',b')$.  Equality of the
+second coordinates gives $a=a'$.  If this common value is nonzero,
+equality of the first coordinates gives $ab=a'b'$, hence $b=b'$.
+If $a=a'=0$, equality of the third coordinates gives
+$-3b=-3b'$, hence again $b=b'$.  Therefore $(a,b)=(a',b')$, and
+$\Phi$ is bijective.
+\end{proof}
+
+\begin{proposition}[The image of integral parameter values]\label{prop:integralimage}
+Let $(x,y,z)\in S(\Z)$.  Then $(x,y,z)\in\Phi(\Z^2)$ if and only if
+one of the following mutually exclusive conditions holds:
+\begin{enumerate}
+ \item $y\ne0$ and $y\mid x+1$;
+ \item $y=0$ and $3\mid z$.
+\end{enumerate}
+In the first case the unique integral parameters are
+\[
+ (a,b)=\left(y,\frac{x+1}{y}\right),
+\]
+and in the second case they are
+\[
+ (a,b)=\left(0,-\frac{z}{3}\right).
+\]
+\end{proposition}
+
+\begin{proof}
+By Theorem~\ref{thm:rational}, every point of $S(\Z)$ has the unique
+rational parameters displayed in \eqref{eq:inverse}.  If $y\ne0$,
+those parameters are integral exactly when
+$(x+1)/y\in\Z$, which is equivalent to $y\mid x+1$.  If $y=0$, the
+equation forces $x=-1$, and the unique parameters are integral exactly
+when $-z/3\in\Z$, which is equivalent to $3\mid z$.
+\end{proof}
+
+\begin{remark}\label{rem:notallintegral}
+The distinction in Proposition~\ref{prop:integralimage} is essential.
+For example, $(2,9,-1)$ is an integral solution because
+$2^3+9(-1)+1=0$, but its unique parameters are $(9,1/3)$, not an
+integer pair.  Thus \eqref{eq:parametrization} gives a large polynomial
+family of integral points but does not exhaust $S(\Z)$ when the
+parameters are required to be integral.
+\end{remark}
+
+\section{How the construction was found}\label{sec:discovery}
+
+The construction is guided by two requirements: the equation should
+hold identically, and every displayed coordinate should remain a
+polynomial in freely chosen parameters.  The following sequence of
+observations leads directly to \eqref{eq:parametrization}.
+
+\subsection*{1. Isolate the product}
+The equation may be rewritten as
+\begin{equation}\label{eq:product}
+ yz=-(x^3+1).
+\end{equation}
+Thus one does not need to control $y$ and $z$ separately at first; one
+only needs to split the polynomial $-(x^3+1)$ into two factors.
+
+\subsection*{2. Use the sum-of-cubes factorization}
+The cubic has the canonical factorization
+\[
+ x^3+1=(x+1)(x^2-x+1).
+\]
+The most immediate choice in \eqref{eq:product} is therefore
+\[
+ y=x+1,
+ \qquad
+ z=-(x^2-x+1).
+\]
+This already gives the one-parameter family
+\[
+ (x,y,z)=\bigl(t,t+1,-(t^2-t+1)\bigr).
+\]
+It is correct, but it uses only one free parameter.
+
+\subsection*{3. Split the linear factor to create a second parameter}
+To introduce a second independent parameter without creating
+fractions, the linear factor $x+1$ is the natural place to intervene.
+Write
+\begin{equation}\label{eq:split}
+ x+1=ab.
+\end{equation}
+This equation can be solved polynomially for $x$:
+\[
+ x=ab-1.
+\]
+We then distribute the two factors $a$ and $b$ between $y$ and $z$:
+\[
+ y=a,
+ \qquad
+ z=-b(x^2-x+1).
+\]
+With these choices,
+\[
+ yz=-ab(x^2-x+1)=-(x+1)(x^2-x+1)=-(x^3+1),
+\]
+so the original equation is forced.
+
+Finally, substituting $x=ab-1$ into the remaining quadratic factor
+gives
+\[
+ x^2-x+1
+ =(ab-1)^2-(ab-1)+1
+ =a^2b^2-3ab+3.
+\]
+This is precisely the polynomial appearing in
+\eqref{eq:parametrization}.
+
+\subsection*{4. Why this split is particularly efficient}
+One could try to split the quadratic factor instead, for example by
+imposing $x^2-x+1=ab$.  However, solving that relation for $x$ would
+normally require extracting a square root, since
+\[
+ (2x-1)^2=4ab-3.
+\]
+That approach therefore introduces an additional square condition and
+does not immediately produce polynomial coordinates.  By contrast,
+$x+1=ab$ is linear in $x$, so eliminating $x$ preserves polynomiality
+and costs no auxiliary condition.  The useful design principle is:
+\emph{split a factor that is linear in the original variable, then
+absorb the complementary factor into the remaining product variable.}
+
+\subsection*{5. Why rational completeness is visible from the same idea}
+Suppose a rational solution has $y\ne0$.  Since the construction sets
+$a=y$ and requires $ab=x+1$, the only possible value of the second
+parameter is
+\[
+ b=\frac{x+1}{y}.
+\]
+The original equation then forces the $z$-coordinate to equal the one
+produced by the parametrization.  Thus the factor-splitting argument
+not only creates solutions; it also recovers every rational solution
+away from $y=0$.  The remaining locus $y=0$ is the line
+$(-1,0,z)$, and the specialization $a=0$ gives
+$\Phi(0,b)=(-1,0,-3b)$, which covers that line over $\Q$ as well.
+
+\section{A second one-parameter family}
+
+There is also a symmetric-looking family obtained from a different
+factorization pattern.
+
+\begin{proposition}\label{prop:symmetric}
+For every $t\in\Z$,
+\begin{equation}\label{eq:symmetric}
+ \boxed{(x,y,z)=\bigl(-t^2,\ t^3-1,\ t^3+1\bigr)}
+\end{equation}
+is an integral solution of $x^3+yz+1=0$.
+\end{proposition}
+
+\begin{proof}
+Using the difference-of-squares factorization,
+\[
+ yz=(t^3-1)(t^3+1)=t^6-1.
+\]
+Since $x=-t^2$, one has $x^3=-t^6$.  Therefore
+\[
+ x^3+yz+1=-t^6+(t^6-1)+1=0.
+\]
+\end{proof}
+
+\begin{remark}[Intuition for the second family]
+To find \eqref{eq:symmetric}, choose $x=-t^2$ so that $-x^3=t^6$ is a
+perfect square and
+\[
+ -(x^3+1)=t^6-1.
+\]
+The right-hand side factors as $(t^3-1)(t^3+1)$, which can be assigned
+directly to $y$ and $z$.  This illustrates the same general strategy:
+make $-(x^3+1)$ factor in a parameter-controlled way and assign its
+factors to the product $yz$.
+\end{remark}
+
+\section{Conclusion}
+
+The principal polynomial parametrization is
+\[
+ \boxed{
+ (x,y,z)=
+ \bigl(ab-1,\ a,\ -b(a^2b^2-3ab+3)\bigr),
+ \qquad a,b\in\Z.}
+\]
+Its validity is an identity in $\Z[a,b]$, so no congruence,
+divisibility, or exceptional-case condition is required for integral
+parameter values.  Over $\Q$, the same map is a bijection onto the
+entire rational solution set, with inverse given by
+\eqref{eq:inverse}.  The construction follows naturally from
+factoring $x^3+1$ and splitting its linear factor $x+1$ into two free
+parameters.
+
+\end{document}
