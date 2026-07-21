@@ -1,0 +1,462 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+  pdftitle={Integral Solutions of a Diophantine Equation},
+  pdfauthor={Jamal Agbanwa}
+}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\Sq}{\mathcal S}
+
+\title{Integral Solutions of \texorpdfstring{$y^2+x^2y+xz^2=2$}{y2+x2y+xz2=2}}
+\author{Jamal Agbanwa}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We give a complete elementary classification of the integer solutions of
+\[
+ y^2+x^2y+xz^2=2.
+\]
+The classification is an exact divisor--square criterion, with no omitted exceptional cases.  Completing the square then identifies each negative-$x$ fibre with a generalized Pell equation.  This yields a finite-orbit description of every such fibre and, in particular, an explicit infinite family with $x=-17$.  We also record the elementary congruence restrictions on $x$ and explain the structural observations that lead to the classification.
+\end{abstract}
+
+\section{The complete classification}
+
+Let
+\[
+ \Sq=\{r^2:r\in\Z\}
+\]
+denote the set of nonnegative integral squares.
+
+\begin{theorem}[Exact divisor--square classification]\label{thm:main}
+The equation
+\begin{equation}\label{eq:original}
+ y^2+x^2y+xz^2=2
+\end{equation}
+has no solution with $x=0$.  Its solutions with $x\ne0$ are precisely the triples
+\begin{equation}\label{eq:unified-param}
+ (x,y,z)=
+ \left(
+   \varepsilon d,
+   m,
+   \delta\sqrt{-\varepsilon\left(dm+\frac{m^2-2}{d}\right)}
+ \right),
+\end{equation}
+where
+\[
+ \varepsilon,\delta\in\{\pm1\},\qquad m\in\Z,\qquad d\in\Z_{>0},
+\]
+subject to
+\begin{equation}\label{eq:conditions}
+ d\mid m^2-2,
+ \qquad
+ -\varepsilon\left(dm+\frac{m^2-2}{d}\right)\in\Sq.
+\end{equation}
+When the square in \eqref{eq:conditions} is zero, the two choices of $\delta$ give the same triple.  Apart from this harmless duplication, the parameters are uniquely recovered from a solution by
+\[
+ \varepsilon=\operatorname{sgn}(x),\qquad d=|x|,
+ \qquad m=y.
+\]
+\end{theorem}
+
+\begin{proof}
+If $x=0$, then \eqref{eq:original} reduces to $y^2=2$, which has no integral solution.
+
+Now let $x\ne0$, write $x=\varepsilon d$ with $\varepsilon\in\{\pm1\}$ and $d=|x|>0$, and put $m=y$.  Since $x^2=d^2$, equation \eqref{eq:original} is
+\[
+ m^2+d^2m+\varepsilon d z^2=2.
+\]
+Reduction modulo $d$ gives $d\mid m^2-2$.  Dividing the rearranged equation by $\varepsilon d$ and using $\varepsilon^{-1}=\varepsilon$ gives
+\[
+ z^2
+ =\varepsilon\left(\frac{2-m^2}{d}-dm\right)
+ =-\varepsilon\left(dm+\frac{m^2-2}{d}\right).
+\]
+Thus every solution has the form \eqref{eq:unified-param}--\eqref{eq:conditions}.
+
+Conversely, suppose the parameters satisfy \eqref{eq:conditions}, and define $(x,y,z)$ by \eqref{eq:unified-param}.  Then
+\[
+\begin{aligned}
+ y^2+x^2y+xz^2
+ &=m^2+d^2m+\varepsilon d
+   \left[-\varepsilon\left(dm+\frac{m^2-2}{d}\right)\right]\\
+ &=m^2+d^2m-d^2m-(m^2-2)=2.
+\end{aligned}
+\]
+Hence every listed triple is a solution.  The asserted recovery of $\varepsilon,d,m$ is immediate.  This proves completeness and uniqueness.
+\end{proof}
+
+The following split form is sometimes more convenient.
+
+\begin{corollary}[Sign-separated form]\label{cor:split}
+The solutions with $x>0$ are
+\[
+ (1,1,0),\qquad (2,0,\pm1),
+\]
+together with
+\begin{equation}\label{eq:positive-form}
+ (x,y,z)=
+ \left(
+ d,-n,\pm\sqrt{nd-\frac{n^2-2}{d}}
+ \right),
+\end{equation}
+where $n\ge2$, $d>0$, $d\mid n^2-2$, and the radicand belongs to $\Sq$.
+
+The solutions with $x<0$ are
+\[
+ (-1,1,0),
+\]
+together with
+\begin{equation}\label{eq:negative-form}
+ (x,y,z)=
+ \left(
+ -d,m,\pm\sqrt{dm+\frac{m^2-2}{d}}
+ \right),
+\end{equation}
+where $|m|\ge2$, $d>0$, $d\mid m^2-2$, and the radicand belongs to $\Sq$.
+\end{corollary}
+
+\begin{proof}
+For $x>0$, if $y\ge1$, then
+\[
+ 2=y^2+x^2y+xz^2\ge1+x^2,
+\]
+so equality forces $(x,y,z)=(1,1,0)$.  If $y=0$, then $xz^2=2$, whence $(x,z)=(2,\pm1)$.  If $y=-1$, Theorem~\ref{thm:main} forces $d\mid-1$, hence $d=1$, but its square condition becomes $z^2=2$, impossible.  Writing $y=-n$ for the remaining cases gives \eqref{eq:positive-form}.
+
+For $x<0$, Theorem~\ref{thm:main} gives \eqref{eq:negative-form} directly.  The values $m=0$ and $m=-1$ fail its square condition, while $m=1$ forces $d=1$ and $z=0$, giving the sole exceptional triple $(-1,1,0)$.
+\end{proof}
+
+\section{Quadratic symmetry and norm form}
+
+\begin{proposition}[Completed square and Vieta involution]\label{prop:norm}
+For integers $x,y,z$, put
+\[
+ U=2y+x^2.
+\]
+Then \eqref{eq:original} is equivalent to
+\begin{equation}\label{eq:norm}
+ U^2+4xz^2=x^4+8.
+\end{equation}
+Conversely, every integral solution $(x,U,z)$ of \eqref{eq:norm} yields an integral solution of \eqref{eq:original} by
+\begin{equation}\label{eq:yfromu}
+ y=\frac{U-x^2}{2}.
+\end{equation}
+Moreover, the map
+\begin{equation}\label{eq:vieta}
+ (x,y,z)\longmapsto (x,-x^2-y,z)
+\end{equation}
+is an involution of the solution set.
+\end{proposition}
+
+\begin{proof}
+Multiplying \eqref{eq:original} by $4$ and completing the square in $y$ gives
+\[
+ (2y+x^2)^2+4xz^2=x^4+8,
+\]
+which is \eqref{eq:norm}.  Conversely, reducing \eqref{eq:norm} modulo $2$ gives
+\[
+ U^2\equiv x^4\pmod2,
+\]
+and hence $U\equiv x^2\pmod2$.  Thus \eqref{eq:yfromu} is integral, and reversing the completed-square calculation proves \eqref{eq:original}.
+
+For fixed $x,z$, the left side of \eqref{eq:original} is a monic quadratic in $y$ whose two roots have sum $-x^2$.  Therefore replacing $y$ by $-x^2-y$ preserves the equation, and applying the replacement twice returns $y$.
+\end{proof}
+
+\begin{corollary}[Fibre dichotomy]\label{cor:fibres}
+For every fixed $x>0$, equation \eqref{eq:original} has only finitely many solutions.  More precisely, every corresponding pair $(U,z)$ satisfies
+\[
+ |U|\le\sqrt{x^4+8},
+ \qquad
+ |z|\le\sqrt{\frac{x^4+8}{4x}}.
+\]
+For $x=-a<0$, the fibre is equivalent to
+\begin{equation}\label{eq:generalized-pell}
+ U^2-aV^2=a^4+8,
+ \qquad V\equiv0\pmod2,
+\end{equation}
+through $V=2z$ and \eqref{eq:yfromu}.
+\end{corollary}
+
+\begin{proof}
+If $x>0$, both terms on the left of \eqref{eq:norm} are nonnegative, so the displayed bounds follow immediately.  If $x=-a$, then \eqref{eq:norm} becomes
+\[
+ U^2-4az^2=a^4+8;
+\]
+putting $V=2z$ gives \eqref{eq:generalized-pell}.  Conversely, $V\equiv0\pmod2$ recovers $z=V/2$, and Proposition~\ref{prop:norm} recovers $y$.
+\end{proof}
+
+\section{A complete Pell-orbit description of negative fibres}
+
+We first include the precise elementary form of the Pell fact that is needed below.
+
+\begin{lemma}[An even Pell unit]\label{lem:pell-unit}
+If $a>0$ is not a square, then there exist integers $P,Q>0$ such that
+\begin{equation}\label{eq:pell-unit}
+ P^2-aQ^2=1,
+ \qquad Q\equiv0\pmod2.
+\end{equation}
+In particular, $\eta=P+Q\sqrt a$ is a unit of $\Z[\sqrt a]$ with $\eta>1$.
+\end{lemma}
+
+\begin{proof}
+For each positive integer $M$, the pigeonhole principle applied to
+\[
+ 0,\{\sqrt a\},\{2\sqrt a\},\ldots,\{M\sqrt a\}
+\]
+produces integers $p,q$ with $1\le q\le M$ and
+\[
+ 0<|q\sqrt a-p|<\frac1M;
+\]
+the strict positivity uses the irrationality of $\sqrt a$.  For all sufficiently large $M$ we may take $p>0$, and then
+\[
+ 0<|p^2-aq^2|
+ =|p-q\sqrt a|(p+q\sqrt a)
+ <2\sqrt a+1.
+\]
+The pairs $(p,q)$ obtained as $M$ varies cannot belong to a finite set, because the nonzero numbers $|q\sqrt a-p|$ attached to a finite set have a positive minimum.  Hence infinitely many distinct pairs occur, while the nonzero integers $p^2-aq^2$ lie in a fixed finite set.  There is therefore a nonzero integer $m$ and infinitely many positive pairs $(p,q)$ satisfying
+\[
+ p^2-aq^2=m.
+\]
+Choose two distinct such pairs $(p_1,q_1)$ and $(p_2,q_2)$ that are coordinatewise congruent modulo $|m|$.  Then
+\[
+ \xi:=\frac{p_1+q_1\sqrt a}{p_2+q_2\sqrt a}
+ =\frac{p_1p_2-aq_1q_2+(q_1p_2-p_1q_2)\sqrt a}{m}
+ \in\Z[\sqrt a],
+\]
+because both numerator coefficients are divisible by $m$.  Its norm is $1$.  Also $\xi>0$ and $\xi\ne1$ because the two pairs are positive and distinct.  Replacing $\xi$ by $\xi^{-1}$ if necessary, write $\xi=R+S\sqrt a>1$.  Then
+\[
+ \eta:=\xi^2=(R^2+aS^2)+2RS\sqrt a
+\]
+automatically has norm $1$, is greater than $1$, and has an even $\sqrt a$-coefficient.  Moreover, $\xi^*=\xi^{-1}\in(0,1)$, so
+\[
+ R=\frac{\xi+\xi^*}{2}>0,\qquad
+ S=\frac{\xi-\xi^*}{2\sqrt a}>0.
+\]
+Thus $P=R^2+aS^2$ and $Q=2RS$ are positive and satisfy \eqref{eq:pell-unit}.
+\end{proof}
+
+\begin{theorem}[Finite seed set and all Pell orbits]\label{thm:pell-orbits}
+Let $a>0$ be nonsquare, put $N=a^4+8$, and choose
+\[
+ \eta=P+Q\sqrt a>1
+\]
+as in Lemma~\ref{lem:pell-unit}.  Define
+\begin{equation}\label{eq:seed-set}
+ \mathcal C_a=
+ \left\{
+  r+s\sqrt a:
+  \begin{array}{l}
+   r,s\in\Z,\ s\equiv0\pmod2,\ r^2-as^2=N,\\
+   \sqrt N\le r+s\sqrt a<\eta\sqrt N
+  \end{array}
+ \right\}.
+\end{equation}
+Then $\mathcal C_a$ is finite.  Every integral solution of \eqref{eq:generalized-pell} is represented uniquely as
+\begin{equation}\label{eq:orbit}
+ U+V\sqrt a=\epsilon\,\beta\eta^k,
+ \qquad
+ \epsilon\in\{\pm1\},\quad k\in\Z,\quad \beta\in\mathcal C_a.
+\end{equation}
+Consequently, all solutions of \eqref{eq:original} with $x=-a$ are obtained from \eqref{eq:orbit} by
+\begin{equation}\label{eq:pell-back}
+ (x,y,z)=\left(-a,\frac{U-a^2}{2},\frac V2\right).
+\end{equation}
+Thus a nonsquare negative fibre is either empty or infinite, and in all cases is a finite union of Pell orbits.
+\end{theorem}
+
+\begin{proof}
+Let $\beta=r+s\sqrt a\in\mathcal C_a$, and let $\beta^*=r-s\sqrt a$ denote its conjugate.  Since $\beta\beta^*=N$ and $\sqrt N\le\beta<\eta\sqrt N$, one has
+\[
+ \frac{\sqrt N}{\eta}<\beta^*\le\sqrt N.
+\]
+It follows that
+\[
+ 0<r=\frac{\beta+\beta^*}{2}<\frac{\eta+1}{2}\sqrt N,
+ \qquad
+ 0\le s=\frac{\beta-\beta^*}{2\sqrt a}<\frac{\eta}{2\sqrt a}\sqrt N.
+\]
+Hence only finitely many integer pairs $(r,s)$ can occur, proving that $\mathcal C_a$ is finite.
+
+Now let $\alpha=U+V\sqrt a$ satisfy \eqref{eq:generalized-pell}.  Its norm is $N>0$, so $\alpha$ and its conjugate have the same sign.  There is a unique $\epsilon\in\{\pm1\}$ such that $\gamma=\epsilon\alpha$ and $\gamma^*$ are positive.  The half-open intervals
+\[
+ [\eta^k\sqrt N,\eta^{k+1}\sqrt N),\qquad k\in\Z,
+\]
+partition the positive real axis.  Hence there is a unique $k\in\Z$ such that
+\[
+ \sqrt N\le\gamma\eta^{-k}<\eta\sqrt N.
+\]
+Set $\beta=\gamma\eta^{-k}$.  Because $\eta$ and $\eta^{-1}=P-Q\sqrt a$ belong to $\Z[\sqrt a]$, the coefficients of $\beta$ are integral.  Moreover, multiplication by either $\eta$ or $\eta^{-1}$ preserves evenness of the $\sqrt a$-coefficient: that coefficient is transformed into $Qr+Ps$ or $-Qr+Ps$, and both are even when $Q$ and $s$ are even.  Thus $\beta\in\mathcal C_a$, proving existence in \eqref{eq:orbit}.  The uniqueness of $\epsilon$ and of the interval index $k$ proves uniqueness of the representation.
+
+Conversely, every expression in \eqref{eq:orbit} has norm $N$, integral coefficients, and even $\sqrt a$-coefficient, so it solves \eqref{eq:generalized-pell}.  Reducing that equation modulo $2$ gives $U^2\equiv a^4\pmod2$, hence $U\equiv a^2\pmod2$; therefore \eqref{eq:pell-back} is integral and Proposition~\ref{prop:norm} completes the correspondence.  If $\mathcal C_a$ is nonempty, the distinct powers of $\eta>1$ give infinitely many solutions.
+\end{proof}
+
+For completeness, square values of $a$ reduce to ordinary factorization rather than Pell theory.
+
+\begin{proposition}[Square negative fibres]\label{prop:square-fibre}
+Let $a=c^2$ with $c\in\Z_{>0}$.  All solutions with $x=-c^2$ are obtained from integer factor pairs $(r,s)$ satisfying
+\begin{equation}\label{eq:factor-conditions}
+ rs=c^8+8,
+ \qquad r+s\equiv2c^4\pmod4,
+ \qquad s-r\equiv0\pmod{4c},
+\end{equation}
+by
+\begin{equation}\label{eq:factor-param}
+ (x,y,z)=
+ \left(
+  -c^2,
+  \frac{r+s-2c^4}{4},
+  \frac{s-r}{4c}
+ \right).
+\end{equation}
+In particular, every square negative fibre is finite.
+\end{proposition}
+
+\begin{proof}
+For $x=-c^2$, equation \eqref{eq:norm} factors as
+\[
+ (U-2cz)(U+2cz)=c^8+8.
+\]
+Given a solution, put $r=U-2cz$ and $s=U+2cz$.  Then $rs=c^8+8$, while
+\[
+ r+s=2U=4y+2c^4,
+ \qquad
+ s-r=4cz,
+\]
+which gives \eqref{eq:factor-conditions} and \eqref{eq:factor-param}.
+
+Conversely, \eqref{eq:factor-conditions} makes the quantities in \eqref{eq:factor-param} integral.  Put $U=(r+s)/2$; then $z=(s-r)/(4c)$ and
+\[
+ U^2-4c^2z^2=rs=c^8+8.
+\]
+Proposition~\ref{prop:norm} yields a solution.  Since the fixed nonzero integer $c^8+8$ has finitely many divisors, only finitely many factor pairs occur.
+\end{proof}
+
+\section{An explicit infinite family}
+
+\begin{corollary}[A fixed-$x$ infinite family]\label{cor:infinite}
+Define integer sequences $(U_n)_{n\ge0}$ and $(Z_n)_{n\ge0}$ by
+\begin{equation}\label{eq:recurrence}
+ U_0=573,
+ \quad Z_0=60,
+ \qquad
+ \begin{cases}
+ U_{n+1}=33U_n+272Z_n,\\
+ Z_{n+1}=4U_n+33Z_n.
+ \end{cases}
+\end{equation}
+Then, for every $n\ge0$ and every $\epsilon,\delta\in\{\pm1\}$,
+\begin{equation}\label{eq:infinite-family}
+ \left(
+ -17,
+ \frac{\epsilon U_n-289}{2},
+ \delta Z_n
+ \right)
+\end{equation}
+is an integer solution of \eqref{eq:original}.  These triples include infinitely many distinct solutions.
+\end{corollary}
+
+\begin{proof}
+The initial values satisfy
+\[
+ U_0^2-68Z_0^2=573^2-68\cdot60^2=83529=17^4+8.
+\]
+The recurrence is multiplication of $U_n+Z_n\sqrt{68}$ by $33+4\sqrt{68}$, whose norm is
+\[
+ 33^2-68\cdot4^2=1.
+\]
+Therefore
+\[
+ U_n^2-68Z_n^2=17^4+8
+\]
+for every $n$.  Also $U_0$ is odd, and \eqref{eq:recurrence} preserves oddness of $U_n$.  Hence $(\epsilon U_n-289)/2$ is integral.  Proposition~\ref{prop:norm}, with $x=-17$ and $z=\delta Z_n$, proves \eqref{eq:infinite-family}.
+
+Finally, $U_n,Z_n>0$ and $U_{n+1}>U_n$ for every $n$, so the displayed solutions are distinct as $n$ varies.
+\end{proof}
+
+The first values are
+\[
+ (U_0,Z_0)=(573,60),\qquad
+ (U_1,Z_1)=(35229,4272),
+\]
+which give, among others,
+\[
+ (-17,142,\pm60),\quad (-17,-431,\pm60),
+ \quad (-17,17470,\pm4272).
+\]
+
+\section{Congruence restrictions on the first coordinate}
+
+\begin{proposition}\label{prop:congruences}
+If $(x,y,z)$ solves \eqref{eq:original}, then
+\begin{equation}\label{eq:modx}
+ y^2\equiv2\pmod{|x|}.
+\end{equation}
+Consequently,
+\[
+ |x|=2^e\prod_i p_i^{e_i},
+ \qquad e\in\{0,1\},
+ \qquad p_i\equiv1\ \text{or}\ 7\pmod8
+\]
+for odd primes $p_i$.  If $x$ is even, then $y$ is even and $z$ is odd.
+\end{proposition}
+
+\begin{proof}
+The case $x=0$ is impossible by Theorem~\ref{thm:main}.  Reducing \eqref{eq:original} modulo $|x|$ gives \eqref{eq:modx}.  Since a square is never congruent to $2$ modulo $4$, one has $4\nmid x$, so the exponent of $2$ in $|x|$ is at most one.
+
+Let $p$ be an odd prime divisor of $x$.  Then $2$ is a quadratic residue modulo $p$.  By Gauss's lemma,
+\[
+ \left(\frac2p\right)=(-1)^M,
+ \qquad
+ M=\#\left\{1\le j\le\frac{p-1}{2}:2j>\frac p2\right\}
+ =\frac{p-1}{2}-\left\lfloor\frac p4\right\rfloor.
+\]
+The parity of $M$ is even precisely when $p\equiv1$ or $7\pmod8$.  Hence every odd prime divisor of $x$ lies in one of those two residue classes.
+
+Finally, if $x$ is even, then $v_2(x)=1$; write $x=2r$ with $r$ odd.  Congruence \eqref{eq:modx} modulo $2$ shows that $y$ is even.  Reducing \eqref{eq:original} modulo $4$ then gives
+\[
+ 2rz^2\equiv2\pmod4,
+\]
+so $z$ is odd.
+\end{proof}
+
+\section{How the classification is found}
+
+Three elementary observations point directly to the final answer.
+
+First, the equation is a monic quadratic in $y$.  Hence its two $y$-roots, whenever integral, have sum $-x^2$.  This predicts the involution \eqref{eq:vieta} and suggests centring the quadratic by introducing $U=2y+x^2$.
+
+Second, reduction modulo $x$ removes the two terms containing $x$ and leaves
+\[
+ y^2\equiv2\pmod{|x|}.
+\]
+Thus $|x|$ must divide $y^2-2$.  Once $x=\varepsilon d$ and $y=m$ are written down, the original equation becomes linear in $z^2$ and immediately yields
+\[
+ z^2=-\varepsilon\left(dm+\frac{m^2-2}{d}\right).
+\]
+This is exactly the divisor--square criterion in Theorem~\ref{thm:main}; no search or descent is needed.
+
+Third, completing the square gives
+\[
+ (2y+x^2)^2+4xz^2=x^4+8.
+\]
+The sign of $x$ now explains the global geometry.  Positive $x$ gives a positive-definite equation and therefore finite fibres.  Negative $x=-a$ gives the norm equation
+\[
+ U^2-a(2z)^2=a^4+8.
+\]
+For nonsquare $a$, multiplication by norm-one units generates Pell orbits; for square $a$, the same expression factors over the integers.  This accounts simultaneously for the finite positive fibres, the finite square negative fibres, and the infinite families that occur on suitable nonsquare negative fibres.
+
+\end{document}
