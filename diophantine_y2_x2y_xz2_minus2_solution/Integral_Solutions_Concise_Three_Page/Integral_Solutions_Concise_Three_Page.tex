@@ -1,0 +1,230 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=2.0cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+  pdftitle={Integral Solutions of y^2+x^2y+xz^2=2},
+  pdfauthor={Jamal Agbanwa}
+}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\Sq}{\{r^2:r\in\mathbb Z\}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\setlength{\abovedisplayskip}{5pt}
+\setlength{\belowdisplayskip}{5pt}
+\setlength{\abovedisplayshortskip}{3pt}
+\setlength{\belowdisplayshortskip}{3pt}
+
+\title{Integral Solutions of \texorpdfstring{$y^2+x^2y+xz^2=2$}{y2+x2y+xz2=2}\\[1mm]
+\large Complete Classification, an Infinite Family, and the Guiding Idea}
+\author{Jamal Agbanwa}
+\date{}
+
+\begin{document}
+\maketitle
+\vspace{-5mm}
+
+\begin{abstract}
+We give an exact elementary description of every integral solution of
+$y^2+x^2y+xz^2=2$.  We then exhibit an explicit infinite family on the
+single fibre $x=-17$.  The final section explains how the quadratic symmetry,
+a norm equation, and a deliberately engineered Pell unit lead naturally to
+the numbers occurring in that family.
+\end{abstract}
+\vspace{-2mm}
+
+\section{Complete classification}
+
+Let $\Sq$ denote the set of nonnegative integral squares.
+
+\begin{theorem}[Exact divisor--square criterion]\label{thm:classification}
+There is no solution with $x=0$.  For $x\ne0$, all integral solutions are
+precisely
+\begin{equation}\label{eq:classification}
+ (x,y,z)=
+ \left(
+   \varepsilon d,\ m,\
+   \delta\sqrt{-\varepsilon\left(dm+\frac{m^2-2}{d}\right)}
+ \right),
+\end{equation}
+where
+\[
+ \varepsilon,\delta\in\{\pm1\},\qquad d\in\mathbb Z_{>0},\qquad m\in\mathbb Z,
+\]
+subject only to
+\begin{equation}\label{eq:conditions}
+ d\mid m^2-2,
+ \qquad
+ -\varepsilon\left(dm+\frac{m^2-2}{d}\right)\in\Sq.
+\end{equation}
+If the square in \eqref{eq:conditions} is zero, the two choices of $\delta$
+coincide; otherwise the parametrization is unique after fixing the sign of
+$z$.
+\end{theorem}
+
+\begin{proof}
+If $x=0$, the equation becomes $y^2=2$, impossible in $\mathbb Z$.  Now write
+$x=\varepsilon d$, where $d=|x|>0$ and $\varepsilon=\operatorname{sgn}(x)$,
+and put $m=y$.  Since $x^2=d^2$, the equation is
+\[
+ m^2+d^2m+\varepsilon dz^2=2.
+\]
+Reduction modulo $d$ gives $d\mid m^2-2$, and rearrangement gives
+\[
+ z^2=-\varepsilon\left(dm+\frac{m^2-2}{d}\right).
+\]
+Thus every solution has the form \eqref{eq:classification}--\eqref{eq:conditions}.
+Conversely, substituting those expressions yields
+\[
+ m^2+d^2m+\varepsilon d
+ \left[-\varepsilon\left(dm+\frac{m^2-2}{d}\right)\right]
+ =m^2-(m^2-2)=2.
+\]
+Hence every listed triple is a solution, and the recovery
+$d=|x|$, $\varepsilon=\operatorname{sgn}(x)$, $m=y$ proves completeness and
+the stated uniqueness.
+\end{proof}
+
+The classification is unconditional and effective: for any prescribed $y=m$,
+one checks only the finitely many positive divisors of $m^2-2$ and tests a
+single integer for being a square.
+
+\section{An explicit infinite family}
+
+The quadratic in $y$ is best centred by
+\begin{equation}\label{eq:normidentity}
+ (2y+x^2)^2+4xz^2=x^4+8,
+\end{equation}
+which follows by multiplying the original equation by $4$ and completing the
+square.
+
+\begin{proposition}[A Pell family on $x=-17$]\label{prop:family}
+Define integer sequences $(U_n)$ and $(Z_n)$ by
+\begin{equation}\label{eq:recurrence}
+ U_0=573,\quad Z_0=60,\qquad
+ \begin{cases}
+ U_{n+1}=33U_n+272Z_n,\\
+ Z_{n+1}=4U_n+33Z_n
+ \end{cases}
+ \quad(n\ge0).
+\end{equation}
+Then, for every $n\ge0$ and every $\sigma,\tau\in\{\pm1\}$,
+\begin{equation}\label{eq:family}
+ \boxed{
+ (x,y,z)=
+ \left(-17,\frac{\sigma U_n-289}{2},\tau Z_n\right)
+ }
+\end{equation}
+is an integral solution.  These give infinitely many distinct solutions.
+\end{proposition}
+
+\begin{proof}
+In $\mathbb Z[\sqrt{17}]$, recurrence \eqref{eq:recurrence} is exactly
+\[
+ U_{n+1}+2Z_{n+1}\sqrt{17}
+ =(33+8\sqrt{17})(U_n+2Z_n\sqrt{17}).
+\]
+Since $33^2-17\cdot8^2=1$, norms are preserved.  The initial norm is
+\[
+ 573^2-68\cdot60^2=83529=17^4+8,
+\]
+so
+\begin{equation}\label{eq:invariant}
+ U_n^2-68Z_n^2=17^4+8
+\end{equation}
+for every $n$.  Moreover $U_0$ is odd and \eqref{eq:recurrence} preserves
+oddness of $U_n$, so the displayed $y$ is integral.  For $x=-17$,
+\eqref{eq:normidentity} is
+\[
+ (2y+289)^2-68z^2=17^4+8;
+\]
+substitution of \eqref{eq:family} and \eqref{eq:invariant} proves the claim.
+Finally, $U_n,Z_n>0$ and $U_{n+1}>U_n$ by induction, so the resulting
+solutions are pairwise distinct as $n$ varies.
+\end{proof}
+
+The first two Vieta pairs are
+\[
+ (-17,142,\pm60),\quad (-17,-431,\pm60),
+\]
+\[
+ (-17,17470,\pm4272),\quad (-17,-17759,\pm4272).
+\]
+
+\section{How the construction was found}
+
+\textbf{1. Use the equation's quadratic structure.}
+For fixed $x,z$, the equation is the monic quadratic
+\[
+ y^2+x^2y+(xz^2-2)=0.
+\]
+Hence the second root corresponding to a solution $y$ is $-x^2-y$.  This
+Vieta symmetry suggests translating the variable to the centre
+$-x^2/2$, namely setting $U=2y+x^2$.  One then obtains
+\[
+ U^2+4xz^2=x^4+8.
+\]
+The same equation also explains the complete classification: reducing the
+original equation modulo $x$ gives $x\mid y^2-2$, after which solving
+linearly for $z^2$ gives Theorem~\ref{thm:classification} in one step.
+
+\textbf{2. The sign of $x$ reveals where infinitude can occur.}
+If $x>0$, then $U^2+4xz^2=x^4+8$ is positive definite; for a fixed $x$ it
+admits only finitely many pairs $(U,z)$.  Put instead $x=-a<0$.  The equation
+becomes
+\begin{equation}\label{eq:pellform}
+ U^2-a(2z)^2=a^4+8,
+\end{equation}
+which is a generalized Pell equation.  Thus one seed solution can be
+multiplied repeatedly by a norm-one unit to produce infinitely many others.
+The task is therefore to choose $a$ so that both the unit and the seed are
+simple.
+
+\textbf{3. Engineer a simple unit and a compatible seed.}
+A particularly transparent norm-one unit appears when
+$a=r^2+1$, because
+\[
+ (2a-1)^2-a(2r)^2=1.
+\]
+To seek a low-complexity seed for \eqref{eq:pellform}, take
+$U=2a^2-(r+1)$.  This automatically gives an integral
+$y=(U-a^2)/2$ when $a$ and $r+1$ have the same parity.  Modulo $a$, the
+required divisibility of
+\[
+ U^2-(a^4+8)=3a^4-4(r+1)a^2+(r+1)^2-8
+\]
+reduces, using $a=r^2+1$, to the very small condition
+\[
+ (r+1)^2-8\equiv 2r-8\pmod a.
+\]
+The clean choice is therefore $r=4$, which gives
+\[
+ a=17,\qquad U=2\cdot17^2-5=573.
+\]
+The remaining coordinate is then forced:
+\[
+ z^2=\frac{573^2-(17^4+8)}{4\cdot17}=3600,
+ \qquad z=60,
+\]
+and consequently $y=(573-289)/2=142$.  Thus the seed is not a mysterious
+computer output: it is produced by matching a simple Pell unit with a
+small-offset ansatz for $U$.
+
+\textbf{4. Propagate the seed.}
+For $r=4$, the unit above is
+$33+8\sqrt{17}$.  Multiplying
+$573+120\sqrt{17}$ by successive powers of this unit preserves its norm
+$17^4+8$ and gives exactly recurrence \eqref{eq:recurrence}.  Changing the
+sign of the square-root coefficient changes $z$ to $-z$, while replacing
+$U$ by $-U$ gives the Vieta partner $y\mapsto-17^2-y$.  These two elementary
+symmetries account for all four sign choices in \eqref{eq:family}.
+
+\end{document}
