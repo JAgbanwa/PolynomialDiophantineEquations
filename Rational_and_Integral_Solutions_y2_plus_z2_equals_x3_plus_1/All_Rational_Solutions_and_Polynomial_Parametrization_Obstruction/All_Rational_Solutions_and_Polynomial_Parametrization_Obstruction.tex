@@ -1,0 +1,746 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[margin=28mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+
+\allowdisplaybreaks
+\numberwithin{equation}{section}
+\setlist[enumerate]{label=(\roman*),leftmargin=2.2em}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\C}{\mathbb C}
+\newcommand{\ii}{\mathrm i}
+\newcommand{\N}{\operatorname N}
+\newcommand{\vord}{\operatorname v}
+\newcommand{\ol}[1]{\overline{#1}}
+\newcommand{\A}{\mathbb A}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Rational solutions of $y^2+z^2=x^3+1$}
+\fancyhead[R]{\small Jamal Agbanwa}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\hypersetup{
+  pdftitle={All Rational Solutions of y2+z2=x3+1 and the Obstruction to Polynomial Parametrization},
+  pdfauthor={Jamal Agbanwa},
+  pdfsubject={Rational points, Gaussian norms, and polynomial parametrization obstruction},
+  pdfkeywords={Diophantine equation, Gaussian integers, norm form, polynomial parametrization, Chatelet surface}
+}
+
+\title{\bfseries All Rational Solutions of
+\texorpdfstring{$y^2+z^2=x^3+1$}{y2+z2=x3+1}\\
+\large and the Obstruction to an Unrestricted Polynomial Parametrization}
+\author{Jamal Agbanwa\\[2pt]\small Independent Researcher}
+\date{20 July 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We study the affine surface
+\[
+\mathcal S:\qquad y^2+z^2=x^3+1
+\]
+over the rational numbers.  A natural request is a single polynomial map
+$\Q^n\to\mathcal S(\Q)$, with completely unrestricted rational parameters,
+whose image is all of $\mathcal S(\Q)$.  We prove that no such map exists,
+regardless of the number of parameters or the degrees of the polynomials.
+In fact, if nonconstant polynomials $X,Y,Z\in\Q[T_1,\ldots,T_n]$ satisfy
+$Y^2+Z^2=X^3+1$, then both $X+1$ and $X^2-X+1$ are themselves sums of two
+squares in the polynomial ring.  Hence such a family cannot contain even one
+point with $x=2$, because $3$ is not a sum of two rational squares.  We also
+show that no finite collection of polynomial families covers all rational
+points.
+
+We then give a complete prime-free descent description.  Every rational
+solution is obtained from one of two norm classes, indexed by
+$\varepsilon\in\{1,3\}$, and one explicit quadratic norm equation.  This
+provides a rigorous all-solutions formula without placing an infinite list of
+prime conditions in the statement, while also proving why the remaining
+arithmetic constraint cannot be removed by a global polynomial
+parametrization.
+\end{abstract}
+
+\tableofcontents
+
+\section{The question and the precise negative answer}
+
+Let
+\begin{equation}
+ \mathcal S:\qquad y^2+z^2=x^3+1.
+ \label{eq:surface}
+\end{equation}
+For $\alpha\in\Q(\ii)$, write
+\[
+ \N(\alpha)=\alpha\ol\alpha.
+\]
+Thus $\N(a+\ii b)=a^2+b^2$.
+
+\begin{definition}
+An \emph{unrestricted polynomial parametrization} of $\mathcal S(\Q)$ means
+polynomials
+\[
+ X,Y,Z\in\Q[T_1,\ldots,T_n]
+\]
+for some finite $n$ such that
+\[
+ Y(\mathbf T)^2+Z(\mathbf T)^2=X(\mathbf T)^3+1
+\]
+identically and such that every point of $\mathcal S(\Q)$ is obtained by
+specializing $\mathbf T$ to a tuple in $\Q^n$.
+\end{definition}
+
+The requested object does not exist.
+
+\begin{theorem}[Polynomial-family obstruction]
+\label{thm:polynomial-obstruction}
+Let $n\ge1$, and let
+\[
+ X,Y,Z\in\Q[T_1,\ldots,T_n]
+\]
+satisfy the polynomial identity
+\begin{equation}
+ Y^2+Z^2=X^3+1.
+ \label{eq:polynomial-identity}
+\end{equation}
+If $X$ is nonconstant, then there exist polynomials
+$A_1,A_2,B_1,B_2\in\Q[T_1,\ldots,T_n]$ such that
+\begin{equation}
+ X+1=A_1^2+A_2^2
+ \label{eq:Xplus1-polynomial-norm}
+\end{equation}
+and
+\begin{equation}
+ X^2-X+1=B_1^2+B_2^2.
+ \label{eq:quadratic-factor-polynomial-norm}
+\end{equation}
+Consequently, every rational specialization of a nonconstant polynomial
+family satisfies that $x+1$ is a sum of two rational squares.
+\end{theorem}
+
+\begin{corollary}[No unrestricted polynomial parametrization]
+\label{cor:no-global-polynomial-param}
+There is no unrestricted polynomial parametrization of all rational solutions
+of \eqref{eq:surface}.  More strongly, no finite collection of polynomial
+maps from affine spaces over $\Q$ covers $\mathcal S(\Q)$.
+\end{corollary}
+
+The proof of Theorem~\ref{thm:polynomial-obstruction} is given in
+Section~\ref{sec:polynomial-obstruction-proof}.  It is purely algebraic and
+does not rely on a dimension count or on a heuristic about the apparent
+complexity of the rational points.
+
+\section{Gaussian norms over the rational numbers}
+\label{sec:gaussian-norms}
+
+We record the exact norm criterion needed later.
+
+\begin{proposition}[Rational two-squares criterion]
+\label{prop:rational-two-squares}
+Let $r\in\Q_{>0}$.  The following are equivalent.
+\begin{enumerate}
+\item There exist $a,b\in\Q$ such that $r=a^2+b^2$.
+\item For every rational prime $q\equiv3\pmod4$, the valuation
+$\vord_q(r)$ is even.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Suppose first that $r=a^2+b^2$.  After choosing a common denominator, write
+\[
+ r=\frac{A^2+B^2}{C^2}
+\]
+with $A,B,C\in\Z$ and $C\ne0$.  If $q\equiv3\pmod4$ and
+$q\mid A^2+B^2$, then $q\mid A$ and $q\mid B$.  Indeed, if $q\nmid B$,
+then $(AB^{-1})^2\equiv-1\pmod q$, contradicting
+$(-1)^{(q-1)/2}=-1$ and Euler's criterion.  Removing the largest common
+power of $q$ from $A$ and $B$ shows that $\vord_q(A^2+B^2)$ is even.
+Subtracting the even integer $2\vord_q(C)$ proves that $\vord_q(r)$ is even.
+
+Conversely, write $r=M/N$ in lowest terms, with $M,N\in\Z_{>0}$.  The parity
+assumption implies that every prime $q\equiv3\pmod4$ occurs to an even
+exponent separately in $M$ and in $N$.
+
+For completeness, $\Z[\ii]$ is Euclidean for the norm
+$\N(u+\ii v)=u^2+v^2$: rounding the real and imaginary parts of a Gaussian
+quotient gives a remainder of norm strictly smaller than the divisor norm.
+Hence $\Z[\ii]$ is a unique factorization domain.  A prime
+$q\equiv3\pmod4$ remains prime in $\Z[\ii]$, while a prime
+$p\equiv1\pmod4$ splits.  To see the latter directly, Wilson's theorem gives
+an integer $h$ with $h^2\equiv-1\pmod p$; a nontrivial Gaussian greatest
+common divisor of $p$ and $h+\ii$ then has norm $p$.  Also
+$2=\N(1+\ii)$.  It follows by multiplying Gaussian factorizations that a
+positive integer is a sum of two squares exactly when every prime
+congruent to $3$ modulo $4$ occurs to an even exponent.  Thus
+\[
+ M=A^2+B^2,
+ \qquad
+ N=C^2+D^2
+\]
+for suitable integers $A,B,C,D$.  Finally,
+\[
+ \frac{M}{N}
+ =\N\!\left(\frac{A+\ii B}{C+\ii D}\right)
+ =\left(\frac{AC+BD}{N}\right)^2
+  +\left(\frac{BC-AD}{N}\right)^2.
+\]
+This proves the converse.
+\end{proof}
+
+\begin{lemma}
+\label{lem:three-not-norm}
+The rational number $3$ is not a sum of two rational squares.
+\end{lemma}
+
+\begin{proof}
+Suppose $3=a^2+b^2$ with $a,b\in\Q$.  Clearing denominators and cancelling a
+common factor gives coprime integers $A,B,C$ satisfying
+\[
+ A^2+B^2=3C^2.
+\]
+Modulo $3$, a square is $0$ or $1$, so the left side is divisible by $3$
+only if $3\mid A$ and $3\mid B$.  The displayed equation then forces
+$3\mid C$, contradicting coprimality.
+\end{proof}
+
+\section{A factorization lemma in polynomial rings}
+\label{sec:factorization-lemma}
+
+Let
+\[
+ R=\Q[T_1,\ldots,T_n],
+ \qquad
+ R_{\ii}=\Q(\ii)[T_1,\ldots,T_n],
+\]
+and extend complex conjugation coefficientwise to $R_{\ii}$.
+
+\begin{lemma}[Splitting coprime rational factors of a norm]
+\label{lem:coprime-norm-factors}
+Let $F,G\in R\setminus\{0\}$ be relatively prime in $R_{\ii}$, and suppose
+that
+\begin{equation}
+ FG=H\ol H
+ \label{eq:FG-norm}
+\end{equation}
+for some $H\in R_{\ii}$.  Then there exist
+$c\in\Q^\times$ and $A,B\in R_{\ii}$ such that
+\begin{equation}
+ F=cA\ol A,
+ \qquad
+ G=c^{-1}B\ol B.
+ \label{eq:split-norm}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The ring $R_{\ii}$ is a unique factorization domain.  Factor $F$ into
+irreducibles in $R_{\ii}$.  Since $F=\ol F$, conjugation permutes its
+irreducible factors.
+
+Consider first a conjugation orbit consisting of two nonassociate factors
+$\pi$ and $\ol\pi$.  Their exponents in $F$ are equal.  Their contribution to
+$F$ is therefore, up to a constant, the norm of a power of one member of the
+pair.  Consider next an irreducible $\rho$ associated to $\ol\rho$.  Because
+$F$ and $G$ are coprime, the exponent of $\rho$ in $F$ equals its exponent in
+$H\ol H$.  The latter exponent is twice the exponent contributed by $H$,
+so it is even.  Hence this contribution is also a norm.  Multiplying over all
+orbits gives
+\[
+ F=cA\ol A
+\]
+for some $A\in R_{\ii}$ and some unit $c\in\Q(\ii)^\times$.  Both $F$ and
+$A\ol A$ are fixed by conjugation, so $c=\ol c$ and therefore
+$c\in\Q^\times$.
+
+The same argument gives $G=dC\ol C$ with $d\in\Q^\times$.  From
+\eqref{eq:FG-norm}, in the fraction field of $R_{\ii}$ we obtain
+\[
+ cd=\N\!\left(\frac{H}{AC}\right).
+\]
+The left side is a nonzero rational constant.  Since $\Q$ is infinite, one
+may specialize the variables to rational values avoiding all zeros and poles
+of $H/(AC)$.  This shows that $cd$ is the norm of an element of
+$\Q(\ii)^\times$.  Choose $\lambda\in\Q(\ii)^\times$ with
+$\N(\lambda)=cd$, and put $B=\lambda C$.  Then
+\[
+ c^{-1}B\ol B=c^{-1}(cd)C\ol C=dC\ol C=G,
+\]
+which proves \eqref{eq:split-norm}.
+\end{proof}
+
+\section{Proof of the polynomial obstruction}
+\label{sec:polynomial-obstruction-proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:polynomial-obstruction}]
+Put
+\[
+ F=X+1,
+ \qquad
+ G=X^2-X+1,
+ \qquad
+ H=Y+\ii Z.
+\]
+Then \eqref{eq:polynomial-identity} becomes
+\begin{equation}
+ FG=H\ol H.
+ \label{eq:norm-factorization-polynomial}
+\end{equation}
+Moreover,
+\begin{equation}
+ G-(X-2)F=3,
+ \label{eq:bezout-FG}
+\end{equation}
+so $F$ and $G$ are relatively prime even in $R_{\ii}$.  By
+Lemma~\ref{lem:coprime-norm-factors},
+\begin{equation}
+ F=cA\ol A,
+ \qquad
+ G=c^{-1}B\ol B
+ \label{eq:F-G-c}
+\end{equation}
+for some $c\in\Q^\times$ and $A,B\in R_{\ii}$.
+
+It remains to prove that the constant $c$ is itself a Gaussian norm.  Fix any
+monomial order on $R_{\ii}$.  Let $a,b\in\Q(\ii)^\times$ be the leading
+coefficients of $A$ and $B$, respectively, and let $\ell\in\Q^\times$ be the
+leading coefficient of $X$.  Since $X$ is nonconstant, the leading
+coefficients in \eqref{eq:F-G-c} give
+\begin{equation}
+ \ell=c\,a\ol a
+ \label{eq:leading-one}
+\end{equation}
+and
+\begin{equation}
+ \ell^2=c^{-1}b\ol b.
+ \label{eq:leading-two}
+\end{equation}
+Combining these identities yields
+\[
+ b\ol b=c^3(a\ol a)^2.
+\]
+Therefore
+\begin{equation}
+ c=
+ \N\!\left(\frac{b}{c a^2}\right).
+ \label{eq:c-is-norm}
+\end{equation}
+Set $\delta=b/(ca^2)\in\Q(\ii)^\times$.  Then $\N(\delta)=c$, and
+\eqref{eq:F-G-c} becomes
+\[
+ F=(\delta A)\ol{(\delta A)},
+ \qquad
+ G=(B/\delta)\ol{(B/\delta)}.
+\]
+Writing
+\[
+ \delta A=A_1+\ii A_2,
+ \qquad
+ B/\delta=B_1+\ii B_2
+\]
+with $A_1,A_2,B_1,B_2\in R$ proves
+\eqref{eq:Xplus1-polynomial-norm} and
+\eqref{eq:quadratic-factor-polynomial-norm}.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:no-global-polynomial-param}]
+The surface contains the rational point $(2,3,0)$.  If a nonconstant
+polynomial family contained this point, Theorem~\ref{thm:polynomial-obstruction}
+would imply that
+\[
+ 3=2+1
+\]
+is a sum of two rational squares, contradicting
+Lemma~\ref{lem:three-not-norm}.  Hence a single surjective polynomial family
+cannot exist.
+
+For the stronger finite-cover assertion, first note that if $X$ is constant
+in a polynomial family, then
+\[
+ (Y+\ii Z)(Y-\ii Z)=X^3+1
+\]
+is constant.  In the polynomial ring $R_{\ii}$, both factors on the left are
+therefore units, so $Y$ and $Z$ are constant as well.  Thus a polynomial
+family with constant $X$ has a one-point image.
+
+On the other hand, the fiber $x=2$ contains infinitely many rational points:
+for every $t\in\Q$,
+\begin{equation}
+ \left(
+ 2,
+ 3\frac{1-t^2}{1+t^2},
+ \frac{6t}{1+t^2}
+ \right)
+ \in\mathcal S(\Q).
+ \label{eq:x2-fiber}
+\end{equation}
+No nonconstant polynomial family meets this fiber, while each constant
+polynomial family contributes at most one point.  A finite collection can
+therefore cover only finitely many of the points in \eqref{eq:x2-fiber}.
+\end{proof}
+
+\begin{remark}
+Theorem~\ref{thm:polynomial-obstruction} is stronger than the elementary
+observation that one particular proposed formula fails.  It rules out every
+possible polynomial formula, with any finite number of unrestricted rational
+parameters and of any degree.
+\end{remark}
+
+\section{A complete prime-free two-class descent}
+\label{sec:two-class-descent}
+
+The impossibility theorem does not prevent an exact all-solutions
+description.  It shows instead that such a description must retain genuine
+arithmetic data.  For this equation the data can be compressed into the two
+classes $1$ and $3$.
+
+\begin{lemma}[The two possible norm classes]
+\label{lem:two-norm-classes}
+Let $x\in\Q$ with $x>-1$, and suppose that $x^3+1$ is a sum of two rational
+squares.  Then there is a unique
+\[
+ \varepsilon\in\{1,3\}
+\]
+such that both
+\begin{equation}
+ \frac{x+1}{\varepsilon}
+ \qquad\text{and}\qquad
+ \frac{x^2-x+1}{\varepsilon}
+ \label{eq:two-factor-norms}
+\end{equation}
+are sums of two rational squares.
+\end{lemma}
+
+\begin{proof}
+Write $x=a/b$ in lowest terms with $b>0$, and set
+\[
+ U=x+1=\frac{a+b}{b},
+ \qquad
+ V=x^2-x+1=\frac{a^2-ab+b^2}{b^2}.
+\]
+Then $UV=x^3+1$ is a rational Gaussian norm.
+
+Let $q\equiv3\pmod4$ be a prime with $q\ne3$.  If $q\mid b$, then
+$q\nmid a$, and hence
+\[
+ \vord_q(U)=-\vord_q(b),
+ \qquad
+ \vord_q(V)=-2\vord_q(b).
+\]
+Since $\vord_q(UV)$ is even, $\vord_q(b)$ is even, so both displayed
+valuations are even.
+
+Suppose now that $q\nmid b$.  If $q$ divided both $a+b$ and
+$a^2-ab+b^2$, then $a\equiv-b\pmod q$ and consequently
+\[
+ a^2-ab+b^2\equiv3b^2\pmod q,
+\]
+forcing $q=3$, a contradiction.  Thus at most one of $U$ and $V$ has
+positive $q$-adic valuation.  Since their valuation sum is even, each
+individual valuation is even.
+
+It follows that, for every prime $q\equiv3\pmod4$ other than $3$, the
+$q$-adic valuations of both $U$ and $V$ are even.  At $q=3$, the parity of
+$\vord_3(U)+\vord_3(V)$ is even, so $\vord_3(U)$ and $\vord_3(V)$ have the
+same parity.  Choose $\varepsilon=1$ when this common parity is even, and
+$\varepsilon=3$ when it is odd.  Proposition~\ref{prop:rational-two-squares}
+then shows that both numbers in \eqref{eq:two-factor-norms} are sums of two
+rational squares.
+
+Uniqueness follows from Lemma~\ref{lem:three-not-norm}: if both choices of
+$\varepsilon$ worked, their quotient would imply that $3$ is a rational
+Gaussian norm.
+\end{proof}
+
+\begin{theorem}[Complete prime-free rational classification]
+\label{thm:prime-free-classification}
+A triple $(x,y,z)\in\Q^3$ satisfies \eqref{eq:surface} if and only if either
+\[
+ (x,y,z)=(-1,0,0),
+\]
+or there exist
+\[
+ \varepsilon\in\{1,3\},
+ \qquad
+ a,b,c,d,m,n\in\Q,
+ \qquad
+ m^2+n^2\ne0,
+\]
+such that, with
+\begin{equation}
+ S=a^2+b^2,
+ \label{eq:def-S}
+\end{equation}
+one has
+\begin{equation}
+ c^2+d^2
+ =\varepsilon S^2-3S+\frac{3}{\varepsilon},
+ \label{eq:single-residual-norm-equation}
+\end{equation}
+and
+\begin{equation}
+ \boxed{
+ x=\varepsilon S-1,
+ \qquad
+ y+\ii z=
+ \varepsilon(a+\ii b)(c+\ii d)
+ \frac{m+\ii n}{m-\ii n}.
+ }
+ \label{eq:prime-free-gaussian-formula}
+\end{equation}
+The boundary solution $(-1,0,0)$ may also be included in the formula by
+taking $\varepsilon=3$, $a=b=0$, and $c^2+d^2=1$.
+\end{theorem}
+
+\begin{proof}
+Assume first that $(x,y,z)$ is a rational solution with $x>-1$.  Put
+$W=y+\ii z$.  By Lemma~\ref{lem:two-norm-classes}, choose the unique
+$\varepsilon\in\{1,3\}$ and Gaussian rationals
+\[
+ \alpha=a+\ii b,
+ \qquad
+ \beta=c+\ii d
+\]
+such that
+\begin{equation}
+ \N(\alpha)=\frac{x+1}{\varepsilon},
+ \qquad
+ \N(\beta)=\frac{x^2-x+1}{\varepsilon}.
+ \label{eq:alpha-beta-norms}
+\end{equation}
+The first equation gives $x=\varepsilon S-1$.  Substitution into the second
+gives
+\[
+ c^2+d^2
+ =\frac{(\varepsilon S-1)^2-(\varepsilon S-1)+1}{\varepsilon}
+ =\varepsilon S^2-3S+\frac3\varepsilon,
+\]
+which is \eqref{eq:single-residual-norm-equation}.
+
+Furthermore,
+\[
+ \N(\varepsilon\alpha\beta)
+ =\varepsilon^2\N(\alpha)\N(\beta)
+ =(x+1)(x^2-x+1)
+ =x^3+1
+ =\N(W).
+\]
+Hence
+\[
+ \eta=\frac{W}{\varepsilon\alpha\beta}
+\]
+has norm $1$.  Every norm-one Gaussian rational has the form
+\begin{equation}
+ \eta=\frac{m+\ii n}{m-\ii n}
+ \label{eq:hilbert90-param}
+\end{equation}
+with $m,n\in\Q$ not both zero.  Indeed, if
+$\eta=C+\ii D$ and $C\ne-1$, take $m=1+C$ and $n=D$; if $\eta=-1$, take
+$m=0$ and $n=1$.  This proves \eqref{eq:prime-free-gaussian-formula}.
+
+Conversely, suppose the parameters satisfy
+\eqref{eq:single-residual-norm-equation} and define $x,y,z$ by
+\eqref{eq:prime-free-gaussian-formula}.  Since the last factor has norm $1$,
+\begin{align*}
+ y^2+z^2
+ &=\varepsilon^2S(c^2+d^2)\\
+ &=\varepsilon^2S\left(\varepsilon S^2-3S+\frac3\varepsilon\right)\\
+ &=(\varepsilon S-1)^3+1\\
+ &=x^3+1.
+\end{align*}
+Thus every permitted parameter choice gives a rational solution, and the
+preceding argument proves that every rational solution occurs.
+\end{proof}
+
+\begin{corollary}[Expanded real-coordinate formula]
+\label{cor:expanded-real}
+Under the hypotheses of Theorem~\ref{thm:prime-free-classification}, put
+\[
+ P=ac-bd,
+ \qquad
+ Q=ad+bc.
+\]
+Then
+\begin{equation}
+ \boxed{
+ y=\varepsilon\,
+ \frac{(m^2-n^2)P-2mnQ}{m^2+n^2},
+ }
+ \label{eq:y-expanded}
+\end{equation}
+\begin{equation}
+ \boxed{
+ z=\varepsilon\,
+ \frac{2mnP+(m^2-n^2)Q}{m^2+n^2}.
+ }
+ \label{eq:z-expanded}
+\end{equation}
+Together with
+\[
+ x=\varepsilon(a^2+b^2)-1
+\]
+and \eqref{eq:single-residual-norm-equation}, these formulas give every
+rational solution.
+\end{corollary}
+
+\begin{remark}[What remains constrained]
+Theorem~\ref{thm:prime-free-classification} removes the infinite prime test
+from the statement and replaces it by the finite choice
+$\varepsilon\in\{1,3\}$ and the single explicit equation
+\eqref{eq:single-residual-norm-equation}.  Theorem~\ref{thm:polynomial-obstruction}
+shows that one cannot eliminate all arithmetic constraints and still obtain
+all rational points from one unrestricted polynomial family.
+\end{remark}
+
+\section{Examples and explicit unrestricted rational families}
+
+\begin{example}[The principal norm class]
+Take $\varepsilon=1$ and $t\in\Q$.  The identity
+\[
+ 1^2+(t^3)^2=(t^2)^3+1
+\]
+gives the polynomial family
+\begin{equation}
+ (x,y,z)=(t^2,1,t^3).
+ \label{eq:square-x-family}
+\end{equation}
+Here $x+1=t^2+1$ is visibly a rational Gaussian norm, in accordance with
+Theorem~\ref{thm:polynomial-obstruction}.
+\end{example}
+
+\begin{example}[The nonprincipal norm class]
+The point
+\[
+ \left(\frac12,\frac34,\frac34\right)
+\]
+is a rational solution because
+\[
+ \frac{9}{16}+\frac{9}{16}=\frac98
+ =\left(\frac12\right)^3+1.
+\]
+It belongs to the $\varepsilon=3$ branch.  Indeed,
+\[
+ \frac{x+1}{3}=\frac12
+ =\N\!\left(\frac{1+\ii}{2}\right),
+ \qquad
+ \frac{x^2-x+1}{3}=\frac14
+ =\N\!\left(\frac12\right),
+\]
+and
+\[
+ \frac34+\frac34\ii
+ =3\left(\frac{1+\ii}{2}\right)\left(\frac12\right).
+\]
+No nonconstant polynomial family over $\Q$ can contain this point, because
+$x+1=3/2$ is not a rational Gaussian norm.
+\end{example}
+
+\begin{example}[Why denominators matter]
+Although the $\varepsilon=3$ branch cannot occur in a nonconstant polynomial
+family, it does occur in unrestricted rational-function families.  Let
+$t\in\Q$.  Since $t^2-2\ne0$ for every rational $t$, the formulas
+\begin{equation}
+ \begin{aligned}
+ x(t)&=2+\frac{12(t^2-1)}{(t^2-2)^2},\\
+ y(t)&=3-\frac{24(t^2-1)}{(t^2-2)^3},\\
+ z(t)&=\frac{12t^3(t^2-1)}{(t^2-2)^3}
+ \end{aligned}
+ \label{eq:class-three-rational-family}
+\end{equation}
+are defined for every $t\in\Q$ and satisfy
+\[
+ y(t)^2+z(t)^2=x(t)^3+1.
+\]
+Moreover,
+\begin{equation}
+ x(t)+1=3\left(\frac{t^2}{t^2-2}\right)^2,
+ \label{eq:class-three-norm-class}
+\end{equation}
+so the generic member lies in the $\varepsilon=3$ class.
+
+For completeness, the family is obtained by taking the line through
+\[
+ P=(2,3,0)
+ \qquad\text{and}\qquad
+ Q_t=(t^2,1,t^3).
+\]
+Writing the line as $P+\lambda(Q_t-P)$ and substituting into
+$y^2+z^2-x^3-1$ gives
+\[
+ -\lambda(\lambda-1)
+ \left((t^2-2)^3\lambda-12(t^2-1)\right).
+\]
+The third intersection parameter is therefore
+\[
+ \lambda=\frac{12(t^2-1)}{(t^2-2)^3},
+\]
+which yields \eqref{eq:class-three-rational-family}.
+\end{example}
+
+An arbitrary rational rotation of either family gives a second unrestricted
+parameter.  If $(X,Y,Z)$ is any rational solution and $u\in\Q$, set
+\begin{equation}
+ \begin{aligned}
+ Y_u&=\frac{(1-u^2)Y-2uZ}{1+u^2},\\
+ Z_u&=\frac{2uY+(1-u^2)Z}{1+u^2}.
+ \end{aligned}
+ \label{eq:rational-rotation}
+\end{equation}
+Then $Y_u^2+Z_u^2=Y^2+Z^2$.  Since $1+u^2\ne0$ for rational $u$, the
+parameter is unrestricted.  These rational-function families are useful and
+Zariski-dense, but they are not a complete parametrization of all rational
+points.
+
+\section{Integral points}
+
+For completeness, the exact integral criterion is immediate from
+Proposition~\ref{prop:rational-two-squares}.
+
+\begin{corollary}
+Let $x,y,z\in\Z$.  Then $y^2+z^2=x^3+1$ if and only if either
+$(x,y,z)=(-1,0,0)$, or $x\ge0$, every prime $q\equiv3\pmod4$ occurs to an
+even exponent in $x^3+1$, and $(y,z)$ is one of the integral two-square
+representations of $x^3+1$.
+\end{corollary}
+
+\begin{proof}
+The inequality $y^2+z^2\ge0$ gives $x\ge-1$.  The case $x=-1$ is immediate.
+For $x\ge0$, Proposition~\ref{prop:rational-two-squares}, applied to the
+integer $x^3+1$, gives the criterion.  Every representation of that integer
+as $y^2+z^2$ is plainly a solution, and there are no others.
+\end{proof}
+
+\section{Conclusion}
+
+The demand for one explicit polynomial parametrization with unrestricted
+rational parameters is incompatible with the arithmetic of
+\eqref{eq:surface}.  It is not merely that a convenient formula has not yet
+been found.  Theorem~\ref{thm:polynomial-obstruction} proves that every
+nonconstant polynomial family is trapped in the norm class in which $x+1$ is
+a sum of two rational squares, whereas the surface has infinitely many
+rational points in the other class, already on the fiber $x=2$.
+
+The complete replacement is Theorem~\ref{thm:prime-free-classification}:
+all rational solutions are described by the finite branch
+$\varepsilon\in\{1,3\}$, one explicit quadratic norm equation, and an
+unrestricted norm-one rotation.  This is both exact and structurally sharp.
+
+\end{document}
