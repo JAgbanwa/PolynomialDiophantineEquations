@@ -1,0 +1,241 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=27mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+
+\title{An Infinite Pell-Type Family for\texorpdfstring{\\[2mm]
+$y^2+x^2y+xz^2+y-1=0$}{ y2+x2y+xz2+y-1=0}}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\vspace{-2.5em}
+
+\begin{abstract}
+We give a completely explicit infinite family of integer solutions to
+\[
+ y^2+x^2y+xz^2+y-1=0.
+\]
+All solutions in the family have the fixed coordinate $x=-55$.  The proof is an elementary Pell-type norm argument: one seed point is propagated by an integral linear transformation preserving the quadratic form $U^2-55V^2$.
+\end{abstract}
+
+\section{The infinite family}
+
+Define integer sequences $(U_n)_{n\geq 0}$ and $(V_n)_{n\geq 0}$ by
+\begin{equation}\label{eq:recurrence}
+ U_0=1575,\qquad V_0=59,
+\end{equation}
+and
+\begin{equation}\label{eq:recurrence-step}
+ \begin{pmatrix}U_{n+1}\\ V_{n+1}\end{pmatrix}
+ =
+ \begin{pmatrix}89&660\\12&89\end{pmatrix}
+ \begin{pmatrix}U_n\\V_n\end{pmatrix};
+\end{equation}
+that is,
+\[
+ U_{n+1}=89U_n+660V_n,
+ \qquad
+ V_{n+1}=12U_n+89V_n.
+\]
+Equivalently,
+\begin{equation}\label{eq:closed-form}
+ U_n+V_n\sqrt{55}
+ =(1575+59\sqrt{55})(89+12\sqrt{55})^n.
+\end{equation}
+
+\begin{lemma}[Norm preservation]\label{lem:norm}
+For all integers $U,V$, if
+\[
+ U'=89U+660V,
+ \qquad
+ V'=12U+89V,
+\]
+then
+\[
+ (U')^2-55(V')^2=U^2-55V^2.
+\]
+\end{lemma}
+
+\begin{proof}
+Direct expansion gives
+\begin{align*}
+ (U')^2-55(V')^2
+ &=(89U+660V)^2-55(12U+89V)^2\\
+ &=(89^2-55\cdot12^2)U^2
+   +2\cdot89(660-55\cdot12)UV\\
+ &\qquad +(660^2-55\cdot89^2)V^2.
+\end{align*}
+The three coefficients are respectively
+\[
+ 89^2-55\cdot12^2=1,
+ \qquad
+ 2\cdot89(660-55\cdot12)=0,
+ \qquad
+ 660^2-55\cdot89^2=-55.
+\]
+Hence the displayed expression is $U^2-55V^2$.
+\end{proof}
+
+\begin{theorem}\label{thm:main}
+For every $n\in\Z_{\geq0}$ and every $\varepsilon,\delta\in\{\pm1\}$,
+\begin{equation}\label{eq:family}
+ \boxed{
+ (x,y,z)=\bigl(-55,\,\varepsilon U_n-1513,\,\delta V_n\bigr)
+ }
+\end{equation}
+is an integer solution of
+\begin{equation}\label{eq:original}
+ y^2+x^2y+xz^2+y-1=0.
+\end{equation}
+Moreover, the triples with $\varepsilon=\delta=1$ are pairwise distinct.  Consequently, \eqref{eq:original} has infinitely many integer solutions.
+\end{theorem}
+
+\begin{proof}
+First,
+\begin{equation}\label{eq:seed-norm}
+ 1575^2-55\cdot59^2
+ =2\,480\,625-191\,455
+ =2\,289\,170
+ =1513^2+1.
+\end{equation}
+Lemma~\ref{lem:norm}, applied inductively to \eqref{eq:recurrence-step}, therefore yields
+\begin{equation}\label{eq:all-norms}
+ U_n^2-55V_n^2=1513^2+1
+ \qquad(n\geq0).
+\end{equation}
+
+Now fix $n\geq0$ and $\varepsilon,\delta\in\{\pm1\}$, and set
+\[
+ x=-55,
+ \qquad
+ y=\varepsilon U_n-1513,
+ \qquad
+ z=\delta V_n.
+\]
+Because $x^2+1=3026=2\cdot1513$, the left-hand side of \eqref{eq:original} is
+\begin{align*}
+ y^2+x^2y+xz^2+y-1
+ &=y^2+3026y-55z^2-1\\
+ &=(y+1513)^2-55z^2-(1513^2+1)\\
+ &=U_n^2-55V_n^2-(1513^2+1)=0
+\end{align*}
+by \eqref{eq:all-norms}.  Thus every triple in \eqref{eq:family} is an integer solution.
+
+It remains only to prove that infinitely many of these triples are distinct.  Since $U_0,V_0>0$ and every entry of the recurrence matrix in \eqref{eq:recurrence-step} is positive, induction gives $U_n,V_n>0$ for all $n$.  Hence
+\[
+ V_{n+1}=12U_n+89V_n>V_n.
+\]
+Thus $(V_n)_{n\geq0}$ is strictly increasing, so the triples obtained with $\varepsilon=\delta=1$ are pairwise distinct.
+\end{proof}
+
+For example, the first three members of this subfamily are
+\[
+ (-55,62,59),\qquad
+ (-55,177602,24151),\qquad
+ (-55,31879382,4298819).
+\]
+The independent sign changes in \eqref{eq:family} reflect the symmetries
+\[
+ z\longmapsto -z,
+ \qquad
+ y\longmapsto -3026-y
+\]
+of the equation after $x$ has been fixed at $-55$.
+
+\section{How the construction was found}\label{sec:discovery}
+
+The main obstacle in \eqref{eq:original} is the mixed role of $x$: it occurs both as the coefficient of $z^2$ and, through $x^2$, as a large coefficient of $y$.  Choosing $x$ negative turns the equation into an indefinite quadratic equation in $(y,z)$, which is precisely the setting in which Pell-type propagation becomes available.
+
+Write
+\[
+ x=-m,
+ \qquad m>0.
+\]
+Then \eqref{eq:original} becomes
+\begin{equation}\label{eq:m-equation}
+ y^2+(m^2+1)y-mz^2-1=0.
+\end{equation}
+For odd $m$, completing the square gives
+\begin{equation}\label{eq:general-norm}
+ \left(y+\frac{m^2+1}{2}\right)^2-mz^2
+ =\left(\frac{m^2+1}{2}\right)^2+1.
+\end{equation}
+Thus, once one finds a single integral point for a suitable nonsquare $m$, a solution of the Pell equation $r^2-ms^2=1$ can be used to generate further points on the same norm level.
+
+The question is therefore how to manufacture a convenient seed.  The dominant terms in \eqref{eq:m-equation} suggest looking for $y$ and $z$ close to $m$.  Put
+\[
+ y=m+a,
+ \qquad
+ z=m+b.
+\]
+Substitution into the left-hand side of \eqref{eq:m-equation} yields
+\begin{equation}\label{eq:offset-expansion}
+ (a+1-2b)m^2+(2a-b^2+1)m+(a^2+a-1).
+\end{equation}
+The cubic terms cancel automatically.  We can also force the quadratic term to vanish by taking
+\[
+ a=2b-1.
+\]
+Then \eqref{eq:offset-expansion} reduces to
+\[
+ -(b^2-4b+1)m+4b^2-2b-1.
+\]
+Consequently, a seed is obtained whenever
+\begin{equation}\label{eq:m-rational}
+ m=\frac{4b^2-2b-1}{b^2-4b+1}
+\end{equation}
+is a positive integer.
+
+A particularly natural way to remove the divisibility issue in \eqref{eq:m-rational} is to make the denominator equal to $1$.  Since
+\[
+ b^2-4b+1=(b-2)^2-3,
+\]
+the equation $b^2-4b+1=1$ gives $(b-2)^2=4$, hence $b=0$ or $b=4$.  The choice $b=0$ produces $m=-1$, whereas $b=4$ gives
+\[
+ m=4\cdot4^2-2\cdot4-1=55,
+ \qquad
+ a=2\cdot4-1=7.
+\]
+Therefore
+\[
+ x=-55,
+ \qquad
+ y=55+7=62,
+ \qquad
+ z=55+4=59,
+\]
+which is the seed solution appearing in Theorem~\ref{thm:main}.
+
+For $m=55$, equation \eqref{eq:general-norm} becomes
+\[
+ (y+1513)^2-55z^2=1513^2+1.
+\]
+The small identity
+\[
+ 89^2-55\cdot12^2=1
+\]
+then supplies a norm-one multiplier.  If $U=y+1513$ and $V=z$, multiplication by $89+12\sqrt{55}$ sends
+\[
+ U+V\sqrt{55}
+ \quad\text{to}\quad
+ (89U+660V)+(12U+89V)\sqrt{55},
+\]
+which is exactly the recurrence \eqref{eq:recurrence-step}.  In this way, the seed point and the norm-one identity together explain every coefficient in the final infinite family.
+
+\begin{remark}
+Theorem~\ref{thm:main} proves infinitude, as required; it does not assert that the displayed family exhausts all integer solutions of \eqref{eq:original}.
+\end{remark}
+
+\end{document}
