@@ -1,0 +1,211 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=0.88in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[hidelinks]{hyperref}
+\usepackage{microtype}
+\hypersetup{pdftitle={Infinitely Many Integer Solutions of y2+x2y+xz2-y+1=0}}
+
+\newtheorem{theorem}{Theorem}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\title{Infinitely Many Integer Solutions of\\[-1mm]
+\texorpdfstring{$y^2+x^2y+xz^2-y+1=0$}{y2+x2y+xz2-y+1=0}}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\vspace{-2.2em}
+
+\begin{abstract}
+We give a completely explicit infinite family of integer solutions of
+\[
+ y^2+x^2y+xz^2-y+1=0.
+\]
+The construction fixes $x=-201$, converts the equation into an indefinite Pell-type norm equation, and iterates one integral norm-preserving transformation.  The proof itself is a direct calculation with a binary quadratic form; a final section explains how the seed and the transformation were found.
+\end{abstract}
+
+\section{The explicit family}
+
+Set
+\[
+ a=515095,\qquad b=36332,\qquad D=201,
+\]
+and define integer sequences $(W_n)_{n\geq 0}$ and $(Z_n)_{n\geq 0}$ by
+\begin{equation}\label{eq:recurrence}
+ \begin{aligned}
+ W_0&=20640, & Z_0&=299,\\
+ W_{n+1}&=aW_n+DbZ_n,
+ &Z_{n+1}&=bW_n+aZ_n.
+ \end{aligned}
+\end{equation}
+Thus $Db=7302732$.
+
+\begin{theorem}\label{thm:main}
+For every $n\geq 0$ and every $\sigma\in\{1,-1\}$,
+\begin{equation}\label{eq:family}
+ (x,y,z)=\bigl(-201,\,W_n-20200,\,\sigma Z_n\bigr)
+\end{equation}
+is an integer solution of
+\begin{equation}\label{eq:original}
+ y^2+x^2y+xz^2-y+1=0.
+\end{equation}
+The triples in \eqref{eq:family}, indexed by $(n,\sigma)$, are pairwise distinct.  In particular, \eqref{eq:original} has infinitely many integer solutions.
+\end{theorem}
+
+\begin{proof}
+The two numerical identities on which the construction rests are
+\begin{equation}\label{eq:numerical-identities}
+ a^2-Db^2=515095^2-201\cdot36332^2=1
+\end{equation}
+and
+\begin{equation}\label{eq:initial-norm}
+ W_0^2-DZ_0^2
+ =20640^2-201\cdot299^2
+ =20200^2-1.
+\end{equation}
+For arbitrary integers $W,Z$, put
+\[
+ W'=aW+DbZ,
+ \qquad
+ Z'=bW+aZ.
+\]
+A direct expansion, with the mixed terms cancelling, gives
+\begin{align*}
+ (W')^2-D(Z')^2
+ &= (aW+DbZ)^2-D(bW+aZ)^2\\
+ &= (a^2-Db^2)(W^2-DZ^2).
+\end{align*}
+By \eqref{eq:numerical-identities}, the transformation therefore preserves the quadratic form $W^2-DZ^2$.  Applying this observation inductively to \eqref{eq:recurrence}, and using \eqref{eq:initial-norm}, yields
+\begin{equation}\label{eq:invariant}
+ W_n^2-201Z_n^2=20200^2-1
+ \qquad(n\geq 0).
+\end{equation}
+
+Now take $x=-201$, $y=W_n-20200$, and $z=\sigma Z_n$.  Since
+\[
+ 201^2-1=40400=2\cdot20200,
+\]
+the left-hand side of \eqref{eq:original} becomes
+\begin{align*}
+ &(W_n-20200)^2+(201^2-1)(W_n-20200)-201Z_n^2+1\\
+ &\qquad =W_n^2-201Z_n^2-20200^2+1=0
+\end{align*}
+by \eqref{eq:invariant}.  Hence every triple in \eqref{eq:family} is an integer solution.
+
+It remains only to prove that infinitely many of these solutions are distinct.  The initial values $W_0,Z_0$ are positive, and every coefficient in \eqref{eq:recurrence} is positive; hence $W_n,Z_n>0$ for all $n$.  Moreover,
+\[
+ W_{n+1}=aW_n+DbZ_n>W_n,
+\]
+because $a>1$ and $DbZ_n>0$.  Thus $(W_n)$ is strictly increasing.  Solutions arising from different indices have different $y$-coordinates, while the two signs at a fixed index are distinct because $Z_n>0$.  Hence all triples indexed by $(n,\sigma)$ are pairwise distinct.  This proves the theorem.
+\end{proof}
+
+The first two levels of the family are
+\[
+ (-201,440,\pm299)
+\]
+and
+\[
+ (-201,12815057468,\pm903905885).
+\]
+Equivalently, the recurrence is encoded by
+\begin{equation}\label{eq:closed-form}
+ W_n+Z_n\sqrt{201}
+ =(20640+299\sqrt{201})
+  (515095+36332\sqrt{201})^n.
+\end{equation}
+
+\section{How the construction was found}
+
+The point of the construction is not the large numerical coefficients; it is the sign of $x$ and the norm structure that this sign exposes.
+
+\subsection*{1. Forcing an indefinite Pell-type equation}
+Write $x=-A$, where $A$ is a positive odd integer, and set
+\[
+ H=\frac{A^2-1}{2}.
+\]
+Then \eqref{eq:original} is
+\[
+ y^2+(A^2-1)y-Az^2+1=0,
+\]
+so completing the square gives the equivalent equation
+\begin{equation}\label{eq:general-pell}
+ (y+H)^2-Az^2=H^2-1.
+\end{equation}
+This is indefinite.  Once one solution is available, multiplication by a nontrivial solution of $u^2-Av^2=1$ can preserve the right-hand side and generate further solutions.  This explains why a negative value of $x$ is natural.  For comparison, fixing $x=A>0$ would instead produce a positive-definite equation of the form
+\[
+ (y+H)^2+Az^2=H^2-1,
+\]
+which has only finitely many integral possibilities for that fixed $A$.
+
+\subsection*{2. Engineering one seed}
+For $x=-A$, the original expression can be grouped as
+\begin{equation}\label{eq:seed-grouping}
+ y^2-y+1+A(Ay-z^2).
+\end{equation}
+Consequently, it is enough to find integers $y,r,z$ satisfying
+\begin{equation}\label{eq:seed-system}
+ y^2-y+1=Ar^2,
+ \qquad
+ z^2=Ay+r^2.
+\end{equation}
+Indeed, substitution into \eqref{eq:seed-grouping} gives
+\[
+ Ar^2+A\bigl(Ay-(Ay+r^2)\bigr)=0.
+\]
+A convenient successful choice is
+\[
+ A=201,
+ \qquad y=440,
+ \qquad r=31,
+ \qquad z=299,
+\]
+for which
+\begin{equation}\label{eq:seed-verification}
+ 440^2-440+1=201\cdot31^2,
+ \qquad
+ 299^2=201\cdot440+31^2.
+\end{equation}
+Thus $(-201,440,\pm299)$ is the required seed.  In the completed-square coordinate
+\[
+ W=y+\frac{201^2-1}{2}=y+20200,
+\]
+this seed is $(W,Z)=(20640,299)$, which explains the initial values in \eqref{eq:recurrence}.
+
+\subsection*{3. Extracting the norm-one multiplier from the same seed}
+The first equation of \eqref{eq:seed-system} has a useful hidden form, since
+\[
+ 4(y^2-y+1)=(2y-1)^2+3.
+\]
+For $U,V\in\mathbb Q$, write
+\[
+ N(U+V\sqrt{201})=U^2-201V^2.
+\]
+A direct expansion shows that $N(\alpha\beta)=N(\alpha)N(\beta)$.  For the values in \eqref{eq:seed-verification}, the preceding identity becomes
+\begin{equation}\label{eq:minus-three}
+ 879^2-201\cdot62^2=-3.
+\end{equation}
+Hence the quadratic expression
+\[
+ \eta=879+62\sqrt{201}
+\]
+has norm $-3$.  Squaring and dividing by $3$ gives the integral element
+\begin{align*}
+ \varepsilon=\frac{\eta^2}{3}
+ &=\frac{879^2+201\cdot62^2}{3}
+   +\frac{2\cdot879\cdot62}{3}\sqrt{201}\\
+ &=515095+36332\sqrt{201}.
+\end{align*}
+Its norm is $(-3)^2/3^2=1$, which is exactly identity \eqref{eq:numerical-identities}.  Multiplying $W+Z\sqrt{201}$ by $\varepsilon$ gives
+\[
+ (aW+201bZ)+(bW+aZ)\sqrt{201},
+\]
+namely the recurrence \eqref{eq:recurrence}.  Thus the same arithmetic data that produce the seed also produce the norm-preserving operation that iterates it indefinitely.
+
+\begin{remark}
+Theorem~\ref{thm:main} proves infinitude, which is one of the two alternatives in the problem.  It does not assert that the displayed family exhausts all integer solutions of \eqref{eq:original}.
+\end{remark}
+
+\end{document}
