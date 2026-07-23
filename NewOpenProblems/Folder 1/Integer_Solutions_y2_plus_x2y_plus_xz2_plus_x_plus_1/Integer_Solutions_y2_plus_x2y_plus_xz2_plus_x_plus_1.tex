@@ -1,0 +1,260 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=0.88in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={Infinitely Many Integer Solutions of y2+x2y+xz2+x+1=0}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+\newcommand{\F}{\mathcal F}
+
+\title{Infinitely Many Integer Solutions of\\[2pt]
+\texorpdfstring{$y^2+x^2y+xz^2+x+1=0$}{y^2+x^2y+xz^2+x+1=0}}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\vspace{-2.0em}
+
+\begin{abstract}
+We give a completely explicit infinite family of integer solutions to
+\[
+ y^2+x^2y+xz^2+x+1=0.
+\]
+The construction fixes $x=-5$, converts the remaining equation into the norm equation
+$U^2-5V^2=641$, and iterates a single integral norm-preserving transformation.  Every
+algebraic and integrality assertion is proved directly; no general theorem on Pell
+equations is required.
+\end{abstract}
+
+\section{The infinite family}
+
+Let
+\[
+\F(x,y,z)=y^2+x^2y+xz^2+x+1.
+\]
+
+\begin{theorem}\label{thm:main}
+Define integer sequences $(y_n)_{n\ge 0}$ and $(z_n)_{n\ge 0}$ by
+\[
+ y_0=3,\qquad z_0=4,
+\]
+and
+\begin{equation}\label{eq:yzrec}
+\boxed{
+\begin{aligned}
+ y_{n+1}&=9y_n+20z_n+100,\\
+ z_{n+1}&=4y_n+9z_n+50.
+\end{aligned}}
+\end{equation}
+Then, for every $n\ge 0$ and every $\varepsilon\in\{-1,1\}$,
+\begin{equation}\label{eq:family}
+ \boxed{(x,y,z)=(-5,y_n,\varepsilon z_n)}
+\end{equation}
+is an integer solution of
+\[
+ y^2+x^2y+xz^2+x+1=0.
+\]
+All the triples in \eqref{eq:family} are pairwise distinct.  In particular, the
+equation has infinitely many integer solutions.
+\end{theorem}
+
+The proof rests on two elementary lemmas.
+
+\begin{lemma}\label{lem:change}
+For integers $y,z$, one has
+\[
+ \F(-5,y,z)=0
+ \quad\Longleftrightarrow\quad
+ (2y+25)^2-5(2z)^2=641.
+\]
+Thus any solution $(U,V)\in\Z^2$ of
+\begin{equation}\label{eq:norm}
+ U^2-5V^2=641
+\end{equation}
+with $U$ odd and $V$ even gives an integer solution of the original equation through
+\begin{equation}\label{eq:back}
+ x=-5,\qquad y=\frac{U-25}{2},\qquad z=\frac V2.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+At $x=-5$ the original equation is
+\[
+ y^2+25y-5z^2-4=0.
+\]
+Multiplying by $4$ and completing the square gives
+\[
+ 4y^2+100y-20z^2-16=0
+ \quad\Longleftrightarrow\quad
+ (2y+25)^2-20z^2=641,
+\]
+which is the asserted equivalence.  If $U$ is odd and $V$ is even, the quantities in
+\eqref{eq:back} are integers; substituting $U=2y+25$ and $V=2z$ into
+\eqref{eq:norm} then recovers $\F(-5,y,z)=0$ by the already proved equivalence.
+\end{proof}
+
+\begin{lemma}\label{lem:map}
+Define
+\begin{equation}\label{eq:T}
+ T(U,V)=(9U+20V,\,4U+9V).
+\end{equation}
+Then:
+\begin{enumerate}
+\item $T$ preserves the quadratic form $U^2-5V^2$;
+\item if $U$ is odd and $V$ is even, then the two coordinates of $T(U,V)$ are,
+respectively, odd and even;
+\item if $U,V>0$, then both coordinates of $T(U,V)$ are positive and the first
+coordinate is strictly larger than $U$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Writing $T(U,V)=(U',V')$, direct expansion gives
+\begin{align*}
+ (U')^2-5(V')^2
+ &=(9U+20V)^2-5(4U+9V)^2\\
+ &=81U^2+360UV+400V^2
+   -80U^2-360UV-405V^2\\
+ &=U^2-5V^2.
+\end{align*}
+This proves the first assertion.  If $U$ is odd and $V$ is even, then
+$9U+20V$ is odd and $4U+9V$ is even, proving the second.  Finally, when $U,V>0$,
+both new coordinates are positive and
+\[
+ (9U+20V)-U=8U+20V>0,
+\]
+which proves the third assertion.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+The pair
+\[
+ (U_0,V_0)=(31,8)
+\]
+satisfies
+\[
+ 31^2-5\cdot 8^2=961-320=641.
+\]
+For $n\ge 0$, define
+\begin{equation}\label{eq:UVrec}
+ (U_{n+1},V_{n+1})=T(U_n,V_n).
+\end{equation}
+By Lemma~\ref{lem:map}(1), every $(U_n,V_n)$ satisfies
+$U_n^2-5V_n^2=641$.  Since $U_0$ is odd and $V_0$ is even,
+Lemma~\ref{lem:map}(2), applied inductively, shows that every $U_n$ is odd and every
+$V_n$ is even.  Hence
+\[
+ y_n=\frac{U_n-25}{2},\qquad z_n=\frac{V_n}{2}
+\]
+are integers, and Lemma~\ref{lem:change} gives
+\[
+ \F(-5,y_n,z_n)=0.
+\]
+Because $\F$ contains $z$ only through $z^2$, it also follows that
+$\F(-5,y_n,-z_n)=0$.
+
+It remains only to verify that these $y_n,z_n$ agree with the recurrence stated in
+the theorem and that no repetitions occur.  From $U_n=2y_n+25$ and $V_n=2z_n$,
+\eqref{eq:UVrec} yields
+\begin{align*}
+ y_{n+1}
+ &=\frac{9(2y_n+25)+20(2z_n)-25}{2}
+   =9y_n+20z_n+100,\\
+ z_{n+1}
+ &=\frac{4(2y_n+25)+9(2z_n)}{2}
+   =4y_n+9z_n+50,
+\end{align*}
+which is \eqref{eq:yzrec}.  Also $U_0,V_0>0$, so
+Lemma~\ref{lem:map}(3) implies inductively that $U_n,V_n>0$ and
+$U_{n+1}>U_n$ for every $n$.  Therefore $y_{n+1}>y_n$ and $z_n>0$.
+Distinct indices give distinct $y$-coordinates, while for each fixed index the two
+choices $\varepsilon=\pm1$ give distinct $z$-coordinates.  Thus all triples in
+\eqref{eq:family} are pairwise distinct, completing the proof.
+\end{proof}
+
+The first four levels of the family are
+\[
+ (-5,3,\pm4),\quad
+ (-5,207,\pm98),\quad
+ (-5,3923,\pm1760),\quad
+ (-5,70607,\pm31582).
+\]
+
+\begin{remark}\label{rem:closed}
+Equivalently, the auxiliary sequences admit the compact description
+\[
+ U_n+V_n\sqrt5=(31+8\sqrt5)(9+4\sqrt5)^n.
+\]
+Indeed, multiplying $U+V\sqrt5$ by $9+4\sqrt5$ produces
+$(9U+20V)+(4U+9V)\sqrt5$, which is exactly \eqref{eq:UVrec}.  The recurrence,
+however, is the entirely integral formulation and is sufficient for the proof.
+\end{remark}
+
+\section{How the construction was found}
+
+The term $xz^2$ suggests first making $x$ negative: this turns the quadratic part in
+$y$ and $z$ into an indefinite form, the setting in which a single solution can often
+be propagated.  Put $x=-a$ with $a>0$.  Then
+\begin{equation}\label{eq:general-a}
+ \F(-a,y,z)=y^2+a^2y-az^2-a+1,
+\end{equation}
+and completing the square gives the general identity
+\begin{equation}\label{eq:general-norm}
+ \F(-a,y,z)=0
+ \quad\Longleftrightarrow\quad
+ (2y+a^2)^2-a(2z)^2=a^4+4a-4.
+\end{equation}
+Thus a nonsquare value of $a$ would lead to a Pell-type norm equation, provided that
+one could first locate an integral point.
+
+The dominant terms $a^2y$ and $-az^2$ cancel when $y$ and $z$ are both of size $a$.
+To search systematically near that balance, write
+\[
+ y=a-r,\qquad z=a-s,
+\]
+where $r,s$ are small integers.  Substitution into \eqref{eq:general-a} gives
+\begin{equation}\label{eq:offset}
+ \F(-a,a-r,a-s)
+ =(1-r+2s)a^2-(2r+s^2+1)a+r^2+1.
+\end{equation}
+The small offsets $(r,s)=(2,1)$ are especially fruitful:
+\[
+ \F(-a,a-2,a-1)=a^2-6a+5=(a-1)(a-5).
+\]
+The root $a=1$ gives the unhelpful seed $(-1,-1,0)$ within this ansatz.  The other
+root gives
+\[
+ a=5,\qquad (x,y,z)=(-5,3,4),
+\]
+and, crucially, the nonsquare coefficient $5$ needed for an indefinite norm equation.
+
+For $a=5$, equation \eqref{eq:general-norm} becomes $U^2-5V^2=641$.
+The next task is to find an integral linear transformation preserving
+$U^2-5V^2$.  A transformation of the standard form
+\[
+ (U,V)\longmapsto(pU+5qV,\,qU+pV)
+\]
+preserves this form whenever $p^2-5q^2=1$, as a direct expansion shows.  The
+small identity
+\[
+ 9^2-5\cdot4^2=1
+\]
+therefore supplies $(p,q)=(9,4)$ and yields precisely
+\[
+ (U,V)\longmapsto(9U+20V,\,4U+9V).
+\]
+It preserves the required parity class, maps positive pairs to larger positive pairs,
+and therefore generates an infinite orbit from $(31,8)$.  This explains both the
+choice $x=-5$ and the recurrence in Theorem~\ref{thm:main} without invoking any
+external classification theorem.
+
+\end{document}
