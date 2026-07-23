@@ -1,0 +1,163 @@
+\documentclass[10pt]{article}
+
+\usepackage[a4paper,left=23mm,right=23mm,top=20mm,bottom=22mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\Qform}{\mathcal Q}
+
+\setlength{\parindent}{1.3em}
+\setlength{\parskip}{0pt}
+\emergencystretch=2em
+
+\hypersetup{
+  pdftitle={An Infinite Pell Family for z2 + xy2 + x3 + 3 = 0},
+  pdfauthor={Jamal Agbanwa}
+}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries An Infinite Pell Family for $z^2+xy^2+x^3+3=0$\par}
+\vspace{0.55em}
+{\large Jamal Agbanwa\par}
+\end{center}
+\vspace{0.5em}
+
+\begin{abstract}
+We prove, by an explicit elementary construction, that
+\[
+ z^2+xy^2+x^3+3=0
+\]
+has infinitely many integer solutions.  Fixing $x=-3$ reduces the equation to the Pell-type conic $z^2-3y^2=24$.  A norm-preserving recurrence, obtained from the unit $2+\sqrt3$, then generates an infinite strictly increasing sequence of solutions.  We also explain in detail how this useful slice and its recurrence arise.
+\end{abstract}
+
+\section{The explicit infinite family}
+
+\begin{theorem}\label{thm:main}
+Define integer sequences $(y_n)_{n\ge 0}$ and $(z_n)_{n\ge 0}$ by
+\begin{equation}\label{eq:recurrence}
+ y_0=2,\qquad z_0=6,
+ \qquad
+ y_{n+1}=2y_n+z_n,\qquad
+ z_{n+1}=3y_n+2z_n.
+\end{equation}
+Then, for every $n\ge 0$ and every $\varepsilon,\delta\in\{\pm1\}$,
+\begin{equation}\label{eq:family}
+ (x,y,z)=\bigl(-3,\varepsilon y_n,\delta z_n\bigr)
+\end{equation}
+is an integer solution of
+\begin{equation}\label{eq:surface}
+ z^2+xy^2+x^3+3=0.
+\end{equation}
+Moreover, the solutions $(-3,y_n,z_n)$ are pairwise distinct.  Consequently, \eqref{eq:surface} has infinitely many integer solutions.
+\end{theorem}
+
+\begin{proof}
+Put
+\[
+ \Qform(y,z)=z^2-3y^2.
+\]
+A direct calculation gives the invariant identity
+\begin{align*}
+ \Qform(2y+z,3y+2z)
+ &=(3y+2z)^2-3(2y+z)^2\\
+ &=z^2-3y^2
+ =\Qform(y,z).
+\end{align*}
+Since
+\[
+ \Qform(y_0,z_0)=6^2-3\cdot2^2=24,
+\]
+induction using \eqref{eq:recurrence} yields
+\begin{equation}\label{eq:pell-invariant}
+ z_n^2-3y_n^2=24
+ \qquad(n\ge0).
+\end{equation}
+On taking $x=-3$, the left-hand side of \eqref{eq:surface} becomes
+\[
+ z_n^2-3y_n^2-27+3
+ =24-24=0
+\]
+after applying \eqref{eq:pell-invariant}.  Because only $y^2$ and $z^2$ occur in \eqref{eq:surface}, the two signs in \eqref{eq:family} may be chosen independently.
+
+It remains only to verify infinitude.  The initial values are positive, and \eqref{eq:recurrence} therefore implies inductively that $y_n,z_n>0$ for every $n$.  Hence
+\[
+ y_{n+1}=2y_n+z_n>y_n,
+\]
+so $(y_n)$ is strictly increasing.  Thus the triples $(-3,y_n,z_n)$ are pairwise distinct, proving the assertion.
+\end{proof}
+
+The first positive solutions furnished by the theorem are
+\[
+ (-3,2,6),\quad(-3,10,18),\quad(-3,38,66),\quad
+ (-3,142,246),\quad(-3,530,918),\ldots.
+\]
+
+\section{How the construction was found}\label{sec:discovery}
+
+The decisive step is to expose an indefinite quadratic form hidden inside the cubic equation.  First, no solution can have $x\ge0$: in that case $z^2$, $xy^2$, and $x^3$ are all nonnegative, so the left-hand side of \eqref{eq:surface} is at least $3$.  Every integer solution must therefore have $x<0$.
+
+Write $x=-a$ with $a\in\Z_{>0}$.  Equation \eqref{eq:surface} is then exactly equivalent to
+\begin{equation}\label{eq:slices}
+ z^2-ay^2=a^3-3.
+\end{equation}
+For each fixed $a$, the original cubic surface has been cut by the plane $x=-a$ into a Pell-type conic.  The problem is now to choose $a$ so that this conic has one integer point and also admits a nontrivial norm-preserving motion.
+
+The first two choices fail for elementary congruence reasons.  For $a=1$, equation \eqref{eq:slices} reads
+\[
+ z^2-y^2=-2,
+\]
+which is impossible modulo $4$, since a difference of two squares is never congruent to $2\pmod4$.  For $a=2$, it reads
+\[
+ z^2-2y^2=5.
+\]
+If $y$ is even, this would give $z^2\equiv5\pmod8$; if $y$ is odd, it would give $z^2\equiv7\pmod8$.  Both are impossible because a square modulo $8$ is $0$, $1$, or $4$.
+
+The next choice, $a=3$, succeeds immediately:
+\begin{equation}\label{eq:pell}
+ z^2-3y^2=24,
+\end{equation}
+and the small identity
+\[
+ 6^2-3\cdot2^2=24
+\]
+provides the seed $(y,z)=(2,6)$.  Thus the remaining task is not to find more points independently, but to find a transformation preserving the left-hand side of \eqref{eq:pell}.
+
+The general multiplicative identity
+\begin{equation}\label{eq:norm-identity}
+ (rz+asy)^2-a(sz+ry)^2
+ =(r^2-as^2)(z^2-ay^2)
+\end{equation}
+is verified by expanding both sides: the mixed terms cancel, leaving
+\((r^2-as^2)z^2-a(r^2-as^2)y^2\).  It says that whenever
+$r^2-as^2=1$, the map
+\[
+ (y,z)\longmapsto (sz+ry,\,rz+asy)
+\]
+preserves $z^2-ay^2$.  For $a=3$, the smallest positive nontrivial solution of
+\[
+ r^2-3s^2=1
+\]
+is $(r,s)=(2,1)$.  Substitution into the preceding map gives precisely
+\[
+ (y,z)\longmapsto(2y+z,\,3y+2z),
+\]
+which is the recurrence in \eqref{eq:recurrence}.  In the suggestive notation of quadratic norms, this is simply multiplication by $2+\sqrt3$:
+\[
+ z_{n+1}+y_{n+1}\sqrt3
+ =(z_n+y_n\sqrt3)(2+\sqrt3).
+\]
+Since $(2+\sqrt3)(2-\sqrt3)=1$, this multiplication preserves the norm
+$z^2-3y^2$; the elementary calculation in the proof of Theorem~\ref{thm:main} is exactly this norm argument written without invoking any algebraic-number-theoretic machinery.
+
+Iterating gives the compact closed form
+\begin{equation}\label{eq:closed-form}
+ z_n+y_n\sqrt3=(6+2\sqrt3)(2+\sqrt3)^n,
+\end{equation}
+which follows at once by induction from the recurrence.  Formula \eqref{eq:closed-form} explains both the rapid growth and the inexhaustibility of the family, while Theorem~\ref{thm:main} supplies the completely elementary proof that every generated triple is integral, solves the original equation, and is distinct from all earlier ones.
+
+\end{document}
