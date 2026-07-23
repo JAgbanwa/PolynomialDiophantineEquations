@@ -1,3 +1,5 @@
+This folder is dedicated to either listing all integer solutions to the equations in this folder or proving the existence of infinitely many. The results in this folder achieves the latter. These results were yielded with assistance of the A.I. tools as in the table below:
+
 | Folder | Equation solved | Status | Tool used |
 |--------|------|----------|----------|
 | [\[1\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/NewOpenProblems/Folder%201/Pell%20fiber) | $y^2+x^2y+z^2x+3=0$ |  🟡 Pending feedback |  Fable 5 |
@@ -6,3 +8,6 @@
 | [\[4\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/NewOpenProblems/Folder%201/infinite_solutions_y2_x2y_xz2_y_minus1) | $y^2+x^2y+xz^2+y-1=0$ | 🟡 Pending feedback | GPT-5.5 Sol |
 | [\[5\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/NewOpenProblems/Folder%201/infinite_integer_solutions_z2_xy2_x3_plus_3) | $z^2+xy^2+x^3+3=0$ | 🟡 Pending feedback | GPT-5.5 Sol |
 | [\[6\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/NewOpenProblems/Folder%201/infinite_integer_solutions_y2_x2y_xz2_minus_y_plus_1) | $y^2+x^2y+xz^2-y+1=0$ | 🟡 Pending feedback | GPT-5.5 Sol |
+
+
+(This status of the equations in the above table would later be updated after review from Dr. Grechuk.)
