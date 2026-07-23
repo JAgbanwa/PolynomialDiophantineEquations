@@ -1,0 +1,169 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=0.82in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+
+\title{An Infinite Pell Family for
+\texorpdfstring{$y^2+x^2y+xz^2-3=0$}{y2 + x2 y + x z2 - 3 = 0}}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\vspace{-2.2em}
+
+\begin{abstract}
+We give a completely explicit infinite family of integer solutions to
+\[
+ y^2+x^2y+xz^2-3=0.
+\]
+The construction is elementary: fixing $x=-2$ reduces the equation to the generalized Pell equation
+$(y+2)^2-2z^2=7$.  A single solution of the latter is propagated by an explicit norm-preserving recurrence.  No general theorem about Pell equations is required.
+\end{abstract}
+
+\section{The infinite family}
+
+\begin{lemma}[Norm-preserving recurrence]\label{lem:recurrence}
+Let $(U_n,V_n)_{n\geq 0}$ be defined by
+\[
+ (U_0,V_0)=(3,1),
+ \qquad
+ \begin{cases}
+ U_{n+1}=3U_n+4V_n,\\
+ V_{n+1}=2U_n+3V_n.
+ \end{cases}
+\]
+Then, for every $n\geq 0$,
+\[
+ U_n^2-2V_n^2=7.
+\]
+Moreover, $U_n$ and $V_n$ are positive, and $(V_n)_{n\geq0}$ is strictly increasing.
+\end{lemma}
+
+\begin{proof}
+For arbitrary integers $U,V$ one has the identity
+\begin{align*}
+ (3U+4V)^2-2(2U+3V)^2
+ &=9U^2+24UV+16V^2 \\
+ &\quad{}-2(4U^2+12UV+9V^2)\\
+ &=U^2-2V^2.
+\end{align*}
+Thus the recurrence preserves the quadratic form $U^2-2V^2$.  Since
+$U_0^2-2V_0^2=9-2=7$, induction gives $U_n^2-2V_n^2=7$ for all $n$.
+
+The recurrence has integral coefficients and integral initial values, so $U_n,V_n\in\Z$ for all $n$.  The initial values are positive, and the recurrence has positive coefficients, so $U_n,V_n>0$ for all $n$.  Finally,
+\[
+ V_{n+1}-V_n=2U_n+2V_n>0,
+\]
+so $V_{n+1}>V_n$ for every $n$.
+\end{proof}
+
+\begin{theorem}\label{thm:main}
+For every integer $n\geq0$, the two triples
+\[
+ \boxed{(x,y,z)=\bigl(-2,\,U_n-2,\,\pm V_n\bigr)}
+\]
+are integer solutions of
+\[
+ y^2+x^2y+xz^2-3=0.
+\]
+Consequently, the equation has infinitely many integer solutions.
+\end{theorem}
+
+\begin{proof}
+Fix $n\geq0$ and put $x=-2$, $y=U_n-2$, and $z=\pm V_n$.  By Lemma~\ref{lem:recurrence},
+\begin{align*}
+ y^2+x^2y+xz^2-3
+ &=(U_n-2)^2+4(U_n-2)-2V_n^2-3\\
+ &=U_n^2-2V_n^2-7\\
+ &=0.
+\end{align*}
+Hence every displayed triple is a solution.  The positive integers $V_n$ are strictly increasing by Lemma~\ref{lem:recurrence}; therefore the triples with $z=V_n$ are pairwise distinct.  This proves infinitude.
+\end{proof}
+
+The first values are
+\[
+ (U_n,V_n)=(3,1),(13,9),(75,53),(437,309),\ldots,
+\]
+which yield
+\[
+ (-2,1,\pm1),\quad
+ (-2,11,\pm9),\quad
+ (-2,73,\pm53),\quad
+ (-2,435,\pm309),\ldots.
+\]
+
+\section{How the construction was found}\label{sec:discovery}
+
+The original expression is quadratic in $y$.  Completing the square is therefore the natural first move:
+\begin{align}
+ 4\bigl(y^2+x^2y+xz^2-3\bigr)=0
+ \quad\Longleftrightarrow\quad
+ (2y+x^2)^2+4xz^2=x^4+12.\label{eq:square}
+\end{align}
+The sign of $x$ now becomes decisive.  When $x>0$, the two square terms on the left of \eqref{eq:square} have the same sign, so this specialization does not naturally produce an unbounded indefinite quadratic equation.  To obtain a Pell-type mechanism, one instead takes $x<0$.  Writing $x=-m$ with $m>0$ gives
+\begin{equation}
+ (2y+m^2)^2-4mz^2=m^4+12.\label{eq:m}
+\end{equation}
+
+The smallest choices illustrate what is needed.  For $m=1$, equation \eqref{eq:m} becomes
+\[
+ (2y+1)^2-(2z)^2=13,
+\]
+a difference of two integral squares.  It factors as
+$(2y+1-2z)(2y+1+2z)=13$, so this route can give only finitely many pairs.
+
+The next choice, $m=2$, is qualitatively different.  Equation \eqref{eq:m} becomes
+\[
+ (2y+4)^2-8z^2=28,
+\]
+and division by $4$ gives
+\begin{equation}
+ (y+2)^2-2z^2=7.\label{eq:pell}
+\end{equation}
+This is an indefinite quadratic equation with the obvious seed
+\[
+ 3^2-2\cdot1^2=7.
+\]
+What remains is to reproduce this seed indefinitely without changing the value $7$.
+
+For this purpose, write a pair $(U,V)$ formally as $U+V\sqrt2$ and define its norm by
+\[
+ N(U+V\sqrt2)=U^2-2V^2.
+\]
+Indeed, since
+\[
+ (U+V\sqrt2)(A+B\sqrt2)=(UA+2VB)+(UB+VA)\sqrt2,
+\]
+one obtains by direct expansion
+\begin{align*}
+ N\bigl((U+V\sqrt2)(A+B\sqrt2)\bigr)
+ &=(UA+2VB)^2-2(UB+VA)^2\\
+ &=(U^2-2V^2)(A^2-2B^2)\\
+ &=N(U+V\sqrt2)N(A+B\sqrt2).
+\end{align*}  Hence multiplication by any element of norm $1$ preserves equation \eqref{eq:pell}.  The small identity
+\[
+ 3^2-2\cdot2^2=1
+\]
+provides such an element, namely $3+2\sqrt2$.  Multiplying gives
+\[
+ (U+V\sqrt2)(3+2\sqrt2)
+   =(3U+4V)+(2U+3V)\sqrt2,
+\]
+which is exactly the recurrence in Lemma~\ref{lem:recurrence}.  Starting from $3+\sqrt2$, whose norm is $7$, repeated multiplication by $3+2\sqrt2$ produces
+\[
+ U_n+V_n\sqrt2=(3+\sqrt2)(3+2\sqrt2)^n.
+\]
+The recurrence proof in Section~1 then establishes integrality, preservation of the norm, and strict growth without appealing to any external result on Pell equations.
+
+\end{document}
