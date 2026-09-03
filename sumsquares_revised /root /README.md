@@ -11,8 +11,8 @@ Co-authored-by: Aristotle (Harmonic) <aristotle-harmonic@harmonic.fun>
 
 Lean 4 formalization of the paper
 
-> **On the polynomial values represented by quadratic forms [\[1\]](https://arxiv.org/pdf/2607.06627)**
-> Bogdan Grechuk and Jamal Agbanwa
+> **On the polynomial values represented by quadratic forms**
+> Bogdan Grechuk and Jamal Agbanwa [\[1\]](https://arxiv.org/pdf/2607.06627)
 
 The development proves, with no `sorry` and no added `axiom`, that `x⁶ − 4` is a sum of
 two squares for infinitely many integers `x`, and hence that the Diophantine equation
