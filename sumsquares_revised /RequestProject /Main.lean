@@ -1224,7 +1224,7 @@ theorem degenerate_case {A B C k n m : ℤ}
   have hset : {p : ℤ × ℤ × ℤ | A * p.2.1 ^ 2 + B * p.2.1 * p.2.2 + C * p.2.2 ^ 2 = P p.1}
       = {p : ℤ × ℤ × ℤ | k * (n * p.2.1 + m * p.2.2) ^ 2 = P p.1} := by
     ext p
-    simp only [Set.mem_setOf_eq, degenerate_reduces hA hB hC]
+    simp only [Set.mem_ofPred_eq, degenerate_reduces hA hB hC]
   rw [hset, degenerate_infinite_iff hnm P]
 
 end SumSquaresPaper
