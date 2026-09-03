@@ -11,7 +11,8 @@ Co-authored-by: Aristotle (Harmonic) <aristotle-harmonic@harmonic.fun>
 
 Lean 4 formalization of the paper
 
-> **On the polynomial values represented by quadratic forms [2607.06627v1-2.pdf](https://arxiv.org/pdf/2607.06627)**
+> **On the polynomial values represented by quadratic forms [1](https://arxiv.org/pdf/2607.06627)**
+
 > Bogdan Grechuk and Jamal Agbanwa
 
 The development proves, with no `sorry` and no added `axiom`, that `x⁶ − 4` is a sum of
