@@ -1,3 +1,24 @@
+# Summary of changes for run 15e0e207-38d6-4177-adc8-4a66c87986e3
+I read the revised manuscript and the referee report, diffed the revision against the earlier version, and formalized every new or restated result, incorporating them into the single development file `RequestProject/Main.lean` (now 1406 lines). The project builds with no errors and no `sorry`/`admit`/`axiom`; every theorem depends only on `propext`, `Classical.choice`, `Quot.sound`.
+
+New results formalized and proved
+
+* **Proposition 2.2** (`prop_2_2`) — the sum-of-two-squares criterion: if `R(u)` is a positive sum of two squares and the auxiliary equation (10) `4R(u)Du(Q(x)) − r² = v²` has infinitely many integer solutions, then `R(Q(x)) ∈ S₂` for infinitely many `x`. (No non-constancy hypothesis on `R∘Q` is needed in the Lean proof, since `0` is itself a sum of two squares; this is noted in the docstring.)
+* **Residue-controlled generalized Pell lemma** (`residue_controlled_pell`) — stated exactly as in the revision, `X² − A Y² = C` with `X ≡ X₀`, `Y ≡ Y₀ (mod N)`.
+* **Proposition 2.3** (`prop_2_3`) — conditions (a)–(c) give infinitely many solutions of `a x² + b x + c = v²`, **with infinitely many distinct values of `x`** (both conjuncts are in the statement). The `a = 0` case uses the paper's explicit family; the `a > 0` case completes the square and applies the Pell lemma with modulus `2a`.
+* **Algorithm 2.4** (`algorithm_2_4`) — the renumbered sum-of-two-squares recipe, now proved as the composition of Propositions 2.2 and 2.3 (this replaces the previous monolithic proof of the recipe).
+* **The Section 1 limitation for `y² + z² = x⁶ + 3`** (`pow6_add3_algorithm_fails`, with `pow6_add3_even_u_not_sum2sq`, `pow6_add3_odd_u_aux_not_square`, `sq_emod_four_ne_three`): for every `u`, either `u³+3` is not a sum of two squares, or `4(u³+3)x² − u(u³−24)` is never a square — i.e. no `u` passes the first two steps of the algorithm.
+* **The mod-3 non-multiplicativity argument** (`form2_identity`, `form2_not_one_mod_three`): the proof that `2y² + yz + 2z²` does not represent `4` now follows the revision's argument via `4(y² − yz + z²) = (2y − z)² + 3z²` and the residues mod 3, instead of the earlier bounding argument.
+* **Proposition 4.5** (`prop_4_5`) — the degenerate case in the exact form now stated in the paper: `Δ = 0` and `(A,B,C) ≠ (0,0,0)` give `κ ≠ 0`, `(r,s) ≠ (0,0)` with `(A,B,C) = (κr², 2κrs, κs²)`, `F(y,z) = κ(ry+sz)²`, and the equivalence with `κt₀² = P(x₀)`, `gcd(r,s) ∣ t₀`.
+* **Proposition 4.4(b)** now uses the fully expanded family (36) `y = 9690n³+6105n²+1189n+71`, `z = −4560n³−1230n²+89n+29` exactly as displayed in the revision (previously an equivalent factored form).
+
+Supporting updates
+
+* The comparator surface (`Challenge.lean` / `Solution.lean`, statements character-identical) was extended with six further declarations — the Pell lemma, Propositions 2.2, 2.3 and 4.5, and formal correctness statements for Algorithms 2.4 and 4.3 — matching the revision's declaration of what was formalized; `comparator.json` now lists sixteen declarations.
+* Renumbering was propagated throughout: Propositions 3.1/3.2 → Corollaries 3.1/3.2 (equations (16)–(19)), Algorithm 2.2 → 2.4, and the bibliography keys ([9] → [11], [11] → [13]). Declaration names were kept stable, with the correspondence recorded in the docstrings and in a new "Numbering" section of the module docstring.
+* `formalization.yaml` (scope, main results, alignment table, references) and `README.md` were updated accordingly.
+
+
 # Summary of changes for run 6b3d3105-579f-4fbc-902d-e3bacd305f97
 I addressed every point of items **L1** and **L2** of the referee's "Lean formalization" section. The project builds cleanly with the pinned toolchain, and the comparator check was run locally end-to-end and reports `Your solution is okay!`.
 
