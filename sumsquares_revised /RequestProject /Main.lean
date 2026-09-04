@@ -24,24 +24,38 @@ non-multiplicative form `2y² + yz + 2z²`.
 * `genPell_infinite`        : a generalised Pell equation `v² = a x² + c` with `a > 0`
                               non-square, `c ≠ 0` and one solution has infinitely many
                               positive solutions (Gauss's theorem, [Gre24, Prop. 5.4]).
-* `genPell_infinite_cong`   : the residue-controlled refinement: infinitely many solutions
-                              in any prescribed class modulo `N`.
+* `genPell_infinite_cong`,
+  `residue_controlled_pell` : the residue-controlled refinement: infinitely many solutions
+                              in any prescribed class modulo `N` (the second is the form in
+                              which the paper states it, `X² − A Y² = C`).
 * `sum2sq_x6_add`           : the core tangent identity: if the auxiliary Pell equation
                               is solvable then `x⁶ + f` is a sum of two squares.
-* `prop_3_1`                : `y² + x³y + z² + 1 = 0` has infinitely many integer solutions.
-* `prop_3_2_eq14/15/16/17`  : the four length-9 equations (14)–(17) each have infinitely
-                              many integer solutions.
+* `prop_2_2`                : Proposition 2.2, the sum-of-two-squares criterion: if the
+                              auxiliary equation (10) has infinitely many solutions then
+                              `R(Q(x)) ∈ S₂` for infinitely many `x`.
+* `prop_2_3`                : Proposition 2.3, conditions (a)–(c) give infinitely many
+                              solutions of `a x² + b x + c = v²`, with infinitely many
+                              distinct `x`.
+* `pow6_add3_algorithm_fails`: the limitation recorded in Section 1: for `x⁶ + 3` no `u`
+                              passes the first two steps of Algorithm 2.4.
+* `prop_3_1`                : Corollary 3.1: `y² + x³y + z² + 1 = 0` has infinitely many
+                              integer solutions.
+* `prop_3_2_eq14/15/16/17`  : Corollary 3.2: the four further length-9 equations (in the
+                              revised numbering (16)–(19)) each have infinitely many
+                              integer solutions.
 * `prop_4_1_core`           : the algebraic tangent identity for a general form.
 * `prop_4_1`                : Proposition 4.1, the full infinitude statement for a general
                               non-degenerate form.
 * `prop_4_2`                : Proposition 4.2, infinitely many solutions of the auxiliary
                               equation (30) subject to the congruences (28).
-* `algorithm_2_2`           : Algorithm 2.2, the sum-of-two-squares recipe, as a theorem.
+* `algorithm_2_4`           : Algorithm 2.4, the sum-of-two-squares recipe, as a theorem.
 * `algorithm_4_3`           : Algorithm 4.3, the general-form recipe, as a theorem.
 * `prop_4_4a`, `prop_4_4b`  : the equations `2y² + yz + 2z² = x³ ± 1` have infinitely many
                               integer solutions (Proposition 4.4).
 * `form2_not_multiplicative`: the form `2y² + yz + 2z²` is not multiplicative (it represents
-                              `2` but not `2·2 = 4`).
+                              `2` but not `2·2 = 4`; the obstruction is modulo `3`).
+* `prop_4_5`                : Proposition 4.5, the degenerate case `Δ = 0` in the form
+                              stated in the paper.
 * `degenerate_factorization`: a form with `Δ = B² − 4AC = 0` factors as `k (n y + m z)²`.
 * `degenerate_infinite_iff`,
   `degenerate_case`         : the degenerate case `Δ = 0`: `F(y,z) = P(x)` has infinitely
@@ -69,15 +83,24 @@ differently; both differences are recorded again at the relevant declarations.
 
 ## References
 
-The bracketed keys below are the references of the paper (with its bibliography numbers).
+The bracketed keys below are the references of the paper (with the bibliography numbers of
+the revised version).
 
-* [Gre24] = [9]  Bogdan Grechuk, *Polynomial Diophantine equations — a systematic
-  approach*, Springer, Cham, 2024.  Proposition 5.4 there is the form of Gauss's theorem
+* [Gre24] = [11]  Bogdan Grechuk, *Polynomial Diophantine Equations — A Systematic
+  Approach*, Springer, Cham, 2024.  Proposition 5.4 there is the form of Gauss's theorem
   on generalised Pell equations used throughout Sections 2–4 of the paper; it is proved
-  here from scratch as `genPell_infinite`, and refined as `genPell_infinite_cong`.
-* [GR26] = [11]  Bogdan Grechuk and Ashleigh Ratcliffe, *On the shortest open cubic
+  here from scratch as `genPell_infinite`, and refined as `genPell_infinite_cong` /
+  `residue_controlled_pell`.
+* [GR26] = [13]  Bogdan Grechuk and Ashleigh Ratcliffe, *On the shortest open cubic
   equations*, International Journal of Number Theory, 2026.  Background for the
   length-ordering of Diophantine equations discussed in Section 1.
+
+## Numbering
+
+The declaration names follow the numbering of the first version of the paper where these
+were already formalised (`prop_3_1`, `prop_3_2_eq14`–`eq17`).  In the revised version these
+are Corollary 3.1 and Corollary 3.2 (equations (16)–(19)), and Algorithm 2.2 is now
+Algorithm 2.4 (`algorithm_2_4`).  The correspondence is recorded in each docstring.
 -/
 
 namespace SumSquaresPaper
@@ -396,6 +419,21 @@ theorem genPell_infinite_cong {a c : ℤ} (ha : 0 < a) (hns : ¬ IsSquare a) (hc
   rintro _ ⟨n, rfl⟩
   exact ⟨pellIter_norm hPQnorm h0 n, (pellIter_cong hPd hQd n).1, (pellIter_cong hPd hQd n).2⟩
 
+/-- **Residue-controlled generalised Pell lemma** (Section 2), in the shape in which the
+paper states it: let `A > 0` be a non-square, let `C ≠ 0`, and suppose `X₀² − A Y₀² = C`.
+Then for every modulus `N > 0` the equation `X² − A Y² = C` has infinitely many integer
+solutions with `X ≡ X₀` and `Y ≡ Y₀` modulo `N`.
+
+This is `genPell_infinite_cong` written in the paper's variables; it is the lemma used in
+the proofs of Propositions 2.3 and 4.2. -/
+theorem residue_controlled_pell {A C : ℤ} (hA : 0 < A) (hns : ¬ IsSquare A) (hC : C ≠ 0)
+    (X0 Y0 : ℤ) (h0 : X0 ^ 2 - A * Y0 ^ 2 = C) (N : ℤ) (hN : 0 < N) :
+    {p : ℤ × ℤ | p.1 ^ 2 - A * p.2 ^ 2 = C ∧ p.1 ≡ X0 [ZMOD N] ∧ p.2 ≡ Y0 [ZMOD N]}.Infinite := by
+  have h := genPell_infinite_cong hA hns hC N hN Y0 X0 (by linarith)
+  refine (h.image (f := Prod.swap) (Prod.swap_injective.injOn)).mono ?_
+  rintro _ ⟨⟨y, x⟩, ⟨h1, h2, h3⟩, rfl⟩
+  exact ⟨by simp at h1 ⊢; linarith, h3, h2⟩
+
 /-! ## The tangent identity for the sum of two squares -/
 
 /-- **The core identity** (Section 2).  Let `R(t) = t³ + f`, `Q(x) = x²`, so that
@@ -651,7 +689,7 @@ lemma even_pow6_sub3_S2_infinite :
 
 /-! ## Section 3: the main propositions -/
 
-/-- **Proposition 3.1.** The equation `y² + x³y + z² + 1 = 0` (equation (2)) has
+/-- **Corollary 3.1.** The equation `y² + x³y + z² + 1 = 0` (equation (2)) has
 infinitely many integer solutions. -/
 theorem prop_3_1 :
     {p : ℤ × ℤ × ℤ | p.2.1 ^ 2 + p.1 ^ 3 * p.2.1 + p.2.2 ^ 2 + 1 = 0}.Infinite := by
@@ -660,7 +698,8 @@ theorem prop_3_1 :
   rintro x ⟨hodd, hS⟩
   exact sol_31 hodd hS
 
-/-- **Proposition 3.2, equation (14).** `y² + x³y + z² − 2 = 0` has infinitely many
+/-- **Corollary 3.2, equation (16)** (equation (14) in the first version).
+`y² + x³y + z² − 2 = 0` has infinitely many
 integer solutions. -/
 theorem prop_3_2_eq14 :
     {p : ℤ × ℤ × ℤ | p.2.1 ^ 2 + p.1 ^ 3 * p.2.1 + p.2.2 ^ 2 - 2 = 0}.Infinite := by
@@ -669,7 +708,8 @@ theorem prop_3_2_eq14 :
   rintro x ⟨_, hx, hS⟩
   exact sol_14 hx hS
 
-/-- **Proposition 3.2, equation (15).** `y² + x³y + z² + z − 1 = 0` has infinitely many
+/-- **Corollary 3.2, equation (17)** (equation (15) in the first version).
+`y² + x³y + z² + z − 1 = 0` has infinitely many
 integer solutions. -/
 theorem prop_3_2_eq15 :
     {p : ℤ × ℤ × ℤ | p.2.1 ^ 2 + p.1 ^ 3 * p.2.1 + p.2.2 ^ 2 + p.2.2 - 1 = 0}.Infinite := by
@@ -678,7 +718,8 @@ theorem prop_3_2_eq15 :
   rintro x ⟨_, hx, hS⟩
   exact sol_15 hx hS
 
-/-- **Proposition 3.2, equation (16).** `y² + x³y + z² + z + 1 = 0` has infinitely many
+/-- **Corollary 3.2, equation (18)** (equation (16) in the first version).
+`y² + x³y + z² + z + 1 = 0` has infinitely many
 integer solutions. -/
 theorem prop_3_2_eq16 :
     {p : ℤ × ℤ × ℤ | p.2.1 ^ 2 + p.1 ^ 3 * p.2.1 + p.2.2 ^ 2 + p.2.2 + 1 = 0}.Infinite := by
@@ -687,7 +728,8 @@ theorem prop_3_2_eq16 :
   rintro x ⟨_, hx, hS⟩
   exact sol_16 hx hS
 
-/-- **Proposition 3.2, equation (17).** `y² + x³y + y + z² + 1 = 0` has infinitely many
+/-- **Corollary 3.2, equation (19)** (equation (17) in the first version).
+`y² + x³y + y + z² + 1 = 0` has infinitely many
 integer solutions.  Here we substitute `x = -w²` with `w` even, using
 `(x³+1)²-4 = (w⁶-3)(w⁶+1)` and the fact that `w⁶-3 ∈ S₂` infinitely often. -/
 theorem prop_3_2_eq17 :
@@ -727,7 +769,7 @@ lemma prop_4_1_core {A B C : ℤ} (p q m r s D lam mu : ℤ)
   subst hm hF; linear_combination s * hline
 
 /-- **Proposition 4.4(a).** `2y² + yz + 2z² = x³ + 1` has infinitely many integer
-solutions.  Explicit family: `x = 30n² + 15n + 1`, `y = 30n³ + 45n² + 15n + 1`,
+solutions.  Explicit family (35): `x = 30n² + 15n + 1`, `y = 30n³ + 45n² + 15n + 1`,
 `z = −(120n³ + 90n² + 15n)`.
 
 *Proof organisation.*  As in the paper the family comes from the tangent construction of
@@ -747,8 +789,8 @@ theorem prop_4_4a :
   ring
 
 /-- **Proposition 4.4(b).** `2y² + yz + 2z² = x³ − 1` has infinitely many integer
-solutions.  Explicit family: `x = 570n² + 225n + 24`, with `y, z` given by the tangent
-construction.
+solutions.  Explicit family (36): `x = 570n² + 225n + 24`,
+`y = 9690n³ + 6105n² + 1189n + 71`, `z = −4560n³ − 1230n² + 89n + 29`.
 
 *Proof organisation.*  As for `prop_4_4a`, the family is verified directly by `ring`
 rather than through the tangent construction `prop_4_1`. -/
@@ -761,8 +803,8 @@ theorem prop_4_4b :
     exact_mod_cast this
   refine (Set.infinite_range_of_injective hinj).mono ?_
   rintro _ ⟨n, rfl⟩
-  refine ⟨3 + (570 * (n : ℤ) ^ 2 + 225 * n + 17) * (4 + 17 * n),
-    12 + (570 * (n : ℤ) ^ 2 + 225 * n + 17) * (1 - 8 * n), ?_⟩
+  refine ⟨9690 * (n : ℤ) ^ 3 + 6105 * n ^ 2 + 1189 * n + 71,
+    -4560 * (n : ℤ) ^ 3 - 1230 * n ^ 2 + 89 * n + 29, ?_⟩
   ring
 
 /-! ## Section 4: general infinitude and congruence machinery
@@ -974,13 +1016,128 @@ lemma sum2sq_of_aux (u r : ℤ) (R Q Du : ℤ → ℤ) (x v : ℤ)
     exact Sum2Sq.mul ( by exact ⟨ 2, 0, by ring ⟩ ) hRuS;
   · exact ⟨ 0, 0, by nlinarith [ show 0 ≤ 4 * R u * R ( Q x ) by obtain ⟨ a, b, h ⟩ := h_key; nlinarith ] ⟩
 
+/-- **Proposition 2.2** (Section 2).  Let `R` and `Q` be integer polynomial functions, let
+`u ∈ ℤ`, and let `Du` be the second-order Taylor coefficient of `R` at `u`, so that
+`R t = R u + r (t − u) + (t − u)² Du t` for all `t` (here `r = R'(u)`).  Assume that
+`R(u)` is a positive sum of two squares.  If the auxiliary equation (10),
+
+  `4 R(u) Du(Q(x)) − r² = v²`,
+
+has infinitely many integer solutions `(x, v)`, then `R(Q(x)) ∈ S₂` for infinitely many
+integers `x`.
+
+The paper's proof discards the finitely many `x` with `R(Q(x)) = 0`, using that `R ∘ Q` is
+non-constant.  Here no such hypothesis is needed: `sum2sq_of_aux` covers those `x` too,
+because `R(Q(x)) = 0` is itself a sum of two squares. -/
+theorem prop_2_2 (u r : ℤ) (R Q Du : ℤ → ℤ)
+    (hRuS : Sum2Sq (R u)) (hRupos : 0 < R u)
+    (hTaylor : ∀ t, R t = R u + r * (t - u) + (t - u) ^ 2 * Du t)
+    (hInf : {p : ℤ × ℤ | 4 * R u * Du (Q p.1) - r ^ 2 = p.2 ^ 2}.Infinite) :
+    {x : ℤ | Sum2Sq (R (Q x))}.Infinite := by
+  have hfst := infinite_fst_of_finite_fibers hInf (fun x => by
+    have hfin := finite_setOf_mul_sq_eq (D := (1 : ℤ)) (K := 4 * R u * Du (Q x) - r ^ 2)
+      one_ne_zero
+    refine hfin.subset ?_
+    intro v hv
+    simp only [Set.mem_ofPred_eq] at hv ⊢
+    linarith [hv])
+  refine hfst.mono ?_
+  rintro x ⟨v, hv⟩
+  exact sum2sq_of_aux u r R Q Du x v hRuS hRupos hTaylor hv
+
 /-
-**Algorithm 2.2** (stated as a theorem).  For the sum-of-two-squares form, given
-`R(u) ∈ S₂` positive (Step 1) and the auxiliary equation (10) `a x² + b x + c = v²`
-satisfying conditions (a)–(c) (Steps 2–3), `R(Q(x))` is a sum of two squares for infinitely
-many integers `x`.
+The pair form of Proposition 2.3: under conditions (a)–(c) the equation
+`a x² + b x + c = v²` has infinitely many integer solutions `(x, v)`.
 -/
-theorem algorithm_2_2 (u r a b c : ℤ) (R Q Du : ℤ → ℤ)
+lemma prop_2_3_pairs {a b c : ℤ} (ha : a = 0 ∨ (0 < a ∧ ¬ IsSquare a))
+    (hb : b ^ 2 - 4 * a * c ≠ 0) (x0 v0 : ℤ) (hsol : a * x0 ^ 2 + b * x0 + c = v0 ^ 2) :
+    {p : ℤ × ℤ | a * p.1 ^ 2 + b * p.1 + c = p.2 ^ 2}.Infinite := by
+  rcases ha with rfl | ⟨ha, hns⟩
+  · -- `a = 0`; condition (b) forces `b ≠ 0`, and the explicit family of the paper works.
+    have hb0 : b ≠ 0 := by
+      intro h; apply hb; rw [h]; ring
+    refine Set.infinite_of_injective_forall_mem
+      (f := fun k : ℤ => (x0 + 2 * v0 * k + b * k ^ 2, v0 + b * k)) ?_ ?_
+    · intro k1 k2 h
+      simp only [Prod.mk.injEq] at h
+      exact mul_left_cancel₀ hb0 (by linarith [h.2])
+    · intro k
+      simp only [Set.mem_ofPred_eq]
+      linear_combination hsol
+  · -- `a > 0` non-square: complete the square and apply the residue-controlled Pell lemma
+    -- with modulus `2a`, so that `x = (X − b)/(2a)` is an integer.
+    have h4a : (0 : ℤ) < 4 * a := by linarith
+    have hns4 : ¬ IsSquare (4 * a) := by
+      rintro ⟨k, hk⟩
+      have hke : Even k := by
+        rcases Int.even_or_odd k with h | h
+        · exact h
+        · exfalso
+          obtain ⟨j, rfl⟩ := h
+          obtain ⟨n, hn⟩ : ∃ n : ℤ, j * j = n := ⟨_, rfl⟩
+          have h4 : 4 * a = 4 * n + 4 * j + 1 := by rw [hk, ← hn]; ring
+          omega
+      obtain ⟨j, rfl⟩ := hke
+      exact hns ⟨j, by nlinarith⟩
+    have hX0 : (2 * a * x0 + b) ^ 2 - (4 * a) * v0 ^ 2 = b ^ 2 - 4 * a * c := by
+      linear_combination (4 * a) * hsol
+    have hPell := residue_controlled_pell h4a hns4 hb (2 * a * x0 + b) v0 hX0 (2 * a) (by linarith)
+    set S := {p : ℤ × ℤ | p.1 ^ 2 - (4 * a) * p.2 ^ 2 = b ^ 2 - 4 * a * c ∧
+      p.1 ≡ 2 * a * x0 + b [ZMOD 2 * a] ∧ p.2 ≡ v0 [ZMOD 2 * a]} with hS
+    have hdvd : ∀ p : ℤ × ℤ, p ∈ S → ∃ k : ℤ, p.1 = 2 * a * k + b := by
+      rintro ⟨X, Y⟩ ⟨-, h2, -⟩
+      obtain ⟨t, ht⟩ := h2.dvd
+      exact ⟨x0 - t, by simp only at ht ⊢; linarith⟩
+    have hquot : ∀ p : ℤ × ℤ, p ∈ S → ∀ k : ℤ, p.1 = 2 * a * k + b → (p.1 - b) / (2 * a) = k := by
+      intro p _ k hk
+      rw [hk, show 2 * a * k + b - b = 2 * a * k by ring]
+      exact Int.mul_ediv_cancel_left _ (by positivity)
+    refine (hPell.image (f := fun p : ℤ × ℤ => ((p.1 - b) / (2 * a), p.2)) ?_).mono ?_
+    · rintro ⟨X, Y⟩ hp ⟨X', Y'⟩ hp' h
+      obtain ⟨k, hk⟩ := hdvd _ hp
+      obtain ⟨k', hk'⟩ := hdvd _ hp'
+      simp only [Prod.mk.injEq, hquot _ hp k hk, hquot _ hp' k' hk'] at h
+      simp only at hk hk'
+      exact Prod.ext (by rw [hk, hk', h.1]) h.2
+    · rintro _ ⟨⟨X, Y⟩, hp, rfl⟩
+      obtain ⟨k, hk⟩ := hdvd _ hp
+      simp only [Set.mem_ofPred_eq, hquot _ hp k hk]
+      have hXY : X ^ 2 - (4 * a) * Y ^ 2 = b ^ 2 - 4 * a * c := hp.1
+      simp only at hk
+      have hkey : 4 * a * (a * k ^ 2 + b * k + c) = 4 * a * Y ^ 2 := by
+        rw [hk] at hXY; nlinarith [hXY]
+      exact mul_left_cancel₀ (show (4 : ℤ) * a ≠ 0 by positivity) hkey
+
+/-- **Proposition 2.3** (Section 2).  Let `a, b, c ∈ ℤ` and assume
+
+  (a) either `a = 0`, or `a > 0` and `a` is not a perfect square;
+  (b) `b² − 4ac ≠ 0`;
+  (c) equation (11), `a x² + b x + c = v²`, has an integer solution `(x₀, v₀)`.
+
+Then (11) has infinitely many integer solutions `(x, v)`, with infinitely many distinct
+values of `x`. -/
+theorem prop_2_3 {a b c : ℤ} (ha : a = 0 ∨ (0 < a ∧ ¬ IsSquare a))
+    (hb : b ^ 2 - 4 * a * c ≠ 0) (x0 v0 : ℤ) (hsol : a * x0 ^ 2 + b * x0 + c = v0 ^ 2) :
+    {p : ℤ × ℤ | a * p.1 ^ 2 + b * p.1 + c = p.2 ^ 2}.Infinite ∧
+      {x : ℤ | ∃ v : ℤ, a * x ^ 2 + b * x + c = v ^ 2}.Infinite := by
+  have hpairs := prop_2_3_pairs ha hb x0 v0 hsol
+  refine ⟨hpairs, infinite_fst_of_finite_fibers hpairs (fun x => ?_)⟩
+  have hfin := finite_setOf_mul_sq_eq (D := (1 : ℤ)) (K := a * x ^ 2 + b * x + c) one_ne_zero
+  refine hfin.subset ?_
+  intro v hv
+  simp only [Set.mem_ofPred_eq] at hv ⊢
+  linarith [hv]
+
+/-- **Algorithm 2.4** (stated as a theorem; Algorithm 2.2 in the first version of the
+paper).  For the sum-of-two-squares form, given `R(u) ∈ S₂` positive (Step 1) and the
+auxiliary equation (10) written as `a x² + b x + c = v²` and satisfying conditions (a)–(c)
+of Proposition 2.3 (Steps 2–3), `R(Q(x))` is a sum of two squares for infinitely many
+integers `x`.
+
+The search steps of the algorithm are not formalised as an executable procedure; the data
+returned by a successful search (`u`, and the seed solution `(x₀, v₀)`) occur as
+hypotheses. -/
+theorem algorithm_2_4 (u r a b c : ℤ) (R Q Du : ℤ → ℤ)
     (hRuS : Sum2Sq (R u)) (hRupos : 0 < R u)
     (hTaylor : ∀ t, R t = R u + r * (t - u) + (t - u) ^ 2 * Du t)
     (haux : ∀ x, 4 * R u * Du (Q x) - r ^ 2 = a * x ^ 2 + b * x + c)
@@ -988,80 +1145,58 @@ theorem algorithm_2_2 (u r a b c : ℤ) (R Q Du : ℤ → ℤ)
     (hb : b ^ 2 - 4 * a * c ≠ 0)
     (x0 v0 : ℤ) (hsol : a * x0 ^ 2 + b * x0 + c = v0 ^ 2) :
     {x : ℤ | Sum2Sq (R (Q x))}.Infinite := by
-  rcases ha with rfl | ⟨ ha, ha' ⟩;
-  · -- Since $b \neq 0$, the equation $b * x + c = v^2$ has infinitely many solutions for $x$.
-    have h_inf_solutions : ∀ k : ℤ, Sum2Sq (R (Q (x0 + 2 * v0 * k + b * k ^ 2))) := by
-      intro k
-      have hv : 4 * R u * Du (Q (x0 + 2 * v0 * k + b * k ^ 2)) - r ^ 2 = (v0 + b * k) ^ 2 := by
-        grind
-      exact sum2sq_of_aux u r R Q Du (x0 + 2 * v0 * k + b * k ^ 2) (v0 + b * k) hRuS hRupos hTaylor hv;
-    by_contra h_contra;
-    -- Since $b \neq 0$, the set $\{x0 + 2 * v0 * k + b * k ^ 2 \mid k \in \mathbb{Z}\}$ is infinite.
-    have h_infinite_set : Set.Infinite {x : ℤ | ∃ k : ℤ, x = x0 + 2 * v0 * k + b * k ^ 2} := by
-      by_cases hb_pos : 0 < b;
-      · refine Set.infinite_of_forall_exists_gt ?_;
-        exact fun n => ⟨ _, ⟨ |n - x0| + |2 * v0| + 1, rfl ⟩, by cases abs_cases ( n - x0 ) <;> cases abs_cases ( 2 * v0 ) <;> nlinarith ⟩;
-      · by_cases hb_neg : b < 0;
-        · refine Set.infinite_of_not_bddBelow ?_;
-          norm_num [ bddBelow_def ];
-          exact fun x => ⟨ |x - x0| + |2 * v0| + 1, by cases abs_cases ( x - x0 ) <;> cases abs_cases ( 2 * v0 ) <;> nlinarith ⟩;
-        · interval_cases b ; norm_num at hb;
-    exact h_contra <| h_infinite_set.mono fun x hx => by obtain ⟨ k, rfl ⟩ := hx; exact h_inf_solutions k;
-  · set a' := 4 * a
-    set c' := b^2 - 4 * a * c
-    set X0 := 2 * a * x0 + b
-    set M := 2 * a
-    have ha'_pos : 0 < a' := by
-      positivity
-    have ha'_not_square : ¬ IsSquare a' := by
-      simp +zetaDelta at *;
-      exact fun ⟨ k, hk ⟩ => ha' ⟨ k / 2, by cases abs_cases k <;> nlinarith [ Int.ediv_mul_cancel ( show 2 ∣ k from even_iff_two_dvd.mp ( by simpa +decide [ parity_simps ] using congr_arg Even hk ) ) ] ⟩
-    have hc'_ne_zero : c' ≠ 0 := by
-      exact hb
-    have hX0 : X0^2 = a' * v0^2 + c' := by
-      linear_combination' hsol * 4 * a
-    have hM_pos : 0 < M := by
-      exact mul_pos zero_lt_two ha
-    have hM : |M| = M := by
-      exact abs_of_pos hM_pos
-    have hPell : {p : ℤ × ℤ | p.2^2 = a' * p.1^2 + c' ∧ p.1 ≡ v0 [ZMOD M] ∧ p.2 ≡ X0 [ZMOD M]}.Infinite := by
-      apply genPell_infinite_cong ha'_pos ha'_not_square hc'_ne_zero M hM_pos v0 X0 hX0
-    generalize_proofs at *;
-    -- Let $Vset$ be the set of first coordinates $W$ of these solutions.
-    set Vset := {W : ℤ | ∃ X : ℤ, (W, X) ∈ {p : ℤ × ℤ | p.2^2 = a' * p.1^2 + c' ∧ p.1 ≡ v0 [ZMOD M] ∧ p.2 ≡ X0 [ZMOD M]}} with hVset_def
-    have hVset_inf : Vset.Infinite := by
-      intro hVset_finite
-      generalize_proofs at *;
-      refine hPell <| Set.Finite.subset ( hVset_finite.prod <| Set.Finite.biUnion hVset_finite fun x hx => Set.finite_Ico ( - ( |a' * x ^ 2 + c'| ) ) ( |a' * x ^ 2 + c'| + 1 ) ) ?_;
-      simp +contextual [ Set.subset_def ];
-      exact fun a b hb ha hb' => ⟨ ⟨ b, hb, ha, hb' ⟩, a, by cases abs_cases ( a' * a ^ 2 + c' ) <;> nlinarith, ⟨ b, hb, ha, hb' ⟩, by cases abs_cases ( a' * a ^ 2 + c' ) <;> nlinarith ⟩
-    generalize_proofs at *;
-    -- For each $W \in Vset$, there exists $x$ such that $a * x^2 + b * x + c = W^2$.
-    have h_exists_x : ∀ W ∈ Vset, ∃ x : ℤ, a * x^2 + b * x + c = W^2 := by
-      intro W hW
-      obtain ⟨X, hX⟩ := hW
-      have hX_eq : X^2 = a' * W^2 + c' := by
-        exact hX.1
-      have hX_mod : X ≡ X0 [ZMOD M] := by
-        exact hX.2.2
-      have hX_div : (2 * a) ∣ (X - b) := by
-        have := hX_mod.symm.dvd; obtain ⟨ k, hk ⟩ := this; exact ⟨ k + x0, by linarith ⟩ ;
-      obtain ⟨k, hk⟩ : ∃ k : ℤ, X = 2 * a * k + b := by
-        exact ⟨ hX_div.choose, eq_add_of_sub_eq hX_div.choose_spec ⟩
-      generalize_proofs at *;
-      exact ⟨ k, by subst hk; nlinarith ⟩
-    generalize_proofs at *;
-    -- For each $W \in Vset$, there exists $x$ such that $R(Q(x))$ is a sum of two squares.
-    have h_sum2sq : ∀ W ∈ Vset, ∃ x : ℤ, Sum2Sq (R (Q x)) ∧ a * x^2 + b * x + c = W^2 := by
-      intros W hW
-      obtain ⟨x, hx⟩ := h_exists_x W hW
-      use x
-      generalize_proofs at *;
-      exact ⟨ sum2sq_of_aux u r R Q Du x W hRuS hRupos hTaylor ( by linarith [ haux x ] ), hx ⟩
-    generalize_proofs at *;
-    contrapose! hVset_inf;
-    refine Set.Finite.subset ( hVset_inf.biUnion fun x hx => Set.finite_Icc ( - ( |a * x ^ 2 + b * x + c| ) ) ( |a * x ^ 2 + b * x + c| ) ) ?_;
-    intro W hW; obtain ⟨ x, hx₁, hx₂ ⟩ := h_sum2sq W hW; exact Set.mem_iUnion₂.mpr ⟨ x, hx₁, by constructor <;> cases abs_cases ( a * x ^ 2 + b * x + c ) <;> nlinarith ⟩ ;
+  refine prop_2_2 u r R Q Du hRuS hRupos hTaylor ?_
+  refine ((prop_2_3 ha hb x0 v0 hsol).1).mono ?_
+  intro p hp
+  simp only [Set.mem_ofPred_eq, haux p.1]
+  exact hp
+
+/-! ## Section 1: a limitation of the method
+
+The paper records that the present algorithm does not resolve equation (6),
+`y² + z² = x⁶ + 3`: applying Algorithm 2.4 with `R(t) = t³ + 3` and `Q(x) = x²`, no `u`
+can pass its first two steps.  For even `u` the integer `u³ + 3` is `≡ 3 (mod 4)` and
+hence is not a sum of two squares; for odd `u` the auxiliary expression
+`4(u³ + 3)x² − u(u³ − 24)` is `≡ 3 (mod 4)` for every `x`, so it is never a square. -/
+
+/-- No square is `≡ 3 (mod 4)`. -/
+lemma sq_emod_four_ne_three (v : ℤ) : v ^ 2 % 4 ≠ 3 := by
+  have hp : v ^ 2 % 4 = (v % 4) ^ 2 % 4 :=
+    Int.ModEq.pow 2 (Int.emod_emod_of_dvd v dvd_rfl).symm
+  have h : v % 4 = 0 ∨ v % 4 = 1 ∨ v % 4 = 2 ∨ v % 4 = 3 := by omega
+  rcases h with h | h | h | h <;> rw [hp, h] <;> norm_num
+
+/-- Step 1 of Algorithm 2.4 fails for `R(t) = t³ + 3` at every even `u`: the integer
+`u³ + 3` is congruent to `3` modulo `4`, hence is not a sum of two squares. -/
+lemma pow6_add3_even_u_not_sum2sq {u : ℤ} (hu : Even u) : ¬ Sum2Sq (u ^ 3 + 3) := by
+  obtain ⟨j, rfl⟩ := hu
+  refine not_sum2sq_mod4_three ?_
+  obtain ⟨n, hn⟩ : ∃ n : ℤ, j ^ 3 = n := ⟨_, rfl⟩
+  have h : (j + j) ^ 3 + 3 = 8 * n + 3 := by rw [← hn]; ring
+  rw [h]; omega
+
+/-- Step 2 of Algorithm 2.4 fails for `R(t) = t³ + 3`, `Q(x) = x²` at every odd `u`: the
+auxiliary expression `4(u³ + 3)x² − u(u³ − 24)` is congruent to `3` modulo `4`, hence is
+never a square. -/
+lemma pow6_add3_odd_u_aux_not_square {u : ℤ} (hu : Odd u) (x v : ℤ) :
+    4 * (u ^ 3 + 3) * x ^ 2 - u * (u ^ 3 - 24) ≠ v ^ 2 := by
+  obtain ⟨j, rfl⟩ := hu
+  intro hv
+  refine sq_emod_four_ne_three v ?_
+  obtain ⟨M, hM⟩ : ∃ M : ℤ, 4 * ((2 * j + 1) ^ 3 + 3) * x ^ 2 - (2 * j + 1) * ((2 * j + 1) ^ 3 - 24)
+      = 4 * M + 3 :=
+    ⟨((2 * j + 1) ^ 3 + 3) * x ^ 2 - 4 * j ^ 4 - 8 * j ^ 3 - 6 * j ^ 2 + 10 * j + 5, by ring⟩
+  rw [← hv, hM]; omega
+
+/-- **The method does not resolve equation (6)** `y² + z² = x⁶ + 3` (Section 1).  For every
+integer `u`, either `R(u) = u³ + 3` is not a sum of two squares (so Step 1 of Algorithm 2.4
+fails), or the auxiliary equation (14) for `f = 3` has no integer solution `(x, v)` (so
+Step 2 fails). -/
+theorem pow6_add3_algorithm_fails (u : ℤ) :
+    ¬ Sum2Sq (u ^ 3 + 3) ∨ ∀ x v : ℤ, 4 * (u ^ 3 + 3) * x ^ 2 - u * (u ^ 3 - 24) ≠ v ^ 2 := by
+  rcases Int.even_or_odd u with hu | hu
+  · exact Or.inl (pow6_add3_even_u_not_sum2sq hu)
+  · exact Or.inr fun x v => pow6_add3_odd_u_aux_not_square hu x v
 
 /-! ## Section 4: non-multiplicativity of `2y² + yz + 2z²`
 
@@ -1080,18 +1215,33 @@ def MultiplicativeForm (F : ℤ → ℤ → ℤ) : Prop :=
 lemma form2_represents_two : ∃ y z : ℤ, 2 * y ^ 2 + y * z + 2 * z ^ 2 = 2 :=
   ⟨0, 1, by ring⟩
 
+/-- The identity `4(y² − yz + z²) = (2y − z)² + 3z²` displayed in Section 4, which shows
+that `y² − yz + z²` is congruent modulo `3` to a square. -/
+lemma form2_identity (y z : ℤ) : 4 * (y ^ 2 - y * z + z ^ 2) = (2 * y - z) ^ 2 + 3 * z ^ 2 := by
+  ring
+
+/-- The values of `2y² + yz + 2z²` are never `≡ 1 (mod 3)`.  Indeed
+`2y² + yz + 2z² ≡ −(y² − yz + z²) (mod 3)`, and by `form2_identity` the form
+`y² − yz + z²` is a square modulo `3`, so it takes only the values `0` and `1`. -/
+lemma form2_not_one_mod_three (y z : ℤ) : ¬ (3 : ℤ) ∣ (2 * y ^ 2 + y * z + 2 * z ^ 2 - 1) := by
+  intro h
+  have h' : ((2 * y ^ 2 + y * z + 2 * z ^ 2 - 1 : ℤ) : ZMod 3) = 0 :=
+    (ZMod.intCast_zmod_eq_zero_iff_dvd _ 3).mpr (by exact_mod_cast h)
+  push_cast at h'
+  revert h'
+  generalize ((y : ZMod 3)) = Y
+  generalize ((z : ZMod 3)) = Z
+  revert Y Z
+  decide
+
 /-
 `2y² + yz + 2z²` does not represent `4`: the equation `2y² + yz + 2z² = 4` has no
-integer solutions.
+integer solutions, because `4 ≡ 1 (mod 3)` while the form never takes the value `1`
+modulo `3`.
 -/
 lemma form2_not_represents_four : ¬ ∃ y z : ℤ, 2 * y ^ 2 + y * z + 2 * z ^ 2 = 4 := by
-  simp only [not_exists]
-  intro x y H
-  have hx1 : x ≤ 2 := by nlinarith [sq_nonneg (x + y)]
-  have hx2 : -2 ≤ x := by nlinarith [sq_nonneg (x + y)]
-  have hy1 : y ≤ 2 := by nlinarith [sq_nonneg (x + y)]
-  have hy2 : -2 ≤ y := by nlinarith [sq_nonneg (x + y)]
-  interval_cases x <;> interval_cases y <;> omega
+  rintro ⟨y, z, h⟩
+  exact form2_not_one_mod_three y z ⟨1, by omega⟩
 
 /-
 **Non-multiplicativity of `2y² + yz + 2z²`** (Section 4).  The form represents the
@@ -1226,5 +1376,31 @@ theorem degenerate_case {A B C k n m : ℤ}
     ext p
     simp only [Set.mem_ofPred_eq, degenerate_reduces hA hB hC]
   rw [hset, degenerate_infinite_iff hnm P]
+
+/-- **Proposition 4.5** (the degenerate case, Section 4).  Suppose that the discriminant
+`Δ = B² − 4AC` of `F(y,z) = A y² + B y z + C z²` vanishes and `(A,B,C) ≠ (0,0,0)`.  Then
+there are integers `κ, r, s` with `κ ≠ 0` and `(r,s) ≠ (0,0)` such that
+
+  `(A, B, C) = (κ r², 2 κ r s, κ s²)`,  and hence  `F(y,z) = κ (r y + s z)²`;
+
+and for any polynomial `P` the equation `F(y,z) = P(x)` has infinitely many integer
+solutions if and only if there are integers `x₀, t₀` with `κ t₀² = P(x₀)` and
+`gcd(r,s) ∣ t₀` (equation (38)). -/
+theorem prop_4_5 {A B C : ℤ} (hΔ : B ^ 2 - 4 * A * C = 0) (hABC : ¬ (A = 0 ∧ B = 0 ∧ C = 0))
+    (P : ℤ → ℤ) :
+    ∃ k n m : ℤ, k ≠ 0 ∧ ¬ (n = 0 ∧ m = 0) ∧
+      A = k * n ^ 2 ∧ B = 2 * k * n * m ∧ C = k * m ^ 2 ∧
+      (∀ y z : ℤ, A * y ^ 2 + B * y * z + C * z ^ 2 = k * (n * y + m * z) ^ 2) ∧
+      ({p : ℤ × ℤ × ℤ | A * p.2.1 ^ 2 + B * p.2.1 * p.2.2 + C * p.2.2 ^ 2 = P p.1}.Infinite
+        ↔ ∃ x0 t0 : ℤ, k * t0 ^ 2 = P x0 ∧ (Int.gcd n m : ℤ) ∣ t0) := by
+  obtain ⟨k, n, m, hA, hB, hC⟩ := degenerate_factorization hΔ
+  have hk : k ≠ 0 := by
+    rintro rfl
+    exact hABC ⟨by simp [hA], by simp [hB], by simp [hC]⟩
+  have hnm : ¬ (n = 0 ∧ m = 0) := by
+    rintro ⟨rfl, rfl⟩
+    exact hABC ⟨by simp [hA], by simp [hB], by simp [hC]⟩
+  exact ⟨k, n, m, hk, hnm, hA, hB, hC, fun y z => degenerate_reduces hA hB hC y z,
+    degenerate_case hA hB hC hnm P⟩
 
 end SumSquaresPaper
