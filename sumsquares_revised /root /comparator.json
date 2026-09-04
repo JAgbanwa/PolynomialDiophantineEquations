@@ -11,9 +11,19 @@
     "PolynomialValuesQuadraticForms.prop_4_1_general_form",
     "PolynomialValuesQuadraticForms.prop_4_2_auxiliary_equation",
     "PolynomialValuesQuadraticForms.form_2_1_2_eq_cube_add_one_infinite",
-    "PolynomialValuesQuadraticForms.form_2_1_2_eq_cube_sub_one_infinite"
+    "PolynomialValuesQuadraticForms.form_2_1_2_eq_cube_sub_one_infinite",
+    "PolynomialValuesQuadraticForms.residue_controlled_pell_lemma",
+    "PolynomialValuesQuadraticForms.prop_2_2_sum_two_squares_criterion",
+    "PolynomialValuesQuadraticForms.prop_2_3_auxiliary_equation",
+    "PolynomialValuesQuadraticForms.algorithm_2_4_correct",
+    "PolynomialValuesQuadraticForms.algorithm_4_3_correct",
+    "PolynomialValuesQuadraticForms.prop_4_5_degenerate_case"
   ],
   "definition_names": [],
-  "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
   "enable_nanoda": false
 }
