@@ -104,7 +104,7 @@ uses the half-dimensional sieve [14]. More recently, Cao and Huang obtained geom
 quadrics and, as an auxiliary application, density estimates for quadratic-polynomial values represented by
 positive definite binary quadratic forms [4]. These results give powerful analytic information in the quadratic
 case, whereas the main difficulty of the present paper begins with cubic and higher-degree P.
-When P has degree three, the affine surface defined by (4) is closely related to Châtelet surfaces and to
+When P has degree three, the affine surface defined by (4) is closely related to Châtelet surfaces and to
 pencils of conics. Iwaniec and Munshi studied rational points on equations of the form Q(s, t) = P( x ), where
 Q is an irreducible binary quadratic form and P is an irreducible cubic polynomial [15]. Their result is primarily
 about rational points rather than integral points, but it is one of the central analytic works on cubic polynomials
@@ -117,7 +117,7 @@ bounds for the frequency with which certain irreducible monic cubic polynomials 
 example, his methods apply to families such as n3 + h under explicit hypotheses on h. His proof uses units in
 degree-six number fields. In addition, [9, Section 5.4] develops powerful methods for solving Problem 1.1 for
 equations of the form (4) with cubic P and certain multiplicative forms F.
-There is also an integral-point literature on affine Châtelet surfaces. Gundlach considered integral Brauer–
+There is also an integral-point literature on affine Châtelet surfaces. Gundlach considered integral Brauer–
 Manin obstructions for equations y2 + z2 + x k = m, equivalently y2 + z2 = m − x k , and obtained conditional
 completeness results under Schinzel’s hypothesis [13]. Berg studied Brauer–Manin obstructions to integral
 points on affine surfaces y2 − az2 = P( x ) [1]. These results are close in spirit to the study of Problem 1.1
@@ -722,12 +722,12 @@ cannot resolve this case, and new ideas are needed.
 
 References
 [1] Jennifer Berg.
-Obstructions to integral points on affine Châtelet surfaces.
+Obstructions to integral points on affine Châtelet surfaces.
 arXiv:1710.07969, 2017.
 
 arXiv preprint
 
-[2] Paul Bernays. Über die Darstellung von positiven, ganzen Zahlen durch die primitiven, binären quadratischen Formen einer nicht-quadratischen Diskriminante. Dieterich, Göttingen, 1912.
+[2] Paul Bernays. Über die Darstellung von positiven, ganzen Zahlen durch die primitiven, binären quadratischen Formen einer nicht-quadratischen Diskriminante. Dieterich, Göttingen, 1912.
 [3] Duncan A. Buell. Binary Quadratic Forms: Classical Theory and Modern Computations. Springer, New
 York, 1989.
 [4] Yang Cao and Zhizhong Huang. Arithmetic purity of the hardy–littlewood property and geometric sieve
