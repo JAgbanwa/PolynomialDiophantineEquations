@@ -16,9 +16,9 @@ Lean 4 formalization of the paper
 
 The development proves, with no `sorry` and no added `axiom`, that `x⁶ − 4` is a sum of
 two squares for infinitely many integers `x`, and hence that the Diophantine equation
-`y² + x³y + z² + 1 = 0` has infinitely many integer solutions (Proposition 3.1), together
-with the four further length-9 equations of Proposition 3.2, the general theory of
-Section 4 (Propositions 4.1, 4.2, 4.4, Algorithms 2.2 and 4.3, non-multiplicativity of
+`y² + x³y + z² + 1 = 0` has infinitely many integer solutions (Corollary 3.1), together
+with the four further length-9 equations of Corollary 3.2, the general theory of
+Section 4 (Propositions 4.1, 4.2, 4.4, Algorithms 2.4 and 4.3, non-multiplicativity of
 `2y² + yz + 2z²`, and the degenerate case `B² − 4AC = 0`), and the supporting machinery
 (property (*) of the sums of two squares, Gauss's theorem on generalised Pell equations
 and a residue-controlled refinement of it).
@@ -69,7 +69,7 @@ The script fetches and builds [`comparator`](https://github.com/leanprover/compa
 and [`lean4export`](https://github.com/leanprover/lean4export) at the tag matching
 `lean-toolchain`, together with the `landrun` sandbox they use, and then runs the
 comparator on `comparator.json`. Comparator rebuilds `Challenge` and `Solution` in a
-sandbox, checks that the ten compared declarations have exactly the statements advertised
+sandbox, checks that the sixteen compared declarations have exactly the statements advertised
 in `Challenge.lean`, checks that their axiom closure lies inside the permitted set, and
 re-checks the proofs with the Lean kernel; it prints `Your solution is okay!` on success.
 Only the Lean kernel, Mathlib, `Challenge.lean` and comparator itself have to be trusted.
@@ -93,22 +93,20 @@ echo 'import Solution
 lake env lean /tmp/axioms.lean
 ```
 
-## Differences from the paper's proofs
+## Proof organization
 
-The formalized statements are the paper's statements. Two proofs are organised
-differently, and this is documented in the module docstring of
-`RequestProject/Main.lean`, at the declarations concerned, and in
-`formalization.yaml` under `fidelity.divergences`:
+The formalized statements are the paper's statements. The implementation records
+proof-engineering details in the module docstring of `RequestProject/Main.lean` and in
+`formalization.yaml`:
 
-* **Proposition 4.2** is proved via a residue-controlled Pell theorem
-  (`genPell_infinite_cong`), rather than via Gauss's theorem applied to the conic (31).
-  The Lean statement also records that the non-degeneracy assumption `Δ ≠ 0` is not
-  needed for Proposition 4.2 itself.
+* **Proposition 4.2** uses the revised manuscript's residue-controlled Pell argument
+  (`genPell_infinite_cong`). The Lean statement also records that the non-degeneracy
+  assumption `Δ ≠ 0` is not needed for Proposition 4.2 itself.
 * **Proposition 4.4** is verified directly from the explicit polynomial families given in
   the paper (by `ring`), rather than by re-running the tangent construction.
 
 In addition, Gauss's theorem on generalised Pell equations, quoted in the paper from
-[9, Proposition 5.4], is proved from scratch here rather than assumed.
+[11, Proposition 5.4], is proved from scratch here rather than assumed.
 
 ## Licence
 

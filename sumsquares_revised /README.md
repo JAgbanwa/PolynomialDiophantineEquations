@@ -1,1 +1,0 @@
-Following the referee report from the International Journal of Number Theory, the revised Lean file is found [here](https://github.com/JAgbanwa/PolynomialDiophantineEquations/blob/main/sumsquares_revised%20/RequestProject%20/Main.lean). This repository contains other relevant Lean files. 
