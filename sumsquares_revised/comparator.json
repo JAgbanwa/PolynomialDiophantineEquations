@@ -19,7 +19,6 @@
     "PolynomialValuesQuadraticForms.algorithm_4_3_correct",
     "PolynomialValuesQuadraticForms.prop_4_5_degenerate_case"
   ],
-  "definition_names": [],
   "permitted_axioms": [
     "propext",
     "Quot.sound",

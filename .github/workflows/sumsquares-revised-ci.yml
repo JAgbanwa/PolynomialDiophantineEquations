@@ -1,0 +1,100 @@
+name: Sumsquares revised CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "sumsquares_revised/**"
+      - ".github/workflows/sumsquares-revised-ci.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "sumsquares_revised/**"
+      - ".github/workflows/sumsquares-revised-ci.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sumsquares-revised-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build Lean project
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      LEAN_ABORT_ON_PANIC: "1"
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      # Challenge.lean is deliberately excluded: its sorry placeholders specify
+      # the statements that comparator checks against Solution.lean.
+      - name: Reject placeholders in proof sources
+        working-directory: sumsquares_revised
+        run: |
+          set -euo pipefail
+          if grep -RInE --include='*.lean' \
+            '(^|[^[:alnum:]_])(sorry|admit)([^[:alnum:]_]|$)|^[[:space:]]*(private[[:space:]]+)?axiom[[:space:]]' \
+            RequestProject RequestProject.lean Solution.lean
+          then
+            echo "::error::A proof source contains sorry, admit, or an axiom declaration"
+            exit 1
+          fi
+
+      - name: Restore Mathlib and build
+        uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596 # v1
+        with:
+          lake-package-directory: sumsquares_revised
+          auto-config: "false"
+          build: "true"
+          test: "false"
+          lint: "false"
+          use-mathlib-cache: "true"
+          use-github-cache: "true"
+
+  comparator:
+    name: Compare Challenge and Solution
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      LEAN_ABORT_ON_PANIC: "1"
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      # This job must not restore the project .lake cache produced by the build
+      # job: comparator itself must build Challenge and Solution under landrun.
+      - name: Install Lean and fetch Mathlib cache
+        uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596 # v1
+        with:
+          lake-package-directory: sumsquares_revised
+          auto-config: "false"
+          build: "false"
+          test: "false"
+          lint: "false"
+          use-mathlib-cache: "true"
+          use-github-cache: "false"
+
+      - name: Restore pinned verifier tools
+        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+        with:
+          path: ${{ runner.temp }}/sumsquares-verifier
+          key: sumsquares-verifier-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('sumsquares_revised/lean-toolchain', 'sumsquares_revised/verify.sh') }}
+
+      - name: Run comparator
+        working-directory: sumsquares_revised
+        env:
+          COMPARATOR_WORK: ${{ runner.temp }}/sumsquares-verifier
+          COMPARATOR_SKIP_CACHE: "1"
+        run: bash verify.sh
