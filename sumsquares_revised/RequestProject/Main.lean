@@ -1039,7 +1039,7 @@ theorem prop_2_2 (u r : ℤ) (R Q Du : ℤ → ℤ)
       one_ne_zero
     refine hfin.subset ?_
     intro v hv
-    simp only [Set.mem_ofPred_eq] at hv ⊢
+    simp only [Set.mem_setOf_eq] at hv ⊢
     linarith [hv])
   refine hfst.mono ?_
   rintro x ⟨v, hv⟩
@@ -1062,7 +1062,7 @@ lemma prop_2_3_pairs {a b c : ℤ} (ha : a = 0 ∨ (0 < a ∧ ¬ IsSquare a))
       simp only [Prod.mk.injEq] at h
       exact mul_left_cancel₀ hb0 (by linarith [h.2])
     · intro k
-      simp only [Set.mem_ofPred_eq]
+      simp only [Set.mem_setOf_eq]
       linear_combination hsol
   · -- `a > 0` non-square: complete the square and apply the residue-controlled Pell lemma
     -- with modulus `2a`, so that `x = (X − b)/(2a)` is an integer.
@@ -1101,7 +1101,7 @@ lemma prop_2_3_pairs {a b c : ℤ} (ha : a = 0 ∨ (0 < a ∧ ¬ IsSquare a))
       exact Prod.ext (by rw [hk, hk', h.1]) h.2
     · rintro _ ⟨⟨X, Y⟩, hp, rfl⟩
       obtain ⟨k, hk⟩ := hdvd _ hp
-      simp only [Set.mem_ofPred_eq, hquot _ hp k hk]
+      simp only [Set.mem_setOf_eq, hquot _ hp k hk]
       have hXY : X ^ 2 - (4 * a) * Y ^ 2 = b ^ 2 - 4 * a * c := hp.1
       simp only at hk
       have hkey : 4 * a * (a * k ^ 2 + b * k + c) = 4 * a * Y ^ 2 := by
@@ -1125,7 +1125,7 @@ theorem prop_2_3 {a b c : ℤ} (ha : a = 0 ∨ (0 < a ∧ ¬ IsSquare a))
   have hfin := finite_setOf_mul_sq_eq (D := (1 : ℤ)) (K := a * x ^ 2 + b * x + c) one_ne_zero
   refine hfin.subset ?_
   intro v hv
-  simp only [Set.mem_ofPred_eq] at hv ⊢
+  simp only [Set.mem_setOf_eq] at hv ⊢
   linarith [hv]
 
 /-- **Algorithm 2.4** (stated as a theorem; Algorithm 2.2 in the first version of the
@@ -1148,7 +1148,7 @@ theorem algorithm_2_4 (u r a b c : ℤ) (R Q Du : ℤ → ℤ)
   refine prop_2_2 u r R Q Du hRuS hRupos hTaylor ?_
   refine ((prop_2_3 ha hb x0 v0 hsol).1).mono ?_
   intro p hp
-  simp only [Set.mem_ofPred_eq, haux p.1]
+  simp only [Set.mem_setOf_eq, haux p.1]
   exact hp
 
 /-! ## Section 1: a limitation of the method
@@ -1374,7 +1374,7 @@ theorem degenerate_case {A B C k n m : ℤ}
   have hset : {p : ℤ × ℤ × ℤ | A * p.2.1 ^ 2 + B * p.2.1 * p.2.2 + C * p.2.2 ^ 2 = P p.1}
       = {p : ℤ × ℤ × ℤ | k * (n * p.2.1 + m * p.2.2) ^ 2 = P p.1} := by
     ext p
-    simp only [Set.mem_ofPred_eq, degenerate_reduces hA hB hC]
+    simp only [Set.mem_setOf_eq, degenerate_reduces hA hB hC]
   rw [hset, degenerate_infinite_iff hnm P]
 
 /-- **Proposition 4.5** (the degenerate case, Section 4).  Suppose that the discriminant
