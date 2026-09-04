@@ -1,12 +1,3 @@
-This project was edited by [Aristotle](https://aristotle.harmonic.fun).
-
-To cite Aristotle:
-- Tag @Aristotle-Harmonic on GitHub PRs/issues
-- Add as co-author to commits:
-```
-Co-authored-by: Aristotle (Harmonic) <aristotle-harmonic@harmonic.fun>
-```
-
 # On the polynomial values represented by quadratic forms — Lean formalization
 
 Lean 4 formalization of the paper
@@ -123,4 +114,316 @@ To cite Aristotle:
 - Add as co-author to commits:
 ```
 Co-authored-by: Aristotle (Harmonic) <aristotle-harmonic@harmonic.fun>
+```
+
+## Reproducing the Lean build locally
+
+The project is pinned to **Lean 4.28.0** and a fixed Mathlib revision through `lean-toolchain` and `lake-manifest.json`. The following instructions reproduce the successful build on macOS using Terminal. They also work on most Linux systems.
+
+### 1. Prerequisites
+
+Check that Git and curl are installed:
+
+```bash
+git --version
+curl --version
+```
+
+On macOS, running `git --version` may prompt you to install the Xcode Command Line Tools. Approve that installation if necessary.
+
+### 2. Install Elan
+
+Elan manages Lean installations and automatically selects the version specified by the project’s `lean-toolchain` file.
+
+Check whether Elan is already installed:
+
+```bash
+elan --version
+```
+
+If the command is not found, install Elan with:
+
+```bash
+curl https://elan.lean-lang.org/elan-init.sh -sSf | sh
+```
+
+Choose the default installation option when prompted. Then activate Elan in the current Terminal session:
+
+```bash
+source ~/.elan/env
+```
+
+Confirm the installation:
+
+```bash
+elan --version
+```
+
+If `lake` is still not found after installation, either run `source ~/.elan/env` again or close and reopen Terminal.
+
+### 3. Clone a fresh copy of the repository
+
+A fresh clone is recommended because older copies of the repository contained directory names with literal trailing spaces.
+
+For example:
+
+```bash
+cd ~/Documents
+git clone https://github.com/JAgbanwa/PolynomialDiophantineEquations.git PolynomialDiophantineEquations-build-test
+cd PolynomialDiophantineEquations-build-test/sumsquares_revised
+```
+
+The correct directory name is:
+
+```text
+sumsquares_revised
+```
+
+There is no trailing space after `revised`.
+
+Confirm the current location and project contents:
+
+```bash
+pwd
+ls
+```
+
+The directory should contain at least:
+
+```text
+Challenge.lean
+README.md
+RequestProject/
+RequestProject.lean
+Solution.lean
+comparator.json
+lake-manifest.json
+lakefile.toml
+lean-toolchain
+verify.sh
+```
+
+The relevant Lean module layout is:
+
+```text
+sumsquares_revised/
+├── RequestProject.lean
+└── RequestProject/
+    └── Main.lean
+```
+
+This path is important because:
+
+```lean
+import RequestProject.Main
+```
+
+corresponds to the filesystem path:
+
+```text
+RequestProject/Main.lean
+```
+
+### 4. Record the exact repository revision
+
+For reproducibility, record the commit being built:
+
+```bash
+git branch --show-current
+git rev-parse HEAD
+git status --short
+```
+
+For a fresh clone, the branch should normally be `main`, and `git status --short` should produce no output.
+
+### 5. Confirm the pinned Lean version
+
+Display the project’s toolchain file:
+
+```bash
+cat lean-toolchain
+```
+
+Expected output:
+
+```text
+leanprover/lean4:v4.28.0
+```
+
+Now ask Lake for its version:
+
+```bash
+lake --version
+```
+
+Elan will automatically download Lean 4.28.0 if it is not already installed.
+
+A correct installation reports Lean 4.28.0, for example:
+
+```text
+Lake version 5.0.0-src+7e01a1b (Lean version 4.28.0)
+```
+
+The exact Lake build identifier may differ, but the Lean version must be `4.28.0`.
+
+### 6. Download the pinned dependencies and Mathlib cache
+
+Run:
+
+```bash
+lake exe cache get
+```
+
+On the first execution, Lake clones the dependency revisions recorded in `lake-manifest.json` and downloads Mathlib’s compiled cache.
+
+Messages such as the following are normal:
+
+```text
+No files to download
+Decompressing 8007 file(s)
+Completed successfully!
+```
+
+or:
+
+```text
+Already decompressed 8010 file(s)
+```
+
+The exact number of cached files may vary slightly.
+
+For strict reproduction of the committed dependency set, do **not** run `lake update`. The committed `lake-manifest.json` already identifies the dependency revisions that should be used.
+
+### 7. Build the complete Lake project
+
+Run:
+
+```bash
+lake build
+```
+
+The first build can take several minutes. A successful build ends with a message similar to:
+
+```text
+Build completed successfully (8032 jobs).
+```
+
+The number of jobs may vary, but the important phrase is:
+
+```text
+Build completed successfully
+```
+
+Immediately confirm the command’s exit status:
+
+```bash
+echo $?
+```
+
+Expected output:
+
+```text
+0
+```
+
+An exit status of `0` means that the project built successfully.
+
+### 8. Verify `Solution.lean` directly
+
+To elaborate the solution file explicitly, run:
+
+```bash
+lake env lean Solution.lean
+```
+
+Then check the exit status:
+
+```bash
+echo $?
+```
+
+Expected output:
+
+```text
+0
+```
+
+Lean may return directly to the Terminal prompt without printing anything. No output together with exit status `0` means that `Solution.lean` was accepted successfully.
+
+### 9. About the `sorry` warnings
+
+During `lake build`, Lean reports sixteen warnings from `Challenge.lean`, for example:
+
+```text
+warning: Challenge.lean:52:8: declaration uses `sorry`
+```
+
+These warnings are intentional and do not indicate a failed build.
+
+`Challenge.lean` is the statement interface used by the comparator. It contains one placeholder for each of the sixteen declarations being verified. The actual proofs are supplied by `RequestProject/Main.lean` and exposed through `Solution.lean`.
+
+The CI workflow checks that:
+
+1. the trusted proof sources contain no `sorry`, `admit`, or added axiom declarations;
+2. the complete Lean project builds;
+3. all sixteen declarations in `Solution.lean` match the corresponding declarations in `Challenge.lean`;
+4. only the permitted foundational axioms are used.
+
+Therefore, the expected local result is a successful build accompanied by sixteen warnings originating only from `Challenge.lean`.
+
+### 10. Full comparator verification
+
+The project includes:
+
+```text
+verify.sh
+```
+
+This script runs a pinned Lean comparator and `lean4export` inside the `landrun` sandbox.
+
+The supplied verifier uses a Linux x86-64 `landrun` executable and should not be run directly on macOS. On macOS, use:
+
+```bash
+lake build
+lake env lean Solution.lean
+```
+
+The full sandboxed comparator is run automatically by GitHub Actions:
+
+[View the Sumsquares revised CI workflow](https://github.com/JAgbanwa/PolynomialDiophantineEquations/actions/workflows/sumsquares-revised-ci.yml)
+
+On a compatible Linux x86-64 system, the complete comparator can be run with:
+
+```bash
+bash verify.sh
+```
+
+### 11. Rebuilding after later changes
+
+From the repository root, update the local `main` branch:
+
+```bash
+git switch main
+git pull --ff-only
+cd sumsquares_revised
+```
+
+Then refresh the cache and rebuild:
+
+```bash
+lake exe cache get
+lake build
+lake env lean Solution.lean
+```
+
+A successful reproduction is established when:
+
+```text
+Build completed successfully
+```
+
+is reported and the final exit status is:
+
+```text
+0
 ```
