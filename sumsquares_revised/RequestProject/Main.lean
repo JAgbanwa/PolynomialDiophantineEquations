@@ -251,7 +251,7 @@ lemma pellIter_fst_lt {a c p q : ℤ} (ha : 0 < a) (hp : 1 ≤ p) (hq : 1 ≤ q)
   rw [ show pellIter a p q ( X0, V0 ) ( n + 1 ) = pellStep a p q ( pellIter a p q ( X0, V0 ) n ) from rfl ] ; unfold pellStep; nlinarith;
 
 /-- **Generalised Pell equation** (Gauss's theorem, [Gre24, Proposition 5.4], i.e.
-reference [9, Proposition 5.4] of the paper): if `a > 0`
+reference [11, Proposition 5.4] of the paper): if `a > 0`
 is not a perfect square, `c ≠ 0`, and `v₀² = a x₀² + c` for some integers, then there
 are infinitely many *positive* `x` for which `a x² + c` is a perfect square. -/
 theorem genPell_infinite {a c : ℤ} (ha : 0 < a) (hns : ¬ IsSquare a) (hc : c ≠ 0)
@@ -898,7 +898,7 @@ with `cg v₀`, then the equation has infinitely many integer solutions `(x, v)`
 form, a standing assumption of Section 4, is not needed for this infinitude statement.)
 
 *Proof organisation.*  The proof below differs from the paper's.  The paper applies
-Gauss's theorem ([Gre24, Prop. 5.4], reference [9] of the paper) to the conic (31) in the
+Gauss's theorem ([Gre24, Prop. 5.4], reference [11] of the paper) to the conic (31) in the
 variables `(x, w)` and then extracts the congruence condition.  Here we complete the
 square and apply the residue-controlled Pell theorem `genPell_infinite_cong` instead: a
 positive power of the fundamental unit is congruent to the identity `(1, 0)` modulo the
