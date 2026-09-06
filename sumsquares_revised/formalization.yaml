@@ -15,8 +15,8 @@ project:
     many integer solutions (Corollary 3.1: this was the shortest equation, in
     the paper's length ordering, whose finiteness problem was open). It also
     formalizes the four further length-9 equations of Corollary 3.2, the
-    criteria of Section 2 (Propositions 2.2 and 2.3, and the residue-controlled
-    generalized Pell lemma), the general tangent construction of Section 4 for
+    criteria of Section 2 (Propositions 2.2 and 2.3, together with the Pell
+    results that underlie them), the general tangent construction of Section 4 for
     an arbitrary non-degenerate binary quadratic form (Propositions 4.1, 4.2 and
     Algorithms 2.4, 4.3), the two equations 2y^2 + yz + 2z^2 = x^3 +- 1 of
     Proposition 4.4, the non-multiplicativity of the form 2y^2 + yz + 2z^2, the
@@ -24,7 +24,9 @@ project:
     limitation recorded in Section 1 for x^6 + 3. Supporting theory proved from
     scratch includes property (*) of the sums of two squares and Gauss's theorem
     on generalised Pell equations, together with a residue-controlled refinement
-    of the latter.
+    of the latter; the paper itself quotes these Pell inputs from the literature
+    ([11, Proposition 5.4] and [11, Proposition 3.14]) and states no such lemma
+    of its own.
   authors:
     - Bogdan Grechuk
     - Jamal Agbanwa
@@ -60,14 +62,18 @@ sources:
       - Bogdan Grechuk
     type: book
     id: "Springer, Cham, 2024"
-    location: "Proposition 5.4 (Gauss's theorem on generalised Pell equations)"
+    location: "Proposition 5.4 (Gauss's theorem on generalised Pell equations), Proposition 3.14 (integer points on a nonsingular conic), Proposition 3.67 (the equation k t^2 = P(x))"
     relationship: background
     note: >-
       Reference [11] of the paper. The paper appeals to Proposition 5.4 there for
-      the infinitude of the solutions of a generalised Pell equation; the Lean
-      development does not assume it, but proves it from scratch as
-      SumSquaresPaper.genPell_infinite, and proves a residue-controlled
-      refinement, SumSquaresPaper.genPell_infinite_cong.
+      the infinitude of the solutions of a generalised Pell equation (proof of
+      Proposition 2.3 and Section 3), to Proposition 3.14 for the infinitude of
+      the integer points of the conic in the proof of Proposition 4.2, and to
+      Proposition 3.67 for the reduced equation of Proposition 4.5. A Lean
+      development cannot cite the literature, so the Pell input is proved from
+      scratch as SumSquaresPaper.genPell_infinite, with the residue-controlled
+      refinement SumSquaresPaper.genPell_infinite_cong replacing the appeal to
+      Proposition 3.14.
   - title: On the shortest open cubic equations
     authors:
       - Bogdan Grechuk
@@ -86,7 +92,9 @@ status:
     All mathematical statements of the paper's Sections 1-4 that are asserted as
     results are formalized and proved: Propositions 2.2, 2.3, 4.1, 4.2, 4.4(a),
     4.4(b) and 4.5; Corollaries 3.1 and 3.2 (equations (16)-(19)); the
-    residue-controlled generalized Pell lemma of Section 2; the observation of
+    residue-controlled generalized Pell result that underlies the formal proofs
+    of Propositions 2.3 and 4.2 (an auxiliary result of the formalization, not a
+    statement of the paper); the observation of
     Section 1 that the method does not resolve y^2 + z^2 = x^6 + 3;
     Algorithms 2.4 and 4.3, each stated
     as a theorem whose hypotheses record the data produced by the algorithm's
@@ -96,8 +104,11 @@ status:
     non-multiplicativity of the form 2y^2 + yz + 2z^2; and the degenerate case
     B^2 - 4AC = 0. Not formalized: the expository discussion, Table 1 (the list
     of remaining open equations of length 9), the survey of the literature in
-    Section 1, and the closing remarks of Section 5, none of which assert a
-    theorem. The search steps of the algorithms are not formalized as
+    Section 1, and the concluding remarks and directions for further work, none
+    of which assert a theorem. (The revised manuscript has four sections; the
+    former Section 5, Conclusion, has been deleted, and the limitation it
+    recorded for y^2 + z^2 = x^6 + 3 now appears in Section 1, where it is
+    formalized as SumSquaresPaper.pow6_add3_algorithm_fails.) The search steps of the algorithms are not formalized as
     executable searches; the numerical data they produce (values of u, base
     solutions of the auxiliary equations, and so on) appear as explicit
     parameters in the applications.
@@ -193,8 +204,10 @@ fidelity:
     The formalized statements are the paper's statements; two proofs are
     organised differently, and both differences are documented in the module
     docstring of RequestProject/Main.lean and at the declarations concerned.
-    (1) Proposition 4.2: the paper applies Gauss's theorem to the conic (31) in
-    the variables (x, w); the Lean proof completes the square and applies the
+    (1) Proposition 4.2: the paper substitutes v = v0 + 2 m w and applies
+    Gauss's theorem on integer points of conics, [11, Proposition 3.14], to the
+    resulting nonsingular conic in the variables (x, w); the Lean proof
+    completes the square and applies the
     residue-controlled Pell theorem genPell_infinite_cong, which is proved here
     from scratch (some positive power of the fundamental unit is congruent to
     (1, 0) modulo N, so the iterates stay in a fixed residue class). The Lean
@@ -203,9 +216,12 @@ fidelity:
     Proposition 4.2 itself. (2) Proposition 4.4 is verified directly from the
     explicit polynomial families displayed in the paper, each identity being
     closed by ring, rather than by re-running the tangent construction of
-    Proposition 4.1. In addition, Gauss's theorem on generalised Pell equations,
-    which the paper quotes from reference [11, Proposition 5.4], is proved from
-    scratch here rather than assumed. Challenge.lean contains one deliberate
+    Proposition 4.1. In addition, the results the paper quotes from the
+    literature - Gauss's theorem on generalised Pell equations,
+    [11, Proposition 5.4], and its conic counterpart, [11, Proposition 3.14] -
+    are not available to a Lean development as citations; the Pell input is
+    proved from scratch here, and the residue-controlled refinement of it
+    replaces the appeal to [11, Proposition 3.14]. Challenge.lean contains one deliberate
     sorry per advertised statement, as the Comparator convention requires;
     Solution.lean and the proof development in RequestProject/Main.lean contain
     none.
@@ -220,7 +236,10 @@ review:
     placeholders, declares no axiom, and every compared declaration reduces to
     the three standard axioms propext, Classical.choice and Quot.sound. The
     correspondence between the paper's statements and the Lean statements has
-    been checked by the authors and is tabulated under alignment below. The
+    been checked by the authors and is tabulated under alignment below. This
+    metadata describes the immutable snapshot tagged snapshot-2026-09-06, which
+    corresponds to the revision of the manuscript dated 6 September 2026 (see
+    SNAPSHOT.md). The
     source paper is under peer review at the International Journal of Number
     Theory; no independent review of the Lean statements themselves has been
     carried out.
@@ -269,14 +288,15 @@ alignment:
         SumSquaresPaper.prop_4_1; the underlying algebraic identity is
         SumSquaresPaper.prop_4_1_core and the tangent point is constructed in
         SumSquaresPaper.prop_4_1_solution.
-    - source: "Proposition 4.2 (auxiliary equation (30) with congruence conditions)"
+    - source: "Proposition 4.2 (auxiliary equation (32) with congruence conditions)"
       lean: PolynomialValuesQuadraticForms.prop_4_2_auxiliary_equation
       module: Solution
       status: proved
       note: >-
         SumSquaresPaper.prop_4_2. Proved via the residue-controlled Pell theorem
-        SumSquaresPaper.genPell_infinite_cong rather than via the conic (31);
-        see fidelity.divergences.
+        SumSquaresPaper.genPell_infinite_cong rather than by the paper's appeal
+        to [11, Proposition 3.14] for the conic in (x, w); see
+        fidelity.divergences.
     - source: "Proposition 4.4(a) (2y^2 + yz + 2z^2 = x^3 + 1)"
       lean: PolynomialValuesQuadraticForms.form_2_1_2_eq_cube_add_one_infinite
       module: Solution
@@ -295,13 +315,14 @@ alignment:
         If a and a*b are positive sums of two squares then so is b; proved from
         the prime-factorization criterion via a p-adic valuation argument. Not
         part of the Comparator surface.
-    - source: "Section 2, Gauss's theorem for generalised Pell equations ([11, Prop. 5.4])"
+    - source: "Gauss's theorem for generalised Pell equations, quoted in the proof of Proposition 2.3 as [11, Prop. 5.4]"
       lean: SumSquaresPaper.genPell_infinite
       module: RequestProject.Main
       status: proved
       note: >-
         Quoted from the literature in the paper, proved from scratch here by
-        iterating multiplication by a fundamental unit. The refinement
+        iterating multiplication by a fundamental unit (a Lean development
+        cannot cite the literature). The refinement
         SumSquaresPaper.genPell_infinite_cong controls the residue class of the
         solutions. Not part of the Comparator surface.
     - source: "Proposition 2.2 (sum-of-two-squares criterion)"
@@ -319,13 +340,16 @@ alignment:
       note: >-
         SumSquaresPaper.prop_2_3; the conclusion records both the infinitude of
         the solution pairs and the infinitude of their x-coordinates.
-    - source: "Section 2, residue-controlled generalized Pell lemma"
+    - source: "Pell result underlying Propositions 2.3 and 4.2 (auxiliary result of the formalization)"
       lean: PolynomialValuesQuadraticForms.residue_controlled_pell_lemma
       module: Solution
-      status: proved
+      status: adapted
       note: >-
-        SumSquaresPaper.residue_controlled_pell, the paper's formulation of
-        SumSquaresPaper.genPell_infinite_cong.
+        SumSquaresPaper.residue_controlled_pell, a restatement of
+        SumSquaresPaper.genPell_infinite_cong in the variables X^2 - A Y^2 = C.
+        The paper states no such lemma: it quotes [11, Proposition 5.4] in
+        Proposition 2.3 and [11, Proposition 3.14] in Proposition 4.2, and this
+        declaration is what supplies those inputs inside the formalization.
     - source: "Section 1, the method does not resolve y^2 + z^2 = x^6 + 3 (equation (6))"
       lean: SumSquaresPaper.pow6_add3_algorithm_fails
       module: RequestProject.Main
