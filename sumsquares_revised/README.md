@@ -43,6 +43,17 @@ comparator convention that file advertises statements only, and `Solution.lean` 
 the proofs. There is no `sorry` anywhere else in the project, and no `axiom` declaration
 at all.
 
+The Lean declaration names retain the numbering of an earlier draft. Their references
+in the supplied marked manuscript dated 6 September 2026 are:
+
+| Stable Lean declaration | Marked manuscript reference |
+| --- | --- |
+| `equation_14_infinite` | Equation (13), Corollary 3.2 |
+| `equation_15_infinite` | Equation (14), Corollary 3.2 |
+| `equation_16_infinite` | Equation (15), Corollary 3.2 |
+| `equation_17_infinite` | Equation (16), Corollary 3.2 |
+| `prop_4_5_degenerate_case` | Unnumbered closing discussion of Section 4, equation (32) |
+
 ## Building
 
 ```sh
@@ -90,9 +101,12 @@ The formalized statements are the paper's statements. The implementation records
 proof-engineering details in the module docstring of `RequestProject/Main.lean` and in
 `formalization.yaml`:
 
-* **Proposition 4.2** uses the revised manuscript's residue-controlled Pell argument
-  (`genPell_infinite_cong`). The Lean statement also records that the non-degeneracy
-  assumption `Δ ≠ 0` is not needed for Proposition 4.2 itself.
+* **Proposition 4.2** in the revised manuscript substitutes `v = v₀ + 2mw`. For
+  `a ≠ 0`, it applies the published conic theorem [11, Proposition 3.14]; the case
+  `a = 0` is handled directly. The Lean proof also treats the linear case directly
+  and, for `a ≠ 0`, completes the square and uses the residue-controlled Pell lemma
+  `genPell_infinite_cong`. The Lean statement also records that the non-degeneracy assumption
+  `Δ ≠ 0` is not needed for Proposition 4.2 itself.
 * **Proposition 4.4** is verified directly from the explicit polynomial families given in
   the paper (by `ring`), rather than by re-running the tangent construction.
 

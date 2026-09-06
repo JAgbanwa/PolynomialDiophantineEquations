@@ -25,7 +25,7 @@ The statements are, in order:
 * `prop_4_1_general_form` — Proposition 4.1, the tangent construction for an arbitrary
   non-degenerate binary quadratic form `F(y,z) = A y² + B y z + C z²`;
 * `prop_4_2_auxiliary_equation` — Proposition 4.2, infinitude of the solutions of the
-  auxiliary equation (32) inside a prescribed congruence class;
+  auxiliary equation (29) inside a prescribed congruence class;
 * `form_2_1_2_eq_cube_add_one_infinite`, `form_2_1_2_eq_cube_sub_one_infinite` —
   Proposition 4.4, for the non-multiplicative form `2y² + yz + 2z²`;
 * `residue_controlled_pell_lemma` — the residue-controlled generalized Pell result that
@@ -35,7 +35,13 @@ The statements are, in order:
   and 2.3;
 * `algorithm_2_4_correct`, `algorithm_4_3_correct` — the formal correctness statements
   corresponding to Algorithms 2.4 and 4.3;
-* `prop_4_5_degenerate_case` — Proposition 4.5, the degenerate case `Δ = 0`.
+* `prop_4_5_degenerate_case` — the unnumbered closing discussion of Section 4,
+  the degenerate case `Δ = 0` and equation (32).
+
+Cross-references use the marked manuscript dated 6 September 2026. The stable
+declaration names `equation_14_infinite` through `equation_17_infinite` refer
+to its equations (13) through (16), respectively; `prop_4_5_degenerate_case`
+refers to the unnumbered closing discussion of Section 4, equation (32).
 
 Throughout, a triple `p : ℤ × ℤ × ℤ` is read as `(x, y, z) = (p.1, p.2.1, p.2.2)`.
 
@@ -48,8 +54,8 @@ namespace PolynomialValuesQuadraticForms
 /-! ## Section 2–3: the sum of two squares -/
 
 /-- **Abstract, and Section 3.**  `x⁶ − 4` is a sum of two squares for infinitely many
-integers `x`.  (Equivalently, the equation `Y² + Z² = x⁶ − 4`, i.e. equation (3), has
-infinitely many integer solutions.) -/
+integers `x`. This is the representation problem arising from equation (3);
+equivalently, `Y² + Z² = x⁶ − 4` has infinitely many integer solutions. -/
 theorem sum_two_squares_x_pow_six_sub_four :
     {x : ℤ | ∃ a b : ℤ, x ^ 6 - 4 = a ^ 2 + b ^ 2}.Infinite := by
   sorry
@@ -60,28 +66,28 @@ theorem equation_2_infinite :
     {p : ℤ × ℤ × ℤ | p.2.1 ^ 2 + p.1 ^ 3 * p.2.1 + p.2.2 ^ 2 + 1 = 0}.Infinite := by
   sorry
 
-/-- **Corollary 3.2, equation (16)** (equation (14) in the first version).
+/-- **Corollary 3.2, equation (13)** in the marked manuscript of 6 September 2026.
 `y² + x³y + z² − 2 = 0` has infinitely many
 integer solutions. -/
 theorem equation_14_infinite :
     {p : ℤ × ℤ × ℤ | p.2.1 ^ 2 + p.1 ^ 3 * p.2.1 + p.2.2 ^ 2 - 2 = 0}.Infinite := by
   sorry
 
-/-- **Corollary 3.2, equation (17)** (equation (15) in the first version).
+/-- **Corollary 3.2, equation (14)** in the marked manuscript of 6 September 2026.
 `y² + x³y + z² + z − 1 = 0` has infinitely many
 integer solutions. -/
 theorem equation_15_infinite :
     {p : ℤ × ℤ × ℤ | p.2.1 ^ 2 + p.1 ^ 3 * p.2.1 + p.2.2 ^ 2 + p.2.2 - 1 = 0}.Infinite := by
   sorry
 
-/-- **Corollary 3.2, equation (18)** (equation (16) in the first version).
+/-- **Corollary 3.2, equation (15)** in the marked manuscript of 6 September 2026.
 `y² + x³y + z² + z + 1 = 0` has infinitely many
 integer solutions. -/
 theorem equation_16_infinite :
     {p : ℤ × ℤ × ℤ | p.2.1 ^ 2 + p.1 ^ 3 * p.2.1 + p.2.2 ^ 2 + p.2.2 + 1 = 0}.Infinite := by
   sorry
 
-/-- **Corollary 3.2, equation (19)** (equation (17) in the first version).
+/-- **Corollary 3.2, equation (16)** in the marked manuscript of 6 September 2026.
 `y² + x³y + y + z² + 1 = 0` has infinitely many
 integer solutions. -/
 theorem equation_17_infinite :
@@ -97,11 +103,11 @@ Let `F(y,z) = A y² + B y z + C z²` be non-degenerate, i.e. `Δ = B² − 4AC �
 `R u = F(p, q) ≠ 0`, let `r = R'(u)` and let `Du` be the second-order Taylor coefficient
 of `R` at `u`, so that `R t = R u + r (t − u) + (t − u)² Du t` for all `t`.
 
-If the auxiliary equation (29),
+If the auxiliary equation (26),
 
   `4 R(u) Du(Q(x)) − r² = −Δ v²`,
 
-together with the congruence conditions (30),
+together with the congruence conditions (27),
 
   `2|R(u)| ∣ r p + v (B p + 2 C q)` and `2|R(u)| ∣ r q − v (2 A p + B q)`,
 
@@ -118,7 +124,7 @@ theorem prop_4_1_general_form {A B C : ℤ} (u p q r : ℤ) (R Q Du : ℤ → �
     {x : ℤ | ∃ y z : ℤ, A * y ^ 2 + B * y * z + C * z ^ 2 = R (Q x)}.Infinite := by
   sorry
 
-/-- **Proposition 4.2.**  The auxiliary equation (32), `a x² + b x + c = −D v²`, together
+/-- **Proposition 4.2.**  The auxiliary equation (29), `a x² + b x + c = −D v²`, together
 with a congruence condition `cg` on `v` which is periodic with period `2m` (`m ≠ 0`).
 Under the paper's conditions (a) `a = 0` or `a(−D)` is a positive non-square,
 (b) `b² − 4ac ≠ 0`, and (c) there is one solution `(x₀, v₀)` with `cg v₀`, the equation
@@ -161,7 +167,7 @@ theorem residue_controlled_pell_lemma {A C : ℤ} (hA : 0 < A) (hns : ¬ IsSquar
 /-- **Proposition 2.2.**  Let `R`, `Q` be integer polynomial functions, `u ∈ ℤ`, `r = R'(u)`
 and let `Du` be the second-order Taylor coefficient of `R` at `u`, so that
 `R t = R u + r (t − u) + (t − u)² Du t` for all `t`.  If `R(u)` is a positive sum of two
-squares and the auxiliary equation (10), `4 R(u) Du(Q(x)) − r² = v²`, has infinitely many
+squares and the auxiliary equation (8), `4 R(u) Du(Q(x)) − r² = v²`, has infinitely many
 integer solutions `(x, v)`, then `R(Q(x))` is a sum of two squares for infinitely many
 integers `x`. -/
 theorem prop_2_2_sum_two_squares_criterion (u r : ℤ) (R Q Du : ℤ → ℤ)
@@ -172,8 +178,8 @@ theorem prop_2_2_sum_two_squares_criterion (u r : ℤ) (R Q Du : ℤ → ℤ)
   sorry
 
 /-- **Proposition 2.3.**  Assume (a) either `a = 0`, or `a > 0` and `a` is not a perfect
-square; (b) `b² − 4ac ≠ 0`; and (c) equation (11), `a x² + b x + c = v²`, has an integer
-solution `(x₀, v₀)`.  Then (11) has infinitely many integer solutions `(x, v)`, with
+square; (b) `b² − 4ac ≠ 0`; and (c) equation (9), `a x² + b x + c = v²`, has an integer
+solution `(x₀, v₀)`.  Then (9) has infinitely many integer solutions `(x, v)`, with
 infinitely many distinct values of `x`. -/
 theorem prop_2_3_auxiliary_equation {a b c : ℤ} (ha : a = 0 ∨ (0 < a ∧ ¬ IsSquare a))
     (hb : b ^ 2 - 4 * a * c ≠ 0) (x0 v0 : ℤ) (hsol : a * x0 ^ 2 + b * x0 + c = v0 ^ 2) :
@@ -183,7 +189,7 @@ theorem prop_2_3_auxiliary_equation {a b c : ℤ} (ha : a = 0 ∨ (0 < a ∧ ¬ 
 
 /-- **Algorithm 2.4**, formal correctness statement.  The hypotheses record the data
 returned by a successful run of the search steps: an integer `u` with `R(u)` a positive sum
-of two squares, the auxiliary equation (10) written in the form `a x² + b x + c = v²`, and
+of two squares, the auxiliary equation (8) written in the form `a x² + b x + c = v²`, and
 a seed solution `(x₀, v₀)` certifying condition (c).  The conclusion is the asserted
 output: `R(Q(x))` is a sum of two squares for infinitely many integers `x`. -/
 theorem algorithm_2_4_correct (u r a b c : ℤ) (R Q Du : ℤ → ℤ)
@@ -199,8 +205,8 @@ theorem algorithm_2_4_correct (u r a b c : ℤ) (R Q Du : ℤ → ℤ)
 /-- **Algorithm 4.3**, formal correctness statement.  The hypotheses record the data
 returned by a successful run of the search steps for a non-degenerate form
 `F(y,z) = A y² + B y z + C z²`: integers `u, p, q` with `R(u) = F(p,q) ≠ 0`, the auxiliary
-equation (29) written in the form (32), and a seed solution `(x₀, v₀)` satisfying the
-congruences (30).  The conclusion is the asserted output: `F(y,z) = R(Q(x))` is solvable in
+equation (26) written in the form (29), and a seed solution `(x₀, v₀)` satisfying the
+congruences (27).  The conclusion is the asserted output: `F(y,z) = R(Q(x))` is solvable in
 integers for infinitely many `x`. -/
 theorem algorithm_4_3_correct {A B C : ℤ} (u p q r a b c : ℤ) (R Q Du : ℤ → ℤ)
     (hΔ : B ^ 2 - 4 * A * C ≠ 0)
@@ -215,7 +221,7 @@ theorem algorithm_4_3_correct {A B C : ℤ} (u p q r a b c : ℤ) (R Q Du : ℤ 
     {x : ℤ | ∃ y z : ℤ, A * y ^ 2 + B * y * z + C * z ^ 2 = R (Q x)}.Infinite := by
   sorry
 
-/-- **Proposition 4.5**, the degenerate case.  If `Δ = B² − 4AC = 0` and
+/-- **Closing discussion of Section 4 (unnumbered)**, the degenerate case.  If `Δ = B² − 4AC = 0` and
 `(A,B,C) ≠ (0,0,0)`, then there are integers `κ, r, s` with `κ ≠ 0` and `(r,s) ≠ (0,0)`
 such that `(A,B,C) = (κ r², 2 κ r s, κ s²)`, hence `F(y,z) = κ (r y + s z)²`; and for any
 polynomial `P` the equation `F(y,z) = P(x)` has infinitely many integer solutions if and

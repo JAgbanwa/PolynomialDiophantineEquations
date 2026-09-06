@@ -36,7 +36,7 @@ non-multiplicative form `2y² + yz + 2z²`.
 * `sum2sq_x6_add`           : the core tangent identity: if the auxiliary Pell equation
                               is solvable then `x⁶ + f` is a sum of two squares.
 * `prop_2_2`                : Proposition 2.2, the sum-of-two-squares criterion: if the
-                              auxiliary equation (10) has infinitely many solutions then
+                              auxiliary equation (8) has infinitely many solutions then
                               `R(Q(x)) ∈ S₂` for infinitely many `x`.
 * `prop_2_3`                : Proposition 2.3, conditions (a)–(c) give infinitely many
                               solutions of `a x² + b x + c = v²`, with infinitely many
@@ -46,21 +46,21 @@ non-multiplicative form `2y² + yz + 2z²`.
 * `prop_3_1`                : Corollary 3.1: `y² + x³y + z² + 1 = 0` has infinitely many
                               integer solutions.
 * `prop_3_2_eq14/15/16/17`  : Corollary 3.2: the four further length-9 equations (in the
-                              revised numbering (16)–(19)) each have infinitely many
+                              revised numbering (13)–(16)) each have infinitely many
                               integer solutions.
 * `prop_4_1_core`           : the algebraic tangent identity for a general form.
 * `prop_4_1`                : Proposition 4.1, the full infinitude statement for a general
                               non-degenerate form.
 * `prop_4_2`                : Proposition 4.2, infinitely many solutions of the auxiliary
-                              equation (32) subject to the congruences (30).
+                              equation (29) subject to the congruences (27).
 * `algorithm_2_4`           : Algorithm 2.4, the sum-of-two-squares recipe, as a theorem.
 * `algorithm_4_3`           : Algorithm 4.3, the general-form recipe, as a theorem.
 * `prop_4_4a`, `prop_4_4b`  : the equations `2y² + yz + 2z² = x³ ± 1` have infinitely many
                               integer solutions (Proposition 4.4).
 * `form2_not_multiplicative`: the form `2y² + yz + 2z²` is not multiplicative (it represents
                               `2` but not `2·2 = 4`; the obstruction is modulo `3`).
-* `prop_4_5`                : Proposition 4.5, the degenerate case `Δ = 0` in the form
-                              stated in the paper.
+* `prop_4_5`                : the unnumbered closing discussion of Section 4,
+                              the degenerate case `Δ = 0` and equation (32).
 * `degenerate_factorization`: a form with `Δ = B² − 4AC = 0` factors as `k (n y + m z)²`.
 * `degenerate_infinite_iff`,
   `degenerate_case`         : the degenerate case `Δ = 0`: `F(y,z) = P(x)` has infinitely
@@ -73,7 +73,7 @@ The statements formalised here are the paper's statements, but two proofs are or
 differently; both differences are recorded again at the relevant declarations.
 
 * Proposition 4.2 (`prop_4_2`).  The paper deduces the infinitude of the solutions of the
-  auxiliary equation (32) from Gauss's theorem on integral points of conics,
+  auxiliary equation (29) from Gauss's theorem on integral points of conics,
   [11, Proposition 3.14], applied to the conic `a x² + b x + c = −Δ(v₀ + 2mw)²` in the
   variables `(x, w)`.  The Lean proof instead completes the square and appeals to a
   *residue-controlled* generalised Pell theorem, `genPell_infinite_cong`, proved here from
@@ -98,7 +98,7 @@ the revised version).
   Proposition 2.3 ; Proposition 3.14 (one integer point on a nonsingular
   conic with positive non-square discriminant gives infinitely many) in the proof of
   Proposition 4.2; and Proposition 3.67 (integer solutions of `k t² = P(x)`) in the
-  discussion after Proposition 4.5.  A Lean development cannot cite the literature, so
+  unnumbered closing discussion of Section 4.  A Lean development cannot cite the literature, so
   the Pell input is proved here from scratch as `genPell_infinite`, and refined as
   `genPell_infinite_cong` / `residue_controlled_pell`; the refinement replaces the appeal
   to [11, Proposition 3.14] in `prop_4_2`.
@@ -108,19 +108,25 @@ the revised version).
 
 ## Numbering
 
-The declaration names follow the numbering of the first version of the paper where these
-were already formalised (`prop_3_1`, `prop_3_2_eq14`–`eq17`).  In the revised version these
-are Corollary 3.1 and Corollary 3.2 (equations (16)–(19)), and Algorithm 2.2 is now
-Algorithm 2.4 (`algorithm_2_4`).  The correspondence is recorded in each docstring.
+The cross-references below follow the supplied marked manuscript dated 6 September 2026.
+Declaration names retain their original identifiers for compatibility: `prop_3_1` proves
+Corollary 3.1, and `prop_3_2_eq14`, `prop_3_2_eq15`, `prop_3_2_eq16`, `prop_3_2_eq17`
+prove equations (13), (14), (15), (16) of Corollary 3.2, respectively. The comparator
+declarations `equation_14_infinite` through `equation_17_infinite` use the same order.
+Algorithm 2.2 of the original version is Algorithm 2.4 in this manuscript.
 
-The equation numbers quoted below are those of the revised manuscript.  In Section 4 these
-are: the auxiliary equation (29) `4 m · Du(Q(x)) − r² = −Δ v²` and the congruences (30) of
-Proposition 4.1, the solution formulas (31), the reduced form (32) `a x² + b x + c = −Δ v²`
-used in Proposition 4.2, the two equations (34) of Proposition 4.4 with the families (35)
-and (36), and the degenerate case (37), (38) of Proposition 4.5.  The revision also deletes
-the former Section 5 (Conclusion); its content — in particular the discussion of
-`y² + z² = x⁶ + 3` formalised here as `pow6_add3_algorithm_fails` — now appears in
-Section 1.
+In Section 2, the auxiliary equation is (8) and its quadratic form is (9).
+In Section 4, the tangent auxiliary equation is (26), its congruences are (27), the
+recovery formulas are (28), the quadratic form is (29), and substitution of
+`v = v₀ + 2mw` gives (30). The two equations of Proposition 4.4 are (31); their
+explicit polynomial families are unnumbered. The degenerate case is the unnumbered
+closing discussion of Section 4, with reduced equation (32). The identifiers
+`prop_4_5` and `prop_4_5_degenerate_case` refer to that discussion; the manuscript
+has no numbered Proposition 4.5.
+
+The former Section 5 (Conclusion) is deleted. The discussion of `y² + z² = x⁶ + 3`,
+formalised as `pow6_add3_algorithm_fails`, now appears without an equation number
+in Section 1.
 -/
 
 namespace SumSquaresPaper
@@ -537,8 +543,7 @@ lemma odd_of_S2_sub4 {x : ℤ} (hpos : 0 < x ^ 6 - 4) (hS : Sum2Sq (x ^ 6 - 4)) 
   exact not_sum2sq_mod4_three ( show ( 16 * w ^ 6 - 1 ) % 4 = 3 by omega ) h_sum2sq
 
 /-
-If `x` is even and `x⁶ + 8` is a sum of two squares, equation (16) of the revised
-numbering (equation (14) in the first version) is solvable.
+If `x` is even and `x⁶ + 8` is a sum of two squares, equation (13) of the marked manuscript of 6 September 2026 is solvable.
 -/
 lemma sol_14 {x : ℤ} (hx : Even x) (hS : Sum2Sq (x ^ 6 + 8)) :
     ∃ y z : ℤ, y ^ 2 + x ^ 3 * y + z ^ 2 - 2 = 0 := by
@@ -550,8 +555,7 @@ lemma sol_14 {x : ℤ} (hx : Even x) (hS : Sum2Sq (x ^ 6 + 8)) :
   exact ⟨ y - w ^ 3 * 4, z, by linarith ⟩
 
 /-
-If `x` is even and `x⁶ + 5` is a sum of two squares, equation (17) of the revised
-numbering (equation (15) in the first version) is solvable.
+If `x` is even and `x⁶ + 5` is a sum of two squares, equation (14) of the marked manuscript of 6 September 2026 is solvable.
 -/
 lemma sol_15 {x : ℤ} (hx : Even x) (hS : Sum2Sq (x ^ 6 + 5)) :
     ∃ y z : ℤ, y ^ 2 + x ^ 3 * y + z ^ 2 + z - 1 = 0 := by
@@ -567,8 +571,7 @@ lemma sol_15 {x : ℤ} (hx : Even x) (hS : Sum2Sq (x ^ 6 + 5)) :
   rcases h_eq with ( ⟨ rfl, rfl ⟩ | ⟨ rfl, rfl ⟩ ); all_goals grind
 
 /-
-If `x` is even and `x⁶ − 3` is a sum of two squares, equation (18) of the revised
-numbering (equation (16) in the first version) is solvable.
+If `x` is even and `x⁶ − 3` is a sum of two squares, equation (15) of the marked manuscript of 6 September 2026 is solvable.
 -/
 lemma sol_16 {x : ℤ} (hx : Even x) (hS : Sum2Sq (x ^ 6 - 3)) :
     ∃ y z : ℤ, y ^ 2 + x ^ 3 * y + z ^ 2 + z + 1 = 0 := by
@@ -588,8 +591,7 @@ lemma sol_16 {x : ℤ} (hx : Even x) (hS : Sum2Sq (x ^ 6 - 3)) :
   · rcases Int.even_or_odd' A with ⟨ z, rfl | rfl ⟩; all_goals grind
 
 /-
-If `x` is even and `(x³+1)² − 4` is a sum of two squares, equation (19) of the revised
-numbering (equation (17) in the first version) is solvable.
+If `x` is even and `(x³+1)² − 4` is a sum of two squares, equation (16) of the marked manuscript of 6 September 2026 is solvable.
 -/
 lemma sol_17 {x : ℤ} (hx : Even x) (hS : Sum2Sq ((x ^ 3 + 1) ^ 2 - 4)) :
     ∃ y z : ℤ, y ^ 2 + x ^ 3 * y + y + z ^ 2 + 1 = 0 := by
@@ -724,7 +726,7 @@ theorem prop_3_1 :
   rintro x ⟨hodd, hS⟩
   exact sol_31 hodd hS
 
-/-- **Corollary 3.2, equation (16)** (equation (14) in the first version).
+/-- **Corollary 3.2, equation (13)** in the marked manuscript of 6 September 2026.
 `y² + x³y + z² − 2 = 0` has infinitely many
 integer solutions. -/
 theorem prop_3_2_eq14 :
@@ -734,7 +736,7 @@ theorem prop_3_2_eq14 :
   rintro x ⟨_, hx, hS⟩
   exact sol_14 hx hS
 
-/-- **Corollary 3.2, equation (17)** (equation (15) in the first version).
+/-- **Corollary 3.2, equation (14)** in the marked manuscript of 6 September 2026.
 `y² + x³y + z² + z − 1 = 0` has infinitely many
 integer solutions. -/
 theorem prop_3_2_eq15 :
@@ -744,7 +746,7 @@ theorem prop_3_2_eq15 :
   rintro x ⟨_, hx, hS⟩
   exact sol_15 hx hS
 
-/-- **Corollary 3.2, equation (18)** (equation (16) in the first version).
+/-- **Corollary 3.2, equation (15)** in the marked manuscript of 6 September 2026.
 `y² + x³y + z² + z + 1 = 0` has infinitely many
 integer solutions. -/
 theorem prop_3_2_eq16 :
@@ -754,7 +756,7 @@ theorem prop_3_2_eq16 :
   rintro x ⟨_, hx, hS⟩
   exact sol_16 hx hS
 
-/-- **Corollary 3.2, equation (19)** (equation (17) in the first version).
+/-- **Corollary 3.2, equation (16)** in the marked manuscript of 6 September 2026.
 `y² + x³y + y + z² + 1 = 0` has infinitely many
 integer solutions.  Here we substitute `x = -w²` with `w` even, using
 `(x³+1)²-4 = (w⁶-3)(w⁶+1)` and the fact that `w⁶-3 ∈ S₂` infinitely often. -/
@@ -795,7 +797,7 @@ lemma prop_4_1_core {A B C : ℤ} (p q m r s D lam mu : ℤ)
   subst hm hF; linear_combination s * hline
 
 /-- **Proposition 4.4(a).** `2y² + yz + 2z² = x³ + 1` has infinitely many integer
-solutions.  Explicit family (35): `x = 30n² + 15n + 1`, `y = 30n³ + 45n² + 15n + 1`,
+solutions.  Explicit family (a) in the proof: `x = 30n² + 15n + 1`, `y = 30n³ + 45n² + 15n + 1`,
 `z = −(120n³ + 90n² + 15n)`.
 
 *Proof organisation.*  As in the paper the family comes from the tangent construction of
@@ -815,7 +817,7 @@ theorem prop_4_4a :
   ring
 
 /-- **Proposition 4.4(b).** `2y² + yz + 2z² = x³ − 1` has infinitely many integer
-solutions.  Explicit family (36): `x = 570n² + 225n + 24`,
+solutions.  Explicit family (b) in the proof: `x = 570n² + 225n + 24`,
 `y = 9690n³ + 6105n² + 1189n + 71`, `z = −4560n³ − 1230n² + 89n + 29`.
 
 *Proof organisation.*  As for `prop_4_4a`, the family is verified directly by `ring`
@@ -859,7 +861,7 @@ lemma finite_setOf_mul_sq_eq {D K : ℤ} (hD : D ≠ 0) : {v : ℤ | D * v ^ 2 =
 
 /-
 The per-solution tangent construction of Proposition 4.1: for a single pair `(x, v)`
-satisfying the auxiliary equation (29) and the congruences (30), the equation
+satisfying the auxiliary equation (26) and the congruences (27), the equation
 `F(y,z) = R(Q(x))` has an integer solution `(y, z)` given by the tangent-line formula.
 -/
 lemma prop_4_1_solution {A B C : ℤ} (u p q r : ℤ) (R Q Du : ℤ → ℤ) (x v : ℤ)
@@ -895,8 +897,8 @@ lemma prop_4_1_solution {A B C : ℤ} (u p q r : ℤ) (R Q Du : ℤ → ℤ) (x 
 /-
 **Proposition 4.1.**  Let `F(y,z) = A y² + B y z + C z²` be non-degenerate
 (`Δ = B² − 4AC ≠ 0`), let `m = R(u) = F(p,q) ≠ 0`, `r = R'(u)`, and let `Du` be the
-second-order Taylor coefficient of `R` at `u`.  If the auxiliary equation (29),
-`4 m · Du(Q(x)) − r² = −Δ v²`, together with the congruences (30) has infinitely many
+second-order Taylor coefficient of `R` at `u`.  If the auxiliary equation (26),
+`4 m · Du(Q(x)) − r² = −Δ v²`, together with the congruences (27) has infinitely many
 integer solutions `(x, v)`, then `F(y,z) = R(Q(x))` is solvable for infinitely many `x`.
 -/
 theorem prop_4_1 {A B C : ℤ} (u p q r : ℤ) (R Q Du : ℤ → ℤ)
@@ -915,7 +917,7 @@ theorem prop_4_1 {A B C : ℤ} (u p q r : ℤ) (R Q Du : ℤ → ℤ)
     exacts [ r ^ 2 - 4 * R u * Du ( Q x ), fun v hv => by linear_combination' hv.1 ]
 
 /-
-**Proposition 4.2.**  Consider the auxiliary equation (32) `a x² + b x + c = −D v²`
+**Proposition 4.2.**  Consider the auxiliary equation (29) `a x² + b x + c = −D v²`
 (where `D = Δ` is the discriminant of the form) together with a congruence condition `cg`
 on `v` that is periodic with period `2m` (`m ≠ 0`).  If (a) `a = 0` or `a(−D)` is a positive
 non-square, (b) the discriminant `b² − 4ac ≠ 0`, and (c) there is one solution `(x₀, v₀)`
@@ -927,7 +929,7 @@ form, a standing assumption of Section 4, is not needed for this infinitude stat
 `v = v₀ + 2mw` and applies Gauss's theorem on integral points of conics,
 [11, Proposition 3.14], to the resulting nonsingular conic
 `a x² + b x + c = −Δ(v₀ + 2mw)²` in the variables `(x, w)`; the congruence condition then
-holds automatically by the periodicity (33).  Here we complete the
+holds automatically because the congruences are preserved under v = v₀ + 2mw.  Here we complete the
 square and apply the residue-controlled Pell theorem `genPell_infinite_cong` instead: a
 positive power of the fundamental unit is congruent to the identity `(1, 0)` modulo the
 period, so the whole orbit of iterates stays inside one residue class and the congruence
@@ -988,7 +990,7 @@ theorem prop_4_2 {a b c D m : ℤ} (hm : m ≠ 0)
 
 /-
 **Algorithm 4.3** (stated as a theorem).  Given the data `(u, p, q)` with
-`R(u) = F(p,q) ≠ 0` found in Step 1, the auxiliary equation written in the form (32) with
+`R(u) = F(p,q) ≠ 0` found in Step 1, the auxiliary equation written in the form (29) with
 coefficients `(a, b, c)` (Step 2), and the verification of conditions (a)–(c) of
 Proposition 4.2 (Step 3), the equation `F(y,z) = R(Q(x))` is solvable for infinitely many
 integers `x`.  This is the composition of Proposition 4.2 and Proposition 4.1.
@@ -1047,7 +1049,7 @@ lemma sum2sq_of_aux (u r : ℤ) (R Q Du : ℤ → ℤ) (x v : ℤ)
 /-- **Proposition 2.2** (Section 2).  Let `R` and `Q` be integer polynomial functions, let
 `u ∈ ℤ`, and let `Du` be the second-order Taylor coefficient of `R` at `u`, so that
 `R t = R u + r (t − u) + (t − u)² Du t` for all `t` (here `r = R'(u)`).  Assume that
-`R(u)` is a positive sum of two squares.  If the auxiliary equation (10),
+`R(u)` is a positive sum of two squares.  If the auxiliary equation (8),
 
   `4 R(u) Du(Q(x)) − r² = v²`,
 
@@ -1140,15 +1142,15 @@ lemma prop_2_3_pairs {a b c : ℤ} (ha : a = 0 ∨ (0 < a ∧ ¬ IsSquare a))
 
   (a) either `a = 0`, or `a > 0` and `a` is not a perfect square;
   (b) `b² − 4ac ≠ 0`;
-  (c) equation (11), `a x² + b x + c = v²`, has an integer solution `(x₀, v₀)`.
+  (c) equation (9), `a x² + b x + c = v²`, has an integer solution `(x₀, v₀)`.
 
-Then (11) has infinitely many integer solutions `(x, v)`, with infinitely many distinct
+Then (9) has infinitely many integer solutions `(x, v)`, with infinitely many distinct
 values of `x`.
 
 *Proof organisation.*  For `a = 0` this is the explicit family of the manuscript.  For
 `a > 0` non-square the manuscript quotes [11, Proposition 5.4]; since a Lean development
 cannot cite the literature, that input is supplied here by `genPell_infinite_cong`
-(equivalently `residue_controlled_pell`), applied after completing the square as in (12)
+(equivalently `residue_controlled_pell`), applied after completing the square as described under “Checking the seed condition”
 with modulus `2a`, which also makes `x = (X − b)/(2a)` an integer. -/
 theorem prop_2_3 {a b c : ℤ} (ha : a = 0 ∨ (0 < a ∧ ¬ IsSquare a))
     (hb : b ^ 2 - 4 * a * c ≠ 0) (x0 v0 : ℤ) (hsol : a * x0 ^ 2 + b * x0 + c = v0 ^ 2) :
@@ -1164,7 +1166,7 @@ theorem prop_2_3 {a b c : ℤ} (ha : a = 0 ∨ (0 < a ∧ ¬ IsSquare a))
 
 /-- **Algorithm 2.4** (stated as a theorem; Algorithm 2.2 in the first version of the
 paper).  For the sum-of-two-squares form, given `R(u) ∈ S₂` positive (Step 1) and the
-auxiliary equation (10) written as `a x² + b x + c = v²` and satisfying conditions (a)–(c)
+auxiliary equation (8) written as `a x² + b x + c = v²` and satisfying conditions (a)–(c)
 of Proposition 2.3 (Steps 2–3), `R(Q(x))` is a sum of two squares for infinitely many
 integers `x`.
 
@@ -1187,7 +1189,7 @@ theorem algorithm_2_4 (u r a b c : ℤ) (R Q Du : ℤ → ℤ)
 
 /-! ## Section 1: a limitation of the method
 
-The paper records that the present algorithm does not resolve equation (6),
+The paper records that the present algorithm does not resolve the equation
 `y² + z² = x⁶ + 3`: applying Algorithm 2.4 with `R(t) = t³ + 3` and `Q(x) = x²`, no `u`
 can pass its first two steps.  For even `u` the integer `u³ + 3` is `≡ 3 (mod 4)` and
 hence is not a sum of two squares; for odd `u` the auxiliary expression
@@ -1222,9 +1224,9 @@ lemma pow6_add3_odd_u_aux_not_square {u : ℤ} (hu : Odd u) (x v : ℤ) :
     ⟨((2 * j + 1) ^ 3 + 3) * x ^ 2 - 4 * j ^ 4 - 8 * j ^ 3 - 6 * j ^ 2 + 10 * j + 5, by ring⟩
   rw [← hv, hM]; omega
 
-/-- **The method does not resolve equation (6)** `y² + z² = x⁶ + 3` (Section 1).  For every
+/-- **The method does not resolve the equation** `y² + z² = x⁶ + 3` (Section 1).  For every
 integer `u`, either `R(u) = u³ + 3` is not a sum of two squares (so Step 1 of Algorithm 2.4
-fails), or the auxiliary equation (14) for `f = 3` has no integer solution `(x, v)` (so
+fails), or the auxiliary equation (11) for `f = 3` has no integer solution `(x, v)` (so
 Step 2 fails). -/
 theorem pow6_add3_algorithm_fails (u : ℤ) :
     ¬ Sum2Sq (u ^ 3 + 3) ∨ ∀ x v : ℤ, 4 * (u ^ 3 + 3) * x ^ 2 - u * (u ^ 3 - 24) ≠ v ^ 2 := by
@@ -1357,7 +1359,7 @@ lemma degenerate_reduces {A B C k n m : ℤ}
   subst hA hB hC; ring
 
 /-
-**Degenerate case, infinitude criterion** (Section 4, eq. (38)).  If the linear form
+**Degenerate case, infinitude criterion** (Section 4, eq. (32)).  If the linear form
 `(n, m)` is non-trivial, then `k (n y + m z)² = P(x)` has infinitely many integer solutions
 `(x, y, z)` if and only if the reduced equation `k t² = P(x)` has a solution `(x₀, t₀)` with
 `t₀` divisible by `gcd(n, m)`.
@@ -1411,7 +1413,7 @@ theorem degenerate_case {A B C k n m : ℤ}
     simp only [Set.mem_ofPred_eq, degenerate_reduces hA hB hC]
   rw [hset, degenerate_infinite_iff hnm P]
 
-/-- **Proposition 4.5** (the degenerate case, Section 4).  Suppose that the discriminant
+/-- **Closing discussion of Section 4 (unnumbered)**, the degenerate case.  Suppose that the discriminant
 `Δ = B² − 4AC` of `F(y,z) = A y² + B y z + C z²` vanishes and `(A,B,C) ≠ (0,0,0)`.  Then
 there are integers `κ, r, s` with `κ ≠ 0` and `(r,s) ≠ (0,0)` such that
 
@@ -1419,7 +1421,7 @@ there are integers `κ, r, s` with `κ ≠ 0` and `(r,s) ≠ (0,0)` such that
 
 and for any polynomial `P` the equation `F(y,z) = P(x)` has infinitely many integer
 solutions if and only if there are integers `x₀, t₀` with `κ t₀² = P(x₀)` and
-`gcd(r,s) ∣ t₀` (equation (38)). -/
+`gcd(r,s) ∣ t₀` (equation (32)). -/
 theorem prop_4_5 {A B C : ℤ} (hΔ : B ^ 2 - 4 * A * C = 0) (hABC : ¬ (A = 0 ∧ B = 0 ∧ C = 0))
     (P : ℤ → ℤ) :
     ∃ k n m : ℤ, k ≠ 0 ∧ ¬ (n = 0 ∧ m = 0) ∧
