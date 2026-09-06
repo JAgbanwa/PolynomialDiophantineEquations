@@ -16,8 +16,7 @@ and a residue-controlled refinement of it).
 
 ## Versions
 
-The project pins its dependencies exactly, so it will keep compiling as Lean and Mathlib
-evolve:
+The project pins its dependencies exactly, so builds use the recorded Lean and Mathlib versions:
 
 | Component | Version |
 | --- | --- |
@@ -47,8 +46,13 @@ at all.
 
 ```sh
 lake exe cache get   # optional: fetch prebuilt Mathlib oleans
-lake build           # builds RequestProject, Challenge and Solution
+lake build RequestProject Solution  # warnings are errors for proved targets
 ```
+
+The default targets are the proved modules `RequestProject` and `Solution`.
+`Challenge` is built explicitly by the comparator script; its sixteen `sorry`
+warnings are expected statement placeholders and are not proof-module warnings.
+No linter warning is disabled.
 
 ## Independent verification with `comparator`
 
@@ -352,7 +356,10 @@ Lean may return directly to the Terminal prompt without printing anything. No ou
 
 ### 9. About the `sorry` warnings
 
-During `lake build`, Lean reports sixteen warnings from `Challenge.lean`, for example:
+The default `lake build` builds `RequestProject` and `Solution` with warnings treated
+as errors. It does not build the statement-only `Challenge` module. Running
+`lake build Challenge` or the comparator script reports sixteen warnings from
+`Challenge.lean`, for example:
 
 ```text
 warning: Challenge.lean:52:8: declaration uses `sorry`
@@ -369,7 +376,9 @@ The CI workflow checks that:
 3. all sixteen declarations in `Solution.lean` match the corresponding declarations in `Challenge.lean`;
 4. only the permitted foundational axioms are used.
 
-Therefore, the expected local result is a successful build accompanied by sixteen warnings originating only from `Challenge.lean`.
+Therefore, the expected default build has no warnings. The separate comparator
+run builds `Challenge` and reports sixteen deliberate statement-placeholder
+warnings; its success is confirmed by `Your solution is okay!`.
 
 ### 10. Full comparator verification
 
@@ -427,3 +436,4 @@ is reported and the final exit status is:
 ```text
 0
 ```
+
