@@ -23,11 +23,16 @@ non-multiplicative form `2y² + yz + 2z²`.
 * `Sum2Sq.div`              : the "property (*)" of the set of sums of two squares.
 * `genPell_infinite`        : a generalised Pell equation `v² = a x² + c` with `a > 0`
                               non-square, `c ≠ 0` and one solution has infinitely many
-                              positive solutions (Gauss's theorem, [Gre24, Prop. 5.4]).
+                              positive solutions.  This is the result the paper quotes
+                              from the literature as [11, Prop. 5.4] in the proof of
+                              Proposition 2.3; it is proved from scratch here.
 * `genPell_infinite_cong`,
-  `residue_controlled_pell` : the residue-controlled refinement: infinitely many solutions
-                              in any prescribed class modulo `N` (the second is the form in
-                              which the paper states it, `X² − A Y² = C`).
+  `residue_controlled_pell` : a residue-controlled refinement of the previous result:
+                              infinitely many solutions in the residue class of a given solution modulo `N`
+                              (the second is the same statement in the variables
+                              `X² − A Y² = C`).  These are auxiliary results of this
+                              formalisation only: the manuscript states no such lemma, and
+                              quotes [11, Prop. 5.4] and [11, Prop. 3.14] instead.
 * `sum2sq_x6_add`           : the core tangent identity: if the auxiliary Pell equation
                               is solvable then `x⁶ + f` is a sum of two squares.
 * `prop_2_2`                : Proposition 2.2, the sum-of-two-squares criterion: if the
@@ -47,7 +52,7 @@ non-multiplicative form `2y² + yz + 2z²`.
 * `prop_4_1`                : Proposition 4.1, the full infinitude statement for a general
                               non-degenerate form.
 * `prop_4_2`                : Proposition 4.2, infinitely many solutions of the auxiliary
-                              equation (30) subject to the congruences (28).
+                              equation (32) subject to the congruences (30).
 * `algorithm_2_4`           : Algorithm 2.4, the sum-of-two-squares recipe, as a theorem.
 * `algorithm_4_3`           : Algorithm 4.3, the general-form recipe, as a theorem.
 * `prop_4_4a`, `prop_4_4b`  : the equations `2y² + yz + 2z² = x³ ± 1` have infinitely many
@@ -68,8 +73,9 @@ The statements formalised here are the paper's statements, but two proofs are or
 differently; both differences are recorded again at the relevant declarations.
 
 * Proposition 4.2 (`prop_4_2`).  The paper deduces the infinitude of the solutions of the
-  auxiliary equation (30) from Gauss's theorem applied to the conic (31) in the variables
-  `(x, w)`.  The Lean proof instead completes the square and appeals to a
+  auxiliary equation (32) from Gauss's theorem on integral points of conics,
+  [11, Proposition 3.14], applied to the conic `a x² + b x + c = −Δ(v₀ + 2mw)²` in the
+  variables `(x, w)`.  The Lean proof instead completes the square and appeals to a
   *residue-controlled* generalised Pell theorem, `genPell_infinite_cong`, proved here from
   scratch: some positive power of the fundamental unit is `≡ (1, 0)` modulo `N`, so all
   iterates obtained from it stay in a fixed residue class modulo `N`.  This yields the
@@ -86,11 +92,16 @@ differently; both differences are recorded again at the relevant declarations.
 The bracketed keys below are the references of the paper (with the bibliography numbers of
 the revised version).
 
-* [Gre24] = [11]  Bogdan Grechuk, *Polynomial Diophantine Equations — A Systematic
-  Approach*, Springer, Cham, 2024.  Proposition 5.4 there is the form of Gauss's theorem
-  on generalised Pell equations used throughout Sections 2–4 of the paper; it is proved
-  here from scratch as `genPell_infinite`, and refined as `genPell_infinite_cong` /
-  `residue_controlled_pell`.
+* [11]  Bogdan Grechuk, *Polynomial Diophantine Equations — A Systematic Approach*,
+  Springer, Cham, 2024.  The manuscript quotes three results from this book:
+  Proposition 5.4 (Gauss's theorem on generalised Pell equations) in the proof of
+  Proposition 2.3 ; Proposition 3.14 (one integer point on a nonsingular
+  conic with positive non-square discriminant gives infinitely many) in the proof of
+  Proposition 4.2; and Proposition 3.67 (integer solutions of `k t² = P(x)`) in the
+  discussion after Proposition 4.5.  A Lean development cannot cite the literature, so
+  the Pell input is proved here from scratch as `genPell_infinite`, and refined as
+  `genPell_infinite_cong` / `residue_controlled_pell`; the refinement replaces the appeal
+  to [11, Proposition 3.14] in `prop_4_2`.
 * [GR26] = [13]  Bogdan Grechuk and Ashleigh Ratcliffe, *On the shortest open cubic
   equations*, International Journal of Number Theory, 2026.  Background for the
   length-ordering of Diophantine equations discussed in Section 1.
@@ -101,6 +112,15 @@ The declaration names follow the numbering of the first version of the paper whe
 were already formalised (`prop_3_1`, `prop_3_2_eq14`–`eq17`).  In the revised version these
 are Corollary 3.1 and Corollary 3.2 (equations (16)–(19)), and Algorithm 2.2 is now
 Algorithm 2.4 (`algorithm_2_4`).  The correspondence is recorded in each docstring.
+
+The equation numbers quoted below are those of the revised manuscript.  In Section 4 these
+are: the auxiliary equation (29) `4 m · Du(Q(x)) − r² = −Δ v²` and the congruences (30) of
+Proposition 4.1, the solution formulas (31), the reduced form (32) `a x² + b x + c = −Δ v²`
+used in Proposition 4.2, the two equations (34) of Proposition 4.4 with the families (35)
+and (36), and the degenerate case (37), (38) of Proposition 4.5.  The revision also deletes
+the former Section 5 (Conclusion); its content — in particular the discussion of
+`y² + z² = x⁶ + 3` formalised here as `pow6_add3_algorithm_fails` — now appears in
+Section 1.
 -/
 
 namespace SumSquaresPaper
@@ -250,8 +270,8 @@ lemma pellIter_fst_lt {a c p q : ℤ} (ha : 0 < a) (hp : 1 ≤ p) (hq : 1 ≤ q)
     exact pellIter_inv ha hp hq hpq hX0 hV0 hsol n |>.1 |> fun x => ⟨ x, pellIter_inv ha hp hq hpq hX0 hV0 hsol n |>.2.1 ⟩;
   rw [ show pellIter a p q ( X0, V0 ) ( n + 1 ) = pellStep a p q ( pellIter a p q ( X0, V0 ) n ) from rfl ] ; unfold pellStep; nlinarith;
 
-/-- **Generalised Pell equation** (Gauss's theorem, [Gre24, Proposition 5.4], i.e.
-reference [11, Proposition 5.4] of the paper): if `a > 0`
+/-- **Generalised Pell equation** (Gauss's theorem; the manuscript quotes this as
+[11, Proposition 5.4], and it is proved from scratch here): if `a > 0`
 is not a perfect square, `c ≠ 0`, and `v₀² = a x₀² + c` for some integers, then there
 are infinitely many *positive* `x` for which `a x² + c` is a perfect square. -/
 theorem genPell_infinite {a c : ℤ} (ha : 0 < a) (hns : ¬ IsSquare a) (hc : c ≠ 0)
@@ -419,13 +439,15 @@ theorem genPell_infinite_cong {a c : ℤ} (ha : 0 < a) (hns : ¬ IsSquare a) (hc
   rintro _ ⟨n, rfl⟩
   exact ⟨pellIter_norm hPQnorm h0 n, (pellIter_cong hPd hQd n).1, (pellIter_cong hPd hQd n).2⟩
 
-/-- **Residue-controlled generalised Pell lemma** (Section 2), in the shape in which the
-paper states it: let `A > 0` be a non-square, let `C ≠ 0`, and suppose `X₀² − A Y₀² = C`.
+/-- **Residue-controlled generalised Pell lemma**, in the variables `X² − A Y² = C`: let
+`A > 0` be a non-square, let `C ≠ 0`, and suppose `X₀² − A Y₀² = C`.
 Then for every modulus `N > 0` the equation `X² − A Y² = C` has infinitely many integer
 solutions with `X ≡ X₀` and `Y ≡ Y₀` modulo `N`.
 
-This is `genPell_infinite_cong` written in the paper's variables; it is the lemma used in
-the proofs of Propositions 2.3 and 4.2. -/
+This is `genPell_infinite_cong` restated; it is the Pell result underlying the Lean proofs
+of Propositions 2.3 and 4.2.  It is an auxiliary result of this formalisation and is not a
+statement of the manuscript, which instead quotes [11, Proposition 5.4] (in Proposition
+2.3) and [11, Proposition 3.14] (in Proposition 4.2). -/
 theorem residue_controlled_pell {A C : ℤ} (hA : 0 < A) (hns : ¬ IsSquare A) (hC : C ≠ 0)
     (X0 Y0 : ℤ) (h0 : X0 ^ 2 - A * Y0 ^ 2 = C) (N : ℤ) (hN : 0 < N) :
     {p : ℤ × ℤ | p.1 ^ 2 - A * p.2 ^ 2 = C ∧ p.1 ≡ X0 [ZMOD N] ∧ p.2 ≡ Y0 [ZMOD N]}.Infinite := by
@@ -515,7 +537,8 @@ lemma odd_of_S2_sub4 {x : ℤ} (hpos : 0 < x ^ 6 - 4) (hS : Sum2Sq (x ^ 6 - 4)) 
   exact not_sum2sq_mod4_three ( show ( 16 * w ^ 6 - 1 ) % 4 = 3 by omega ) h_sum2sq
 
 /-
-If `x` is even and `x⁶ + 8` is a sum of two squares, equation (14) is solvable.
+If `x` is even and `x⁶ + 8` is a sum of two squares, equation (16) of the revised
+numbering (equation (14) in the first version) is solvable.
 -/
 lemma sol_14 {x : ℤ} (hx : Even x) (hS : Sum2Sq (x ^ 6 + 8)) :
     ∃ y z : ℤ, y ^ 2 + x ^ 3 * y + z ^ 2 - 2 = 0 := by
@@ -527,7 +550,8 @@ lemma sol_14 {x : ℤ} (hx : Even x) (hS : Sum2Sq (x ^ 6 + 8)) :
   exact ⟨ y - w ^ 3 * 4, z, by linarith ⟩
 
 /-
-If `x` is even and `x⁶ + 5` is a sum of two squares, equation (15) is solvable.
+If `x` is even and `x⁶ + 5` is a sum of two squares, equation (17) of the revised
+numbering (equation (15) in the first version) is solvable.
 -/
 lemma sol_15 {x : ℤ} (hx : Even x) (hS : Sum2Sq (x ^ 6 + 5)) :
     ∃ y z : ℤ, y ^ 2 + x ^ 3 * y + z ^ 2 + z - 1 = 0 := by
@@ -543,7 +567,8 @@ lemma sol_15 {x : ℤ} (hx : Even x) (hS : Sum2Sq (x ^ 6 + 5)) :
   rcases h_eq with ( ⟨ rfl, rfl ⟩ | ⟨ rfl, rfl ⟩ ); all_goals grind
 
 /-
-If `x` is even and `x⁶ − 3` is a sum of two squares, equation (16) is solvable.
+If `x` is even and `x⁶ − 3` is a sum of two squares, equation (18) of the revised
+numbering (equation (16) in the first version) is solvable.
 -/
 lemma sol_16 {x : ℤ} (hx : Even x) (hS : Sum2Sq (x ^ 6 - 3)) :
     ∃ y z : ℤ, y ^ 2 + x ^ 3 * y + z ^ 2 + z + 1 = 0 := by
@@ -563,7 +588,8 @@ lemma sol_16 {x : ℤ} (hx : Even x) (hS : Sum2Sq (x ^ 6 - 3)) :
   · rcases Int.even_or_odd' A with ⟨ z, rfl | rfl ⟩; all_goals grind
 
 /-
-If `x` is even and `(x³+1)² − 4` is a sum of two squares, equation (17) is solvable.
+If `x` is even and `(x³+1)² − 4` is a sum of two squares, equation (19) of the revised
+numbering (equation (17) in the first version) is solvable.
 -/
 lemma sol_17 {x : ℤ} (hx : Even x) (hS : Sum2Sq ((x ^ 3 + 1) ^ 2 - 4)) :
     ∃ y z : ℤ, y ^ 2 + x ^ 3 * y + y + z ^ 2 + 1 = 0 := by
@@ -811,7 +837,7 @@ theorem prop_4_4b :
 
 This section formalises the remaining components of Section 4 of the paper: the full
 infinitude statement of Proposition 4.1, Proposition 4.2 (solvability of the auxiliary
-equation subject to congruences), and the two algorithms (Algorithm 2.2 for the sum of
+equation subject to congruences), and the two algorithms (Algorithm 2.4 for the sum of
 two squares and Algorithm 4.3 for general non-degenerate forms), stated as theorems whose
 hypotheses record the data produced by the corresponding search steps. -/
 
@@ -833,7 +859,7 @@ lemma finite_setOf_mul_sq_eq {D K : ℤ} (hD : D ≠ 0) : {v : ℤ | D * v ^ 2 =
 
 /-
 The per-solution tangent construction of Proposition 4.1: for a single pair `(x, v)`
-satisfying the auxiliary equation (27) and the congruences (28), the equation
+satisfying the auxiliary equation (29) and the congruences (30), the equation
 `F(y,z) = R(Q(x))` has an integer solution `(y, z)` given by the tangent-line formula.
 -/
 lemma prop_4_1_solution {A B C : ℤ} (u p q r : ℤ) (R Q Du : ℤ → ℤ) (x v : ℤ)
@@ -869,8 +895,8 @@ lemma prop_4_1_solution {A B C : ℤ} (u p q r : ℤ) (R Q Du : ℤ → ℤ) (x 
 /-
 **Proposition 4.1.**  Let `F(y,z) = A y² + B y z + C z²` be non-degenerate
 (`Δ = B² − 4AC ≠ 0`), let `m = R(u) = F(p,q) ≠ 0`, `r = R'(u)`, and let `Du` be the
-second-order Taylor coefficient of `R` at `u`.  If the auxiliary equation (27),
-`4 m · Du(Q(x)) − r² = −Δ v²`, together with the congruences (28) has infinitely many
+second-order Taylor coefficient of `R` at `u`.  If the auxiliary equation (29),
+`4 m · Du(Q(x)) − r² = −Δ v²`, together with the congruences (30) has infinitely many
 integer solutions `(x, v)`, then `F(y,z) = R(Q(x))` is solvable for infinitely many `x`.
 -/
 theorem prop_4_1 {A B C : ℤ} (u p q r : ℤ) (R Q Du : ℤ → ℤ)
@@ -889,7 +915,7 @@ theorem prop_4_1 {A B C : ℤ} (u p q r : ℤ) (R Q Du : ℤ → ℤ)
     exacts [ r ^ 2 - 4 * R u * Du ( Q x ), fun v hv => by linear_combination' hv.1 ]
 
 /-
-**Proposition 4.2.**  Consider the auxiliary equation (30) `a x² + b x + c = −D v²`
+**Proposition 4.2.**  Consider the auxiliary equation (32) `a x² + b x + c = −D v²`
 (where `D = Δ` is the discriminant of the form) together with a congruence condition `cg`
 on `v` that is periodic with period `2m` (`m ≠ 0`).  If (a) `a = 0` or `a(−D)` is a positive
 non-square, (b) the discriminant `b² − 4ac ≠ 0`, and (c) there is one solution `(x₀, v₀)`
@@ -897,9 +923,11 @@ with `cg v₀`, then the equation has infinitely many integer solutions `(x, v)`
 (As in the paper, these are exactly conditions (a)–(c); the non-degeneracy `Δ ≠ 0` of the
 form, a standing assumption of Section 4, is not needed for this infinitude statement.)
 
-*Proof organisation.*  The proof below differs from the paper's.  The paper applies
-Gauss's theorem ([Gre24, Prop. 5.4], reference [11] of the paper) to the conic (31) in the
-variables `(x, w)` and then extracts the congruence condition.  Here we complete the
+*Proof organisation.*  The proof below differs from the paper's.  The paper substitutes
+`v = v₀ + 2mw` and applies Gauss's theorem on integral points of conics,
+[11, Proposition 3.14], to the resulting nonsingular conic
+`a x² + b x + c = −Δ(v₀ + 2mw)²` in the variables `(x, w)`; the congruence condition then
+holds automatically by the periodicity (33).  Here we complete the
 square and apply the residue-controlled Pell theorem `genPell_infinite_cong` instead: a
 positive power of the fundamental unit is congruent to the identity `(1, 0)` modulo the
 period, so the whole orbit of iterates stays inside one residue class and the congruence
@@ -960,7 +988,7 @@ theorem prop_4_2 {a b c D m : ℤ} (hm : m ≠ 0)
 
 /-
 **Algorithm 4.3** (stated as a theorem).  Given the data `(u, p, q)` with
-`R(u) = F(p,q) ≠ 0` found in Step 1, the auxiliary equation written in the form (30) with
+`R(u) = F(p,q) ≠ 0` found in Step 1, the auxiliary equation written in the form (32) with
 coefficients `(a, b, c)` (Step 2), and the verification of conditions (a)–(c) of
 Proposition 4.2 (Step 3), the equation `F(y,z) = R(Q(x))` is solvable for infinitely many
 integers `x`.  This is the composition of Proposition 4.2 and Proposition 4.1.
@@ -997,7 +1025,7 @@ theorem algorithm_4_3 {A B C : ℤ} (u p q r a b c : ℤ) (R Q Du : ℤ → ℤ)
   · simp +decide only [haux]
 
 /-
-The per-solution identity of Algorithm 2.2 (sum-of-two-squares case): if `R(u)` is a
+The per-solution identity of Algorithm 2.4 (sum-of-two-squares case): if `R(u)` is a
 positive sum of two squares and the auxiliary equation `4 R(u) Du(Q(x)) − r² = v²` holds,
 then `R(Q(x))` is a sum of two squares.  Uses identity (7) and property (*).
 -/
@@ -1039,7 +1067,7 @@ theorem prop_2_2 (u r : ℤ) (R Q Du : ℤ → ℤ)
       one_ne_zero
     refine hfin.subset ?_
     intro v hv
-    simp only [Set.mem_setOf_eq] at hv ⊢
+    simp only [Set.mem_ofPred_eq] at hv ⊢
     linarith [hv])
   refine hfst.mono ?_
   rintro x ⟨v, hv⟩
@@ -1062,7 +1090,7 @@ lemma prop_2_3_pairs {a b c : ℤ} (ha : a = 0 ∨ (0 < a ∧ ¬ IsSquare a))
       simp only [Prod.mk.injEq] at h
       exact mul_left_cancel₀ hb0 (by linarith [h.2])
     · intro k
-      simp only [Set.mem_setOf_eq]
+      simp only [Set.mem_ofPred_eq]
       linear_combination hsol
   · -- `a > 0` non-square: complete the square and apply the residue-controlled Pell lemma
     -- with modulus `2a`, so that `x = (X − b)/(2a)` is an integer.
@@ -1101,7 +1129,7 @@ lemma prop_2_3_pairs {a b c : ℤ} (ha : a = 0 ∨ (0 < a ∧ ¬ IsSquare a))
       exact Prod.ext (by rw [hk, hk', h.1]) h.2
     · rintro _ ⟨⟨X, Y⟩, hp, rfl⟩
       obtain ⟨k, hk⟩ := hdvd _ hp
-      simp only [Set.mem_setOf_eq, hquot _ hp k hk]
+      simp only [Set.mem_ofPred_eq, hquot _ hp k hk]
       have hXY : X ^ 2 - (4 * a) * Y ^ 2 = b ^ 2 - 4 * a * c := hp.1
       simp only at hk
       have hkey : 4 * a * (a * k ^ 2 + b * k + c) = 4 * a * Y ^ 2 := by
@@ -1115,7 +1143,13 @@ lemma prop_2_3_pairs {a b c : ℤ} (ha : a = 0 ∨ (0 < a ∧ ¬ IsSquare a))
   (c) equation (11), `a x² + b x + c = v²`, has an integer solution `(x₀, v₀)`.
 
 Then (11) has infinitely many integer solutions `(x, v)`, with infinitely many distinct
-values of `x`. -/
+values of `x`.
+
+*Proof organisation.*  For `a = 0` this is the explicit family of the manuscript.  For
+`a > 0` non-square the manuscript quotes [11, Proposition 5.4]; since a Lean development
+cannot cite the literature, that input is supplied here by `genPell_infinite_cong`
+(equivalently `residue_controlled_pell`), applied after completing the square as in (12)
+with modulus `2a`, which also makes `x = (X − b)/(2a)` an integer. -/
 theorem prop_2_3 {a b c : ℤ} (ha : a = 0 ∨ (0 < a ∧ ¬ IsSquare a))
     (hb : b ^ 2 - 4 * a * c ≠ 0) (x0 v0 : ℤ) (hsol : a * x0 ^ 2 + b * x0 + c = v0 ^ 2) :
     {p : ℤ × ℤ | a * p.1 ^ 2 + b * p.1 + c = p.2 ^ 2}.Infinite ∧
@@ -1125,7 +1159,7 @@ theorem prop_2_3 {a b c : ℤ} (ha : a = 0 ∨ (0 < a ∧ ¬ IsSquare a))
   have hfin := finite_setOf_mul_sq_eq (D := (1 : ℤ)) (K := a * x ^ 2 + b * x + c) one_ne_zero
   refine hfin.subset ?_
   intro v hv
-  simp only [Set.mem_setOf_eq] at hv ⊢
+  simp only [Set.mem_ofPred_eq] at hv ⊢
   linarith [hv]
 
 /-- **Algorithm 2.4** (stated as a theorem; Algorithm 2.2 in the first version of the
@@ -1148,7 +1182,7 @@ theorem algorithm_2_4 (u r a b c : ℤ) (R Q Du : ℤ → ℤ)
   refine prop_2_2 u r R Q Du hRuS hRupos hTaylor ?_
   refine ((prop_2_3 ha hb x0 v0 hsol).1).mono ?_
   intro p hp
-  simp only [Set.mem_setOf_eq, haux p.1]
+  simp only [Set.mem_ofPred_eq, haux p.1]
   exact hp
 
 /-! ## Section 1: a limitation of the method
@@ -1323,7 +1357,7 @@ lemma degenerate_reduces {A B C k n m : ℤ}
   subst hA hB hC; ring
 
 /-
-**Degenerate case, infinitude criterion** (Section 4, eq. (33)).  If the linear form
+**Degenerate case, infinitude criterion** (Section 4, eq. (38)).  If the linear form
 `(n, m)` is non-trivial, then `k (n y + m z)² = P(x)` has infinitely many integer solutions
 `(x, y, z)` if and only if the reduced equation `k t² = P(x)` has a solution `(x₀, t₀)` with
 `t₀` divisible by `gcd(n, m)`.
@@ -1374,7 +1408,7 @@ theorem degenerate_case {A B C k n m : ℤ}
   have hset : {p : ℤ × ℤ × ℤ | A * p.2.1 ^ 2 + B * p.2.1 * p.2.2 + C * p.2.2 ^ 2 = P p.1}
       = {p : ℤ × ℤ × ℤ | k * (n * p.2.1 + m * p.2.2) ^ 2 = P p.1} := by
     ext p
-    simp only [Set.mem_setOf_eq, degenerate_reduces hA hB hC]
+    simp only [Set.mem_ofPred_eq, degenerate_reduces hA hB hC]
   rw [hset, degenerate_infinite_iff hnm P]
 
 /-- **Proposition 4.5** (the degenerate case, Section 4).  Suppose that the discriminant
