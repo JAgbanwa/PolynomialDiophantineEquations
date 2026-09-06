@@ -25,11 +25,12 @@ The statements are, in order:
 * `prop_4_1_general_form` — Proposition 4.1, the tangent construction for an arbitrary
   non-degenerate binary quadratic form `F(y,z) = A y² + B y z + C z²`;
 * `prop_4_2_auxiliary_equation` — Proposition 4.2, infinitude of the solutions of the
-  auxiliary equation (30) inside a prescribed congruence class;
+  auxiliary equation (32) inside a prescribed congruence class;
 * `form_2_1_2_eq_cube_add_one_infinite`, `form_2_1_2_eq_cube_sub_one_infinite` —
   Proposition 4.4, for the non-multiplicative form `2y² + yz + 2z²`;
-* `residue_controlled_pell_lemma` — the residue-controlled generalized Pell lemma of
-  Section 2;
+* `residue_controlled_pell_lemma` — the residue-controlled generalized Pell result that
+  underlies the formal proofs of Propositions 2.3 and 4.2 (an auxiliary result of this
+  formalization: the manuscript quotes [11, Prop. 5.4] and [11, Prop. 3.14] instead);
 * `prop_2_2_sum_two_squares_criterion`, `prop_2_3_auxiliary_equation` — Propositions 2.2
   and 2.3;
 * `algorithm_2_4_correct`, `algorithm_4_3_correct` — the formal correctness statements
@@ -96,11 +97,11 @@ Let `F(y,z) = A y² + B y z + C z²` be non-degenerate, i.e. `Δ = B² − 4AC �
 `R u = F(p, q) ≠ 0`, let `r = R'(u)` and let `Du` be the second-order Taylor coefficient
 of `R` at `u`, so that `R t = R u + r (t − u) + (t − u)² Du t` for all `t`.
 
-If the auxiliary equation (27),
+If the auxiliary equation (29),
 
   `4 R(u) Du(Q(x)) − r² = −Δ v²`,
 
-together with the congruence conditions (28),
+together with the congruence conditions (30),
 
   `2|R(u)| ∣ r p + v (B p + 2 C q)` and `2|R(u)| ∣ r q − v (2 A p + B q)`,
 
@@ -117,7 +118,7 @@ theorem prop_4_1_general_form {A B C : ℤ} (u p q r : ℤ) (R Q Du : ℤ → �
     {x : ℤ | ∃ y z : ℤ, A * y ^ 2 + B * y * z + C * z ^ 2 = R (Q x)}.Infinite := by
   sorry
 
-/-- **Proposition 4.2.**  The auxiliary equation (30), `a x² + b x + c = −D v²`, together
+/-- **Proposition 4.2.**  The auxiliary equation (32), `a x² + b x + c = −D v²`, together
 with a congruence condition `cg` on `v` which is periodic with period `2m` (`m ≠ 0`).
 Under the paper's conditions (a) `a = 0` or `a(−D)` is a positive non-square,
 (b) `b² − 4ac ≠ 0`, and (c) there is one solution `(x₀, v₀)` with `cg v₀`, the equation
@@ -144,10 +145,14 @@ theorem form_2_1_2_eq_cube_sub_one_infinite :
 
 /-! ## Further results of the revised version: Sections 2 and 4 -/
 
-/-- **Residue-controlled generalized Pell lemma** (Section 2), the Pell result underlying
-Propositions 2.3 and 4.2.  Let `A > 0` be a non-square, let `C ≠ 0`, and suppose that
-`X₀² − A Y₀² = C`.  Then for every modulus `N > 0` the equation `X² − A Y² = C` has
-infinitely many integer solutions with `X ≡ X₀` and `Y ≡ Y₀` modulo `N`. -/
+/-- **Residue-controlled generalized Pell result**, the Pell input underlying the formal
+proofs of Propositions 2.3 and 4.2.  Let `A > 0` be a non-square, let `C ≠ 0`, and suppose
+that `X₀² − A Y₀² = C`.  Then for every modulus `N > 0` the equation `X² − A Y² = C` has
+infinitely many integer solutions with `X ≡ X₀` and `Y ≡ Y₀` modulo `N`.
+
+This statement belongs to the formalization, not to the manuscript: the manuscript quotes
+[11, Proposition 5.4] in Proposition 2.3 and [11, Proposition 3.14] in Proposition 4.2, and
+a Lean development has to supply those inputs by proof. -/
 theorem residue_controlled_pell_lemma {A C : ℤ} (hA : 0 < A) (hns : ¬ IsSquare A)
     (hC : C ≠ 0) (X0 Y0 : ℤ) (h0 : X0 ^ 2 - A * Y0 ^ 2 = C) (N : ℤ) (hN : 0 < N) :
     {p : ℤ × ℤ | p.1 ^ 2 - A * p.2 ^ 2 = C ∧ p.1 ≡ X0 [ZMOD N] ∧ p.2 ≡ Y0 [ZMOD N]}.Infinite := by
