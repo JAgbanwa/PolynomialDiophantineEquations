@@ -10,7 +10,7 @@ publish a correction, a new tag is added below. Citing a tag (or the commit it p
 therefore pins the exact sources, the exact `lean-toolchain` and the exact
 `lake-manifest.json` against which the proofs were checked.
 
-## Current snapshot
+## Recorded snapshot
 
 | Field | Value |
 | --- | --- |
@@ -21,9 +21,9 @@ therefore pins the exact sources, the exact `lean-toolchain` and the exact
 | Compared declarations | the sixteen declarations listed in `comparator.json` |
 | Permitted axioms | `propext`, `Classical.choice`, `Quot.sound` |
 
-Contents of this snapshot, relative to the previous state of the repository: the Lean
-documentation is synchronized with the 6 September 2026 revision of the manuscript. In
-particular
+This tag records an earlier documentation revision. Later commits synchronize
+cross-references with the supplied marked manuscript dated 6 September 2026,
+as listed below; they do not change the historical tag. The proof descriptions are:
 
 * the commentary on `prop_4_2` now records that the manuscript proves Proposition 4.2 by
   applying Gauss's theorem on integer points of conics, **[11, Proposition 3.14]**, to the
@@ -41,10 +41,14 @@ particular
 * references to the deleted Section 5 are removed from `formalization.yaml`, `README.md`
   and the module documentation; the limitation for `y² + z² = x⁶ + 3`
   (`pow6_add3_algorithm_fails`) is attributed to Section 1, where the revision places it;
-* the equation numbers quoted in the documentation follow the revision throughout — in
-  Section 4 the auxiliary equation (29), the congruences (30), the solution formulas (31),
-  the reduced form (32), the periodicity (33), the equations (34) with the families (35),
-  (36), and the degenerate case (37), (38).
+* current manuscript cross-references use Section 2 equations (8) and (9), and
+  Corollary 3.2 equations (13)-(16). In Section 4 the tangent auxiliary equation is
+  (26), the congruences are (27), the recovery formulas are (28), the quadratic form
+  is (29), and substitution of `v = v₀ + 2mw` gives (30). Proposition 4.4 treats
+  equations (31); its explicit families are unnumbered. The degenerate case is the
+  unnumbered closing discussion of Section 4, with reduced equation (32).
+  Stable identifiers `equation_14_infinite` through `equation_17_infinite` and
+  `prop_4_5_degenerate_case` retain their original names; see `Challenge.lean`.
 
 No statement and no proof was changed: the sixteen compared declarations, and every
 theorem of `RequestProject/Main.lean`, are as in the previous state of the repository.

@@ -20,7 +20,7 @@ project:
     an arbitrary non-degenerate binary quadratic form (Propositions 4.1, 4.2 and
     Algorithms 2.4, 4.3), the two equations 2y^2 + yz + 2z^2 = x^3 +- 1 of
     Proposition 4.4, the non-multiplicativity of the form 2y^2 + yz + 2z^2, the
-    degenerate case of a form of discriminant zero (Proposition 4.5), and the
+    degenerate case of a form of discriminant zero (unnumbered closing discussion of Section 4), and the
     limitation recorded in Section 1 for x^6 + 3. Supporting theory proved from
     scratch includes property (*) of the sums of two squares and Gauss's theorem
     on generalised Pell equations, together with a residue-controlled refinement
@@ -50,7 +50,7 @@ sources:
       - Bogdan Grechuk
       - Jamal Agbanwa
     type: article
-    location: "Sections 1-4: Propositions 2.2, 2.3, 4.1, 4.2, 4.4, 4.5, Corollaries 3.1 and 3.2, Algorithms 2.4 and 4.3"
+    location: "Sections 1-4: Propositions 2.2, 2.3, 4.1, 4.2, 4.4, the unnumbered closing discussion of Section 4, Corollaries 3.1 and 3.2, Algorithms 2.4 and 4.3"
     relationship: formalizes
     note: >-
       The source paper, submitted to the International Journal of Number
@@ -69,7 +69,7 @@ sources:
       the infinitude of the solutions of a generalised Pell equation (proof of
       Proposition 2.3 and Section 3), to Proposition 3.14 for the infinitude of
       the integer points of the conic in the proof of Proposition 4.2, and to
-      Proposition 3.67 for the reduced equation of Proposition 4.5. A Lean
+      Proposition 3.67 for the reduced equation (32) in the unnumbered closing discussion of Section 4. A Lean
       development cannot cite the literature, so the Pell input is proved from
       scratch as SumSquaresPaper.genPell_infinite, with the residue-controlled
       refinement SumSquaresPaper.genPell_infinite_cong replacing the appeal to
@@ -91,7 +91,7 @@ status:
   scope: >-
     All mathematical statements of the paper's Sections 1-4 that are asserted as
     results are formalized and proved: Propositions 2.2, 2.3, 4.1, 4.2, 4.4(a),
-    4.4(b) and 4.5; Corollaries 3.1 and 3.2 (equations (16)-(19)); the
+    4.4(b); Corollary 3.1 (equation (2)) and Corollary 3.2 (equations (13)-(16)); the
     residue-controlled generalized Pell result that underlies the formal proofs
     of Propositions 2.3 and 4.2 (an auxiliary result of the formalization, not a
     statement of the paper); the observation of
@@ -236,10 +236,12 @@ review:
     placeholders, declares no axiom, and every compared declaration reduces to
     the three standard axioms propext, Classical.choice and Quot.sound. The
     correspondence between the paper's statements and the Lean statements has
-    been checked by the authors and is tabulated under alignment below. This
-    metadata describes the immutable snapshot tagged snapshot-2026-09-06, which
-    corresponds to the revision of the manuscript dated 6 September 2026 (see
-    SNAPSHOT.md). The
+    been checked by the authors and is tabulated under alignment below. The
+    manuscript cross-references follow the supplied marked revision dated
+    6 September 2026. Declaration identifiers retain their original numbering:
+    equation_14_infinite through equation_17_infinite correspond to equations
+    (13)-(16), and prop_4_5_degenerate_case corresponds to the unnumbered
+    closing discussion of Section 4. SNAPSHOT.md records the earlier tag. The
     source paper is under peer review at the International Journal of Number
     Theory; no independent review of the Lean statements themselves has been
     carried out.
@@ -260,22 +262,22 @@ alignment:
       module: Solution
       status: proved
       note: SumSquaresPaper.prop_3_1 in RequestProject/Main.lean.
-    - source: "Corollary 3.2, equation (16) (equation (14) in the first version)"
+    - source: "Corollary 3.2, equation (13) in the marked manuscript of 6 September 2026"
       lean: PolynomialValuesQuadraticForms.equation_14_infinite
       module: Solution
       status: proved
       note: SumSquaresPaper.prop_3_2_eq14.
-    - source: "Corollary 3.2, equation (17) (equation (15) in the first version)"
+    - source: "Corollary 3.2, equation (14) in the marked manuscript of 6 September 2026"
       lean: PolynomialValuesQuadraticForms.equation_15_infinite
       module: Solution
       status: proved
       note: SumSquaresPaper.prop_3_2_eq15.
-    - source: "Corollary 3.2, equation (18) (equation (16) in the first version)"
+    - source: "Corollary 3.2, equation (15) in the marked manuscript of 6 September 2026"
       lean: PolynomialValuesQuadraticForms.equation_16_infinite
       module: Solution
       status: proved
       note: SumSquaresPaper.prop_3_2_eq16.
-    - source: "Corollary 3.2, equation (19) (equation (17) in the first version)"
+    - source: "Corollary 3.2, equation (16) in the marked manuscript of 6 September 2026"
       lean: PolynomialValuesQuadraticForms.equation_17_infinite
       module: Solution
       status: proved
@@ -288,7 +290,7 @@ alignment:
         SumSquaresPaper.prop_4_1; the underlying algebraic identity is
         SumSquaresPaper.prop_4_1_core and the tangent point is constructed in
         SumSquaresPaper.prop_4_1_solution.
-    - source: "Proposition 4.2 (auxiliary equation (32) with congruence conditions)"
+    - source: "Proposition 4.2 (auxiliary equation (29) with congruence conditions)"
       lean: PolynomialValuesQuadraticForms.prop_4_2_auxiliary_equation
       module: Solution
       status: proved
@@ -350,7 +352,7 @@ alignment:
         The paper states no such lemma: it quotes [11, Proposition 5.4] in
         Proposition 2.3 and [11, Proposition 3.14] in Proposition 4.2, and this
         declaration is what supplies those inputs inside the formalization.
-    - source: "Section 1, the method does not resolve y^2 + z^2 = x^6 + 3 (equation (6))"
+    - source: "Section 1, the method does not resolve y^2 + z^2 = x^6 + 3 (unnumbered discussion)"
       lean: SumSquaresPaper.pow6_add3_algorithm_fails
       module: RequestProject.Main
       status: proved
@@ -381,7 +383,7 @@ alignment:
         modulo 3 (SumSquaresPaper.form2_not_one_mod_three, with the identity
         4(y^2 - yz + z^2) = (2y - z)^2 + 3z^2 recorded as
         SumSquaresPaper.form2_identity). Not part of the Comparator surface.
-    - source: "Proposition 4.5, the degenerate case B^2 - 4AC = 0"
+    - source: "Section 4, unnumbered closing discussion of the degenerate case B^2 - 4AC = 0, equation (32)"
       lean: PolynomialValuesQuadraticForms.prop_4_5_degenerate_case
       module: Solution
       status: proved
