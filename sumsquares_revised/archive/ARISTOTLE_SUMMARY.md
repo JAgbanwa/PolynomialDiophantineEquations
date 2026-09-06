@@ -1,3 +1,26 @@
+# Summary of changes for run cc4a3277-77d9-459f-b29f-faa6e8b01942
+I synchronized the Lean documentation with the latest revision of the manuscript (6 September 2026) and published a new immutable snapshot. No statement and no proof was changed — the edits are documentation and metadata only — and the project still builds cleanly.
+
+What was corrected
+
+1. Proposition 4.2's citation. The commentary preceding `prop_4_2` in `RequestProject/Main.lean` said the manuscript applies [Gre24, Prop. 5.4] to the conic (31). It now records the manuscript's actual argument: substitute `v = v₀ + 2mw` and apply Gauss's theorem on integer points of conics, **[11, Proposition 3.14]**, to the resulting nonsingular conic `a x² + b x + c = −Δ(v₀+2mw)²` in the variables `(x, w)`, the congruence condition being preserved by the periodicity (33). The note that the Lean proof instead completes the square and uses the residue-controlled Pell theorem is retained and sharpened. The same correction was made in the module docstring's "Differences" section, in `formalization.yaml` (`fidelity.divergences` and the Proposition 4.2 alignment entry) and in `README.md`.
+
+2. The residue-controlled Pell statement. It is no longer described anywhere as a lemma "of Section 2" of the manuscript. The revision states no such lemma: it quotes [11, Proposition 5.4] in the proof of Proposition 2.3 and [11, Proposition 3.14] in Proposition 4.2. Because a Lean development cannot cite the literature, those inputs have to be proved, so `residue_controlled_pell` (and the comparator declaration `residue_controlled_pell_lemma`) are now documented as auxiliary results of the formalization that supply exactly those inputs — in `Main.lean`, in `Challenge.lean`/`Solution.lean` (docstrings only; the compared statements remain character-identical), in `formalization.yaml` (project description, scope, the [11] source entry, and the alignment entry, now marked `adapted`) and in `README.md`. The docstring of `prop_2_3` now says explicitly that its `a > 0` case is the manuscript's appeal to [11, Proposition 5.4], supplied here by proof.
+
+3. The removed Section 5. References to the deleted Conclusion are gone; `formalization.yaml` now states that the revision has four sections and that the limitation for `y² + z² = x⁶ + 3` (`pow6_add3_algorithm_fails`) belongs to Section 1, and the module docstring records the same.
+
+4. Equation numbering. The documentation now quotes the revision's numbers throughout — in Section 4 the auxiliary equation (29), the congruences (30), the solution formulas (31), the reduced form (32), the periodicity (33), and (38) in the degenerate case — and the Section 3 helper lemmas refer to equations (16)–(19) with the first-version numbers in parentheses. The references section of the module docstring now lists [11] with the three results the manuscript quotes from it (Propositions 5.4, 3.14 and 3.67).
+
+Snapshot
+
+A new annotated, immutable git tag `snapshot-2026-09-06` was created and pushed, together with a new `SNAPSHOT.md` recording the snapshot's tag, the manuscript version it corresponds to, the pinned Lean/Mathlib versions, the compared declarations and permitted axioms, the contents of this update, and how to check the snapshot out and re-verify it. `README.md` gained a "Snapshots" section pointing to it, and `formalization.yaml` records the tag in its review notes.
+
+Verification
+
+`RequestProject.Main`, `Challenge` and `Solution` build with the pinned toolchain; the only `sorry`s are the sixteen deliberate placeholders in `Challenge.lean` required by the comparator protocol, and there is no `sorry`, `admit` or `axiom` elsewhere. I checked that the theorem statements in `Challenge.lean` and `Solution.lean` are still identical, that `formalization.yaml` validates against the v0.4 schema, and that the compared theorems still depend only on `propext`, `Classical.choice` and `Quot.sound`. All work is committed and pushed, and the tag is pushed as well.
+
+Note: the request also mentioned a marked-up LaTeX file and a response-to-referee document. Those are author-side deliverables; this session covered only the Lean side, so no manuscript source or referee response was produced here.
+
 # Summary of changes for run 15e0e207-38d6-4177-adc8-4a66c87986e3
 I read the revised manuscript and the referee report, diffed the revision against the earlier version, and formalized every new or restated result, incorporating them into the single development file `RequestProject/Main.lean` (now 1406 lines). The project builds with no errors and no `sorry`/`admit`/`axiom`; every theorem depends only on `propext`, `Classical.choice`, `Quot.sound`.
 
