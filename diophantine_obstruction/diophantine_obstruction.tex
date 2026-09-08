@@ -1,0 +1,138 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=24mm]{geometry}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+  pdftitle={An elementary Diophantine obstruction},
+  pdfsubject={A self-contained proof that the equation has no integer solutions},
+  pdfkeywords={Diophantine equation, non-existence, cyclotomic divisor, elementary proof}
+}
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{lemma}{Lemma}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\setlength{\emergencystretch}{2em}
+\allowdisplaybreaks[1]
+
+\begin{document}
+\begin{center}
+  {\Large\bfseries An elementary obstruction for}\\[5pt]
+  {\Large $y^3+y^2+xy=x^4+1$}\\[7pt]
+  {\small A self-contained non-existence proof}
+\end{center}
+\vspace{2pt}
+
+\begin{theorem}
+There is no pair $(x,y)\in\mathbb Z^2$ satisfying
+\begin{equation}\label{eq:original}
+ y^3+y^2+xy=x^4+1.
+\end{equation}
+\end{theorem}
+
+\textbf{An elementary divisor observation.}
+\begin{lemma}\label{lem:divisors}
+Let $u\in\mathbb Z$. Every positive divisor $d$ of $u^2+u+1$ with
+$3\nmid d$ satisfies $d\equiv1\pmod3$.
+\end{lemma}
+\begin{proof}
+Let $p\ne3$ be a prime divisor of $u^2+u+1$. Modulo $p$, we have
+$u^3=1$ and $u\ne1$: the latter follows because substitution of $u=1$
+would give $p\mid3$. Multiplication by $u$ therefore partitions the
+$p-1$ nonzero residue classes into disjoint triples
+$\{r,ur,u^2r\}$. These three classes are distinct, since $u^3=1$ and
+$u\ne1$. Hence $3\mid p-1$. Every prime factor of $d$ is consequently
+$1\pmod3$, and so is $d$; this includes the empty product $d=1$.
+\end{proof}
+
+\textbf{Proof of the theorem.}
+Suppose \eqref{eq:original} holds. Reduction modulo $3$ gives
+\[
+ 0\equiv y^2+(x+1)y-x^2-1
+   \equiv (x-1)^2+(x-y+1)^2\pmod3.
+\]
+The only squares modulo $3$ are $0$ and $1$, so both squares vanish. Thus
+\begin{equation}\label{eq:residues}
+ x\equiv1,\qquad y\equiv2\pmod3.
+\end{equation}
+Define
+\[
+ A=x^2+y,\qquad
+ B=x^4-x^2y+y^2-x^2+y+x.
+\]
+A direct expansion, followed by \eqref{eq:original}, yields
+\begin{equation}\label{eq:factorization}
+ AB=x^6+x^3+1
+   =\left(x^3+\frac12\right)^2+\frac34>0.
+\end{equation}
+In particular $A\ne0$. If $A<0$, then $t=-y\ge x^2+1$ and
+\[
+ y^2+y+x=t(t-1)+x
+   \ge x^2(x^2+1)+x=x^4+x(x+1)\ge0,
+\]
+where $x(x+1)\ge0$ for every integer $x$. Since $y<0$, this contradicts
+$y(y^2+y+x)=x^4+1>0$. Therefore $A>0$, and \eqref{eq:factorization}
+also gives $B>0$.
+
+On the other hand, \eqref{eq:residues} implies
+\[
+ B\equiv1-2+1-1+2+1\equiv2\pmod3.
+\]
+But $B$ is a positive divisor of $(x^3)^2+x^3+1$ not divisible by $3$.
+The lemma, with $u=x^3$, forces $B\equiv1\pmod3$, a contradiction.
+\hfill$\square$
+
+\newpage
+\section*{How the obstruction is found}
+
+\textbf{Make two terms cancel before choosing a modulus.}
+Write
+\[
+ F(x,y)=y^3+y^2+xy-x^4-1.
+\]
+The terms $y^2$ and $x^4$ suggest substituting $y=-x^2$. This cancels
+those two terms exactly and leaves
+\[
+ F(x,-x^2)=-(x^6+x^3+1).
+\]
+Consequently, an integer zero of $F$ must make $x^2+y$ a divisor of
+$x^6+x^3+1$. The useful modulus is therefore not a fixed small integer:
+it is the expression $x^2+y$ suggested by the equation itself.
+
+\textbf{Recognize the restriction on prime divisors.}
+The remaining expression is
+\[
+ x^6+x^3+1=u^2+u+1,\qquad u=x^3.
+\]
+A prime divisor other than $3$ must admit a nontrivial cube root of
+unity, which is exactly what the triples in the lemma express.
+It must therefore be $1\pmod3$. This turns the substitution into a
+restriction on \emph{every positive divisor}, rather than merely a
+congruence on $x$ or $y$.
+
+\textbf{Use the complementary factor.}
+The original equation modulo $3$ forces $(x,y)\equiv(1,-1)$, so
+$x^2+y\equiv0\pmod3$. The exceptional prime $3$ thus obscures the
+obstruction in this first factor. Polynomial division isolates the
+complementary factor $B$ through the exact identity
+\[
+ F(x,y)=(x^2+y)
+ \bigl(x^4-x^2y+y^2-x^2+y+x\bigr)-(x^6+x^3+1).
+\]
+Unlike $x^2+y$, this complementary factor is $-1\pmod3$, so it is
+coprime to $3$ and directly contradicts the lemma once it is positive.
+
+\textbf{Do not omit the sign check.}
+A negative divisor can be $2\pmod3$ without having any prime factor
+$2\pmod3$; for example, $-1$ does this. Thus the positivity argument is
+essential. The equation itself rules out $x^2+y<0$, and the positive
+product in \eqref{eq:factorization} then forces $B>0$. No sign assumption
+on the unknown integers is being made.
+
+The proof combines the rigid residue pair modulo $3$ with a
+prime-divisor restriction exposed by cancellation. It excludes every
+integer pair, without a search bound or an unproved auxiliary claim.
+
+\end{document}

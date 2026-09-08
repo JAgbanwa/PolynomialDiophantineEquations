@@ -1,0 +1,220 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{microtype}
+\usepackage[margin=24mm]{geometry}
+\usepackage{booktabs}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={An elementary obstruction for y cubed plus xy equals x to the fourth plus x plus 3},pdfauthor={},pdfsubject={A self-contained proof that the equation has no integer solutions}}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\Fp}{\mathbb F_p}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\setlength{\emergencystretch}{2em}
+\title{\vspace{-1.1cm}An elementary obstruction for\\[3pt]
+\(y^3+xy=x^4+x+3\)}
+\author{}
+\date{\vspace{-1.1cm}}
+
+\begin{document}
+\maketitle
+\vspace{-0.4cm}
+
+The equation has \textbf{no integer solutions}. The obstruction comes from two
+norm factorizations: they force two positive odd integers to be congruent to
+$1$ or $3$ modulo $8$, although their product is congruent to $7$ modulo $8$.
+
+\section{An elementary prime-divisor lemma}
+
+\begin{lemma}\label{lem:prime}
+If $p$ is a prime with $p\equiv5$ or $7\pmod8$ and
+$p\mid a^2+2b^2$, then $p\mid a$ and $p\mid b$.
+Consequently, if a positive odd integer has no prime divisor congruent to
+$5$ or $7$ modulo $8$, it is congruent to $1$ or $3$ modulo $8$.
+\end{lemma}
+
+\begin{proof}
+We first show that $r^2=-2$ in $\Fp$ implies $p\equiv1$ or $3\pmod8$.
+Choose a root $u$ of $T^2-rT-1$ in a field containing $\Fp$.
+Such a field is either $\Fp$ itself or the quotient by this quadratic if it
+is irreducible. Then
+\[
+ u^2=ru+1,\qquad u^3=r-u,\qquad u^4=-1.
+\]
+Thus $u$ has multiplicative order exactly $8$. The two roots of the
+quadratic are $u$ and $u^3$. In characteristic $p$, the binomial theorem
+and $r^p=r$ give
+\[
+ (u^p)^2-r u^p-1=(u^2-ru-1)^p=0.
+\]
+Here $r^p=r$ is elementary: multiplication by any nonzero residue
+permutes the nonzero residues, and multiplying them proves
+$r^{p-1}=1$. Hence $u^p=u$ or $u^p=u^3$, so $p\equiv1$ or $3\pmod8$.
+
+Now, if $p\nmid b$ and $a^2+2b^2\equiv0\pmod p$, then
+$r=ab^{-1}$ would satisfy $r^2=-2$, a contradiction. Thus $p\mid b$,
+and then $p\mid a$. Finally, a positive odd integer with no forbidden
+prime divisor is a product of primes congruent to $1$ or $3$ modulo $8$;
+such a product is again $1$ or $3$, since $3^2\equiv1\pmod8$.
+\end{proof}
+
+\section{Nonexistence theorem}
+
+\begin{theorem}
+There is no pair $(x,y)\in\Z^2$ satisfying
+\begin{equation}\label{eq:main}
+ y^3+xy=x^4+x+3.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Suppose that \eqref{eq:main} holds.
+
+\textit{Positivity and parity.}
+For every integer $x$, one has $x^4+x+3\geq3$.
+If $y\leq0$, positivity of the left side would force
+$x=-u$, $y=-v$ with $u,v>0$ and $u>v^2$. In particular $v\leq u-1$, giving
+\[
+ y^3+xy=v(u-v^2)\leq u(u-1)<u^4-u+3=x^4+x+3,
+\]
+where the strict inequality follows from $u^4-u^2+3>0$.
+This is impossible. Also $y=1$ would give $x^4=-2$. Thus $y>1$.
+
+Modulo $2$, equation \eqref{eq:main} gives $y(1+x)\equiv1$, so
+$x$ is even and $y$ is odd. Modulo $8$, therefore,
+\[
+ (1+x)y\equiv x+3\pmod8.
+\]
+Every odd residue is its own inverse modulo $8$, and for even $x$ one has
+$x^2\equiv2x\pmod8$. It follows that
+\begin{equation}\label{eq:parity}
+ y\equiv(1+x)(x+3)\equiv2x+3\pmod8.
+\end{equation}
+
+\textit{The first factor.}
+Set
+\[
+ D=y^2+y+1+x.
+\]
+Equation \eqref{eq:main} gives
+\begin{equation}\label{eq:first}
+ (y-1)D=x^4+2=(x^2)^2+2\cdot1^2.
+\end{equation}
+Since $y>1$, we have $D>0$; it is also odd. If a prime
+$p\equiv5$ or $7\pmod8$ divided $D$, Lemma~\ref{lem:prime} applied to
+$x^4+2$ would imply $p\mid1$, a contradiction. Consequently,
+\begin{equation}\label{eq:Dres}
+ D\equiv1\ \text{or}\ 3\pmod8.
+\end{equation}
+
+\textit{The second factor.}
+Define
+\[
+ \ell=2x-13,\qquad
+ C=y^2+y\ell+\ell^2+x,\qquad
+ A=x^2-4x+20,\qquad B=7x-30.
+\]
+The key identity is
+\begin{equation}\label{eq:second}
+ (y-\ell)C
+ =x^4+x+3-\ell^3-x\ell
+ =A^2+2B^2.
+\end{equation}
+Moreover, $C$ is odd, and it is positive because
+\begin{equation}\label{eq:positive}
+ 12C=3(2y+2x-13)^2+4(3x-19)^2+77>0.
+\end{equation}
+
+We claim that $C$ has no prime divisor $p\equiv5$ or $7\pmod8$.
+Indeed, such a divisor would divide $A^2+2B^2$, and
+Lemma~\ref{lem:prime} would force $p\mid A$ and $p\mid B$.
+But
+\begin{equation}\label{eq:exceptional}
+ 49A=B(7x+2)+1040,\qquad 1040=2^4\cdot5\cdot13,
+\end{equation}
+so $p=5$ or $p=13$.
+
+For $p=5$, the condition $p\mid B$ gives $x\equiv0\pmod5$, hence
+$\ell\equiv2\pmod5$. Therefore $p\mid C$ would imply
+\[
+ 0\equiv C\equiv y^2+2y+4=(y+1)^2+3\pmod5,
+\]
+so $(y+1)^2\equiv2\pmod5$, impossible since the square residues are
+$0,1,4$.
+
+For $p=13$, the condition $p\mid B$ gives $x\equiv8\pmod{13}$,
+hence $\ell\equiv3\pmod{13}$. Thus $p\mid C$ would imply
+\[
+ 0\equiv C\equiv y^2+3y+4\pmod{13},
+ \qquad (2y+3)^2\equiv6\pmod{13}.
+\]
+This too is impossible: the square residues modulo $13$ are
+$0,1,3,4,9,10,12$. The claim is proved, and Lemma~\ref{lem:prime} now gives
+\begin{equation}\label{eq:Cres}
+ C\equiv1\ \text{or}\ 3\pmod8.
+\end{equation}
+
+\textit{The contradiction.}
+Since $\ell\equiv2x+3\equiv y\pmod8$ and $y$ is odd,
+\[
+ D\equiv3x+5\pmod8,\qquad C\equiv x+3\pmod8.
+\]
+The four possible residues of the even integer $x$ give
+\[
+\begin{array}{c|rrrr}
+ x\pmod8&0&2&4&6\\ \hline
+ D\pmod8&5&3&1&7\\
+ C\pmod8&3&5&7&1
+\end{array}
+\]
+No column is consistent with both \eqref{eq:Dres} and \eqref{eq:Cres}.
+Equivalently, $DC\equiv7\pmod8$, whereas a product of two residues from
+$\{1,3\}$ must lie in $\{1,3\}$. This contradiction proves the theorem.
+\end{proof}
+
+\section{Motivation for the construction}
+
+The useful starting point is not to compare the sizes of $y^3$ and $x^4$,
+but to exploit the shared term $xy-x=x(y-1)$. Subtracting the value at
+$y=1$ produces \eqref{eq:first}. The expression $x^4+2$ is of the form
+$a^2+2b^2$ with $b=1$, so it cannot have a prime divisor congruent to $5$
+or $7$ modulo $8$. This forces the first odd factor $D$ into the
+residues $1,3$ and, by the last table, restricts $x$ to $2,4$ modulo $8$.
+
+A second factorization must exclude precisely those remaining residues.
+Equation \eqref{eq:parity} suggests subtracting a linear value
+$\ell=2x+b$ with $b\equiv3\pmod8$. Its complementary factor
+$y^2+y\ell+\ell^2+x$ is then automatically $x+3$ modulo $8$, exactly the
+needed opposite restriction.
+
+To construct a norm identity, seek integers $u,v,w,b$ such that
+\[
+ x^4+x+3-(2x+b)^3-x(2x+b)
+ =(x^2-4x+u)^2+2(vx+w)^2.
+\]
+The coefficient $-4$ is forced by the cubic term. Matching the remaining
+coefficients gives
+\[
+ \begin{aligned}
+ u+v^2&=-6b-9,\\
+ -8u+4vw&=1-b-6b^2,\\
+ u^2+2w^2&=3-b^3.
+ \end{aligned}
+\]
+The tuple $(b,u,v,w)=(-13,20,7,-30)$ satisfies these three identities
+and has the required $b\equiv3\pmod8$. It therefore produces
+\[
+ x^4+x+3-(2x-13)^3-x(2x-13)
+ =(x^2-4x+20)^2+2(7x-30)^2.
+\]
+The two norm coordinates can share a forbidden odd prime only at $5$ or
+$13$, as \eqref{eq:exceptional} shows, and both exceptions are eliminated
+by the displayed square-residue checks. Thus the second factor also has
+only the allowed prime divisors. The decisive step is the combination
+of these two norm restrictions, not a congruence test on the original
+equation alone.
+
+\end{document}

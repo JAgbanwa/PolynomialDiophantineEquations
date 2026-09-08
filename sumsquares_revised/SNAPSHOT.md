@@ -5,12 +5,32 @@ This file records the immutable snapshots of the Lean formalization accompanying
 > **On the polynomial values represented by quadratic forms**
 > Bogdan Grechuk and Jamal Agbanwa (manuscript IJNT-D-26-00150)
 
-Each snapshot is an annotated, immutable git tag. A tag is never moved or deleted: to
-publish a correction, a new tag is added below. Citing a tag (or the commit it points at)
-therefore pins the exact sources, the exact `lean-toolchain` and the exact
-`lake-manifest.json` against which the proofs were checked.
+The full commit identifier pins the exact sources, `lean-toolchain`, and
+`lake-manifest.json` against which the proofs were checked. Historical tags are
+retained below; reproduction of the revised manuscript uses the verified commit.
 
-## Recorded snapshot
+## Verified manuscript snapshot
+
+| Field | Value |
+| --- | --- |
+| Commit | `f3203621e90e5b1b087ca473ba8e8a7a2856b009` |
+| Verification date | 7 September 2026 |
+| Lean toolchain | `leanprover/lean4:v4.28.0` |
+| Mathlib | tag `v4.28.0`, commit `8f9d9cff6bd728b17a24e163c9402775d9e6a365` |
+| Compared declarations | the sixteen declarations listed in `comparator.json` |
+| Permitted axioms | `propext`, `Classical.choice`, `Quot.sound` |
+| `RequestProject/Main.lean` SHA-256 | `633aeec2392122cffdd63ec7336abdb575d248cca888919528103f6866f366ce` |
+
+- [Verified project snapshot](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/f3203621e90e5b1b087ca473ba8e8a7a2856b009/sumsquares_revised)
+- [Verified proof file](https://github.com/JAgbanwa/PolynomialDiophantineEquations/blob/f3203621e90e5b1b087ca473ba8e8a7a2856b009/sumsquares_revised/RequestProject/Main.lean)
+- [Verification run](https://github.com/JAgbanwa/PolynomialDiophantineEquations/actions/runs/34146246681)
+
+This commit replaces six unavailable `Set.mem_ofPred_eq` references with
+`Set.mem_setOf_eq` for the pinned Mathlib version. No theorem statement was
+changed. It is the exact source revision cited in the revised manuscript and
+recorded in the verification logs.
+
+## Historical snapshot
 
 | Field | Value |
 | --- | --- |
@@ -50,17 +70,39 @@ as listed below; they do not change the historical tag. The proof descriptions a
   Stable identifiers `equation_14_infinite` through `equation_17_infinite` and
   `prop_4_5_degenerate_case` retain their original names; see `Challenge.lean`.
 
-No statement and no proof was changed: the sixteen compared declarations, and every
-theorem of `RequestProject/Main.lean`, are as in the previous state of the repository.
+Those documentation synchronizations changed no theorem statement or proof. The
+verified commit listed above additionally applies the six compatibility replacements.
 
-## Verifying a snapshot
+## Verifying the manuscript snapshot
+
+From the repository root, run:
 
 ```sh
-git checkout snapshot-2026-09-06
+git fetch origin f3203621e90e5b1b087ca473ba8e8a7a2856b009
+git checkout --detach f3203621e90e5b1b087ca473ba8e8a7a2856b009
+git rev-parse HEAD
+cd sumsquares_revised
 lake exe cache get      # optional
-lake build              # builds RequestProject, Challenge and Solution
-./verify.sh             # runs the comparator on comparator.json
+lake build RequestProject Solution
+lake env lean -DwarningAsError=true RequestProject/Main.lean
+lake env lean -DwarningAsError=true Solution.lean
+COMPARATOR_SKIP_CACHE=1 bash verify.sh  # Linux x86-64; compares all sixteen declarations
 ```
 
+`git rev-parse HEAD` must print
+`f3203621e90e5b1b087ca473ba8e8a7a2856b009`; detached HEAD is expected. Each build,
+strict compiler check, and comparator command must exit with status `0`. The
+strict compiler checks should produce no errors or warnings. On macOS, run the
+build and strict compiler checks; the supplied sandboxed comparator requires a
+compatible Linux x86-64 environment.
+
+Continue using these instructions after checkout: documentation inside the
+historical commit predates this correction. The older `snapshot-2026-09-06` tag
+is retained as history and is not the source used for the manuscript's verified
+build.
+
 `Challenge.lean` contains one deliberate `sorry` per advertised statement, as the
-comparator protocol requires; there is no `sorry`, `admit` or `axiom` anywhere else.
+comparator protocol requires. Building that interface, including during comparator
+verification, emits sixteen expected placeholder warnings. The warning-free claim
+applies to `RequestProject/Main.lean` and `Solution.lean`; their proofs do not depend
+on those placeholders.
