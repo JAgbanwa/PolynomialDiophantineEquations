@@ -33,8 +33,8 @@ Since Version 9 (the latest) of this [paper](https://arxiv.org/pdf/2404.08518), 
 
 | Folder | Goal | Progress | 
 |--------|------|----------|
-| [\[21\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_obstruction) | Prove that the equation:  $y^3+y^2+xy=x^4+1$ has no integer solutions (Table 9). |  🟡 Pending feedback |
-| [\[22\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_y3_xy_x4_x_3) |  Prove that the equation:  $y^3+xy=x^4+x+3$ has no integer solutions (Table 9). |  🟡 Pending feedback |
+| [\[21\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_obstruction) | Prove that the equation:  $y^3+y^2+xy=x^4+1$ has no integer solutions (Table 9). |  (Already solved) |
+| [\[22\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_y3_xy_x4_x_3) |  Prove that the equation:  $y^3+xy=x^4+x+3$ has no integer solutions (Table 9). |  (Already solved) |
 
 
 
