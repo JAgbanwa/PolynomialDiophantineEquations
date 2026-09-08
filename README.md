@@ -35,14 +35,8 @@ Since Version 9 (the latest) of this [paper](https://arxiv.org/pdf/2404.08518), 
 
 | Folder | Goal | Progress | 
 |--------|------|----------|
-| [\[23\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_obstruction) | Prove that the equation:  $y^3+y^2+xy=x^4+1$ has no integer solutions (Table 9). |  Pending feedback |
-| [\[24\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_y3_xy_x4_x_3) |  Prove that the equation:  $y^3+xy=x^4+x+3$ has no integer solutions (Table 9). |  Pending feedback |
-| [\[17\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/rational_integral_solutions_y2_z2_x3_minus_1) | Describe all rational/integer solutions to the equation: $y^2 + z^2 = x^3 - 1$. | 🔴 Still needs working on |
-| [\[18\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/rational_points_y2_minus_x2y_plus_z2_plus_1) | Describe all rational/integer solutions to the equation: $y^2 - x^2 \cdot y + z^2 + 1 = 0$. | 🔴 Still needs working on |
-| [\[19\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/polynomial_parametrization_xyz_ts_plus_1) | Provide a polynomial parametrisation to the equation: $xyz + ts + 1 = 0$. | 🔴 Still needs working on  |
-| [\[20\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/polynomial_parametrization_xyz_t2_plus_1) | Provide a polynomial parametrisation to the equation: $xyz + t^2 + 1 = 0$. | 🔴 Still needs working on  |
-| [\[21\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/polynomial_parametrization_xyz_t2_minus_1) | Provide a polynomial parametrisation to the equation: $xyz + t^2 - 1 = 0$. | 🔴 Still needs working on  |
-| [\[22\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/polynomial_parametrization_x3_yz_plus_1) | Provide a polynomial parametrisation to the equation: $x^3 + yz + 1 = 0$. | 🔴 Still needs working on  |
+| [\[23\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_obstruction) | Prove that the equation:  $y^3+y^2+xy=x^4+1$ has no integer solutions (Table 9). |  🟡 Pending feedback |
+| [\[24\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_y3_xy_x4_x_3) |  Prove that the equation:  $y^3+xy=x^4+x+3$ has no integer solutions (Table 9). |  🟡 Pending feedback |
 
 
 
