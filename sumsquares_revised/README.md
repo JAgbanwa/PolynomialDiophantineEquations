@@ -16,8 +16,7 @@ and a residue-controlled refinement of it).
 
 ## Versions
 
-The project pins its dependencies exactly, so it will keep compiling as Lean and Mathlib
-evolve:
+The project pins its dependencies exactly, so builds use the recorded Lean and Mathlib versions:
 
 | Component | Version |
 | --- | --- |
@@ -65,7 +64,7 @@ git fetch origin f3203621e90e5b1b087ca473ba8e8a7a2856b009
 git checkout --detach f3203621e90e5b1b087ca473ba8e8a7a2856b009
 cd sumsquares_revised
 lake exe cache get   # optional: fetch prebuilt Mathlib oleans
-lake build           # builds RequestProject, Challenge and Solution
+lake build RequestProject Solution  # warnings are errors for proved targets
 ```
 
 This selects the exact checked source as well as its pinned dependencies. See
@@ -390,7 +389,10 @@ accepted with no errors or warnings.
 
 ### 9. About the `sorry` warnings
 
-During `lake build`, Lean reports sixteen warnings from `Challenge.lean`, for example:
+The default `lake build` builds `RequestProject` and `Solution` with warnings treated
+as errors. It does not build the statement-only `Challenge` module. Running
+`lake build Challenge` or the comparator script reports sixteen warnings from
+`Challenge.lean`, for example:
 
 ```text
 warning: Challenge.lean:52:8: declaration uses `sorry`
@@ -407,7 +409,9 @@ The CI workflow checks that:
 3. all sixteen declarations in `Solution.lean` match the corresponding declarations in `Challenge.lean`;
 4. only the permitted foundational axioms are used.
 
-Therefore, the expected local result is a successful build accompanied by sixteen warnings originating only from `Challenge.lean`.
+Therefore, the expected default build has no warnings. The separate comparator
+run builds `Challenge` and reports sixteen deliberate statement-placeholder
+warnings; its success is confirmed by `Your solution is okay!`.
 
 ### 10. Full comparator verification
 

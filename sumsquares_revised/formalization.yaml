@@ -53,8 +53,8 @@ sources:
     location: "Sections 1-4: Propositions 2.2, 2.3, 4.1, 4.2, 4.4, the unnumbered closing discussion of Section 4, Corollaries 3.1 and 3.2, Algorithms 2.4 and 4.3"
     relationship: formalizes
     note: >-
-      The source paper, conditionally accepted by the International Journal of
-      Number Theory (manuscript IJNT-D-26-00150). This repository is the Lean
+      The source paper, submitted to the International Journal of Number
+      Theory (manuscript IJNT-D-26-00150). This repository is the Lean
       formalization referred to in that paper.
     author_endorsement: participated
   - title: "Polynomial Diophantine equations: a systematic approach"
@@ -398,3 +398,4 @@ acknowledgements: >-
   Built on Mathlib. The Lean proofs were produced with Aristotle (Harmonic); the
   Comparator setup follows the Palomar registry conventions and the
   mathlib-initiative formalization.yaml format.
+
