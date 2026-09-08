@@ -56,12 +56,27 @@ in the supplied marked manuscript dated 6 September 2026 are:
 
 ## Building
 
+The manuscript's verified source is commit
+`f3203621e90e5b1b087ca473ba8e8a7a2856b009`. To reproduce that build, run the
+following from the repository root:
+
 ```sh
+git fetch origin f3203621e90e5b1b087ca473ba8e8a7a2856b009
+git checkout --detach f3203621e90e5b1b087ca473ba8e8a7a2856b009
+cd sumsquares_revised
 lake exe cache get   # optional: fetch prebuilt Mathlib oleans
 lake build           # builds RequestProject, Challenge and Solution
 ```
 
+This selects the exact checked source as well as its pinned dependencies. See
+[SNAPSHOT.md](SNAPSHOT.md) for the immutable project and proof links. Continue
+using these instructions after checkout; documentation inside the historical
+commit predates this correction.
+
 ## Independent verification with `comparator`
+
+On a compatible Linux x86-64 system, after selecting the verified commit and
+entering `sumsquares_revised` as above:
 
 ```sh
 ./verify.sh              # add COMPARATOR_SKIP_CACHE=1 if Mathlib is already built
@@ -132,7 +147,7 @@ Co-authored-by: Aristotle (Harmonic) <aristotle-harmonic@harmonic.fun>
 
 ## Reproducing the Lean build locally
 
-The project is pinned to **Lean 4.28.0** and a fixed Mathlib revision through `lean-toolchain` and `lake-manifest.json`. The following instructions reproduce the successful build on macOS using Terminal. They also work on most Linux systems.
+The verified source is commit `f3203621e90e5b1b087ca473ba8e8a7a2856b009`, with **Lean 4.28.0** and a fixed Mathlib revision through `lean-toolchain` and `lake-manifest.json`. The following instructions select that source before building on macOS using Terminal. They also work on most Linux systems.
 
 ### 1. Prerequisites
 
@@ -184,7 +199,10 @@ For example:
 ```bash
 cd ~/Documents
 git clone https://github.com/JAgbanwa/PolynomialDiophantineEquations.git PolynomialDiophantineEquations-build-test
-cd PolynomialDiophantineEquations-build-test/sumsquares_revised
+cd PolynomialDiophantineEquations-build-test
+git fetch origin f3203621e90e5b1b087ca473ba8e8a7a2856b009
+git checkout --detach f3203621e90e5b1b087ca473ba8e8a7a2856b009
+cd sumsquares_revised
 ```
 
 The correct directory name is:
@@ -248,7 +266,10 @@ git rev-parse HEAD
 git status --short
 ```
 
-For a fresh clone, the branch should normally be `main`, and `git status --short` should produce no output.
+`git rev-parse HEAD` must print
+`f3203621e90e5b1b087ca473ba8e8a7a2856b009`. The checkout is deliberately in
+detached HEAD state, so `git branch --show-current` prints nothing. For a fresh
+checkout, `git status --short` should also produce no output.
 
 ### 5. Confirm the pinned Lean version
 
@@ -342,15 +363,16 @@ Expected output:
 
 An exit status of `0` means that the project built successfully.
 
-### 8. Verify `Solution.lean` directly
+### 8. Verify the proof files with warnings treated as errors
 
-To elaborate the solution file explicitly, run:
+To reproduce the strict proof-source checks, run:
 
 ```bash
-lake env lean Solution.lean
+lake env lean -DwarningAsError=true RequestProject/Main.lean
+lake env lean -DwarningAsError=true Solution.lean
 ```
 
-Then check the exit status:
+Check the exit status immediately after each command:
 
 ```bash
 echo $?
@@ -362,7 +384,9 @@ Expected output:
 0
 ```
 
-Lean may return directly to the Terminal prompt without printing anything. No output together with exit status `0` means that `Solution.lean` was accepted successfully.
+Lean may return directly to the Terminal prompt without printing anything. For
+each command, no output together with exit status `0` means that the file was
+accepted with no errors or warnings.
 
 ### 9. About the `sorry` warnings
 
@@ -386,6 +410,8 @@ The CI workflow checks that:
 Therefore, the expected local result is a successful build accompanied by sixteen warnings originating only from `Challenge.lean`.
 
 ### 10. Full comparator verification
+
+Use the verified checkout from Step 3 for all commands in this section.
 
 The project includes:
 
@@ -412,13 +438,13 @@ On a compatible Linux x86-64 system, the complete comparator can be run with:
 bash verify.sh
 ```
 
-### 11. Rebuilding after later changes
+### 11. Reproducing the verified build again
 
-From the repository root, update the local `main` branch:
+From the repository root, select the same verified source:
 
 ```bash
-git switch main
-git pull --ff-only
+git fetch origin f3203621e90e5b1b087ca473ba8e8a7a2856b009
+git checkout --detach f3203621e90e5b1b087ca473ba8e8a7a2856b009
 cd sumsquares_revised
 ```
 
@@ -427,10 +453,16 @@ Then refresh the cache and rebuild:
 ```bash
 lake exe cache get
 lake build
-lake env lean Solution.lean
+lake env lean -DwarningAsError=true RequestProject/Main.lean
+lake env lean -DwarningAsError=true Solution.lean
 ```
 
-A successful reproduction is established when:
+A build of a later `main` revision tests different source code. For reproduction
+of the manuscript's verification, keep the commit above and the committed
+dependency manifest.
+
+A successful reproduction has the exact HEAD recorded in Step 4, successful
+exit statuses for both strict checks, and:
 
 ```text
 Build completed successfully
