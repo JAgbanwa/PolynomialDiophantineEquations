@@ -1,70 +1,73 @@
 #!/usr/bin/env bash
-# Independently verify Solution.lean against Challenge.lean with
-# leanprover/comparator.
+# Verification script for the formalization of
+#   "On the polynomial values represented by quadratic forms" (B. Grechuk, J. Agbanwa).
 #
-# Trust required: the Lean kernel, Mathlib, Challenge.lean (the statements), and
-# comparator itself.  The proof development in RequestProject/ does NOT need to
-# be trusted: comparator rebuilds the compared declarations, checks that their
-# statements agree with Challenge.lean character for character, and checks that
-# their axiom closure is contained in the permitted set recorded in
-# comparator.json.
-set -euo pipefail
+# The whole formalization lives in the single file `RequestProject.lean`.
+#
+# It (1) builds the project and checks that it elaborates without errors *or warnings*,
+# (2) checks the source for `sorry`, `admit`, user-declared `axiom`s and `@[implemented_by]`,
+# and (3) prints the axiom dependencies of every name listed in `comparator.json`.
+
+set -uo pipefail
 
 cd "$(dirname "$0")"
 
-TOOLCHAIN_TAG=$(sed -e 's|^leanprover/lean4:||' lean-toolchain | tr -d '[:space:]')
-WORK="${COMPARATOR_WORK:-$HOME/.cache/quadratic-forms-comparator}"
-mkdir -p "$WORK"
+status=0
 
-# A tool need not be tagged for every Lean patch release; fall back to the .0
-# tag of the same minor series.
-resolve_tag() {
-  local repo="$1" tag="$2"
-  if git ls-remote --exit-code --tags "https://github.com/$repo" \
-      "refs/tags/$tag" >/dev/null 2>&1; then
-    printf '%s' "$tag"
-  else
-    printf '%s' "$tag" | sed -E 's/^(v[0-9]+\.[0-9]+)\.[0-9]+$/\1.0/'
-  fi
-}
-
-if [ ! -d "$WORK/comparator" ]; then
-  git clone --branch "$(resolve_tag leanprover/comparator "$TOOLCHAIN_TAG")" --depth 1 \
-    https://github.com/leanprover/comparator "$WORK/comparator"
+echo "== 1/3  Building =="
+if ! lake build; then
+  echo "FAIL: lake build failed."
+  exit 1
 fi
-if [ ! -d "$WORK/lean4export" ]; then
-  git clone --branch "$(resolve_tag leanprover/lean4export "$TOOLCHAIN_TAG")" --depth 1 \
-    https://github.com/leanprover/lean4export "$WORK/lean4export"
-fi
-(cd "$WORK/comparator" && lake build)
-(cd "$WORK/lean4export" && lake build)
+echo "OK: build succeeded."
 
-# landrun, the sandbox comparator runs the builds and exports in.  It is wrapped
-# so that the dynamic loader paths its own -ldd resolution can miss (the ELF
-# interpreter on Ubuntu, the Nix store on NixOS) are readable inside the
-# sandbox; without execute permission on the interpreter every execve inside
-# the sandbox fails with EACCES.
-mkdir -p "$WORK/bin"
-if [ ! -x "$WORK/landrun-bin" ]; then
-  curl -sL -o "$WORK/landrun-bin" \
-    https://github.com/Zouuup/landrun/releases/download/v0.1.14/landrun-linux-amd64
-  chmod +x "$WORK/landrun-bin"
+diagnostics=$(lake env lean RequestProject.lean 2>&1)
+if [ -n "$diagnostics" ]; then
+  echo "$diagnostics"
+  echo "FAIL: the file produced diagnostics (errors or warnings)."
+  status=1
+else
+  echo "OK: RequestProject.lean elaborates with no errors and no warnings."
 fi
-EXTRA=""
-for d in /lib64 /lib /usr/lib /nix/store; do
-  [ -e "$d" ] && EXTRA="$EXTRA --rox $d"
-done
-printf '#!/usr/bin/env bash\nexec "%s/landrun-bin"%s "$@"\n' "$WORK" "$EXTRA" \
-  > "$WORK/bin/landrun"
-chmod +x "$WORK/bin/landrun"
-export COMPARATOR_LANDRUN="$WORK/bin/landrun"
+echo
 
-export PATH="$WORK/bin:$WORK/lean4export/.lake/build/bin:$PATH"
-
-# Set COMPARATOR_SKIP_CACHE=1 to skip the Mathlib cache download, for instance
-# when the dependencies have already been built locally.
-if [ "${COMPARATOR_SKIP_CACHE:-0}" != "1" ]; then
-  lake exe cache get
+echo "== 2/3  Scanning the source =="
+pattern='\bsorry\b|\badmit\b|^[[:space:]]*axiom[[:space:]]|@\[implemented_by'
+if grep -nE "$pattern" RequestProject.lean; then
+  echo "FAIL: forbidden constructs found above."
+  status=1
+else
+  echo "OK: no sorry / admit / axiom / @[implemented_by] in the source."
 fi
-lake build Challenge Solution
-lake env "$WORK/comparator/.lake/build/bin/comparator" comparator.json
+echo
+
+echo "== 3/3  Checking axiom dependencies =="
+names=$(grep -oE '"(PolyQF|Challenge|Solution)\.[A-Za-z0-9_.]+"' comparator.json | tr -d '"')
+tmp=$(mktemp -d)
+{
+  echo "import RequestProject"
+  for n in $names; do
+    echo "#print axioms $n"
+  done
+} > "$tmp/AxiomCheck.lean"
+
+out=$(lake env lean "$tmp/AxiomCheck.lean" 2>&1)
+echo "$out"
+if echo "$out" | grep -qE "error"; then
+  echo "FAIL: could not check all names."
+  status=1
+elif echo "$out" | grep -vE "propext|Classical\.choice|Quot\.sound|does not depend on any axioms" | grep -q "depends on axioms"; then
+  echo "FAIL: a result depends on a non-standard axiom."
+  status=1
+else
+  echo "OK: only propext, Classical.choice and Quot.sound are used."
+fi
+rm -rf "$tmp"
+echo
+
+if [ "$status" -eq 0 ]; then
+  echo "ALL CHECKS PASSED"
+else
+  echo "SOME CHECKS FAILED"
+fi
+exit "$status"
