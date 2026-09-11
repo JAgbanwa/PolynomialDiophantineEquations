@@ -14,9 +14,23 @@ The development follows the paper section by section:
 * **Section 4** — general binary quadratic forms `BQF A B C`, Propositions 4.1, 4.2, 4.4, the
   non-multiplicativity examples, and the degenerate case `Δ = 0`.
 
-The namespace `PolyQF.Main` collects the main results under readable names, the namespace
-`Challenge` states them self-containedly in plain Mathlib vocabulary, and the namespace
-`Solution` discharges each `Challenge` statement from the development.
+The namespace `PolyQF.Main` collects the main results under readable names.  The companion
+file `Challenge.lean` states those results self-containedly in plain Mathlib vocabulary, and
+`Solution.lean` discharges each `Challenge` statement from this development.
+
+Conventions used throughout, and the points raised in the referee report:
+
+* No use of `native_decide` (or of any other tactic introducing a non-standard axiom): the
+  four non-squareness facts needed in Section 3 (for `a = 17006096, 8320, 208, 80`) are proved
+  from the explicit bounds `4123² < a < 4124²`, `91² < a < 92²`, `14² < a < 15²`,
+  `8² < a < 9²` recorded in the paper, via `not_isSquare_of_between` and `norm_num`.  Every
+  result therefore depends only on `propext`, `Classical.choice` and `Quot.sound`.
+* Bibliographic citations in the docstrings below refer to the final bibliography of the
+  paper; in particular Gauss's theorem on binary quadratic Diophantine equations is
+  [11, Proposition 3.14].
+* Where the Lean proof of a result differs from the argument printed in the paper, this is
+  stated explicitly in the docstring of the result (see `prop_4_2` and `prop_4_4_a` /
+  `prop_4_4_b`).
 -/
 
 /-!
@@ -179,6 +193,14 @@ moreover prescribe `X` and `V` modulo any fixed nonzero modulus `N` (namely `X �
 This is the classical fact that the solutions of a Pell-like equation can be multiplied by
 units of the ring `ℤ[√A]`; the congruence conditions are achieved by choosing a unit which is
 congruent to `1` modulo `N`.
+
+*Relation to the paper.*  The paper quotes Gauss's theorem on binary quadratic Diophantine
+equations ([11, Proposition 3.14]) in the proofs of Propositions 2.3 and 4.2.  Rather than
+importing that theorem, the formalization proves the residue-controlled Pell statement
+`pell_solutions_infinite` below: some power of a suitable unit is `≡ (1, 0) (mod N)`, so all
+the iterates it produces stay in a prescribed residue class.  This yields both propositions
+directly (after completing the square), including the congruence conditions (27) that in the
+paper are obtained by a separate substitution.
 -/
 
 namespace PolyQF
@@ -500,7 +522,11 @@ theorem prop_2_2 {R Q : ℤ[X]} (hR : 0 < R.natDegree) (hQ : 0 < Q.natDegree) {u
 /-- **Proposition 2.3.** Let `a, b, c ∈ ℤ` be such that (a) either `a = 0`, or `a > 0` and `a`
 is not a perfect square, (b) `b^2 - 4ac ≠ 0`, and (c) the equation `a x^2 + b x + c = v^2`
 has an integer solution `(x₀, v₀)`. Then this equation has infinitely many integer solutions
-`(x, v)` with infinitely many distinct values of `x`. -/
+`(x, v)` with infinitely many distinct values of `x`.
+
+The paper deduces this from Gauss's theorem [11, Proposition 3.14]; here it is deduced from
+the residue-controlled Pell statement `pell_solutions_infinite` after completing the square
+(and, when `a = 0`, from an explicit linear family). -/
 theorem prop_2_3 {a b c : ℤ} (ha : a = 0 ∨ (0 < a ∧ ¬ IsSquare a)) (hb : b ^ 2 - 4 * a * c ≠ 0)
     {x₀ v₀ : ℤ} (hsol : a * x₀ ^ 2 + b * x₀ + c = v₀ ^ 2) :
     {x : ℤ | ∃ v : ℤ, a * x ^ 2 + b * x + c = v ^ 2}.Infinite := by
@@ -1004,6 +1030,13 @@ discriminant `Δ = B ^ 2 - 4 A C`. This file formalizes:
 * Proposition 4.4, solving the two equations (31);
 * the description of degenerate forms (`Δ = 0`) at the end of Section 4, and the failure of
   multiplicativity for `2y^2 + yz + 2z^2`.
+
+Condition (c) of Proposition 4.2 (and of Algorithms 2.4 and 4.3) — the existence of one
+solution of the auxiliary equation satisfying the congruences (27) — is a decidable finite
+search in the following sense: with `M = 2 |m|`, the congruences (27) depend only on the
+residue of `v` modulo `M` (this is `congr_27_of_congr` below), so one enumerates the finitely
+many residues `j ∈ {0, …, M - 1}` satisfying them, substitutes `v = j + M w`, and applies to
+each resulting binary quadratic equation in `(x, w)` the standard solvability algorithm.
 -/
 
 namespace PolyQF
@@ -1134,7 +1167,16 @@ lemma not_isSquare_four_mul {a : ℤ} (ha : ¬ IsSquare a) : ¬ IsSquare (4 * a)
 /-- **Proposition 4.2.** Assume (a) either `a = 0` or `-aΔ` is a positive non-square,
 (b) `b^2 - 4ac ≠ 0`, and (c) the equation `a x^2 + b x + c = -Δ v^2` has an integer solution
 `(x₀, v₀)`. Then it has infinitely many integer solutions `(x, v)` with `v ≡ v₀ (mod 2m)`;
-in particular, if `v₀` satisfies the congruences (27), then so do all these `v`. -/
+in particular, if `v₀` satisfies the congruences (27), then so do all these `v`.
+
+*Two remarks on the formalization* (both raised in the referee report).  First, the proof
+below differs from the printed one: instead of substituting `v = v₀ + 2 m w` and applying
+Gauss's theorem [11, Proposition 3.14] to the resulting conic (30) in the variables `(x, w)`,
+it completes the square and applies the residue-controlled Pell statement
+`pell_solutions_infinite`, which produces solutions in a prescribed residue class modulo
+`2 m` directly.  Second, the hypothesis `Δ ≠ 0` of the surrounding discussion is *not* needed
+for this proposition: only `m ≠ 0`, (a), (b) and (c) are assumed here (the parameter `D`
+plays the role of `Δ` and is allowed to vanish). -/
 theorem prop_4_2 {a b c D m : ℤ} (hm : m ≠ 0)
     (ha : a = 0 ∨ (0 < -a * D ∧ ¬ IsSquare (-a * D))) (hb : b ^ 2 - 4 * a * c ≠ 0)
     {x₀ v₀ : ℤ} (hsol : a * x₀ ^ 2 + b * x₀ + c = -D * v₀ ^ 2) :
@@ -1216,7 +1258,13 @@ lemma congr_27_of_congr {A B C m r p q v v₀ : ℤ} (hv : 2 * m ∣ v - v₀)
 /-! ### Proposition 4.4 -/
 
 /-- **Proposition 4.4 (a).** `2 y ^ 2 + y z + 2 z ^ 2 = x ^ 3 + 1` has infinitely many integer
-solutions, given by the explicit family of the paper. -/
+solutions, given by the explicit family of the paper.
+
+*On the proof.*  As the referee report notes, the verification here is direct: the explicit
+polynomial family produced in the paper by the tangent-line construction of Proposition 4.1 is
+substituted into the equation and the resulting polynomial identity is checked by `ring`, the
+`x`-coordinates being pairwise distinct.  The tangent construction itself is formalized
+separately in `tangent_line_eq`, `tangent_conic_eq`, `tangent_solution` and `prop_4_1`. -/
 theorem prop_4_4_a :
     {w : ℤ × ℤ × ℤ | BQF 2 1 2 w.2.1 w.2.2 = w.1 ^ 3 + 1}.Infinite := by
   refine infinite_of_subset_image (fun w : ℤ × ℤ × ℤ => w.1)
@@ -1233,7 +1281,8 @@ theorem prop_4_4_a :
     ring
 
 /-- **Proposition 4.4 (b).** `2 y ^ 2 + y z + 2 z ^ 2 = x ^ 3 - 1` has infinitely many integer
-solutions, given by the explicit family of the paper. -/
+solutions, given by the explicit family of the paper.  As in part (a), the explicit family is
+substituted into the equation and the identity is verified by `ring`. -/
 theorem prop_4_4_b :
     {w : ℤ × ℤ × ℤ | BQF 2 1 2 w.2.1 w.2.2 = w.1 ^ 3 - 1}.Infinite := by
   refine infinite_of_subset_image (fun w : ℤ × ℤ × ℤ => w.1)
@@ -1263,7 +1312,19 @@ theorem BQF_two_one_two_not_represents_four : ¬ ∃ y z : ℤ, BQF 2 1 2 y z = 
   have := congrArg (fun n : ℤ => (n : ZMod 3)) h
   simpa [BQF] using this
 
-/-! ### Comparison with Section 2 -/
+/-! ### Comparison with Section 2
+
+The form `y ^ 2 + z ^ 2` of Section 2 has discriminant `-4` (`disc_sum_two_squares`) and is
+*multiplicative*: the set `S₂` of integers it represents is closed under products and, by
+property `(*)` (`S2_star`), under the corresponding division.  This is what makes the
+Section 2 argument simpler than the general one of Section 4: the reduction of `R(Q(x)) ∈ S₂`
+to a single auxiliary Pell-type equation uses `S2.four_mul` and `S2.of_four_mul`, i.e. the
+freedom to multiply and divide by the represented value `4`.  A general binary quadratic form
+has no such property: `BQF_two_one_two_represents_two` together with
+`BQF_two_one_two_not_represents_four` shows that `2 y ^ 2 + y z + 2 z ^ 2` represents `2` but
+not `2 * 2`, and `four_mul_sum_two_squares_not_represents_one` shows that the (imprimitive)
+form `4 (y ^ 2 + z ^ 2)` represents `4` but not `1`.  This is why Section 4 has to keep track
+of the congruence conditions (27) instead. -/
 
 /-- For the form `y ^ 2 + z ^ 2` we have `Δ = -4`. -/
 lemma disc_sum_two_squares : disc 1 0 1 = -4 := by
@@ -1506,135 +1567,3 @@ theorem degenerate_case {A B C : ℤ} (h : disc A B C = 0) :
   exact degenerate_form_eq
 
 end PolyQF.Main
-
-/-!
-# Challenge statements
-
-Self-contained statements of the main results of the paper *On the polynomial values
-represented by quadratic forms* (B. Grechuk, J. Agbanwa).  Each statement below is phrased
-using only `Mathlib` notions, so that it can be read independently of the development above.
-The statements are discharged in the `Solution` namespace below.
--/
-
-namespace Challenge
-
-/-- `IsSumTwoSquares n`: the positive integer `n` lies in the set `S₂` of sums of two integer
-squares. -/
-def IsSumTwoSquares (n : ℤ) : Prop := 0 < n ∧ ∃ y z : ℤ, n = y ^ 2 + z ^ 2
-
-/-- Property `(*)` of Section 2: for positive `a, b`, membership of two of `a`, `b`, `ab` in
-`S₂` implies membership of the third. -/
-def PropertyStar : Prop :=
-  ∀ a b : ℤ, 0 < a → 0 < b →
-    (IsSumTwoSquares a → IsSumTwoSquares b → IsSumTwoSquares (a * b)) ∧
-    (IsSumTwoSquares a → IsSumTwoSquares (a * b) → IsSumTwoSquares b) ∧
-    (IsSumTwoSquares b → IsSumTwoSquares (a * b) → IsSumTwoSquares a)
-
-/-- Proposition 2.3: the equation `a x² + b x + c = v²` has infinitely many integer
-solutions `x` under conditions (a), (b), (c). -/
-def Proposition23 : Prop :=
-  ∀ a b c x₀ v₀ : ℤ, (a = 0 ∨ (0 < a ∧ ¬ IsSquare a)) → b ^ 2 - 4 * a * c ≠ 0 →
-    a * x₀ ^ 2 + b * x₀ + c = v₀ ^ 2 →
-    {x : ℤ | ∃ v : ℤ, a * x ^ 2 + b * x + c = v ^ 2}.Infinite
-
-/-- The key arithmetic statement of Section 3: `x⁶ - 4` is a sum of two squares for
-infinitely many integers `x`. -/
-def SumTwoSquaresSixthPower : Prop :=
-  {x : ℤ | IsSumTwoSquares (x ^ 6 - 4)}.Infinite
-
-/-- Corollary 3.1: equation (2), `y² + x³y + z² + 1 = 0`. -/
-def Equation2 : Prop :=
-  {p : ℤ × ℤ × ℤ | p.2.1 ^ 2 + p.1 ^ 3 * p.2.1 + p.2.2 ^ 2 + 1 = 0}.Infinite
-
-/-- Corollary 3.2, equation (13): `y² + x³y + z² - 2 = 0`. -/
-def Equation13 : Prop :=
-  {p : ℤ × ℤ × ℤ | p.2.1 ^ 2 + p.1 ^ 3 * p.2.1 + p.2.2 ^ 2 - 2 = 0}.Infinite
-
-/-- Corollary 3.2, equation (14): `y² + x³y + z² + z - 1 = 0`. -/
-def Equation14 : Prop :=
-  {p : ℤ × ℤ × ℤ | p.2.1 ^ 2 + p.1 ^ 3 * p.2.1 + p.2.2 ^ 2 + p.2.2 - 1 = 0}.Infinite
-
-/-- Corollary 3.2, equation (15): `y² + x³y + z² + z + 1 = 0`. -/
-def Equation15 : Prop :=
-  {p : ℤ × ℤ × ℤ | p.2.1 ^ 2 + p.1 ^ 3 * p.2.1 + p.2.2 ^ 2 + p.2.2 + 1 = 0}.Infinite
-
-/-- Corollary 3.2, equation (16): `y² + x³y + y + z² + 1 = 0`. -/
-def Equation16 : Prop :=
-  {p : ℤ × ℤ × ℤ | p.2.1 ^ 2 + p.1 ^ 3 * p.2.1 + p.2.1 + p.2.2 ^ 2 + 1 = 0}.Infinite
-
-/-- Proposition 4.4 (a): `2y² + yz + 2z² = x³ + 1`. -/
-def Equation31a : Prop :=
-  {w : ℤ × ℤ × ℤ | 2 * w.2.1 ^ 2 + w.2.1 * w.2.2 + 2 * w.2.2 ^ 2 = w.1 ^ 3 + 1}.Infinite
-
-/-- Proposition 4.4 (b): `2y² + yz + 2z² = x³ - 1`. -/
-def Equation31b : Prop :=
-  {w : ℤ × ℤ × ℤ | 2 * w.2.1 ^ 2 + w.2.1 * w.2.2 + 2 * w.2.2 ^ 2 = w.1 ^ 3 - 1}.Infinite
-
-/-- The form `2y² + yz + 2z²` is not multiplicative: it represents `2` but not `4`. -/
-def FormNotMultiplicative : Prop :=
-  (∃ y z : ℤ, 2 * y ^ 2 + y * z + 2 * z ^ 2 = 2) ∧
-    ¬ ∃ y z : ℤ, 2 * y ^ 2 + y * z + 2 * z ^ 2 = 4
-
-/-- The degenerate case `Δ = 0` of Section 4. -/
-def DegenerateForms : Prop :=
-  ∀ A B C : ℤ, B ^ 2 - 4 * A * C = 0 →
-    ∃ k n m : ℤ, A = k * n ^ 2 ∧ B = 2 * k * n * m ∧ C = k * m ^ 2 ∧
-      ∀ y z : ℤ, A * y ^ 2 + B * y * z + C * z ^ 2 = k * (n * y + m * z) ^ 2
-
-end Challenge
-
-/-!
-# Solutions to the challenge statements
-
-Every statement of the `Challenge` namespace is discharged here from the development above.
--/
-
-namespace Solution
-
-open PolyQF
-
-/-- The two notions of "sum of two squares" agree. -/
-lemma isSumTwoSquares_iff (n : ℤ) : Challenge.IsSumTwoSquares n ↔ S2 n := Iff.rfl
-
-theorem property_star : Challenge.PropertyStar := fun _ _ ha hb => S2_star ha hb
-
-theorem proposition_23 : Challenge.Proposition23 :=
-  fun _ _ _ _ _ ha hb hsol => prop_2_3 ha hb hsol
-
-theorem sumTwoSquaresSixthPower : Challenge.SumTwoSquaresSixthPower := S2_x6_sub_4_infinite
-
-theorem equation2 : Challenge.Equation2 := cor_3_1
-
-theorem equation13 : Challenge.Equation13 := cor_3_2_eq13
-
-theorem equation14 : Challenge.Equation14 := cor_3_2_eq14
-
-theorem equation15 : Challenge.Equation15 := cor_3_2_eq15
-
-theorem equation16 : Challenge.Equation16 := cor_3_2_eq16
-
-theorem equation31a : Challenge.Equation31a := by
-  have h := prop_4_4_a
-  refine h.mono ?_
-  rintro w hw
-  simpa [BQF] using hw
-
-theorem equation31b : Challenge.Equation31b := by
-  have h := prop_4_4_b
-  refine h.mono ?_
-  rintro w hw
-  simpa [BQF] using hw
-
-theorem formNotMultiplicative : Challenge.FormNotMultiplicative := by
-  refine ⟨⟨0, 1, by norm_num⟩, ?_⟩
-  rintro ⟨y, z, h⟩
-  exact BQF_two_one_two_not_represents_four ⟨y, z, by simpa [BQF] using h⟩
-
-theorem degenerateForms : Challenge.DegenerateForms := by
-  intro A B C h
-  obtain ⟨k, n, m, hA, hB, hC, hform⟩ := PolyQF.Main.degenerate_case (A := A) (B := B) (C := C)
-    (by simpa [disc] using h)
-  refine ⟨k, n, m, hA, hB, hC, fun y z => ?_⟩
-  simpa [BQF] using hform y z
-
-end Solution
