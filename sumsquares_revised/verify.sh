@@ -75,7 +75,7 @@ trap 'rm -rf "$tmp"' EXIT
   echo "import RequestProject"
   echo "import Challenge"
   echo "import Solution"
-  echo "set_option pp.width 100000"
+  echo "set_option format.width 100000"
   for n in $names; do
     echo "#print axioms $n"
   done
