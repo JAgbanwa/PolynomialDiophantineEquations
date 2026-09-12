@@ -1,213 +1,62 @@
 import RequestProject
+import Challenge
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
 
 /-!
-# Solution: proofs of the statements advertised in `Challenge.lean`
+# Solutions to the challenge statements
 
-The mathematical development lives in `RequestProject/Main.lean`, which formalizes
-
-  *On the polynomial values represented by quadratic forms*,
-  by Bogdan Grechuk and Jamal Agbanwa.
-
-This module restates each declaration of `Challenge.lean` verbatim and proves it from
-that development.  Every proof below is a direct reference to the corresponding theorem
-of `SumSquaresPaper`; the statements are character-for-character the challenge
-statements, so a comparator can check that the two agree.
-
-Cross-references use the marked manuscript dated 6 September 2026. The stable
-declaration names `equation_14_infinite` through `equation_17_infinite` refer
-to its equations (13) through (16), respectively; `prop_4_5_degenerate_case`
-refers to the unnumbered closing discussion of Section 4, equation (32).
-
-All declarations here depend only on the axioms `propext`, `Classical.choice` and
-`Quot.sound`; in particular nothing uses `native_decide` (and hence `Lean.ofReduceBool`),
-and no unproved placeholder remains anywhere in the development.
+Every statement of `Challenge.lean` is discharged here from the development in
+`RequestProject.lean`.
 -/
 
-namespace PolynomialValuesQuadraticForms
+namespace Solution
 
-/-! ## Section 2–3: the sum of two squares -/
+open PolyQF
 
-/-- **Abstract, and Section 3.**  `x⁶ − 4` is a sum of two squares for infinitely many
-integers `x`. This is the representation problem arising from equation (3);
-equivalently, `Y² + Z² = x⁶ − 4` has infinitely many integer solutions. -/
-theorem sum_two_squares_x_pow_six_sub_four :
-    {x : ℤ | ∃ a b : ℤ, x ^ 6 - 4 = a ^ 2 + b ^ 2}.Infinite :=
-  SumSquaresPaper.odd_pow6_sub4_S2_infinite.mono fun _ hx => hx.2
+/-- The two notions of "sum of two squares" agree. -/
+lemma isSumTwoSquares_iff (n : ℤ) : Challenge.IsSumTwoSquares n ↔ S2 n := Iff.rfl
 
-/-- **Corollary 3.1.**  The Diophantine equation `y² + x³y + z² + 1 = 0`, equation (2)
-of the paper, has infinitely many integer solutions `(x, y, z)`. -/
-theorem equation_2_infinite :
-    {p : ℤ × ℤ × ℤ | p.2.1 ^ 2 + p.1 ^ 3 * p.2.1 + p.2.2 ^ 2 + 1 = 0}.Infinite :=
-  SumSquaresPaper.prop_3_1
+theorem property_star : Challenge.PropertyStar := fun _ _ ha hb => S2_star ha hb
 
-/-- **Corollary 3.2, equation (13)** in the marked manuscript of 6 September 2026.
-`y² + x³y + z² − 2 = 0` has infinitely many
-integer solutions. -/
-theorem equation_14_infinite :
-    {p : ℤ × ℤ × ℤ | p.2.1 ^ 2 + p.1 ^ 3 * p.2.1 + p.2.2 ^ 2 - 2 = 0}.Infinite :=
-  SumSquaresPaper.prop_3_2_eq14
+theorem proposition_23 : Challenge.Proposition23 :=
+  fun _ _ _ _ _ ha hb hsol => prop_2_3 ha hb hsol
 
-/-- **Corollary 3.2, equation (14)** in the marked manuscript of 6 September 2026.
-`y² + x³y + z² + z − 1 = 0` has infinitely many
-integer solutions. -/
-theorem equation_15_infinite :
-    {p : ℤ × ℤ × ℤ | p.2.1 ^ 2 + p.1 ^ 3 * p.2.1 + p.2.2 ^ 2 + p.2.2 - 1 = 0}.Infinite :=
-  SumSquaresPaper.prop_3_2_eq15
+theorem sumTwoSquaresSixthPower : Challenge.SumTwoSquaresSixthPower := S2_x6_sub_4_infinite
 
-/-- **Corollary 3.2, equation (15)** in the marked manuscript of 6 September 2026.
-`y² + x³y + z² + z + 1 = 0` has infinitely many
-integer solutions. -/
-theorem equation_16_infinite :
-    {p : ℤ × ℤ × ℤ | p.2.1 ^ 2 + p.1 ^ 3 * p.2.1 + p.2.2 ^ 2 + p.2.2 + 1 = 0}.Infinite :=
-  SumSquaresPaper.prop_3_2_eq16
+theorem equation2 : Challenge.Equation2 := cor_3_1
 
-/-- **Corollary 3.2, equation (16)** in the marked manuscript of 6 September 2026.
-`y² + x³y + y + z² + 1 = 0` has infinitely many
-integer solutions. -/
-theorem equation_17_infinite :
-    {p : ℤ × ℤ × ℤ | p.2.1 ^ 2 + p.1 ^ 3 * p.2.1 + p.2.1 + p.2.2 ^ 2 + 1 = 0}.Infinite :=
-  SumSquaresPaper.prop_3_2_eq17
+theorem equation13 : Challenge.Equation13 := cor_3_2_eq13
 
-/-! ## Section 4: general binary quadratic forms -/
+theorem equation14 : Challenge.Equation14 := cor_3_2_eq14
 
-/-- **Proposition 4.1.**  The tangent construction for a general binary quadratic form.
+theorem equation15 : Challenge.Equation15 := cor_3_2_eq15
 
-Let `F(y,z) = A y² + B y z + C z²` be non-degenerate, i.e. `Δ = B² − 4AC ≠ 0`, let
-`R` and `Q` be integer polynomial functions, let `u` be an integer with
-`R u = F(p, q) ≠ 0`, let `r = R'(u)` and let `Du` be the second-order Taylor coefficient
-of `R` at `u`, so that `R t = R u + r (t − u) + (t − u)² Du t` for all `t`.
+theorem equation16 : Challenge.Equation16 := cor_3_2_eq16
 
-If the auxiliary equation (26),
+theorem equation31a : Challenge.Equation31a := by
+  have h := prop_4_4_a
+  refine h.mono ?_
+  rintro w hw
+  simpa [BQF] using hw
 
-  `4 R(u) Du(Q(x)) − r² = −Δ v²`,
+theorem equation31b : Challenge.Equation31b := by
+  have h := prop_4_4_b
+  refine h.mono ?_
+  rintro w hw
+  simpa [BQF] using hw
 
-together with the congruence conditions (27),
+theorem formNotMultiplicative : Challenge.FormNotMultiplicative := by
+  refine ⟨⟨0, 1, by norm_num⟩, ?_⟩
+  rintro ⟨y, z, h⟩
+  exact BQF_two_one_two_not_represents_four ⟨y, z, by simpa [BQF] using h⟩
 
-  `2|R(u)| ∣ r p + v (B p + 2 C q)` and `2|R(u)| ∣ r q − v (2 A p + B q)`,
+theorem degenerateForms : Challenge.DegenerateForms := by
+  intro A B C h
+  obtain ⟨k, n, m, hA, hB, hC, hform⟩ := PolyQF.Main.degenerate_case (A := A) (B := B) (C := C)
+    (by simpa [disc] using h)
+  refine ⟨k, n, m, hA, hB, hC, fun y z => ?_⟩
+  simpa [BQF] using hform y z
 
-has infinitely many integer solutions `(x, v)`, then `F(y, z) = R(Q(x))` is solvable in
-integers `y, z` for infinitely many integers `x`. -/
-theorem prop_4_1_general_form {A B C : ℤ} (u p q r : ℤ) (R Q Du : ℤ → ℤ)
-    (hΔ : B ^ 2 - 4 * A * C ≠ 0)
-    (hm : R u = A * p ^ 2 + B * p * q + C * q ^ 2) (hmne : R u ≠ 0)
-    (hTaylor : ∀ t, R t = R u + r * (t - u) + (t - u) ^ 2 * Du t)
-    (hInf : {xv : ℤ × ℤ |
-        4 * R u * Du (Q xv.1) - r ^ 2 = -(B ^ 2 - 4 * A * C) * xv.2 ^ 2 ∧
-        (2 * |R u|) ∣ (r * p + xv.2 * (B * p + 2 * C * q)) ∧
-        (2 * |R u|) ∣ (r * q - xv.2 * (2 * A * p + B * q))}.Infinite) :
-    {x : ℤ | ∃ y z : ℤ, A * y ^ 2 + B * y * z + C * z ^ 2 = R (Q x)}.Infinite :=
-  SumSquaresPaper.prop_4_1 u p q r R Q Du hΔ hm hmne hTaylor hInf
-
-/-- **Proposition 4.2.**  The auxiliary equation (29), `a x² + b x + c = −D v²`, together
-with a congruence condition `cg` on `v` which is periodic with period `2m` (`m ≠ 0`).
-Under the paper's conditions (a) `a = 0` or `a(−D)` is a positive non-square,
-(b) `b² − 4ac ≠ 0`, and (c) there is one solution `(x₀, v₀)` with `cg v₀`, the equation
-has infinitely many integer solutions `(x, v)` with `cg v`. -/
-theorem prop_4_2_auxiliary_equation {a b c D m : ℤ} (hm : m ≠ 0)
-    (ha : a = 0 ∨ (0 < a * (-D) ∧ ¬ IsSquare (a * (-D))))
-    (hb : b ^ 2 - 4 * a * c ≠ 0)
-    (cg : ℤ → Prop) (hperiod : ∀ v w : ℤ, cg v → cg (v + 2 * m * w))
-    (x0 v0 : ℤ) (hsol : a * x0 ^ 2 + b * x0 + c = -D * v0 ^ 2) (hc0 : cg v0) :
-    {p : ℤ × ℤ | a * p.1 ^ 2 + b * p.1 + c = -D * p.2 ^ 2 ∧ cg p.2}.Infinite :=
-  SumSquaresPaper.prop_4_2 hm ha hb cg hperiod x0 v0 hsol hc0
-
-/-- **Proposition 4.4(a).**  The equation `2y² + yz + 2z² = x³ + 1`, for the
-non-multiplicative form `2y² + yz + 2z²`, has infinitely many integer solutions. -/
-theorem form_2_1_2_eq_cube_add_one_infinite :
-    {p : ℤ × ℤ × ℤ | 2 * p.2.1 ^ 2 + p.2.1 * p.2.2 + 2 * p.2.2 ^ 2 = p.1 ^ 3 + 1}.Infinite :=
-  SumSquaresPaper.prop_4_4a
-
-/-- **Proposition 4.4(b).**  The equation `2y² + yz + 2z² = x³ − 1` has infinitely many
-integer solutions. -/
-theorem form_2_1_2_eq_cube_sub_one_infinite :
-    {p : ℤ × ℤ × ℤ | 2 * p.2.1 ^ 2 + p.2.1 * p.2.2 + 2 * p.2.2 ^ 2 = p.1 ^ 3 - 1}.Infinite :=
-  SumSquaresPaper.prop_4_4b
-
-/-! ## Further results of the revised version: Sections 2 and 4 -/
-
-/-- **Residue-controlled generalized Pell result**, the Pell input underlying the formal
-proofs of Propositions 2.3 and 4.2.  Let `A > 0` be a non-square, let `C ≠ 0`, and suppose
-that `X₀² − A Y₀² = C`.  Then for every modulus `N > 0` the equation `X² − A Y² = C` has
-infinitely many integer solutions with `X ≡ X₀` and `Y ≡ Y₀` modulo `N`.
-
-This statement belongs to the formalization, not to the manuscript: the manuscript quotes
-[11, Proposition 5.4] in Proposition 2.3 and [11, Proposition 3.14] in Proposition 4.2, and
-a Lean development has to supply those inputs by proof. -/
-theorem residue_controlled_pell_lemma {A C : ℤ} (hA : 0 < A) (hns : ¬ IsSquare A)
-    (hC : C ≠ 0) (X0 Y0 : ℤ) (h0 : X0 ^ 2 - A * Y0 ^ 2 = C) (N : ℤ) (hN : 0 < N) :
-    {p : ℤ × ℤ | p.1 ^ 2 - A * p.2 ^ 2 = C ∧ p.1 ≡ X0 [ZMOD N] ∧ p.2 ≡ Y0 [ZMOD N]}.Infinite :=
-  SumSquaresPaper.residue_controlled_pell hA hns hC X0 Y0 h0 N hN
-
-/-- **Proposition 2.2.**  Let `R`, `Q` be integer polynomial functions, `u ∈ ℤ`, `r = R'(u)`
-and let `Du` be the second-order Taylor coefficient of `R` at `u`, so that
-`R t = R u + r (t − u) + (t − u)² Du t` for all `t`.  If `R(u)` is a positive sum of two
-squares and the auxiliary equation (8), `4 R(u) Du(Q(x)) − r² = v²`, has infinitely many
-integer solutions `(x, v)`, then `R(Q(x))` is a sum of two squares for infinitely many
-integers `x`. -/
-theorem prop_2_2_sum_two_squares_criterion (u r : ℤ) (R Q Du : ℤ → ℤ)
-    (hRuS : ∃ a b : ℤ, R u = a ^ 2 + b ^ 2) (hRupos : 0 < R u)
-    (hTaylor : ∀ t, R t = R u + r * (t - u) + (t - u) ^ 2 * Du t)
-    (hInf : {p : ℤ × ℤ | 4 * R u * Du (Q p.1) - r ^ 2 = p.2 ^ 2}.Infinite) :
-    {x : ℤ | ∃ a b : ℤ, R (Q x) = a ^ 2 + b ^ 2}.Infinite :=
-  SumSquaresPaper.prop_2_2 u r R Q Du hRuS hRupos hTaylor hInf
-
-/-- **Proposition 2.3.**  Assume (a) either `a = 0`, or `a > 0` and `a` is not a perfect
-square; (b) `b² − 4ac ≠ 0`; and (c) equation (9), `a x² + b x + c = v²`, has an integer
-solution `(x₀, v₀)`.  Then (9) has infinitely many integer solutions `(x, v)`, with
-infinitely many distinct values of `x`. -/
-theorem prop_2_3_auxiliary_equation {a b c : ℤ} (ha : a = 0 ∨ (0 < a ∧ ¬ IsSquare a))
-    (hb : b ^ 2 - 4 * a * c ≠ 0) (x0 v0 : ℤ) (hsol : a * x0 ^ 2 + b * x0 + c = v0 ^ 2) :
-    {p : ℤ × ℤ | a * p.1 ^ 2 + b * p.1 + c = p.2 ^ 2}.Infinite ∧
-      {x : ℤ | ∃ v : ℤ, a * x ^ 2 + b * x + c = v ^ 2}.Infinite :=
-  SumSquaresPaper.prop_2_3 ha hb x0 v0 hsol
-
-/-- **Algorithm 2.4**, formal correctness statement.  The hypotheses record the data
-returned by a successful run of the search steps: an integer `u` with `R(u)` a positive sum
-of two squares, the auxiliary equation (8) written in the form `a x² + b x + c = v²`, and
-a seed solution `(x₀, v₀)` certifying condition (c).  The conclusion is the asserted
-output: `R(Q(x))` is a sum of two squares for infinitely many integers `x`. -/
-theorem algorithm_2_4_correct (u r a b c : ℤ) (R Q Du : ℤ → ℤ)
-    (hRuS : ∃ y z : ℤ, R u = y ^ 2 + z ^ 2) (hRupos : 0 < R u)
-    (hTaylor : ∀ t, R t = R u + r * (t - u) + (t - u) ^ 2 * Du t)
-    (haux : ∀ x, 4 * R u * Du (Q x) - r ^ 2 = a * x ^ 2 + b * x + c)
-    (ha : a = 0 ∨ (0 < a ∧ ¬ IsSquare a))
-    (hb : b ^ 2 - 4 * a * c ≠ 0)
-    (x0 v0 : ℤ) (hsol : a * x0 ^ 2 + b * x0 + c = v0 ^ 2) :
-    {x : ℤ | ∃ y z : ℤ, R (Q x) = y ^ 2 + z ^ 2}.Infinite :=
-  SumSquaresPaper.algorithm_2_4 u r a b c R Q Du hRuS hRupos hTaylor haux ha hb x0 v0 hsol
-
-/-- **Algorithm 4.3**, formal correctness statement.  The hypotheses record the data
-returned by a successful run of the search steps for a non-degenerate form
-`F(y,z) = A y² + B y z + C z²`: integers `u, p, q` with `R(u) = F(p,q) ≠ 0`, the auxiliary
-equation (26) written in the form (29), and a seed solution `(x₀, v₀)` satisfying the
-congruences (27).  The conclusion is the asserted output: `F(y,z) = R(Q(x))` is solvable in
-integers for infinitely many `x`. -/
-theorem algorithm_4_3_correct {A B C : ℤ} (u p q r a b c : ℤ) (R Q Du : ℤ → ℤ)
-    (hΔ : B ^ 2 - 4 * A * C ≠ 0)
-    (hm : R u = A * p ^ 2 + B * p * q + C * q ^ 2) (hmne : R u ≠ 0)
-    (hTaylor : ∀ t, R t = R u + r * (t - u) + (t - u) ^ 2 * Du t)
-    (haux : ∀ x, 4 * R u * Du (Q x) - r ^ 2 = a * x ^ 2 + b * x + c)
-    (ha : a = 0 ∨ (0 < a * (-(B ^ 2 - 4 * A * C)) ∧ ¬ IsSquare (a * (-(B ^ 2 - 4 * A * C)))))
-    (hb : b ^ 2 - 4 * a * c ≠ 0)
-    (x0 v0 : ℤ) (hsol : a * x0 ^ 2 + b * x0 + c = -(B ^ 2 - 4 * A * C) * v0 ^ 2)
-    (hcong1 : (2 * |R u|) ∣ (r * p + v0 * (B * p + 2 * C * q)))
-    (hcong2 : (2 * |R u|) ∣ (r * q - v0 * (2 * A * p + B * q))) :
-    {x : ℤ | ∃ y z : ℤ, A * y ^ 2 + B * y * z + C * z ^ 2 = R (Q x)}.Infinite :=
-  SumSquaresPaper.algorithm_4_3 u p q r a b c R Q Du hΔ hm hmne hTaylor haux ha hb x0 v0 hsol
-    hcong1 hcong2
-
-/-- **Closing discussion of Section 4 (unnumbered)**, the degenerate case.  If `Δ = B² − 4AC = 0` and
-`(A,B,C) ≠ (0,0,0)`, then there are integers `κ, r, s` with `κ ≠ 0` and `(r,s) ≠ (0,0)`
-such that `(A,B,C) = (κ r², 2 κ r s, κ s²)`, hence `F(y,z) = κ (r y + s z)²`; and for any
-polynomial `P` the equation `F(y,z) = P(x)` has infinitely many integer solutions if and
-only if there are integers `x₀, t₀` with `κ t₀² = P(x₀)` and `gcd(r,s) ∣ t₀`. -/
-theorem prop_4_5_degenerate_case {A B C : ℤ} (hΔ : B ^ 2 - 4 * A * C = 0)
-    (hABC : ¬ (A = 0 ∧ B = 0 ∧ C = 0)) (P : ℤ → ℤ) :
-    ∃ k n m : ℤ, k ≠ 0 ∧ ¬ (n = 0 ∧ m = 0) ∧
-      A = k * n ^ 2 ∧ B = 2 * k * n * m ∧ C = k * m ^ 2 ∧
-      (∀ y z : ℤ, A * y ^ 2 + B * y * z + C * z ^ 2 = k * (n * y + m * z) ^ 2) ∧
-      ({p : ℤ × ℤ × ℤ | A * p.2.1 ^ 2 + B * p.2.1 * p.2.2 + C * p.2.2 ^ 2 = P p.1}.Infinite
-        ↔ ∃ x0 t0 : ℤ, k * t0 ^ 2 = P x0 ∧ (Int.gcd n m : ℤ) ∣ t0) :=
-  SumSquaresPaper.prop_4_5 hΔ hABC P
-
-end PolynomialValuesQuadraticForms
+end Solution
