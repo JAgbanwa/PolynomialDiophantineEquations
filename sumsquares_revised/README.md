@@ -16,6 +16,12 @@ Co-authored-by: Aristotle (Harmonic) <aristotle-harmonic@harmonic.fun>
 
 # On the polynomial values represented by quadratic forms — Lean formalization
 
+Lean 4 formalization of the paper
+
+ > **On the polynomial values represented by quadratic forms**
+ > Bogdan Grechuk and Jamal Agbanwa [\[1\]](https://arxiv.org/pdf/2607.06627)
+
+
 This Lake project contains a complete Lean 4 (Mathlib) formalization of the main results of
 the paper *On the polynomial values represented by quadratic forms* by Bogdan Grechuk and
 Jamal Agbanwa (`On_the_polynomial_values_represented_by_quadratic_forms_new.pdf`, included in
@@ -379,7 +385,7 @@ each command, no output together with exit status `0` means that the file was
 accepted with no errors or warnings.
 
 
-### 10. Full comparator verification
+### 9. Full comparator verification
 
 Use the verified checkout from Step 3 for all commands in this section.
 
@@ -408,55 +414,15 @@ On a compatible Linux x86-64 system, the complete comparator can be run with:
 bash verify.sh
 ```
 
-# On the polynomial values represented by quadratic forms — Lean formalization
 
-Lean 4 formalization of the paper
+## Licence
 
-> **On the polynomial values represented by quadratic forms**
-> Bogdan Grechuk and Jamal Agbanwa [\[1\]](https://arxiv.org/pdf/2607.06627)
-
-The development proves, with no `sorry` and no added `axiom`, that `x⁶ − 4` is a sum of
-two squares for infinitely many integers `x`, and hence that the Diophantine equation
-`y² + x³y + z² + 1 = 0` has infinitely many integer solutions (Corollary 3.1), together
-with the four further length-9 equations of Corollary 3.2, the general theory of
-Section 4 (Propositions 4.1, 4.2, 4.4, Algorithms 2.4 and 4.3, non-multiplicativity of
-`2y² + yz + 2z²`, and the degenerate case `B² − 4AC = 0`), and the supporting machinery
-(property (*) of the sums of two squares, Gauss's theorem on generalised Pell equations
-and a residue-controlled refinement of it).
+No `LICENSE` file has been added: the choice of licence is for the authors. A registry
+submission expects a licence file at the repository root, and `project.license` in
+`formalization.yaml` should then be updated to match it.
 
 
 
-## Layout
-
-
-in the supplied marked manuscript dated 6 September 2026 are:
-
-| Stable Lean declaration | Marked manuscript reference |
-| --- | --- |
-| `equation_14_infinite` | Equation (13), Corollary 3.2 |
-| `equation_15_infinite` | Equation (14), Corollary 3.2 |
-| `equation_16_infinite` | Equation (15), Corollary 3.2 |
-| `equation_17_infinite` | Equation (16), Corollary 3.2 |
-| `prop_4_5_degenerate_case` | Unnumbered closing discussion of Section 4, equation (32) |
-
-## Building
-
-The manuscript's verified source is commit
-`f3203621e90e5b1b087ca473ba8e8a7a2856b009`. To reproduce that build, run the
-following from the repository root:
-
-```sh
-git fetch origin f3203621e90e5b1b087ca473ba8e8a7a2856b009
-git checkout --detach f3203621e90e5b1b087ca473ba8e8a7a2856b009
-cd sumsquares_revised
-lake exe cache get   # optional: fetch prebuilt Mathlib oleans
-lake build RequestProject Solution  # warnings are errors for proved targets
-```
-
-This selects the exact checked source as well as its pinned dependencies. See
-[SNAPSHOT.md](SNAPSHOT.md) for the immutable project and proof links. Continue
-using these instructions after checkout; documentation inside the historical
-commit predates this correction.
 
 ## Independent verification with `comparator`
 
@@ -478,120 +444,4 @@ Only the Lean kernel, Mathlib, `Challenge.lean` and comparator itself have to be
 Setting `"enable_nanoda": true` in `comparator.json` additionally re-checks the proofs
 with the independent `nanoda` kernel, which must then be on `PATH`.
 
-## Axioms
 
-Every theorem in `RequestProject/Main.lean` and `Solution.lean` depends only on the three
-standard Lean axioms `propext`, `Classical.choice` and `Quot.sound`. In particular no
-proof uses `native_decide`, so `Lean.ofReduceBool` does not appear: the four
-non-squareness facts needed in Section 3 (`a = 17006096, 8320, 208, 80`) are proved from
-the bounds given in the paper (for instance `4123² < 17006096 < 4124²`) by the elementary
-lemma `SumSquaresPaper.not_isSquare_of_between` together with `norm_num`.
-
-You can check this yourself:
-
-```sh
-echo 'import Solution
-#print axioms PolynomialValuesQuadraticForms.equation_2_infinite' > /tmp/axioms.lean
-lake env lean /tmp/axioms.lean
-```
-
-## Proof organization
-
-The formalized statements are the paper's statements. The implementation records
-proof-engineering details in the module docstring of `RequestProject/Main.lean` and in
-`formalization.yaml`:
-
-* **Proposition 4.2** in the revised manuscript substitutes `v = v₀ + 2mw`. For
-  `a ≠ 0`, it applies the published conic theorem [11, Proposition 3.14]; the case
-  `a = 0` is handled directly. The Lean proof also treats the linear case directly
-  and, for `a ≠ 0`, completes the square and uses the residue-controlled Pell lemma
-  `genPell_infinite_cong`. The Lean statement also records that the non-degeneracy assumption
-  `Δ ≠ 0` is not needed for Proposition 4.2 itself.
-* **Proposition 4.4** is verified directly from the explicit polynomial families given in
-  the paper (by `ring`), rather than by re-running the tangent construction.
-
-In addition, Gauss's theorem on generalised Pell equations, quoted in the paper from
-[11, Proposition 5.4], is proved from scratch here rather than assumed.
-
-## Licence
-
-No `LICENSE` file has been added: the choice of licence is for the authors. A registry
-submission expects a licence file at the repository root, and `project.license` in
-`formalization.yaml` should then be updated to match it.
-
-## Credits
-
-The Lean proofs were produced with [Aristotle](https://aristotle.harmonic.fun) (Harmonic).
-
-To cite Aristotle:
-- Tag @Aristotle-Harmonic on GitHub PRs/issues
-- Add as co-author to commits:
-```
-Co-authored-by: Aristotle (Harmonic) <aristotle-harmonic@harmonic.fun>
-```
-
-
-
-### 9. About the `sorry` warnings
-
-The default `lake build` builds `RequestProject` and `Solution` with warnings treated
-as errors. It does not build the statement-only `Challenge` module. Running
-`lake build Challenge` or the comparator script reports sixteen warnings from
-`Challenge.lean`, for example:
-
-```text
-warning: Challenge.lean:52:8: declaration uses `sorry`
-```
-
-These warnings are intentional and do not indicate a failed build.
-
-`Challenge.lean` is the statement interface used by the comparator. It contains one placeholder for each of the sixteen declarations being verified. The actual proofs are supplied by `RequestProject/Main.lean` and exposed through `Solution.lean`.
-
-The CI workflow checks that:
-
-1. the trusted proof sources contain no `sorry`, `admit`, or added axiom declarations;
-2. the complete Lean project builds;
-3. all sixteen declarations in `Solution.lean` match the corresponding declarations in `Challenge.lean`;
-4. only the permitted foundational axioms are used.
-
-Therefore, the expected default build has no warnings. The separate comparator
-run builds `Challenge` and reports sixteen deliberate statement-placeholder
-warnings; its success is confirmed by `Your solution is okay!`.
-
-
-
-### 11. Reproducing the verified build again
-
-From the repository root, select the same verified source:
-
-```bash
-git fetch origin f3203621e90e5b1b087ca473ba8e8a7a2856b009
-git checkout --detach f3203621e90e5b1b087ca473ba8e8a7a2856b009
-cd sumsquares_revised
-```
-
-Then refresh the cache and rebuild:
-
-```bash
-lake exe cache get
-lake build
-lake env lean -DwarningAsError=true RequestProject/Main.lean
-lake env lean -DwarningAsError=true Solution.lean
-```
-
-A build of a later `main` revision tests different source code. For reproduction
-of the manuscript's verification, keep the commit above and the committed
-dependency manifest.
-
-A successful reproduction has the exact HEAD recorded in Step 4, successful
-exit statuses for both strict checks, and:
-
-```text
-Build completed successfully
-```
-
-is reported and the final exit status is:
-
-```text
-0
-```
