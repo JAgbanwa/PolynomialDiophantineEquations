@@ -145,21 +145,7 @@ revisions against which the proofs were checked.
 
 ## Layout
 
-| Path | Contents |
-| --- | --- |
-| `RequestProject.lean`, `RequestProject/Main.lean` | the proof development: all definitions, lemmas and theorems |
-| `Challenge.lean` | the small, human-auditable statement surface: the paper's main results, stated using Mathlib alone |
-| `Solution.lean` | the same declarations, with the same names and types, proved from the development |
-| `comparator.json` | the [comparator](https://github.com/leanprover/comparator) configuration naming the compared declarations and the permitted axioms |
-| `formalization.yaml` | project metadata in the `mathlib-initiative` `formalization.yaml` v0.4 format |
-| `verify.sh` | independent verification of `Challenge.lean` against `Solution.lean` with `comparator` |
 
-`Challenge.lean` contains one deliberate `sorry` per advertised statement: by the
-comparator convention that file advertises statements only, and `Solution.lean` supplies
-the proofs. There is no `sorry` anywhere else in the project, and no `axiom` declaration
-at all.
-
-The Lean declaration names retain the numbering of an earlier draft. Their references
 in the supplied marked manuscript dated 6 September 2026 are:
 
 | Stable Lean declaration | Marked manuscript reference |
