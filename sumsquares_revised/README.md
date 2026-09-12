@@ -1,5 +1,12 @@
 This project was edited by [Aristotle](https://aristotle.harmonic.fun).
 
+> Current checkout: `bash verify.sh` builds and audits all proof sources, then checks
+> the axiom dependencies of every definition and theorem in `comparator.json`.
+> It requires Python 3 and Lean, and exits unsuccessfully for missing audit results
+> or axioms outside the configured standard allowlist. It does not currently run
+> the sandboxed comparator; comparator instructions below refer to historical snapshots.
+
+
 To cite Aristotle:
 - Tag @Aristotle-Harmonic on GitHub PRs/issues
 - Add as co-author to commits:

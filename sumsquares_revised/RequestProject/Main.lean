@@ -72,7 +72,7 @@ private theorem infinite_sdiff_of_finite {α : Type*} {s t : Set α} (hs : s.Inf
   intro x hx
   by_cases hxt : x ∈ t
   · exact Set.mem_union_right _ hxt
-  · exact Set.mem_union_left _ (Set.mem_sdiff_of_mem hx hxt)
+  · exact Set.mem_union_left _ ⟨hx, hxt⟩
 
 namespace PolyQF
 
