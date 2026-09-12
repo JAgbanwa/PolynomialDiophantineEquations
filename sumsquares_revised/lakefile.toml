@@ -1,6 +1,5 @@
 name = "RequestProject"
-version = "0.1.0"
-defaultTargets = ["RequestProject", "Solution"]
+defaultTargets = ["RequestProject", "Challenge", "Solution"]
 
 [[require]]
 name = "mathlib"
@@ -9,15 +8,9 @@ rev = "v4.28.0"
 
 [[lean_lib]]
 name = "RequestProject"
-globs = ["RequestProject", "RequestProject.*"]
-leanOptions = {warningAsError = true}
 
 [[lean_lib]]
 name = "Challenge"
-roots = ["Challenge"]
 
 [[lean_lib]]
 name = "Solution"
-roots = ["Solution"]
-leanOptions = {warningAsError = true}
-
