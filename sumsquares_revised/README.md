@@ -378,6 +378,36 @@ Lean may return directly to the Terminal prompt without printing anything. For
 each command, no output together with exit status `0` means that the file was
 accepted with no errors or warnings.
 
+
+### 10. Full comparator verification
+
+Use the verified checkout from Step 3 for all commands in this section.
+
+The project includes:
+
+```text
+verify.sh
+```
+
+This script runs a pinned Lean comparator and `lean4export` inside the `landrun` sandbox.
+
+The supplied verifier uses a Linux x86-64 `landrun` executable and should not be run directly on macOS. On macOS, use:
+
+```bash
+lake build
+lake env lean Solution.lean
+```
+
+The full sandboxed comparator is run automatically by GitHub Actions:
+
+[View the Sumsquares revised CI workflow](https://github.com/JAgbanwa/PolynomialDiophantineEquations/actions/workflows/sumsquares-revised-ci.yml)
+
+On a compatible Linux x86-64 system, the complete comparator can be run with:
+
+```bash
+bash verify.sh
+```
+
 # On the polynomial values represented by quadratic forms — Lean formalization
 
 Lean 4 formalization of the paper
@@ -528,34 +558,7 @@ Therefore, the expected default build has no warnings. The separate comparator
 run builds `Challenge` and reports sixteen deliberate statement-placeholder
 warnings; its success is confirmed by `Your solution is okay!`.
 
-### 10. Full comparator verification
 
-Use the verified checkout from Step 3 for all commands in this section.
-
-The project includes:
-
-```text
-verify.sh
-```
-
-This script runs a pinned Lean comparator and `lean4export` inside the `landrun` sandbox.
-
-The supplied verifier uses a Linux x86-64 `landrun` executable and should not be run directly on macOS. On macOS, use:
-
-```bash
-lake build
-lake env lean Solution.lean
-```
-
-The full sandboxed comparator is run automatically by GitHub Actions:
-
-[View the Sumsquares revised CI workflow](https://github.com/JAgbanwa/PolynomialDiophantineEquations/actions/workflows/sumsquares-revised-ci.yml)
-
-On a compatible Linux x86-64 system, the complete comparator can be run with:
-
-```bash
-bash verify.sh
-```
 
 ### 11. Reproducing the verified build again
 
