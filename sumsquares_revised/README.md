@@ -18,6 +18,19 @@ All proofs are complete: the source contains no `sorry`, no `axiom` declarations
 `@[implemented_by]` attributes, and the main theorems depend only on the standard Lean
 axioms `propext`, `Classical.choice` and `Quot.sound`.
 
+## Versions
+
+The project pins its dependencies exactly, so builds use the recorded Lean and Mathlib versions:
+
+| Component | Version |
+| --- | --- |
+| Lean toolchain | `leanprover/lean4:v4.28.0` (see `lean-toolchain`) |
+| Mathlib | tag `v4.28.0`, commit `8f9d9cff6bd728b17a24e163c9402775d9e6a365` (see `lakefile.toml` and `lake-manifest.json`) |
+
+`lake-manifest.json` is committed, so `lake build` reconstructs exactly the dependency
+revisions against which the proofs were checked.
+
+
 ## Layout
 
 The project is a standard Lake project with three Lean targets, declared in `lakefile.toml`:
@@ -131,17 +144,7 @@ Section 4 (Propositions 4.1, 4.2, 4.4, Algorithms 2.4 and 4.3, non-multiplicativ
 (property (*) of the sums of two squares, Gauss's theorem on generalised Pell equations
 and a residue-controlled refinement of it).
 
-## Versions
 
-The project pins its dependencies exactly, so builds use the recorded Lean and Mathlib versions:
-
-| Component | Version |
-| --- | --- |
-| Lean toolchain | `leanprover/lean4:v4.28.0` (see `lean-toolchain`) |
-| Mathlib | tag `v4.28.0`, commit `8f9d9cff6bd728b17a24e163c9402775d9e6a365` (see `lakefile.toml` and `lake-manifest.json`) |
-
-`lake-manifest.json` is committed, so `lake build` reconstructs exactly the dependency
-revisions against which the proofs were checked.
 
 ## Layout
 
