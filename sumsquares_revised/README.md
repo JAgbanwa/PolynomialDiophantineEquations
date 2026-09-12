@@ -1,3 +1,120 @@
+This project was edited by [Aristotle](https://aristotle.harmonic.fun).
+
+To cite Aristotle:
+- Tag @Aristotle-Harmonic on GitHub PRs/issues
+- Add as co-author to commits:
+```
+Co-authored-by: Aristotle (Harmonic) <aristotle-harmonic@harmonic.fun>
+```
+
+# On the polynomial values represented by quadratic forms — Lean formalization
+
+This Lake project contains a complete Lean 4 (Mathlib) formalization of the main results of
+the paper *On the polynomial values represented by quadratic forms* by Bogdan Grechuk and
+Jamal Agbanwa (`On_the_polynomial_values_represented_by_quadratic_forms_new.pdf`, included in
+this repository).
+
+All proofs are complete: the source contains no `sorry`, no `axiom` declarations and no
+`@[implemented_by]` attributes, and the main theorems depend only on the standard Lean
+axioms `propext`, `Classical.choice` and `Quot.sound`.
+
+## Layout
+
+The project is a standard Lake project with three Lean targets, declared in `lakefile.toml`:
+`RequestProject` (the development), `Challenge` (self-contained statements of the main
+results) and `Solution` (their proofs).
+
+| File | Contents |
+| --- | --- |
+| `RequestProject.lean` | The complete development (see the section list below). |
+| `Challenge.lean` | Self-contained statements of the main results of the paper, phrased purely in Mathlib terms (`import Mathlib` only). |
+| `Solution.lean` | A proof of every `Challenge` statement, from the development. |
+| `formalization.yaml` | Correspondence between the numbered results of the paper and the Lean declarations, plus the responses to the referee's Lean comments. |
+| `comparator.json` | Machine-readable list of the formalized theorem and definition names, entry modules and toolchain revisions. |
+| `verify.sh` | Builds the project and checks that no placeholders or extra axioms are used. |
+| `SNAPSHOT.md` | Toolchain and dependency revisions, and the state of the verification. |
+| `lean-toolchain`, `lake-manifest.json` | The exact Lean version (`leanprover/lean4:v4.28.0`) and the pinned revisions of Mathlib and its dependencies. |
+
+Inside `RequestProject.lean` the material appears in the following order:
+
+| Part | Contents |
+| --- | --- |
+| The set `S₂` | Positive integers that are sums of two squares, and property `(*)` of Section 2 (multiplication and cancellation). |
+| Pell engine | For a positive non-square `A`, `D ≠ 0` and any modulus `N ≠ 0`, one integer solution of `X² − A V² = D` produces infinitely many with prescribed residues of `X` and `V` modulo `N`. |
+| Tools | Squares modulo 4, parity of the two squares in a representation, a non-square criterion, and a transfer lemma for infinite sets. |
+| Section 2 | Identity (6) (existence and uniqueness of `Dᵤ`), identity (7), Proposition 2.2 and Proposition 2.3. |
+| Section 3 (core) | Algorithm 2.4 specialised to `R(t) = t³ + f` with `Q(x) = x²` and with `Q(w) = 4w²`. |
+| Section 3 | `x⁶ + f ∈ S₂` infinitely often for `f ∈ {8, 5, −3, −4}`, Corollary 3.1 and Corollary 3.2. |
+| Section 4 | The tangent-line construction, Proposition 4.1, Proposition 4.2, Proposition 4.4, non-multiplicativity of `2y² + yz + 2z²`, and the degenerate case `Δ = 0`. |
+| `PolyQF.Main` | The main results of the paper, collected in one place. |
+
+## Main results
+
+* `PolyQF.S2_star` — property `(*)`: for positive `a, b`, if `S₂` contains two of `a`, `b`,
+  `ab`, it contains all three.
+* `PolyQF.exists_unique_taylorQuot` — identity (6); `PolyQF.identity_seven` — identity (7).
+* `PolyQF.prop_2_2` — Proposition 2.2.
+* `PolyQF.prop_2_3` — Proposition 2.3 (and `PolyQF.prop_2_3_pairs` for the solution set).
+* `PolyQF.S2_x6_sub_4_infinite` — `x⁶ − 4` is a sum of two squares infinitely often.
+* `PolyQF.cor_3_1` — equation (2), `y² + x³y + z² + 1 = 0`, has infinitely many integer
+  solutions.
+* `PolyQF.cor_3_2_eq13`, `PolyQF.cor_3_2_eq14`, `PolyQF.cor_3_2_eq15`,
+  `PolyQF.cor_3_2_eq16` — Corollary 3.2 for equations (13)–(16).
+* `PolyQF.prop_4_1`, `PolyQF.prop_4_2`, `PolyQF.prop_4_4_a`, `PolyQF.prop_4_4_b` — the
+  results of Section 4, together with `PolyQF.degenerate_disc_zero` and
+  `PolyQF.BQF_two_one_two_not_represents_four`.
+
+## Conventions and remarks on the formalization
+
+* "Infinitely many" is rendered as `Set.Infinite` of the corresponding solution set. For the
+  auxiliary equations, both the set of solutions `(x, v)` and the set of `x`-coordinates are
+  shown to be infinite, matching the wording of Propositions 2.2, 2.3 and 4.1.
+* `S₂` is `PolyQF.S2 n := 0 < n ∧ ∃ y z : ℤ, n = y ^ 2 + z ^ 2`. The cancellation half of
+  property `(*)` uses Fermat's characterization of sums of two squares, available in Mathlib
+  as `Nat.eq_sq_add_sq_iff`.
+* Proposition 2.3 and Proposition 4.2 are both deduced from the single Pell-type statement
+  `PolyQF.pell_solutions_infinite`, which is proved from Mathlib's
+  `Pell.exists_of_not_isSquare` by multiplying a given solution by a unit congruent to `1`
+  modulo the required modulus.
+* In Proposition 4.1 the tangent-line coefficients `λ, μ` of (25) are introduced as integers
+  satisfying `2mλ = rp + v(Bp + 2Cq)` and `2mμ = rq − v(2Ap + Bq)`; the congruences (27) are
+  exactly what guarantees that such integers exist. `PolyQF.congr_27_of_congr` shows that
+  the conclusion of Proposition 4.2 (a congruence `v ≡ v₀ mod 2m`) delivers hypothesis (27)
+  of Proposition 4.1.
+* Proposition 4.4 is proved by exhibiting the explicit polynomial families given in the
+  paper and checking that they satisfy the equations identically (by `ring`), rather than by
+  re-running the tangent-line construction; the construction itself is formalized separately
+  in `PolyQF.prop_4_1`.
+* The Lean proof of Proposition 4.2 does not use Gauss's theorem ([11, Proposition 3.14] of
+  the paper) for the conic (30): it completes the square and applies the residue-controlled
+  Pell statement `PolyQF.pell_solutions_infinite`, which already produces the solutions in a
+  prescribed residue class modulo `2m`. The hypothesis `Δ ≠ 0` is not needed for
+  Proposition 4.2 itself. Both points are recorded in the docstrings.
+* No `native_decide` (or any other tactic introducing a non-standard axiom) is used. The four
+  non-squareness facts of Section 3 (`a = 17006096, 8320, 208, 80`) are proved from the bounds
+  stated in the paper (`4123² < a < 4124²`, `91² < a < 92²`, `14² < a < 15²`, `8² < a < 9²`)
+  via `PolyQF.not_isSquare_of_between` and `norm_num`.
+* Bibliographic citations in the Lean docstrings follow the final bibliography of the paper;
+  in particular Gauss's theorem is cited as [11, Proposition 3.14].
+* The relation between Section 2 and the general theory of Section 4 — the multiplicativity of
+  `y² + z²` and its failure for a general form — is discussed in the "Comparison with
+  Section 2" part of `RequestProject.lean`.
+* The file opens with three `private` wrapper lemmas (`mem_setOf_eq'`, `finite_setOf_isRoot'`,
+  `infinite_sdiff_of_finite`) that stand in for Mathlib results whose names differ between
+  Mathlib versions. They are used in place of those library names so that the file elaborates
+  with no deprecation warnings on recent Mathlib releases as well.
+* Statements of the paper that are prose (Algorithms 2.4 and 4.3, Table 1, and the
+  remarks quoting the literature) have no separate Lean counterpart; the mathematical
+  content used in the proofs is formalized in the propositions listed above.
+
+## Building
+
+```bash
+lake exe cache get   # optional, fetches Mathlib build artifacts
+lake build
+./verify.sh
+```
+
 # On the polynomial values represented by quadratic forms — Lean formalization
 
 Lean 4 formalization of the paper
