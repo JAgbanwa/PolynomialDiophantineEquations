@@ -6,11 +6,22 @@ paper:
   file: "On_the_polynomial_values_represented_by_quadratic_forms_new.pdf"
 
 project:
+  name: "RequestProject"
   lean_toolchain: "leanprover/lean4:v4.28.0"
   mathlib_rev: "v4.28.0"
+  mathlib_commit: "8f9d9cff6bd728b17a24e163c9402775d9e6a365"
+  lake_targets:
+    - "RequestProject"
+    - "Challenge"
+    - "Solution"
   entry_point: "RequestProject.lean"
-  self_contained_statements: "RequestProject.lean (namespace Challenge)"
-  solutions: "RequestProject.lean (namespace Solution)"
+  self_contained_statements: "Challenge.lean (namespace Challenge)"
+  solutions: "Solution.lean (namespace Solution)"
+  verification: "verify.sh"
+  allowed_axioms:
+    - "propext"
+    - "Classical.choice"
+    - "Quot.sound"
 
 definitions:
   - name: "PolyQF.S2"
@@ -135,6 +146,83 @@ results:
     name: "PolyQF.four_mul_sum_two_squares_not_represents_one"
     file: "RequestProject.lean"
     status: "proved"
+
+challenge:
+  file: "Challenge.lean"
+  description: >-
+    Self-contained statements of the main results of the paper, phrased using only Mathlib
+    notions (no dependency on the development in RequestProject.lean).  Each statement is
+    proved in Solution.lean from the corresponding result of the development.
+  statements:
+    - name: "Challenge.PropertyStar"
+      paper_reference: "Section 2, property (*)"
+      solution: "Solution.property_star"
+    - name: "Challenge.Proposition23"
+      paper_reference: "Proposition 2.3"
+      solution: "Solution.proposition_23"
+    - name: "Challenge.SumTwoSquaresSixthPower"
+      paper_reference: "Section 3, x⁶ − 4 is a sum of two squares infinitely often"
+      solution: "Solution.sumTwoSquaresSixthPower"
+    - name: "Challenge.Equation2"
+      paper_reference: "Corollary 3.1, equation (2)"
+      solution: "Solution.equation2"
+    - name: "Challenge.Equation13"
+      paper_reference: "Corollary 3.2, equation (13)"
+      solution: "Solution.equation13"
+    - name: "Challenge.Equation14"
+      paper_reference: "Corollary 3.2, equation (14)"
+      solution: "Solution.equation14"
+    - name: "Challenge.Equation15"
+      paper_reference: "Corollary 3.2, equation (15)"
+      solution: "Solution.equation15"
+    - name: "Challenge.Equation16"
+      paper_reference: "Corollary 3.2, equation (16)"
+      solution: "Solution.equation16"
+    - name: "Challenge.Equation31a"
+      paper_reference: "Proposition 4.4 (a), equation (31)(a)"
+      solution: "Solution.equation31a"
+    - name: "Challenge.Equation31b"
+      paper_reference: "Proposition 4.4 (b), equation (31)(b)"
+      solution: "Solution.equation31b"
+    - name: "Challenge.FormNotMultiplicative"
+      paper_reference: "Section 4, 2y² + yz + 2z² represents 2 but not 4"
+      solution: "Solution.formNotMultiplicative"
+    - name: "Challenge.DegenerateForms"
+      paper_reference: "Section 4, degenerate case Δ = 0"
+      solution: "Solution.degenerateForms"
+
+referee_report_responses:
+  - point: "L1"
+    response: >-
+      The project is a standard Lake project (lakefile.toml, lean-toolchain, lake-manifest.json)
+      with three targets: RequestProject (the development), Challenge (self-contained statements
+      of the main results) and Solution (their proofs).  formalization.yaml and comparator.json
+      describe the paper ↔ Lean correspondence, and SNAPSHOT.md records the exact Lean and
+      Mathlib revisions used.
+  - point: "L2, native_decide"
+    response: >-
+      No native_decide (or any other tactic adding a non-standard axiom) is used.  The four
+      non-squareness facts (a = 17006096, 8320, 208, 80) are proved from the bounds stated in
+      the paper via PolyQF.not_isSquare_of_between and norm_num.  Every listed result depends
+      only on propext, Classical.choice and Quot.sound.
+  - point: "L2, Proposition 4.2"
+    response: >-
+      The docstring of PolyQF.prop_4_2 now states that the Lean proof replaces Gauss's theorem
+      for the conic (30) by the residue-controlled Pell statement
+      PolyQF.pell_solutions_infinite, and that Δ ≠ 0 is not needed for the proposition itself.
+  - point: "L2, Proposition 4.4"
+    response: >-
+      The docstrings of PolyQF.prop_4_4_a and PolyQF.prop_4_4_b state that these are verified
+      directly from the explicit polynomial families by ring, not via the tangent construction
+      (which is formalized separately in PolyQF.prop_4_1).
+  - point: "L2, references"
+    response: >-
+      Citations in the Lean docstrings follow the final bibliography of the paper; Gauss's
+      theorem is cited as [11, Proposition 3.14].
+  - point: "S2"
+    response: >-
+      The section 'Comparison with Section 2' in RequestProject.lean explains the role of
+      multiplicativity of y² + z² and why a general form requires the congruence conditions (27).
 
 not_formalized:
   - "Algorithm 2.4 and Algorithm 4.3 are described in prose; their mathematical content is
