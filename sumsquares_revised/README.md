@@ -1,447 +1,214 @@
-This project was edited by [Aristotle](https://aristotle.harmonic.fun).
-
-> Current checkout: `bash verify.sh` builds and audits all proof sources, then checks
-> the axiom dependencies of every definition and theorem in `comparator.json`.
-> It requires Python 3 and Lean, and exits unsuccessfully for missing audit results
-> or axioms outside the configured standard allowlist. It does not currently run
-> the sandboxed comparator; comparator instructions below refer to historical snapshots.
-
-
-To cite Aristotle:
-- Tag @Aristotle-Harmonic on GitHub PRs/issues
-- Add as co-author to commits:
-```
-Co-authored-by: Aristotle (Harmonic) <aristotle-harmonic@harmonic.fun>
-```
-
 # On the polynomial values represented by quadratic forms — Lean formalization
 
-Lean 4 formalization of the paper
+This Lake project formalizes the results listed below from *On the polynomial values
+represented by quadratic forms* by Bogdan Grechuk and Jamal Agbanwa
+([arXiv:2607.06627](https://arxiv.org/abs/2607.06627)). It includes the proof that
+`x⁶ − 4` is a sum of two squares for infinitely many integers `x`, the five
+Diophantine equations of Corollaries 3.1 and 3.2 with infinitely many integer solutions,
+and results about general
+binary quadratic forms.
 
- > **On the polynomial values represented by quadratic forms**
- > Bogdan Grechuk and Jamal Agbanwa [\[1\]](https://arxiv.org/pdf/2607.06627)
+## Verified source and scope
 
+The source snapshot
+[`00743362664f95bc747ad9d960499094de7293eb`](https://github.com/JAgbanwa/PolynomialDiophantineEquations/commit/00743362664f95bc747ad9d960499094de7293eb)
+passed both jobs in
+[GitHub Actions run 34689054241](https://github.com/JAgbanwa/PolynomialDiophantineEquations/actions/runs/34689054241)
+on 12 September 2026:
 
-This Lake project contains a complete Lean 4 (Mathlib) formalization of the main results of
-the paper *On the polynomial values represented by quadratic forms* by Bogdan Grechuk and
-Jamal Agbanwa (`On_the_polynomial_values_represented_by_quadratic_forms_new.pdf`, included in
-this repository).
+- The complete Lake project built successfully.
+- All four project Lean files elaborated with no errors or warnings.
+- The proof-source scan passed, and the axiom audit passed for all **28 listed theorems
+  and 16 listed definitions** in [comparator.json](comparator.json).
+- Every audited declaration used only a subset of `propext`, `Classical.choice`, and
+  `Quot.sound`. The verification script ended with `ALL CHECKS PASSED`.
 
-All proofs are complete: the source contains no `sorry`, no `axiom` declarations and no
-`@[implemented_by]` attributes, and the main theorems depend only on the standard Lean
-axioms `propext`, `Classical.choice` and `Quot.sound`.
+These results apply to that exact snapshot. The
+[current CI history](https://github.com/JAgbanwa/PolynomialDiophantineEquations/actions/workflows/sumsquares-revised-ci.yml)
+records checks of later commits.
 
-## Versions
+The mathematical scope is the statements expressed in the Lean files. Compiling them
+checks their proofs, but does not itself verify their correspondence with every sentence
+or every version of the manuscript. Algorithms 2.4 and 4.3 are represented through their
+supporting propositions and worked instances; there is no separate general algorithm
+correctness theorem. Table 1 and bibliographic discussion are not separate formal results.
 
-The project pins its dependencies exactly, so builds use the recorded Lean and Mathlib versions:
+## Project layout
 
-| Component | Version |
+[lakefile.toml](lakefile.toml) declares three default library targets:
+`RequestProject`, `Challenge`, and `Solution`.
+
+| File | Role |
 | --- | --- |
-| Lean toolchain | `leanprover/lean4:v4.28.0` (see `lean-toolchain`) |
-| Mathlib | tag `v4.28.0`, commit `8f9d9cff6bd728b17a24e163c9402775d9e6a365` (see `lakefile.toml` and `lake-manifest.json`) |
+| [RequestProject/Main.lean](RequestProject/Main.lean) | The mathematical development in `PolyQF`, followed by the main result statements in `PolyQF.Main`. |
+| [RequestProject.lean](RequestProject.lean) | The entry point: it imports `RequestProject.Main`. |
+| [Challenge.lean](Challenge.lean) | Twelve result statements defined as propositions, plus the `IsSumTwoSquares` predicate. It imports only `Mathlib` and contains no placeholder proofs. |
+| [Solution.lean](Solution.lean) | Proofs of all twelve `Challenge` result statements, plus an equivalence lemma for the sum-of-two-squares predicates. |
+| [comparator.json](comparator.json) | The verification manifest: 16 `PolyQF.Main` theorems, 12 `Solution` theorems, 16 definitions, and the allowed axiom names. |
+| [verify.sh](verify.sh) | The build, proof-source, and axiom audit described below. |
+| [formalization.yaml](formalization.yaml) | A catalog of results, numbered references, and notes addressing the referee's formalization comments. |
+| [SNAPSHOT.md](SNAPSHOT.md) | Additional dependency and verification notes. The immutable source and successful run are linked above. |
+| [lean-toolchain](lean-toolchain), [lake-manifest.json](lake-manifest.json) | The Lean toolchain and exact dependency revisions. |
 
-`lake-manifest.json` is committed, so `lake build` reconstructs exactly the dependency
-revisions against which the proofs were checked.
+`Challenge.lean` defines propositions; it does not assume them as axioms. For example,
+`Solution.equation2` has type `Challenge.Equation2`, and Lean checks its proof against
+that type when compiling `Solution.lean`.
 
+## Mathematical results
 
-## Layout
+The numbering below follows the **current Lean source and result catalog**. Use the
+explicit statements when comparing with a manuscript version whose numbering differs.
 
-The project is a standard Lake project with three Lean targets, declared in `lakefile.toml`:
-`RequestProject` (the development), `Challenge` (self-contained statements of the main
-results) and `Solution` (their proofs).
-
-| File | Contents |
+| Result | Lean declaration |
 | --- | --- |
-| `RequestProject.lean` | The complete development (see the section list below). |
-| `Challenge.lean` | Self-contained statements of the main results of the paper, phrased purely in Mathlib terms (`import Mathlib` only). |
-| `Solution.lean` | A proof of every `Challenge` statement, from the development. |
-| `formalization.yaml` | Correspondence between the numbered results of the paper and the Lean declarations, plus the responses to the referee's Lean comments. |
-| `comparator.json` | Machine-readable list of the formalized theorem and definition names, entry modules and toolchain revisions. |
-| `verify.sh` | Builds the project and checks that no placeholders or extra axioms are used. |
-| `SNAPSHOT.md` | Toolchain and dependency revisions, and the state of the verification. |
-| `lean-toolchain`, `lake-manifest.json` | The exact Lean version (`leanprover/lean4:v4.28.0`) and the pinned revisions of Mathlib and its dependencies. |
+| Property (*): for positive `a, b`, membership of two of `a`, `b`, `ab` in `S₂` implies membership of the third | `PolyQF.S2_star` |
+| Identity (6): existence and uniqueness of the Taylor quotient `Dᵤ` | `PolyQF.exists_unique_taylorQuot` |
+| Identity (7) | `PolyQF.identity_seven` |
+| Proposition 2.2 | `PolyQF.Main.proposition_2_2` |
+| Proposition 2.3: infinitely many `x` satisfying the quadratic equation under its stated hypotheses | `PolyQF.Main.proposition_2_3` |
+| `x⁶ − 4` is a sum of two squares infinitely often | `PolyQF.Main.x_pow_six_sub_four_sum_two_squares` |
+| Proposition 4.1: the general quadratic-form construction under its stated hypotheses | `PolyQF.Main.proposition_4_1` |
+| Proposition 4.2: infinitely many solution pairs `(x, v)` with `2m ∣ v − v₀`, under its stated hypotheses | `PolyQF.Main.proposition_4_2` |
+| `2y² + yz + 2z²` represents `2` but not `4` | `PolyQF.Main.form_2_1_2_not_multiplicative` |
+| A form with discriminant zero is `k(ny + mz)²` for integer `k, n, m` | `PolyQF.Main.degenerate_case` |
 
-Inside `RequestProject.lean` the material appears in the following order:
+Each equation in the following table has an infinite set of integer triples `(x, y, z)`:
 
-| Part | Contents |
+| Reference in the source | Equation | Lean declaration |
+| --- | --- | --- |
+| Corollary 3.1, (2) | `y² + x³y + z² + 1 = 0` | `PolyQF.Main.equation_2_infinite` |
+| Corollary 3.2, (13) | `y² + x³y + z² − 2 = 0` | `PolyQF.Main.equation_13_infinite` |
+| Corollary 3.2, (14) | `y² + x³y + z² + z − 1 = 0` | `PolyQF.Main.equation_14_infinite` |
+| Corollary 3.2, (15) | `y² + x³y + z² + z + 1 = 0` | `PolyQF.Main.equation_15_infinite` |
+| Corollary 3.2, (16) | `y² + x³y + y + z² + 1 = 0` | `PolyQF.Main.equation_16_infinite` |
+| Proposition 4.4(a), (31)(a) | `2y² + yz + 2z² = x³ + 1` | `PolyQF.Main.equation_31a_infinite` |
+| Proposition 4.4(b), (31)(b) | `2y² + yz + 2z² = x³ − 1` | `PolyQF.Main.equation_31b_infinite` |
+
+The development also proves the even-`x` families for `x⁶ + 8`, `x⁶ + 5`, and `x⁶ − 3`,
+and the example that `4(y² + z²)` represents `4` but not `1`.
+
+### Proof organization and conventions
+
+- `PolyQF.S2 n` means `0 < n ∧ ∃ y z : ℤ, n = y ^ 2 + z ^ 2`.
+  “Infinitely many” is expressed using `Set.Infinite`. Proposition 2.3 has both an
+  infinite-`x` theorem and a separate infinite-pairs theorem, `PolyQF.prop_2_3_pairs`.
+- The cancellation part of property (*) uses Mathlib's sum-of-two-squares
+  characterization `Nat.eq_sq_add_sq_iff`.
+- `PolyQF.pell_solutions_infinite` builds on Mathlib's `Pell.exists_of_not_isSquare`.
+  It produces infinitely many solutions to a generalized Pell equation in the same
+  residue classes as a given integer solution, modulo a chosen nonzero modulus. Propositions 2.3 and 4.2 use it in their nonlinear cases; their
+  `a = 0` cases are handled by explicit families.
+- In the nonlinear case, the Lean proof of Proposition 4.2 completes the square and
+  uses that Pell result.
+  The formal statement permits `D = 0` and concludes infinitude of pairs `(x, v)`;
+  it does not assert infinitely many distinct `x` in every such case. This is a
+  proof-level distinction from the manuscript's use of a published conic theorem.
+- `PolyQF.congr_27_of_congr` transfers the required divisibility conditions from `v₀`
+  to `v` when `2m ∣ v − v₀`, assuming those conditions hold for the seed `v₀`.
+- Proposition 4.4 is proved using explicit polynomial families: `ring` verifies the
+  identities, and an injectivity argument establishes infinitude. The tangent-line
+  construction is formalized separately in `PolyQF.prop_4_1`.
+- The four non-square constants `17006096`, `8320`, `208`, and `80` are handled with
+  `PolyQF.not_isSquare_of_between` and `norm_num`, using the respective bounds
+  `4123² < 17006096 < 4124²`, `91² < 8320 < 92²`, `14² < 208 < 15²`, and
+  `8² < 80 < 9²`. The project proof sources do not use `native_decide`.
+
+## Versions and prerequisites
+
+| Component | Pinned version |
 | --- | --- |
-| The set `S₂` | Positive integers that are sums of two squares, and property `(*)` of Section 2 (multiplication and cancellation). |
-| Pell engine | For a positive non-square `A`, `D ≠ 0` and any modulus `N ≠ 0`, one integer solution of `X² − A V² = D` produces infinitely many with prescribed residues of `X` and `V` modulo `N`. |
-| Tools | Squares modulo 4, parity of the two squares in a representation, a non-square criterion, and a transfer lemma for infinite sets. |
-| Section 2 | Identity (6) (existence and uniqueness of `Dᵤ`), identity (7), Proposition 2.2 and Proposition 2.3. |
-| Section 3 (core) | Algorithm 2.4 specialised to `R(t) = t³ + f` with `Q(x) = x²` and with `Q(w) = 4w²`. |
-| Section 3 | `x⁶ + f ∈ S₂` infinitely often for `f ∈ {8, 5, −3, −4}`, Corollary 3.1 and Corollary 3.2. |
-| Section 4 | The tangent-line construction, Proposition 4.1, Proposition 4.2, Proposition 4.4, non-multiplicativity of `2y² + yz + 2z²`, and the degenerate case `Δ = 0`. |
-| `PolyQF.Main` | The main results of the paper, collected in one place. |
+| Lean | `leanprover/lean4:v4.28.0` |
+| Mathlib | Tag `v4.28.0`, commit `8f9d9cff6bd728b17a24e163c9402775d9e6a365` |
+| Lake | Bundled with the pinned Lean toolchain |
 
-## Main results
+The committed `lake-manifest.json` pins Mathlib and all transitive dependency revisions.
+Keep it unchanged when reproducing this source; `lake update` can change dependency
+resolution. Verification here establishes compatibility with the pinned toolchain.
 
-* `PolyQF.S2_star` — property `(*)`: for positive `a, b`, if `S₂` contains two of `a`, `b`,
-  `ab`, it contains all three.
-* `PolyQF.exists_unique_taylorQuot` — identity (6); `PolyQF.identity_seven` — identity (7).
-* `PolyQF.prop_2_2` — Proposition 2.2.
-* `PolyQF.prop_2_3` — Proposition 2.3 (and `PolyQF.prop_2_3_pairs` for the solution set).
-* `PolyQF.S2_x6_sub_4_infinite` — `x⁶ − 4` is a sum of two squares infinitely often.
-* `PolyQF.cor_3_1` — equation (2), `y² + x³y + z² + 1 = 0`, has infinitely many integer
-  solutions.
-* `PolyQF.cor_3_2_eq13`, `PolyQF.cor_3_2_eq14`, `PolyQF.cor_3_2_eq15`,
-  `PolyQF.cor_3_2_eq16` — Corollary 3.2 for equations (13)–(16).
-* `PolyQF.prop_4_1`, `PolyQF.prop_4_2`, `PolyQF.prop_4_4_a`, `PolyQF.prop_4_4_b` — the
-  results of Section 4, together with `PolyQF.degenerate_disc_zero` and
-  `PolyQF.BQF_two_one_two_not_represents_four`.
+Install Git, curl, Bash, Python 3, and
+[Elan](https://github.com/leanprover/elan#installation). Elan selects and downloads the
+version in `lean-toolchain` when `lean` or `lake` is invoked from this project.
 
-## Conventions and remarks on the formalization
+The audit also uses standard Unix utilities, including `find`, `sort`, `mktemp`, and
+`grep` with the word-boundary expressions supported by GNU grep. CI provides a tested
+Ubuntu 24.04 environment. When running the audit on another platform, provide these
+utilities and Python as `python3`.
 
-* "Infinitely many" is rendered as `Set.Infinite` of the corresponding solution set. For the
-  auxiliary equations, both the set of solutions `(x, v)` and the set of `x`-coordinates are
-  shown to be infinite, matching the wording of Propositions 2.2, 2.3 and 4.1.
-* `S₂` is `PolyQF.S2 n := 0 < n ∧ ∃ y z : ℤ, n = y ^ 2 + z ^ 2`. The cancellation half of
-  property `(*)` uses Fermat's characterization of sums of two squares, available in Mathlib
-  as `Nat.eq_sq_add_sq_iff`.
-* Proposition 2.3 and Proposition 4.2 are both deduced from the single Pell-type statement
-  `PolyQF.pell_solutions_infinite`, which is proved from Mathlib's
-  `Pell.exists_of_not_isSquare` by multiplying a given solution by a unit congruent to `1`
-  modulo the required modulus.
-* In Proposition 4.1 the tangent-line coefficients `λ, μ` of (25) are introduced as integers
-  satisfying `2mλ = rp + v(Bp + 2Cq)` and `2mμ = rq − v(2Ap + Bq)`; the congruences (27) are
-  exactly what guarantees that such integers exist. `PolyQF.congr_27_of_congr` shows that
-  the conclusion of Proposition 4.2 (a congruence `v ≡ v₀ mod 2m`) delivers hypothesis (27)
-  of Proposition 4.1.
-* Proposition 4.4 is proved by exhibiting the explicit polynomial families given in the
-  paper and checking that they satisfy the equations identically (by `ring`), rather than by
-  re-running the tangent-line construction; the construction itself is formalized separately
-  in `PolyQF.prop_4_1`.
-* The Lean proof of Proposition 4.2 does not use Gauss's theorem ([11, Proposition 3.14] of
-  the paper) for the conic (30): it completes the square and applies the residue-controlled
-  Pell statement `PolyQF.pell_solutions_infinite`, which already produces the solutions in a
-  prescribed residue class modulo `2m`. The hypothesis `Δ ≠ 0` is not needed for
-  Proposition 4.2 itself. Both points are recorded in the docstrings.
-* No `native_decide` (or any other tactic introducing a non-standard axiom) is used. The four
-  non-squareness facts of Section 3 (`a = 17006096, 8320, 208, 80`) are proved from the bounds
-  stated in the paper (`4123² < a < 4124²`, `91² < a < 92²`, `14² < a < 15²`, `8² < a < 9²`)
-  via `PolyQF.not_isSquare_of_between` and `norm_num`.
-* Bibliographic citations in the Lean docstrings follow the final bibliography of the paper;
-  in particular Gauss's theorem is cited as [11, Proposition 3.14].
-* The relation between Section 2 and the general theory of Section 4 — the multiplicativity of
-  `y² + z²` and its failure for a general form — is discussed in the "Comparison with
-  Section 2" part of `RequestProject.lean`.
-* The file opens with three `private` wrapper lemmas (`mem_setOf_eq'`, `finite_setOf_isRoot'`,
-  `infinite_sdiff_of_finite`) that stand in for Mathlib results whose names differ between
-  Mathlib versions. They are used in place of those library names so that the file elaborates
-  with no deprecation warnings on recent Mathlib releases as well.
-* Statements of the paper that are prose (Algorithms 2.4 and 4.3, Table 1, and the
-  remarks quoting the literature) have no separate Lean counterpart; the mathematical
-  content used in the proofs is formalized in the propositions listed above.
+## Build the current checkout
 
-## Building
+From a fresh clone:
 
 ```bash
-lake exe cache get   # optional, fetches Mathlib build artifacts
-lake build
-./verify.sh
-```
-
-## Reproducing the Lean build locally
-
-The verified source is commit `f3203621e90e5b1b087ca473ba8e8a7a2856b009`, with **Lean 4.28.0** and a fixed Mathlib revision through `lean-toolchain` and `lake-manifest.json`. The following instructions select that source before building on macOS using Terminal. They also work on most Linux systems.
-
-### 1. Prerequisites
-
-Check that Git and curl are installed:
-
-```bash
-git --version
-curl --version
-```
-
-On macOS, running `git --version` may prompt you to install the Xcode Command Line Tools. Approve that installation if necessary.
-
-### 2. Install Elan
-
-Elan manages Lean installations and automatically selects the version specified by the project’s `lean-toolchain` file.
-
-Check whether Elan is already installed:
-
-```bash
-elan --version
-```
-
-If the command is not found, install Elan with:
-
-```bash
-curl https://elan.lean-lang.org/elan-init.sh -sSf | sh
-```
-
-Choose the default installation option when prompted. Then activate Elan in the current Terminal session:
-
-```bash
-source ~/.elan/env
-```
-
-Confirm the installation:
-
-```bash
-elan --version
-```
-
-If `lake` is still not found after installation, either run `source ~/.elan/env` again or close and reopen Terminal.
-
-### 3. Clone a fresh copy of the repository
-
-A fresh clone is recommended because older copies of the repository contained directory names with literal trailing spaces.
-
-For example:
-
-```bash
-cd ~/Documents
-git clone https://github.com/JAgbanwa/PolynomialDiophantineEquations.git PolynomialDiophantineEquations-build-test
-cd PolynomialDiophantineEquations-build-test
-git fetch origin f3203621e90e5b1b087ca473ba8e8a7a2856b009
-git checkout --detach f3203621e90e5b1b087ca473ba8e8a7a2856b009
-cd sumsquares_revised
-```
-
-The correct directory name is:
-
-```text
-sumsquares_revised
-```
-
-There is no trailing space after `revised`.
-
-Confirm the current location and project contents:
-
-```bash
-pwd
-ls
-```
-
-The directory should contain at least:
-
-```text
-Challenge.lean
-README.md
-RequestProject/
-RequestProject.lean
-Solution.lean
-comparator.json
-lake-manifest.json
-lakefile.toml
-lean-toolchain
-verify.sh
-```
-
-The relevant Lean module layout is:
-
-```text
-sumsquares_revised/
-├── RequestProject.lean
-└── RequestProject/
-    └── Main.lean
-```
-
-This path is important because:
-
-```lean
-import RequestProject.Main
-```
-
-corresponds to the filesystem path:
-
-```text
-RequestProject/Main.lean
-```
-
-### 4. Record the exact repository revision
-
-For reproducibility, record the commit being built:
-
-```bash
-git branch --show-current
-git rev-parse HEAD
-git status --short
-```
-
-`git rev-parse HEAD` must print
-`f3203621e90e5b1b087ca473ba8e8a7a2856b009`. The checkout is deliberately in
-detached HEAD state, so `git branch --show-current` prints nothing. For a fresh
-checkout, `git status --short` should also produce no output.
-
-### 5. Confirm the pinned Lean version
-
-Display the project’s toolchain file:
-
-```bash
-cat lean-toolchain
-```
-
-Expected output:
-
-```text
-leanprover/lean4:v4.28.0
-```
-
-Now ask Lake for its version:
-
-```bash
-lake --version
-```
-
-Elan will automatically download Lean 4.28.0 if it is not already installed.
-
-A correct installation reports Lean 4.28.0, for example:
-
-```text
-Lake version 5.0.0-src+7e01a1b (Lean version 4.28.0)
-```
-
-The exact Lake build identifier may differ, but the Lean version must be `4.28.0`.
-
-### 6. Download the pinned dependencies and Mathlib cache
-
-Run:
-
-```bash
+git clone https://github.com/JAgbanwa/PolynomialDiophantineEquations.git
+cd PolynomialDiophantineEquations/sumsquares_revised
+lean --version
+python3 --version
 lake exe cache get
-```
-
-On the first execution, Lake clones the dependency revisions recorded in `lake-manifest.json` and downloads Mathlib’s compiled cache.
-
-Messages such as the following are normal:
-
-```text
-No files to download
-Decompressing 8007 file(s)
-Completed successfully!
-```
-
-or:
-
-```text
-Already decompressed 8010 file(s)
-```
-
-The exact number of cached files may vary slightly.
-
-For strict reproduction of the committed dependency set, do **not** run `lake update`. The committed `lake-manifest.json` already identifies the dependency revisions that should be used.
-
-### 7. Build the complete Lake project
-
-Run:
-
-```bash
 lake build
-```
-
-The first build can take several minutes. A successful build ends with a message similar to:
-
-```text
-Build completed successfully (8032 jobs).
-```
-
-The number of jobs may vary, but the important phrase is:
-
-```text
-Build completed successfully
-```
-
-Immediately confirm the command’s exit status:
-
-```bash
-echo $?
-```
-
-Expected output:
-
-```text
-0
-```
-
-An exit status of `0` means that the project built successfully.
-
-### 8. Verify the proof files with warnings treated as errors
-
-To reproduce the strict proof-source checks, run:
-
-```bash
-lake env lean -DwarningAsError=true RequestProject/Main.lean
-lake env lean -DwarningAsError=true Solution.lean
-```
-
-Check the exit status immediately after each command:
-
-```bash
-echo $?
-```
-
-Expected output:
-
-```text
-0
-```
-
-Lean may return directly to the Terminal prompt without printing anything. For
-each command, no output together with exit status `0` means that the file was
-accepted with no errors or warnings.
-
-
-### 9. Full comparator verification
-
-Use the verified checkout from Step 3 for all commands in this section.
-
-The project includes:
-
-```text
-verify.sh
-```
-
-This script runs a pinned Lean comparator and `lean4export` inside the `landrun` sandbox.
-
-The supplied verifier uses a Linux x86-64 `landrun` executable and should not be run directly on macOS. On macOS, use:
-
-```bash
-lake build
-lake env lean Solution.lean
-```
-
-The full sandboxed comparator is run automatically by GitHub Actions:
-
-[View the Sumsquares revised CI workflow](https://github.com/JAgbanwa/PolynomialDiophantineEquations/actions/workflows/sumsquares-revised-ci.yml)
-
-On a compatible Linux x86-64 system, the complete comparator can be run with:
-
-```bash
 bash verify.sh
 ```
 
+`lean --version` must report `4.28.0`. The cache command downloads compiled Mathlib
+artifacts to avoid rebuilding the dependencies from source. `lake build` builds all
+three default targets, including `Challenge`.
 
-## Licence
+A successful build prints `Build completed successfully`. A successful full audit ends
+with `ALL CHECKS PASSED` and exits with status `0`. `bash verify.sh` includes its own
+build, so it can also be used as the single build-and-audit command after fetching the cache.
 
-No `LICENSE` file has been added: the choice of licence is for the authors. A registry
-submission expects a licence file at the repository root, and `project.license` in
-`formalization.yaml` should then be updated to match it.
+### What the audit checks
 
+[verify.sh](verify.sh) performs three checks:
 
+1. It builds the project and elaborates every `.lean` file under `RequestProject/`,
+   plus `RequestProject.lean`, `Challenge.lean`, and `Solution.lean`, with
+   `-DwarningAsError=true`. Any failed invocation or diagnostic output fails the audit.
+2. It scans these sources for `sorry`, `admit`, axiom declarations,
+   `@[implemented_by]`, and `native_decide`. The explanatory source-comment line
+   stating that `native_decide` is not used is excluded from this text scan.
+3. It imports the project modules and runs `#print axioms` for all names in
+   `definition_names` and `theorem_names` in `comparator.json`. Missing results,
+   unrecognized output, or an axiom outside the configured standard allowlist fail
+   the audit. These lists currently contain 44 distinct declarations.
 
+The axiom check includes the dependencies of the listed declarations; it is not a
+separate enumeration of every auxiliary lemma in the project. `lake build` alone does
+not perform this audit or globally enable warnings-as-errors; use `bash verify.sh`
+for the stricter checks.
 
-## Independent verification with `comparator`
+Despite its filename, `comparator.json` is currently used as an audit manifest.
+`verify.sh` does **not** invoke `comparator`, `lean4export`, `landrun`, or `nanoda`.
+It does not perform an independent exported-proof replay or compare separate challenge
+and solution environments. The `Challenge`/`Solution` relationship is checked by Lean
+when compiling the twelve proofs against their declared proposition types.
 
-On a compatible Linux x86-64 system, after selecting the verified commit and
-entering `sumsquares_revised` as above:
+The [CI workflow](../.github/workflows/sumsquares-revised-ci.yml) runs a project build
+and then a separate proof-source and axiom audit. The expected successful result is
+that both jobs pass, with no intentional placeholder warnings.
 
-```sh
-./verify.sh              # add COMPARATOR_SKIP_CACHE=1 if Mathlib is already built
+## Reproduce the verified snapshot
+
+To reproduce the successful run linked above, use a separate clone and select its
+exact source commit:
+
+```bash
+git clone https://github.com/JAgbanwa/PolynomialDiophantineEquations.git PolynomialDiophantineEquations-verified
+cd PolynomialDiophantineEquations-verified
+git checkout --detach 00743362664f95bc747ad9d960499094de7293eb
+cd sumsquares_revised
+lake exe cache get
+bash verify.sh
+git rev-parse HEAD
 ```
 
-The script fetches and builds [`comparator`](https://github.com/leanprover/comparator)
-and [`lean4export`](https://github.com/leanprover/lean4export) at the tag matching
-`lean-toolchain`, together with the `landrun` sandbox they use, and then runs the
-comparator on `comparator.json`. Comparator rebuilds `Challenge` and `Solution` in a
-sandbox, checks that the sixteen compared declarations have exactly the statements advertised
-in `Challenge.lean`, checks that their axiom closure lies inside the permitted set, and
-re-checks the proofs with the Lean kernel; it prints `Your solution is okay!` on success.
-Only the Lean kernel, Mathlib, `Challenge.lean` and comparator itself have to be trusted.
-Setting `"enable_nanoda": true` in `comparator.json` additionally re-checks the proofs
-with the independent `nanoda` kernel, which must then be on `PATH`.
+The final command must print `00743362664f95bc747ad9d960499094de7293eb`.
+The checkout is intentionally detached. Immutable references for this snapshot are:
 
+- [Project folder](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/00743362664f95bc747ad9d960499094de7293eb/sumsquares_revised)
+- [Main proof file](https://github.com/JAgbanwa/PolynomialDiophantineEquations/blob/00743362664f95bc747ad9d960499094de7293eb/sumsquares_revised/RequestProject/Main.lean)
 
+## Credits and licence
+
+The project acknowledges [Aristotle](https://aristotle.harmonic.fun) (Harmonic) for work
+on the Lean proofs. The repository currently has no `LICENSE` file; a project licence
+has not been recorded.
