@@ -39,3 +39,24 @@ Since Version 9 (the latest) of this [paper](https://arxiv.org/pdf/2404.08518), 
 
 
 For the problems marked (Already solved), see the latest version of Dr. Grechuk's (aforementioned) [paper](https://arxiv.org/pdf/2404.08518). I used GPT-Codex to build a simple website to track the progress of solved equations in the aforementioned paper [here](https://jagbanwa.github.io/OpenDiophantineTracker/). This is its GitHub [repo](https://github.com/JAgbanwa/OpenDiophantineTracker).
+
+
+The table below document efforts towards (partially or unconditionally) solving problems from Table 1 of the [joint paper](https://arxiv.org/abs/2607.06627) between Dr. Grechuk and myself. 
+
+
+| Folder | Goal | Progress |
+|--------|------|----------|
+| [\[A\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_2x_minus_1_analysis%20) | Prove the (in)finitude of integer solutions for the equation:  $y (x^3 - y^2 ) = 2x - 1$. |  🟡 Pending feedback |
+| [\[2\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_y2_x3y_z2_minus2_rigorous) | Prove the infinitude of integer solutions for the equation:  $y^2 + x^3 \cdot y + z^2 - 2 = 0$ (Table 13, Problem 4). | (Already solved) |
+| [\[3\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_z2_y2z_2x3_plus1) | Prove the infinitude of integer solutions for the equation:  $z^2 + y^2 \cdot z+2x^3 + 1=0$ (Table 13, Problem 4). | ✅ Success!  |
+| [\[4\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/yx3_z2_eq_x_no_positive_solutions) | Prove that the equation: $y(x^3-z^2)=x$ has no positive integer solutions (Problem 7).| 🔴 Still needs working on |
+| [\[5\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_z2_y2z_x3_minus2_solution) | Prove that the equation: $z^2 + y^2 \cdot z + x^3 - 2 = 0$ has infinitely many integer solutions (Table 13, Problem 4).| 🔴 Still needs working on|
+| [\[6\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/pellian_infinite_family_diophantine) | Prove that the equation: $y^2 + x^2 \cdot y + z^2 \cdot x + 1 = 0$ has infinitely many integer solutions (Table 13, Problem 4). | (Already solved) |
+| [\[7\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_y_x3_z2_z_plus_1) | Prove that the equation: $y(x³ − z²) = z + 1$ has infinitely many integer solutions (Table 13, Problem 4).| (Already solved) |
+| [\[8\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_y_x3_minus_z2_equals_x_minus_1) | Prove that the equation: $y(x³ − z²) = x - 1$ has infinitely many integer solutions (Table 13, Problem 4).| (Already solved) |
+| [\[9\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_y2_x2y_xz2_minus2_solution) | Describe all integer solutions of the equation: $y^2+x^2y+xz^2-2=0$ (Table 5, Problem 2). | (Already solved) |
+| [\[10\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/integral_solutions_z2_minus_xy2_equals_x3_plus_2) | Describe all integer solutions of the equation: $z^2-xy^2-x^3-2=0$ (Table 5, Problem 2). | (Already solved) |
+| [\[11\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/integer_solutions_z2_minus_xy2_equals_x3_minus_2) | Describe all integer solutions of the equation: $z^2-xy^2-x^3+2=0$ (Table 5, Problem 2). | (Already solved)|
+| [\[12\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/integer_solutions_y2_x2y_xz2_plus2) | Describe all integer solutions of the equation: $y^2+x^2y+xz^2+2=0$ (Table 5, Problem 2). | (Already solved) |
+| [\[13\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/integer_solutions_y2_x2y_xz2_plus1) | Describe all integer solutions of the equation: $y^2 + x^2 \cdot y + z^2 \cdot x + 1 = 0$ (Table 5, Problem 2). | (Already solved) |
+| [\[14\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/primitive_solutions_3y3_plus_z3_equals_x4) | Find all primitive integer solutions to the equation: $3Y^3+Z^3=X^4$ ([MathOverflow](https://mathoverflow.net/questions/513113/what-are-the-primitive-solutions-to-3y3z3-x4)). | 🟡 Pending feedback |
