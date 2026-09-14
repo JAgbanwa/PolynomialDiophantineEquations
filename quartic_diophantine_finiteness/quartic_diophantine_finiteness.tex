@@ -1,0 +1,146 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=25mm]{geometry}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+\newtheorem{theorem}{Theorem}
+\newtheorem*{externaltheorem}{Faltings' theorem (invoked)}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\setlength{\emergencystretch}{2em}
+\hypersetup{pdftitle={A finiteness result for a quartic Diophantine equation},
+  pdfsubject={A rigorous correction of the proposed infinitude claim}}
+
+\begin{document}
+\begin{center}
+  {\LARGE The equation $x^4+xy+y^3=1$}\\[5pt]
+  {\large A finiteness result and the obstruction to infinitude}
+\end{center}
+\vspace{2pt}
+
+\textbf{Answer.} The proposed infinitude statement is false. In fact, there
+are only finitely many rational solutions, and therefore only finitely many
+integer solutions.
+
+\textbf{Scope.} The algebraic checks below are
+proved explicitly. The final deduction invokes the genus formula for a smooth
+plane curve and Faltings' theorem, both stated where used. Thus the conclusion
+is unconditional, but this is \emph{not a fully self-contained proof of
+finiteness}. A proof of the requested infinitude cannot be supplied because
+that assertion is false. No claim of novelty is made.
+
+\section*{1. Intuition: check the curve before seeking a family}
+
+The dominant terms suggest the balance $y^3\approx -x^4$. This describes
+the possible size of a large solution; it does not produce exact integer
+solutions. Before attempting a recurrence or parametrization, the useful
+structural question is whether the curve is singular. Singularities can
+reduce the genus of a plane curve and sometimes permit a rational
+parametrization. Here the degree is four, and all points turn out to be
+smooth, so the genus is three. That is the decisive obstruction.
+
+\section*{2. Explicit geometric checks}
+
+Put $f(x,y)=x^4+xy+y^3-1$. Its projective closure $C$ is the curve
+\begin{equation}
+ F(X,Y,Z)=X^4+XYZ^2+Y^3Z-Z^4=0.
+ \label{eq:projective}
+\end{equation}
+All smoothness and irreducibility checks are made over $\mathbb C$,
+so they also cover nonreal points.
+
+\textbf{The point at infinity is smooth.}
+Setting $Z=0$ in \eqref{eq:projective} gives $X^4=0$. Hence the only point
+at infinity is $P=[0:1:0]$. Since
+\[
+ F_Z=2XYZ+Y^3-4Z^3,\qquad F_Z(0,1,0)=1,
+\]
+$P$ is nonsingular.
+
+\textbf{The curve is geometrically irreducible.}
+Suppose that $F=GH$ over $\mathbb C$, where $G,H$ are homogeneous of
+positive degrees $d$ and $4-d$. Restricting to $Z=0$ gives
+\[
+ G(X,Y,0)H(X,Y,0)=X^4.
+\]
+Neither restricted factor is zero. Since their product is a power of $X$,
+homogeneity forces
+\[
+ G(X,Y,0)=cX^d,\qquad H(X,Y,0)=c^{-1}X^{4-d}
+ \quad(c\ne0).
+\]
+Consequently $G(P)=H(P)=0$. The product rule would then give
+$\nabla F(P)=G(P)\nabla H(P)+H(P)\nabla G(P)=0$, contradicting
+$F_Z(P)=1$. Thus $F$ has no such factorization.
+
+\newpage
+\textbf{There are no affine singularities.}
+An affine singularity would satisfy
+\begin{equation}
+ f=0,\qquad f_x=4x^3+y=0,\qquad f_y=x+3y^2=0.
+ \label{eq:singular}
+\end{equation}
+The case $x=0$ forces $y=0$, but $f(0,0)=-1$, so $x\ne0$.
+Substituting $y=-4x^3$ into the last equation yields
+\[
+ x+48x^6=0,\qquad x^5=-\frac1{48}.
+\]
+Also \eqref{eq:singular} gives $xy=-4x^4$ and
+$y^3=-xy/3=4x^4/3$. Hence
+\[
+ 0=f=x^4-4x^4+\frac43x^4-1=-\frac53x^4-1,
+ \qquad x^4=-\frac35.
+\]
+Taking the ratio of the two nonzero powers forces
+\[
+ x=\frac{x^5}{x^4}=\frac{5}{144}.
+\]
+This is a positive real number and cannot have fourth power $-3/5$.
+The contradiction excludes every affine singularity, including complex
+ones. Together with the check at $P$, it proves that $C$ is smooth.
+
+\section*{3. Why the solution set is finite}
+
+We now use the standard \emph{genus formula}: a smooth, geometrically
+irreducible projective plane curve of degree $d$ in characteristic zero has
+genus $(d-1)(d-2)/2$. The checks above justify its application and give
+\[
+ g(C)=\frac{(4-1)(4-2)}2=3.
+\]
+
+\begin{externaltheorem}
+If a smooth, projective, geometrically irreducible curve over a number
+field $K$ has genus at least two, its set of $K$-rational points is finite.
+\end{externaltheorem}
+
+\begin{theorem}
+The equation $x^4+xy+y^3-1=0$ has only finitely many rational solutions.
+In particular, it has only finitely many integer solutions.
+\end{theorem}
+\begin{proof}
+The curve $C$ is defined over $\mathbb Q$, is smooth and geometrically
+irreducible, and has genus three. Faltings' theorem therefore makes
+$C(\mathbb Q)$ finite. Each rational solution determines a point
+$[x:y:1]\in C(\mathbb Q)$, and different pairs determine different points.
+Thus the rational solution set is finite. Its subset of integer solutions
+is finite as well.
+\end{proof}
+
+\section*{4. Explicit solutions and the limit of this argument}
+
+Five integer solutions, verified by direct substitution, are
+\[
+ \boxed{(-1,-1),\quad(-1,0),\quad(-1,1),\quad(0,1),\quad(1,0).}
+\]
+They are exactly the solutions with $|x|\le1$: for $x=-1,0,1$, respectively,
+the equation becomes $y^3-y=0$, $y^3=1$, and $y^3+y=0$.
+
+The proof above does \emph{not} establish that these five points form the
+complete integer solution set, and it supplies no explicit bound on the
+coordinates. Neither is needed to refute infinitude. The precise result
+proved here is finiteness, with its reliance on the two stated general
+theorems made explicit.
+
+\end{document}
