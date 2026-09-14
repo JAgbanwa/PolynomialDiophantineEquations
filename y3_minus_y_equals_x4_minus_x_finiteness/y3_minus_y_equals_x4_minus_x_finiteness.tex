@@ -1,0 +1,216 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=25mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage[colorlinks=true,linkcolor=blue!45!black,pdfauthor={},pdftitle={Finiteness for y cubed minus y equals x to the fourth minus x}]{hyperref}
+\definecolor{ink}{HTML}{183D58}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\C}{\mathbb C}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\PP}{\mathbb P}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{ink}A Diophantine finiteness correction}
+\fancyhead[R]{\small $y^3-y=x^4-x$}
+\fancyfoot[C]{\small\thepage}
+\setlength{\headheight}{14pt}
+\renewcommand{\headrulewidth}{0.3pt}
+
+\begin{document}
+\thispagestyle{empty}
+\begin{center}
+{\Large\bfseries\color{ink}A correction to the proposed infinitude}\\[7pt]
+{\LARGE $y^3-y=x^4-x$}\\[8pt]
+{\small An unconditional finiteness argument with its theorem dependence explicit}
+\end{center}
+
+\textbf{Conclusion and scope.}
+The requested assertion is false. The equation has \emph{finitely many}
+integer solutions. Below, the geometric calculation is given explicitly,
+and the arithmetic conclusion uses Siegel's theorem on integral points.
+That theorem is stated but not proved here: this is an unconditional proof,
+\emph{not a fully self-contained arithmetic proof}. No proof of the requested
+infinitude can exist, and no complete enumeration of the solutions is claimed.
+No internet search was used.
+
+\begin{theorem}\label{thm:main}
+The set
+\[
+\{(x,y)\in\Z^2:y^3-y=x^4-x\}
+\]
+is finite. In fact, its projective algebraic curve is smooth and
+geometrically irreducible of genus $3$.
+\end{theorem}
+
+\section*{1. Intuition and elementary checks}
+The leading terms suggest $y^3\approx x^4$, or $y\approx |x|^{4/3}$.
+This makes $x=t^3$, $y=t^4$ a natural first attempt. But substitution gives
+\[
+(t^4)^3-t^4-\bigl((t^3)^4-t^3\bigr)=t^3(1-t),
+\]
+which vanishes only for $t=0,1$. Matching the leading powers does not
+match the lower terms. The following stronger observation makes this precise.
+
+\begin{proposition}\label{prop:cubes}
+If $(x,y)$ is an integer solution and $|x|$ is a perfect cube, then
+$x\in\{0,1\}$ and $y\in\{-1,0,1\}$.
+\end{proposition}
+\begin{proof}
+Write $f(s)=s^3-s$. For integers $s\ge1$,
+$f(s+1)-f(s)=3s(s+1)>0$.
+If $x=\varepsilon t^3$, where $\varepsilon\in\{-1,1\}$ and $t\ge2$,
+put $N=x^4-x=t^{12}-\varepsilon t^3$. Then
+\begin{align*}
+N-f(t^4)&=t^4-\varepsilon t^3>0,\\
+f(t^4+1)-N&=3t^8+2t^4+\varepsilon t^3>0.
+\end{align*}
+Thus $N$ lies strictly between two consecutive values of $f$ on the
+positive integers. Since $N>0$ and $f(y)\le0$ for every integer $y\le1$,
+no integer $y$ is possible. For $x=-1$, $N=2$ lies between $f(1)=0$
+and $f(2)=6$. Finally, $x=0,1$ gives $y(y-1)(y+1)=0$.
+\end{proof}
+
+In particular, the six directly verified solutions are
+\[
+\boxed{(0,-1),\ (0,0),\ (0,1),\ (1,-1),\ (1,0),\ (1,1).}
+\]
+The proposition does not handle general $x$. To establish global finiteness,
+we next determine the geometry of the entire curve.
+
+\newpage
+\section*{2. Irreducibility and absence of singularities}
+Let the affine curve be $F(x,y)=0$, where
+\[
+F(x,y)=y^3-y-x^4+x.
+\]
+We work over $\C$ so that the checks cover all possible components and
+singularities, including nonreal ones.
+
+\textbf{Irreducibility.}
+As a cubic in $y$ over the field $\C(x)$, a reducible $F$ would have a
+root $r(x)=p(x)/q(x)$, with coprime polynomials $p,q\in\C[x]$ and $q\ne0$.
+Clearing denominators yields
+\[
+p^3-pq^2=(x^4-x)q^3.
+\]
+Hence $q$ divides $p^3$. Coprimality forces $q$ to be constant, so $r$
+is a polynomial. A constant $r$ cannot satisfy $r^3-r=x^4-x$; a
+polynomial of degree $d\ge1$ would give $3d=4$, also impossible.
+Thus $F$ is irreducible over $\C(x)$, and, being monic in $y$, over
+$\C[x,y]$ as well.
+
+\textbf{Affine smoothness.}
+At an affine singularity, both partial derivatives must vanish:
+\[
+F_x=1-4x^3=0,\qquad F_y=3y^2-1=0.
+\]
+Consequently,
+\[
+x^3=\frac14,\qquad y^2=\frac13.
+\]
+Substituting $x^4=x/4$ and $y^3=y/3$ into $F=0$ gives
+\[
+-\frac{2y}{3}+\frac{3x}{4}=0,
+\qquad y=\frac98x,
+\qquad x^2=\frac{64}{243}.
+\]
+But the two expressions for $x^6$ would then require
+\[
+\frac1{16}=\left(\frac{64}{243}\right)^3,
+\qquad\text{hence}\qquad 3^{15}=2^{22},
+\]
+which is impossible. There are no affine singularities.
+
+\textbf{The point at infinity.}
+Homogenization gives the projective quartic
+\[
+H(X,Y,Z)=Y^3Z-YZ^3-X^4+XZ^3=0.
+\]
+On $Z=0$, this requires $X=0$, leaving exactly the point
+$P_\infty=[0:1:0]$. Since
+\[
+H_Z=Y^3-3YZ^2+3XZ^2,
+\qquad H_Z(P_\infty)=1,
+\]
+this point is smooth too. The homogenization is irreducible: any
+projective factorization would yield an affine one unless a factor were
+a power of $Z$, and $Z$ does not divide $H$.
+
+We have therefore obtained a smooth, geometrically irreducible projective
+curve $C$. Smoothness matters here: a singular quartic can have a much
+simpler underlying curve. The checks above exclude that possibility.
+The next page computes the genus directly, instead of merely quoting the
+genus formula for a smooth plane quartic.
+
+\newpage
+\section*{3. A direct genus calculation and the finiteness step}
+The coordinate $x$ defines a map $C\to\PP^1(\C)$ of degree $3$, since
+for general $x$ the cubic equation has three distinct values of $y$.
+Geometric irreducibility makes the associated compact Riemann surface
+connected. A point has ramification index $e$ when the map has local form
+$t\mapsto t^e$ after local changes of coordinates.
+
+\textbf{Finite ramification.}
+Where $F_y\ne0$, the coordinate $x$ is a local parameter, so there is
+no ramification. The remaining points have
+\[
+y=\pm\frac1{\sqrt3},\qquad x^4-x=-\frac{2y}{3}.
+\]
+For each of these two $y$-values the quartic in $x$ has four distinct
+roots: a repeated root would also have $4x^3-1=0$, giving an affine
+singularity already excluded. The two sets of $x$-values are disjoint.
+At each of these eight points, implicit differentiation with $y$ as local
+parameter gives
+\[
+\frac{dx}{dy}=0,\qquad
+\frac{d^2x}{dy^2}=\frac{6y}{4x^3-1}\ne0.
+\]
+Thus each has ramification index $2$.
+
+\textbf{Ramification at infinity.}
+In the chart $Y=1$, put $u=X/Y$, $v=Z/Y$. Near $P_\infty$ the equation is
+\[
+v-v^3-u^4+uv^3=0,
+\qquad v\bigl(1+(u-1)v^2\bigr)=u^4.
+\]
+Here $u$ is a local parameter because the derivative with respect to $v$
+at $(0,0)$ is $1$. The parenthesized factor is nonzero there, so $v$
+vanishes to order $4$. Therefore $x=u/v$ has a pole of order $3$,
+and the ramification index at infinity is $3$.
+
+\textbf{Counting the genus.}
+Triangulate the sphere $\PP^1(\C)$ with all branch values as vertices.
+Each open edge and face lifts three times. At a vertex, ramification of
+index $e$ reduces the number of preimages by $e-1$ relative to the usual
+threefold count. The Euler characteristic is consequently
+\[
+\chi(C)=3\chi(\PP^1)-\sum_P(e_P-1)
+       =6-\bigl(8(2-1)+(3-1)\bigr)=-4.
+\]
+Since $\chi(C)=2-2g$, the genus is $g=3$.
+
+\textbf{The arithmetic input (Siegel's theorem).}
+\emph{If a geometrically irreducible affine algebraic curve over $\Q$
+has a smooth projective model of genus at least $1$, then it has only
+finitely many integer points in its given affine coordinates.}
+
+Our affine curve is defined over $\Q$, and the preceding computations
+give precisely such a model, of genus $3$. Siegel's theorem therefore
+proves Theorem~\ref{thm:main}. This step has no unproved conjectural
+assumptions, but the theorem itself is a substantial external input.
+
+\textbf{What is and is not established.}
+Finiteness is proved; infinitude is disproved. The six displayed points
+are verified, but are not proved to be the complete set. No explicit bound
+for all solutions, and no self-contained replacement for Siegel's theorem,
+is supplied here. These limitations do not change the finiteness conclusion.
+
+\end{document}
