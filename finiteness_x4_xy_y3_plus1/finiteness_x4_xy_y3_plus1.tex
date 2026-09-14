@@ -1,1 +1,145 @@
-.
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype}
+\usepackage[margin=25mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\setlist{nosep}
+\newtheorem{theorem}{Theorem}
+\newtheorem*{faltings}{Faltings' theorem (used without proof)}
+\newcommand{\C}{\mathbb C}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\Z}{\mathbb Z}
+\hypersetup{pdftitle={Finiteness of the integer solutions of x4 + xy + y3 + 1 = 0},
+  pdfsubject={A correction of the requested infinitude claim, with explicit theorem dependencies}}
+\begin{document}
+\begin{center}
+  {\Large\bfseries Finiteness of the integer solutions of}\par\vspace{5pt}
+  {\Large $x^4+xy+y^3+1=0$}
+\end{center}
+
+\textbf{Answer.} The proposed infinitude statement is false. In fact, this
+equation has only finitely many rational solutions, and hence only finitely
+many integer solutions.
+
+\textbf{Scope of the proof.} The algebraic
+calculations below are supplied in full. The finiteness conclusion uses
+Faltings' theorem, and the genus calculation uses the standard genus formula
+for a smooth plane curve. These results are stated explicitly and are not
+proved here. Thus the argument is unconditional, but it is not a fully
+self-contained elementary proof. A proof of the requested infinitude cannot
+be supplied because that conclusion is false.
+
+\begin{theorem}
+The set
+\[
+  \{(x,y)\in\Q^2:x^4+xy+y^3+1=0\}
+\]
+is finite. It contains $(0,-1)$ and $(1,-1)$.
+\end{theorem}
+
+\subsection*{1. Intuition: check the curve before seeking a family}
+One equation in two variables need not have infinitely many integer
+solutions. Here the natural object to examine is the plane curve itself.
+The total degree is four, but that alone does not determine its arithmetic:
+factorization or singularities could change the situation substantially.
+We therefore check two precise facts: the curve is geometrically
+irreducible, and its projective completion is smooth. A smooth plane quartic
+has genus three, which places it within the scope of a theorem asserting
+finiteness even for rational points.
+
+The most useful algebraic observation is that, at a hypothetical singular
+point, the derivative equations become linear relations among the three
+monomials $x^4$, $xy$, and $y^3$. These relations force incompatible absolute
+values. This makes the essential smoothness check particularly short.
+
+\subsection*{2. Geometric irreducibility}
+Put $f(x,y)=x^4+xy+y^3+1$. As a polynomial in $y$ over the field $\C(x)$,
+it has degree three. A reducible cubic over a field has a root in that field.
+Suppose such a root were $r=p/q$, where $p,q\in\C[x]$ are coprime and
+$q\ne0$. Clearing denominators gives
+\[
+  p^3+xpq^2+(x^4+1)q^3=0.
+\]
+Thus $q$ divides $p^3$. Coprimality forces $q$ to be constant, so $r$ is a
+polynomial. If $\deg r\le1$, the term $x^4$ has strictly greater degree
+than every other term of $r^3+xr+x^4+1$. If $\deg r=d\ge2$, the term
+$r^3$ has degree $3d>\max\{d+1,4\}$ and cannot cancel. The zero polynomial
+is not a root either. This is a contradiction in every case.
+
+Consequently $f$ is irreducible over $\C(x)$ and over $\C[x,y]$: a factor
+depending only on $x$ would have to divide the leading coefficient $1$ in
+$y$, and any other factorization would persist over $\C(x)$.
+
+\newpage
+\subsection*{3. The projective curve is smooth}
+The projective completion is
+\[
+  C:\quad F(X,Y,Z)=X^4+XYZ^2+Y^3Z+Z^4=0
+  \quad\text{in }\mathbb P^2.
+\]
+Its defining polynomial is irreducible over $\C$: a projective
+factorization would dehomogenize to one of $f$, unless a factor were a power
+of $Z$, and $Z$ does not divide $F$.
+
+\textit{Affine points.} A singular point with $Z\ne0$ would give complex
+numbers $x,y$ satisfying
+\[
+  f(x,y)=0,\qquad 4x^3+y=0,\qquad x+3y^2=0.
+\]
+Multiply the last two equations by $x$ and $y$, respectively. We obtain
+\[
+  4x^4+xy=0,\qquad xy+3y^3=0.
+\]
+Together with $x^4+xy+y^3+1=0$, these force
+\[
+  \boxed{\quad x^4=\frac35,\qquad y^3=\frac45,
+  \qquad xy=-\frac{12}{5}.\quad}
+\]
+The first two equalities imply $|x|<1$ and $|y|<1$, even when $x,y$ are
+complex. Hence $|xy|<1$. The third equality instead gives
+$|xy|=12/5>1$. Thus there are no affine singularities.
+
+\textit{The point at infinity.} Setting $Z=0$ gives $X^4=0$, so the only
+point at infinity is $P=[0:1:0]$. Since
+\[
+  F_Z=2XYZ+Y^3+4Z^3,\qquad F_Z(P)=1,
+\]
+this point is nonsingular as well. Therefore $C$ is smooth everywhere.
+
+\subsection*{4. Genus and the finiteness conclusion}
+The genus formula for a smooth geometrically irreducible projective plane
+curve of degree $d$ over a field of characteristic zero is
+\[
+  g=\frac{(d-1)(d-2)}2.
+\]
+All its hypotheses were checked above, so our quartic has $g=3$.
+
+\begin{faltings}
+If a smooth, projective, geometrically irreducible curve defined over a
+number field has genus at least two, then it has only finitely many points
+rational over that number field.
+\end{faltings}
+
+Apply this theorem to $C$ over $\Q$. Its rational point set $C(\Q)$ is
+finite. Each rational solution of the original equation gives the distinct
+point $[x:y:1]\in C(\Q)$. Hence there are finitely many rational solutions,
+and therefore finitely many integer solutions. Finally,
+\[
+  0^4+0(-1)+(-1)^3+1=0,
+  \qquad 1^4+1(-1)+(-1)^3+1=0,
+\]
+which verifies the two displayed solutions and completes the proof.
+\hfill$\square$
+
+\textbf{What is established.} Infinitely many integer solutions are ruled
+out unconditionally. This argument supplies neither a height bound nor a
+complete list of integer solutions; in particular, it does not claim that
+$(0,-1)$ and $(1,-1)$ are the only ones. Faltings' theorem and the plane-curve
+genus formula are the explicitly identified external mathematical inputs.
+\end{document}
+
+
