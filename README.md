@@ -46,7 +46,7 @@ The table below document efforts towards (partially or unconditionally) solving 
 
 | Folder | Goal | Status |
 |--------|------|----------|
-| [\[A\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_2x_minus_1_analysis%20) | Prove the finiteness of integer solutions for the equation:  $y (x^3 - y^2 ) = 2x - 1$. |  🟡 Pending feedback |
+| [\[A\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_2x_minus_1_analysis%20) | Prove the finiteness of integer solutions for the equation:  $y (x^3 - y^2 ) = 2x - 1$. |  🟡 Pending feedback (Will be revisited)|
 | [\[B\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/quartic_diophantine_finiteness) | Prove the finiteness of integer solutions for the equation:  $x^4+xy+y^3-1=0$. | 🟡 Pending feedback |
 | [\[C\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/finiteness_x4_xy_y3_plus1/Lean%20formalization%20) | Prove the finiteness of integer solutions for the equation:  $x^4+xy+y^3+1=0$. | 🟡 Pending feedback  |
 | [\[4\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/yx3_z2_eq_x_no_positive_solutions) | Prove that the equation: $y(x^3-z^2)=x$ has no positive integer solutions (Problem 7).| 🔴 Still needs working on |
