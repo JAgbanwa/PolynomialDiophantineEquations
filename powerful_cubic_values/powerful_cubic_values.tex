@@ -1,0 +1,218 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{xcolor}
+\usepackage{microtype}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={Powerful values of 2z cubed plus 1},pdfsubject={Elementary reductions and conditional finiteness}}
+\definecolor{ink}{HTML}{18344A}
+\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}{Theorem}
+\newtheorem*{conjecture}{The abc conjecture}
+\newcommand{\rad}{\operatorname{rad}}
+\newcommand{\Z}{\mathbb Z}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{ink}{Powerful values of a cubic}}
+\fancyhead[R]{\small $x^3y^2=2z^3+1$}
+\fancyfoot[C]{\small\thepage}
+\setlength{\headheight}{14pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\renewcommand{\headrulewidth}{0.3pt}
+\begin{document}
+\thispagestyle{plain}
+\begin{center}
+{\LARGE\bfseries\color{ink} Powerful values of $2z^3+1$}\par
+\vspace{5pt}
+{\large Elementary reductions and conditional finiteness}\par
+\vspace{5pt}
+{\small The integer equation $x^3y^2=2z^3+1$}
+\end{center}
+\vspace{5pt}
+\textbf{Scope.} An unconditional finiteness proof is not established in this
+note. What follows is a self-contained reduction of the question, elementary
+necessary conditions, and a complete finiteness proof \emph{assuming the
+$abc$ conjecture}. That conditional theorem does not answer the requested
+unconditional claim. No internet sources were consulted; no claim of novelty
+or of a complete solution list is made.
+
+\section*{1. The exact arithmetic issue}
+A positive integer $n$ is called \emph{powerful} if every prime dividing $n$
+has exponent at least two in its prime factorization. The integer $1$ is
+powerful by this definition. Since $2z^3+1$ is odd, it is never zero for
+$z\in\Z$.
+
+\begin{proposition}\label{prop:powerful}
+For a fixed integer $z$, there exist integers $x,y$ satisfying
+\begin{equation}\label{eq:main}
+ x^3y^2=2z^3+1
+\end{equation}
+if and only if $|2z^3+1|$ is powerful. Each such $z$ gives only finitely
+many pairs $(x,y)$.
+\end{proposition}
+\begin{proof}
+Put $n=|2z^3+1|$. If \eqref{eq:main} holds, then $x,y\ne0$, and the exponent
+of a prime $p$ in $n$ is $3\alpha+2\beta$, where $\alpha,\beta\ge0$ are its
+exponents in $|x|,|y|$. A positive integer of that form is at least two.
+Thus $n$ is powerful.
+
+Conversely, write $n=\prod_p p^{e_p}$, where every displayed $e_p\ge2$.
+Set $\delta_p=0$ when $e_p$ is even and $\delta_p=1$ when it is odd. In
+the odd case $e_p\ge3$, so the integers
+\[
+ a=\prod_p p^{\delta_p},\qquad
+ b=\prod_p p^{(e_p-3\delta_p)/2}
+\]
+are well defined and satisfy $n=a^3b^2$. Taking
+$x=\operatorname{sgn}(2z^3+1)a$ and $y=\pm b$ proves existence.
+For $n=1$ the products are empty and equal to $1$.
+Finally, any solution has $|x|^3\le n$ and $|y|^2\le n$, so there are
+only finitely many pairs.
+\end{proof}
+
+The construction makes $|x|$ squarefree. It is the unique representation
+with $|x|$ squarefree and $|y|>0$, apart from the sign choice for $y$:
+reducing $e_p=3\alpha+2\beta$ modulo $2$ forces
+$\alpha=\delta_p$ whenever $\alpha\in\{0,1\}$.
+
+Consequently, the original finiteness question is \emph{exactly} the question
+whether $|2z^3+1|$ is powerful for only finitely many integers $z$.
+This is a reformulation of the obstacle, not its resolution.
+
+\newpage
+\section*{2. Unconditional restrictions and verified solutions}
+\begin{proposition}\label{prop:restrictions}
+Every integer solution of \eqref{eq:main} satisfies
+\[
+ x,y\ \text{odd},\qquad
+ \gcd(|x|,|z|)=\gcd(|y|,|z|)=1,
+\]
+and
+\[
+ z\not\equiv1\pmod3,\qquad y\equiv\pm1\pmod9.
+\]
+Also, $x>0$ when $z\ge0$, while $x<0$ when $z\le-1$.
+\end{proposition}
+\begin{proof}
+The right side of \eqref{eq:main} is odd, so both $x$ and $y$ are odd.
+If a prime divides $z$ and either $x$ or $y$, reducing the equation modulo
+that prime gives $0=1$, a contradiction. The sign assertion follows because
+$y^2>0$ and $2z^3+1$ is positive exactly when $z\ge0$.
+
+The cubes modulo $9$ are $0,1,-1$, so the possible residues of the right
+side are $1,3,-1$. None is $0$. Hence neither $x$ nor $y$ is divisible by
+$3$. The possible left-side residues are therefore
+\[
+ (\pm1)\{1,4,7\}=\{1,2,4,5,7,8\},
+\]
+which exclude $3$. This rules out $z\equiv1\pmod3$. When $z\equiv0\pmod3$,
+the right side is $1$ modulo $9$; this forces $x^3\equiv1$ and
+$y^2\equiv1$. When $z\equiv-1\pmod3$, the right side is $-1$; this forces
+$x^3\equiv-1$ and again $y^2\equiv1$. Checking the nine residues gives
+$y^2\equiv1\pmod9$ exactly for $y\equiv\pm1\pmod9$, as asserted.
+\end{proof}
+
+The two values $z=0,-1$ are completely elementary. At $z=0$ the equation is
+$x^3y^2=1$, and at $z=-1$ it is $x^3y^2=-1$. Taking absolute values forces
+$|x|=|y|=1$. The resulting solutions are exactly
+\[
+ \boxed{(1,1,0),\ (1,-1,0),\ (-1,1,-1),\ (-1,-1,-1)}
+\]
+\emph{within those two slices}. No assertion is made that these are all
+integer solutions.
+
+\subsection*{An unconditional obstruction to polynomial families}
+\begin{proposition}
+There are no polynomials $X,Y,Z\in\mathbb Q[T]$ with $Z$ nonconstant
+satisfying $X^3Y^2=2Z^3+1$ identically.
+\end{proposition}
+\begin{proof}
+Suppose such an identity exists. Write $a=\deg X$, $b=\deg Y$, and
+$c=\deg Z>0$. The polynomials $X,Y$ are nonzero, and comparing degrees
+shows $3a+2b=3c$. Also $\gcd(XY,Z)=1$, since any common polynomial divisor
+would divide the constant $1$ in the identity.
+
+Differentiation gives the nonzero polynomial
+\[
+ D=X^2Y(3X'Y+2XY')=6Z^2Z'.
+\]
+The coprime polynomials $X^2Y$ and $Z^2$ both divide $D$, so their product
+divides $D$. Taking degrees yields
+\[
+ 2a+b+2c\le3c-1,\qquad 2a+b\le c-1.
+\]
+But $c=a+2b/3$, so this would give $a+b/3\le-1$, contradicting
+$a,b\ge0$.
+\end{proof}
+
+This rules out a polynomial construction with varying $z$; it does not
+rule out infinitely many isolated integer solutions. Likewise, finiteness
+for each fixed $x$ would leave an infinite union of possible slices.
+An unconditional bound on $z$ is still missing.
+
+\newpage
+\section*{3. A complete conditional finiteness proof}
+For a positive integer $m$, let $\rad(m)$ be the product of its distinct
+prime divisors, with $\rad(1)=1$.
+
+\begin{conjecture}
+For every $\varepsilon>0$ there is a constant $K_\varepsilon\ge1$ such that
+all pairwise coprime positive integers $A,B,C$ with $A+B=C$ satisfy
+\[
+ C\le K_\varepsilon\,\rad(ABC)^{1+\varepsilon}.
+\]
+\end{conjecture}
+
+\begin{theorem}[Conditional on $abc$]\label{thm:abc}
+Assume the $abc$ conjecture, and put $K=K_{1/11}$. Every integer solution
+of \eqref{eq:main} with $z\ne0$ satisfies
+\[
+ \max\{|2z^3+1|,\,2|z|^3\}\le256K^{11}.
+\]
+In particular, under this assumption there are only finitely many integer
+solutions.
+\end{theorem}
+\begin{proof}
+Let $t=|z|\ge1$, $N=|2z^3+1|$ and $H=\max(N,2t^3)$. For $z>0$ use
+\[
+ (A,B,C)=(1,2t^3,N),
+\]
+and for $z<0$ use $(A,B,C)=(1,N,2t^3)$. In both cases $A+B=C=H$.
+The two numbers $N$ and $2t^3$ differ by $1$, so the triple is pairwise
+coprime, as required.
+
+Proposition~\ref{prop:powerful} implies $\rad(N)\le N^{1/2}$: squaring
+the product of its distinct primes gives a divisor of $N$. Also,
+$\rad(2t^3)\le2t$. Since $N\le H$ and $t\le(H/2)^{1/3}$, we obtain
+\begin{equation}\label{eq:radbound}
+ \rad(ABC)\le2t\sqrt N\le2^{2/3}H^{5/6}.
+\end{equation}
+Applying $abc$ with $\varepsilon=1/11$ now gives
+\[
+ H\le K\bigl(2^{2/3}H^{5/6}\bigr)^{12/11}
+   =K\,2^{8/11}H^{10/11}.
+\]
+Divide by $H^{10/11}>0$ and raise to the eleventh power to obtain
+$H\le2^8K^{11}$. Thus $|z|^3\le128K^{11}$, so only finitely many $z$
+are possible. Each admits finitely many pairs $(x,y)$ by
+Proposition~\ref{prop:powerful}. The two solutions at $z=0$ were already
+handled separately.
+\end{proof}
+
+\textbf{Intuition.} Powerful numbers have relatively few distinct prime
+factors: their radical is at most their square root. In the consecutive
+pair $2t^3,N$, the cubic term contributes at most about $H^{1/3}$ to the
+radical and the powerful term at most $H^{1/2}$. Their product is bounded
+by a constant times $H^{5/6}$. The exponent $5/6<1$ leaves a gap that
+$abc$ converts into a height bound. Without that conjecture, this radical
+estimate alone supplies no such bound.
+
+\textbf{Final logical status.} The elementary reductions are unconditional;
+the finiteness theorem is conditional. No numerical value of $K$ has
+been supplied, and neither an unconditional finiteness proof nor a
+complete enumeration is established here.
+\end{document}
