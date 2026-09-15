@@ -1,0 +1,285 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=24mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\definecolor{ink}{HTML}{17334A}
+\definecolor{shade}{HTML}{F4F6F8}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}[proposition]{Lemma}
+\newtheorem{corollary}[proposition]{Corollary}
+\DeclareMathOperator{\rad}{rad}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\sffamily Integer solutions of $x^4y^3=z^2+1$}
+\fancyhead[R]{\small\sffamily Mathematical analysis}
+\fancyfoot[C]{\small\thepage}
+\setlength{\headheight}{15pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\setlength{\emergencystretch}{2em}
+\lstset{language=Python,basicstyle=\ttfamily\footnotesize,
+  backgroundcolor=\color{shade},frame=single,rulecolor=\color{black!15},
+  columns=fullflexible,keepspaces=true,showstringspaces=false,
+  xleftmargin=5pt,xrightmargin=5pt,aboveskip=8pt,belowskip=8pt}
+\hypersetup{pdftitle={On a Diophantine equation with fourth, third, and second powers},
+  pdfsubject={Self-contained restrictions, a polynomial obstruction, and conditional finiteness}}
+
+\begin{document}
+\thispagestyle{empty}
+{\Large\bfseries\color{ink} On the equation $x^4y^3=z^2+1$}\par
+{\large Elementary restrictions and the obstacle to infinitude}\par
+\vspace{3mm}
+
+\textbf{Status of the requested conclusion.}
+I have not established infinitely many integer solutions. The arguments below
+prove several unconditional restrictions, including the impossibility of a
+nonconstant polynomial family. They also prove that the $abc$ conjecture would
+imply \emph{finitely} many integer solutions. Consequently, an infinitude proof
+would disprove that conjecture. This is not an unconditional disproof of
+infinitude. Nor is a complete classification established here.
+
+The solutions $(1,1,0)$ and $(-1,1,0)$ are immediate. All assertions below are
+proved from the stated assumptions; no internet search or external mathematical
+sources were used.
+
+\section*{1. Intuition: rational formulas versus integer solutions}
+An apparently promising substitution is $u=xy$. It gives the exact rational
+parametrization
+\[
+ x=\frac{t^2+1}{u^3},\qquad
+ y=\frac{u^4}{t^2+1},\qquad z=t,
+ \qquad (u,t\in\mathbb Q,\ u\ne0).
+\]
+Indeed, multiplying the fourth power of the first expression by the cube of
+the second gives $t^2+1$. Conversely, every rational solution is obtained by
+taking $u=xy$ and $t=z$.
+
+For \emph{integers} $u,t$, however, integrality of both coordinates requires
+\[
+ u^3\mid t^2+1\qquad\text{and}\qquad t^2+1\mid u^4.
+\]
+Thus the rational parametrization leaves the essential arithmetic difficulty
+intact. Equivalently, in any integer solution, each prime exponent in $z^2+1$
+has the form $4a+3b$ with $a,b\ge0$. A positive exponent is therefore at least
+$3$; exponents $1,2,5$ are impossible. This scarcity of distinct prime factors
+is the reason the $abc$ obstruction in Section~4 appears.
+
+\begin{proposition}[Elementary restrictions]
+Every integer solution has $x\ne0$, $y>0$, $x,y$ odd, and $z$ even. Every prime
+dividing $xy$ is $1\pmod4$, and $y\equiv1$ or $13\pmod{16}$.
+If $y$ is a square, the solution is $(\pm1,1,0)$.
+\end{proposition}
+\begin{proof}
+Positivity of $z^2+1$ forces $x\ne0$ and $y>0$. An even $x$ or an even $y$
+would give $z^2\equiv-1\pmod4$, which is impossible. Therefore $x,y$ are odd
+and $z$ is even. If an odd prime $p\mid xy$, then $z^2\equiv-1\pmod p$.
+Multiplication by $z$ on the nonzero residues modulo $p$ partitions them into
+orbits of length exactly $4$: its square is multiplication by $-1$, and its
+fourth power is the identity. Hence $4\mid p-1$.
+Modulo $16$, $x^4\equiv1$ and $z^2+1\equiv1$ or $5$.
+Cubing permutes the odd residues and is its own inverse, so $y\equiv1$ or $13$.
+Finally, if $y=v^2$ with $v>0$, put $w=x^2v^3>0$. Then
+$(w-z)(w+z)=1$, forcing $w=1$, $z=0$, and $|x|=v=1$.
+\end{proof}
+
+\newpage
+\section*{2. Another infinite class of candidates is excluded}
+The following elementary cube obstruction also rules out every $|x|$ that is
+a perfect cube. We include its proof so this restriction is self-contained.
+
+\begin{lemma}
+The integer equation $t^2+1=v^3$ has only the solution $(t,v)=(0,1)$.
+\end{lemma}
+\begin{proof}
+Necessarily $v>0$. If $t$ were odd, $t^2+1\equiv2\pmod4$, whereas a cube is
+$0,1$, or $3\pmod4$. Hence $t$ is even and $v$ is odd.
+
+We use unique factorization in $\mathbb Z[i]$, justified as follows. Its norm
+is $N(a+bi)=a^2+b^2$. Rounding both coordinates of $\alpha/\beta$ to nearest
+integers gives a Gaussian integer $q$ with
+$N(\alpha-q\beta)\le N(\beta)/2<N(\beta)$. Thus the Euclidean algorithm
+and B\'ezout's identity hold. B\'ezout's identity makes every irreducible
+prime; induction on the norm gives factorization, and primality gives
+uniqueness.
+
+In $(t+i)(t-i)=v^3$, the two factors are coprime: a common divisor divides
+$2i$, so its norm divides $4$, while it also divides the odd integer $t^2+1$.
+Its norm is therefore $1$. Unique factorization now shows that
+$t+i=\varepsilon(a+bi)^3$ for a unit $\varepsilon$. Cubing permutes the four
+units $1,-1,i,-i$, so the unit can be absorbed into the cube. Comparing
+imaginary parts gives
+\[
+ b(3a^2-b^2)=1.
+\]
+Thus $b=\pm1$. The case $b=1$ requires $3a^2=2$, which is impossible;
+the case $b=-1$ gives $a=0$. Consequently $t=0$ and $v=1$.
+\end{proof}
+
+\begin{corollary}
+If $|x|$ is a perfect cube, then $(x,y,z)=(\pm1,1,0)$.
+\end{corollary}
+\begin{proof}
+Write $|x|=a^3$ with $a>0$. Then $z^2+1=(a^4y)^3$. The lemma yields
+$z=0$ and $a^4y=1$, so $a=y=1$.
+\end{proof}
+
+\section*{3. Why a polynomial construction cannot work}
+\begin{proposition}
+If $X,Y,Z\in\mathbb Q[T]$ satisfy $X^4Y^3=Z^2+1$ identically, all three
+polynomials are constant.
+\end{proposition}
+\begin{proof}
+$X$ and $Y$ are nonzero. If $Z$ is constant, comparison of degrees proves
+the claim. Otherwise write $a=\deg X$, $b=\deg Y$, $c=\deg Z\ge1$.
+Comparison of degrees gives $2c=4a+3b$. Differentiation gives
+\[
+ 2ZZ'=X^3Y^2(4X'Y+3XY').
+\]
+No nonconstant polynomial divides both $Z$ and $XY$: such a divisor would
+divide $Z^2+1$ and $Z$, hence $1$. Therefore $X^3Y^2$ is coprime to $Z$,
+and the displayed identity implies $X^3Y^2\mid Z'$. Taking degrees yields
+\[
+ 3a+2b\le c-1=2a+\tfrac32b-1,
+ \qquad\text{so}\qquad a+\tfrac12b\le-1,
+\]
+contradicting $a,b\ge0$.
+\end{proof}
+
+The intuition is that differentiation preserves too much of the repeated
+factors on the left, while reducing the available degree on the right.
+
+\newpage
+\begin{corollary}[Rational formulas at integer parameters]
+No nonconstant triple of rational functions in $T$ can yield integer solutions
+for infinitely many integer values of $T$.
+\end{corollary}
+\begin{proof}
+First suppose $f\in\mathbb Q(T)$ is integer-valued at infinitely many integers.
+Polynomial division writes $f=P+R/Q$, with $P,R,Q\in\mathbb Q[T]$,
+$Q\ne0$, and either $R=0$ or $\deg R<\deg Q$. Choose a positive integer $D$
+such that $DP\in\mathbb Z[T]$. Along those integer inputs, which are unbounded
+in absolute value, $Df-DP=DR/Q$ is an integer tending to zero. It therefore
+vanishes at infinitely many inputs, forcing $R=0$. Thus $f$ is a polynomial.
+
+Apply this argument to each coordinate. The equation holds identically,
+because a nonzero rational function has only finitely many zeros. The preceding
+proposition then makes every coordinate constant.
+\end{proof}
+
+This result concerns rational functions evaluated at \emph{integer} parameters.
+It does not rule out recurrence sequences or other possible constructions of
+integer solutions, and it does not conflict with the two-parameter rational
+parametrization in Section~1.
+
+\section*{4. Infinitude would contradict the $abc$ conjecture}
+For a positive integer $m$, let $\rad(m)$ be the product of its distinct prime
+divisors, with $\rad(1)=1$. The form of the \emph{$abc$ conjecture} needed here
+says that for every $\varepsilon>0$ there is a constant $K_\varepsilon$ such that
+pairwise coprime positive integers $A,B,C$ with $A+B=C$ satisfy
+\[
+ C\le K_\varepsilon\rad(ABC)^{1+\varepsilon}.
+\]
+This is an additional conjectural hypothesis, not an ingredient in any of the
+preceding unconditional results.
+
+\begin{proposition}[Conditional finiteness]
+If the $abc$ conjecture holds, $x^4y^3=z^2+1$ has only finitely many integer
+solutions.
+\end{proposition}
+\begin{proof}
+The case $z=0$ gives only $(\pm1,1,0)$. For $z\ne0$, put
+$C=z^2+1=x^4y^3$. Every prime exponent in $C$ is at least $3$, so
+\[
+ \rad(C)^3\le C.
+\]
+Since $|z|<C^{1/2}$, we have
+\[
+ \rad(z^2C)\le |z|\rad(C)\le C^{1/2+1/3}=C^{5/6}.
+\]
+Apply the conjecture to $1+z^2=C$, with $\varepsilon=1/10$. These three
+integers are pairwise coprime, and thus
+\[
+ C\le K_{1/10}\rad(z^2C)^{11/10}
+   \le K_{1/10}C^{11/12},
+ \qquad C\le K_{1/10}^{12}.
+\]
+This bounds $z$. Each fixed positive $C$ has only finitely many factorizations
+$C=x^4y^3$ with $x\ne0$, $y>0$, proving the assertion.
+\end{proof}
+
+The argument explains the obstruction quantitatively: $z^2+1$ would be large
+relative to the product of the distinct primes in $z^2(z^2+1)$. It supplies no
+unconditional global bound and no usable numerical bound without control of
+$K_{1/10}$.
+
+\newpage
+\section*{5. A reproducible finite check}
+An exact integer computation gives the following bounded result:
+\[
+ \boxed{\ |z|\le10^{10}\quad\Longrightarrow\quad
+ (x,y,z)\in\{(1,1,0),(-1,1,0)\}.\ }
+\]
+This is a computational verification within the stated bound, not a claim
+about larger solutions. The following complete Python code uses only integer
+arithmetic and the standard library; it checked $2{,}503{,}682$ candidate pairs.
+
+\begin{lstlisting}
+from math import isqrt
+
+def icbrt(n):
+    # The greatest integer r such that r**3 <= n.
+    lo, hi = 0, 1 << ((n.bit_length() + 2) // 3)
+    while lo + 1 < hi:
+        mid = (lo + hi) // 2
+        if mid**3 <= n:
+            lo = mid
+        else:
+            hi = mid
+    return lo
+
+B = 10**10
+C = B*B + 1
+solutions = []
+checked = 0
+for x in range(1, isqrt(isqrt(C)) + 1, 2):
+    ymax = icbrt(C // x**4)
+    for y in range(1, ymax + 1, 4):
+        n = x**4 * y**3 - 1
+        z = isqrt(n)
+        checked += 1
+        if z*z == n:
+            solutions.append((x, y, z))
+print(checked, solutions)
+# Output: 2503682 [(1, 1, 0)]
+\end{lstlisting}
+
+\textbf{Why the check is exhaustive within its bound.}
+Sign changes of $x$ or $z$ preserve the equation, so it suffices to take $x>0$
+and $z\ge0$. If $z\le B$, then $x^4y^3\le B^2+1=C$. Since $y\ge1$,
+\[
+ 1\le x\le\lfloor C^{1/4}\rfloor,
+ \qquad
+ 1\le y\le\left\lfloor\sqrt[3]{\lfloor C/x^4\rfloor}\right\rfloor.
+\]
+The outer loop uses $\lfloor C^{1/4}\rfloor=\operatorname{isqrt}
+(\operatorname{isqrt}(C))$. The function \texttt{icbrt} maintains
+$\texttt{lo}^3\le n<\texttt{hi}^3$, terminates when the endpoints are adjacent,
+and therefore returns the exact integer cube root. The parity and congruence
+restrictions justify testing only odd $x$ and $y\equiv1\pmod4$. Finally,
+\texttt{isqrt} and the test $z^2=n$ detect squares exactly. Thus every possible
+solution in the range is tested.
+
+\textbf{What remains unproved.}
+This note establishes neither global finiteness nor global infinitude, and it
+does not prove that $(\pm1,1,0)$ are the complete list without a bound on $z$.
+The requested unconditional proof of infinitely many integer solutions is
+therefore not supplied. The conditional obstruction and the unconditional
+restrictions above should not be mistaken for such a proof.
+
+\end{document}
