@@ -1,1 +1,164 @@
-.
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,microtype}
+\usepackage[margin=24mm]{geometry}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\definecolor{ink}{HTML}{17354A}
+\hypersetup{pdftitle={A finiteness result for y cubed plus y equals x to the fourth plus x},pdfauthor={}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\setlength{\abovedisplayskip}{8pt plus 2pt minus 2pt}
+\setlength{\belowdisplayskip}{8pt plus 2pt minus 2pt}
+\newtheorem{theorem}{Theorem}
+\newtheorem*{proposition}{Elementary proposition}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\PP}{\mathbb{P}}
+\begin{document}
+\begin{center}
+{\Large\bfseries\color{ink} A finiteness result for \(y^3+y=x^4+x\)}\\[5pt]
+{\small A correction to the proposed infinitude assertion}
+\end{center}
+
+\textbf{Status of the answer.}
+The assertion of infinitely many integer solutions is false. The proof below
+uses Siegel's theorem and the genus formula for a smooth plane curve; their
+statements are supplied, but they are not proved. Thus the argument is
+\emph{unconditional}, but it does \emph{not} meet the requested fully
+self-contained standard. No complete enumeration of the integer solutions is
+claimed. No internet search was used.
+
+\begin{theorem}
+There are only finitely many pairs \((x,y)\in\Z^2\) satisfying
+\begin{equation}\label{eq:main}
+ y^3+y=x^4+x.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+We verify explicitly the geometric hypotheses of the finiteness theorem.
+Homogenizing \eqref{eq:main} gives the projective plane curve
+\[
+ C:\quad F(X,Y,Z)=Y^3Z+YZ^3-X^4-XZ^3=0.
+\]
+All smoothness and irreducibility checks below are over \(\C\).
+
+\textbf{1. The point at infinity is unique and smooth.}
+Setting \(Z=0\) gives \(X=0\), so the only point at infinity is
+\(P=[0:1:0]\). Since
+\[
+ F_Z=Y^3+3YZ^2-3XZ^2,\qquad F_Z(P)=1,
+\]
+the gradient is nonzero at \(P\).
+
+\textbf{2. There are no affine singularities.}
+For \(f(x,y)=y^3+y-x^4-x\), a singular point would satisfy
+\[
+ f=0,\qquad f_x=-4x^3-1=0,\qquad f_y=3y^2+1=0.
+\]
+Consequently \(x^3=-1/4\) and \(y^2=-1/3\). Substitution into \(f=0\)
+then gives
+\[
+ \frac23y=\frac34x,\qquad
+ y=\frac98x,\qquad x^2=-\frac{64}{243}.
+\]
+But these equations also force
+\[
+ x=\frac{x^3}{x^2}=\frac{243}{256},
+\]
+whose square is positive, contradicting \(x^2=-64/243\).
+Thus \(C\) is smooth everywhere.
+
+\textbf{3. The curve is geometrically irreducible.}
+Suppose \(F=GH\), with nonconstant homogeneous complex polynomials of
+degrees \(d,e>0\). Since \(F(X,Y,0)=-X^4\), their restrictions to \(Z=0\)
+must be \(cX^d\) and \(c'X^e\), where \(cc'=-1\). Hence both factors
+vanish at \(P\), giving
+\(\nabla F(P)=H(P)\nabla G(P)+G(P)\nabla H(P)=0\).
+This contradicts step 1 and proves irreducibility.
+
+\textbf{4. Apply the genus formula and Siegel's theorem.}
+The genus formula states that a smooth geometrically irreducible projective
+plane curve of degree \(d\) has genus \((d-1)(d-2)/2\). Here
+\[
+ g(C)=\frac{(4-1)(4-2)}2=3.
+\]
+The form of \textbf{Siegel's theorem} needed here is: an affine
+geometrically irreducible curve over \(\Q\) whose smooth projective
+completion has positive genus has only finitely many integer points in any
+fixed affine embedding. Applying it to \(C\setminus\{P\}\), with coordinates
+\((x,y)\), proves the theorem.
+\end{proof}
+
+\newpage
+\begin{center}
+{\large\bfseries\color{ink} Intuition and elementary information}
+\end{center}
+
+The leading terms suggest trying
+\[
+ x=t^3,\qquad y=t^4,
+\]
+because then \(y^3=x^4=t^{12}\). In the actual equation this leaves
+\(t^4=t^3\), so the trial works only for \(t=0,1\). The lower-order terms
+therefore matter even though they are small compared with the leading terms.
+This failed trial alone would not rule out some other infinite family.
+
+The geometric calculation resolves that difficulty. The simpler curve
+\(y^3=x^4\) has a singularity at the origin and admits the displayed
+parametrization. For the curve in \eqref{eq:main}, the derivative calculation
+shows that no singularity remains, including over the complex numbers. Its
+smooth quartic structure gives genus \(3\), and Siegel's theorem supplies the
+arithmetic finiteness conclusion. Merely comparing the degrees \(3\) and \(4\)
+would not establish finiteness.
+
+Some useful information can also be proved entirely elementarily. Put
+\(h(u)=u^3+u\). For real \(v>u\),
+\[
+ h(v)-h(u)=(v-u)(v^2+uv+u^2+1)>0,
+\]
+so \(h\) is strictly increasing. For every integer \(x\),
+\(x^4+x\geq0\); hence any integer solution has \(y\geq0\). At
+\(x=-1,0,1\), strict monotonicity determines exactly the solutions
+\[
+ \boxed{(-1,0),\qquad(0,0),\qquad(1,1).}
+\]
+For \(a=|x|\geq2\),
+\[
+ x^4+x-h(a)\geq a^4-a-a^3-a
+ =a\bigl(a^2(a-1)-2\bigr)>0,
+\]
+so every further solution would satisfy \(y>|x|\).
+
+\begin{proposition}
+The only integer solutions of \eqref{eq:main} for which \(x\) is an integer
+cube are \((-1,0),(0,0),(1,1)\).
+\end{proposition}
+\begin{proof}
+Write \(x=t^3\). The cases \(t=-1,0,1\) were handled above. Suppose
+\(|t|\geq2\), and put \(q=t^4\geq16\). Then
+\[
+ x^4+x=q^3+t^3<q^3+q=h(q),
+\]
+because \(t^3<q\). On the other hand, \(|t|^3\leq q\) gives
+\begin{align*}
+ q^3+t^3-h(q-1)
+ &=3q^2-4q+2+t^3\\
+ &\geq3q^2-5q+2=(3q-2)(q-1)>0.
+\end{align*}
+Thus \(h(q-1)<x^4+x<h(q)\). Strict monotonicity makes
+\(h(y)=x^4+x\) impossible for integral \(y\), since no integer lies
+strictly between \(q-1\) and \(q\).
+\end{proof}
+
+The proposition settles every cube value of \(x\), but does not settle the
+noncube values. The global result proved on the first page is finiteness;
+it supplies neither an explicit bound for \(|x|\) nor a proof that the three
+displayed solutions are the complete list. The reliance on Siegel's theorem
+is the substantive gap between this argument and a fully self-contained
+treatment.
+
+\end{document}
+
