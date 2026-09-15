@@ -1,0 +1,138 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=25mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage[colorlinks=true,linkcolor=blue!45!black]{hyperref}
+\hypersetup{pdftitle={Conditional finiteness for x cubed y squared = z to the fourth + 1},pdfsubject={A self-contained proof assuming the abc conjecture}}
+\DeclareMathOperator{\rad}{rad}
+\newtheorem{theorem}{Theorem}
+\newtheorem*{conjecture}{The abc conjecture}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Conditional Diophantine finiteness}
+\fancyhead[R]{\small $x^3y^2=z^4+1$}
+\fancyfoot[C]{\small\thepage}
+\setlength{\headheight}{14pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\renewcommand{\headrulewidth}{0.3pt}
+\begin{document}
+\begin{center}
+{\LARGE\bfseries Conditional finiteness for}\\[6pt]
+{\Large $\boldsymbol{x^3y^2=z^4+1}$}\\[7pt]
+{\small A self-contained proof assuming the $abc$ conjecture}
+\end{center}
+
+The equation has only finitely many integer solutions \emph{if the
+$abc$ conjecture holds}. All steps below are elementary once that conjecture
+is assumed. This proves the implication; it does not establish finiteness
+independently of the conjecture.
+
+\section*{1. Precise statement and proof}
+For a positive integer $n$, its \emph{radical} $\rad(n)$ is the product of
+its distinct prime divisors, with $\rad(1)=1$. In particular,
+$\rad(n)\le n$ and $\rad(mn)\le\rad(m)\rad(n)$ for positive integers $m,n$.
+These inequalities follow directly by counting each prime at most once.
+
+\begin{conjecture}
+For every $\varepsilon>0$ there is a constant $K_\varepsilon\ge1$ such that
+all pairwise coprime positive integers $a,b,c$ satisfying $a+b=c$ obey
+\[
+c\le K_\varepsilon\,\rad(abc)^{1+\varepsilon}.
+\]
+\end{conjecture}
+
+\begin{theorem}
+Assume the $abc$ conjecture, and let $K=K_{1/6}$. Every integer solution of
+$x^3y^2=z^4+1$ satisfies
+\[
+1\le x\le K^{8/3},\qquad 1\le |y|\le K^4,\qquad |z|\le K^2.
+\]
+Consequently the equation has only finitely many integer solutions.
+\end{theorem}
+
+\begin{proof}
+The right-hand side is positive, so $y\ne0$ and $x\ge1$. If $z=0$, then
+$x^3y^2=1$, giving exactly $(x,y,z)=(1,1,0),(1,-1,0)$; both satisfy the
+claimed bounds because $K\ge1$.
+
+Now put $t=|z|\ge1$ and $N=t^4+1=x^3y^2$. Each prime divisor $p$ of $N$
+divides $x$ or $y$, and hence its exponent in $N$ is at least two.
+Unique prime factorization therefore gives
+\begin{equation}
+\rad(N)^2\mid N,\qquad\text{and thus}\qquad\rad(N)\le N^{1/2}.
+\label{eq:squareful}
+\end{equation}
+The integers $1,t^4,N$ are pairwise coprime: any common divisor of $t^4$
+and $N$ divides $N-t^4=1$. Also $\rad(t^4)=\rad(t)\le t\le N^{1/4}$, so
+\begin{equation}
+\rad(1\cdot t^4\cdot N)
+\le\rad(t^4)\rad(N)\le N^{1/4}N^{1/2}=N^{3/4}.
+\label{eq:radical}
+\end{equation}
+Applying $abc$ with $\varepsilon=1/6$ to $1+t^4=N$ yields
+\[
+N\le K\,\rad(t^4N)^{7/6}\le K N^{7/8}.
+\]
+Since $N>0$, division gives $N^{1/8}\le K$, hence $N\le K^8$.
+Finally $t^4<N$, $x^3\le N$, and $y^2\le N$ give the stated bounds.
+Only finitely many integer triples lie in these bounded ranges.
+\end{proof}
+
+\newpage
+\section*{2. Intuition: why the exponents force a bound}
+The useful feature of $x^3y^2$ is that it has no prime factor occurring
+only once. Such a positive integer is called \emph{powerful}.
+Its size can grow much faster than its radical: a prime power $p^e$
+contributes $p^e$ to the integer but only $p$ to the radical.
+Because every exponent here is at least two, the radical uses at most
+half of the size exponent, as expressed by \eqref{eq:squareful}.
+
+The natural additive identity is
+\[
+\underbrace{1}_{\text{radical }1}
+\; + \;
+\underbrace{t^4}_{\text{radical at most }N^{1/4}}
+\; = \;
+\underbrace{N}_{\text{radical at most }N^{1/2}}.
+\]
+Thus the product of all distinct primes in this coprime triple is at most
+$N^{3/4}$. The conjecture says that the sum $N$ cannot substantially exceed
+that product raised to a power arbitrarily close to one. The gap
+\[
+\frac14+\frac12=\frac34<1
+\]
+is precisely what makes a finiteness proof possible.
+
+More explicitly, any fixed $0<\varepsilon<1/3$ gives
+\[
+N\le K_\varepsilon N^{\frac34(1+\varepsilon)},
+\qquad
+N^{\frac{1-3\varepsilon}{4}}\le K_\varepsilon,
+\qquad
+N\le K_\varepsilon^{\frac4{1-3\varepsilon}}.
+\]
+The exponent on the middle left-hand side is positive. Since
+$K_\varepsilon$ is independent of the solution, $N$ cannot grow without
+bound. Choosing $\varepsilon=1/6$ simply makes this exponent $1/8$.
+
+\section*{3. Scope of the conclusion}
+No coprimality assumption on $x$ and $y$ is needed. The required
+coprimality comes from the consecutive integers $t^4$ and $t^4+1$.
+Negative $x$ and $y=0$ are impossible by positivity; both signs of $y$
+and $z$ are included through absolute values.
+
+The two solutions $(1,\pm1,0)$ are explicit. The argument does not assert
+that these are the only solutions: it proves that the total solution set
+is finite under $abc$. The stated form of the conjecture supplies no
+numerical value for $K_{1/6}$, so the bound above is not a numerical search
+cutoff and does not by itself produce a complete list.
+
+The proof uses no external results beyond the stated conjecture and
+elementary unique prime factorization. No internet search or computational
+search is needed.
+\end{document}
