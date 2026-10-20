@@ -41,22 +41,3 @@ Since Version 9 (the latest) of this [paper](https://arxiv.org/pdf/2404.08518), 
 For the problems marked (Already solved), see the latest version of Dr. Grechuk's (aforementioned) [paper](https://arxiv.org/pdf/2404.08518). I used GPT-Codex to build a simple website to track the progress of solved equations in the aforementioned paper [here](https://jagbanwa.github.io/OpenDiophantineTracker/). This is its GitHub [repo](https://github.com/JAgbanwa/OpenDiophantineTracker).
 
 
-The table below document efforts towards (partially or unconditionally) solving problems from Table 1 of the [joint paper](https://arxiv.org/abs/2607.06627) between Dr. Grechuk and myself. 
-
-
-| Folder | Goal | Status |
-|--------|------|----------|
-| [\[A\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_2x_minus_1_analysis%20) | Prove the finiteness of integer solutions for the equation:  $y (x^3 - y^2 ) = 2x - 1$. |  🟡 Pending feedback (Will be revisited)|
-| [\[B\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/quartic_diophantine_finiteness) | Prove the finiteness of integer solutions for the equation:  $x^4+xy+y^3-1=0$. | 🟡 Pending feedback |
-| [\[C\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/finiteness_x4_xy_y3_plus1/Lean%20formalization%20) | Prove the finiteness of integer solutions for the equation:  $x^4+xy+y^3+1=0$. | 🟡 Pending feedback  |
-| [\[D\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/y3_minus_y_equals_x4_minus_x_finiteness) | Prove that the equation: $y^3 - y = x^4 - x$ has finitely many integer solutions.|  🟡 Pending feedback |
-| [\[E\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/y3_plus_y_equals_x4_plus_x_finiteness) | Prove that the equation: $y^3 + y = x^4 + x$ has finitely many integer solutions.|  🟡 Pending feedback |
-| [\[F\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/abc_finiteness_x3y2_z4_plus1) | Prove that the equation: $x^3 y^2 = z^4 + 1$ has finitely many integer solutions. |  🟡 Pending feedback  |
-| [\[G\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/x4_y3_z2_plus1) | Prove that the equation: $x^4 y^3 = z^2 + 1$ has finitely many integer solutions.| 🟡 Pending feedback |
-| [\[H\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/powerful_cubic_values) | Prove that the equation: $x^3 y^2 = 2z^3 + 1$ has finitely many integer solutions.| 🟡 Pending feedback  |
-| [\[I\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_y2_x2y_xz2_minus2_solution) | Describe all integer solutions of the equation: $y^2+x^2y+xz^2-2=0$ (Table 5, Problem 2). | (Already solved) |
-| [\[J\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/integral_solutions_z2_minus_xy2_equals_x3_plus_2) | Describe all integer solutions of the equation: $z^2-xy^2-x^3-2=0$ (Table 5, Problem 2). | (Already solved) |
-| [\[K\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/integer_solutions_z2_minus_xy2_equals_x3_minus_2) | Describe all integer solutions of the equation: $z^2-xy^2-x^3+2=0$ (Table 5, Problem 2). | (Already solved)|
-| [\[L\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/integer_solutions_y2_x2y_xz2_plus2) | Describe all integer solutions of the equation: $y^2+x^2y+xz^2+2=0$ (Table 5, Problem 2). | (Already solved) |
-| [\[M\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/integer_solutions_y2_x2y_xz2_plus1) | Describe all integer solutions of the equation: $y^2 + x^2 \cdot y + z^2 \cdot x + 1 = 0$ (Table 5, Problem 2). | (Already solved) |
-| [\[N\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/primitive_solutions_3y3_plus_z3_equals_x4) | Find all primitive integer solutions to the equation: $3Y^3+Z^3=X^4$ ([MathOverflow](https://mathoverflow.net/questions/513113/what-are-the-primitive-solutions-to-3y3z3-x4)). | 🟡 Pending feedback |
