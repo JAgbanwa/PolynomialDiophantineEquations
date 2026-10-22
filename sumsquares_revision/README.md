@@ -6,17 +6,26 @@ resolved dependency revisions committed in `lake-manifest.json`.
 
 ## Verification and paper snapshot
 
-This repair restores the independent challenge and complete verification setup.
-The full Lean 4.35.0 build passed on 22 October 2026, ending with
-`Build completed successfully (9052 jobs).` The official comparator is being
-checked in CI; its completed run and the immutable paper snapshot will be
-recorded here before the revision is finalized. An installed verifier is not itself evidence
-of a successful verification run.
+**The complete build and the official comparator passed on 22 October 2026.**
+The [completed verification run](https://github.com/JAgbanwa/PolynomialDiophantineEquations/actions/runs/39760193447)
+checked the 42 advertised statements with the real sandbox enabled and then
+built every project target. Lean 4.35.0 uses Mathlib revision
+`56a005855ea17e0b0958f73ec801ae140b0a1679` in this project.
 
-The project link and proof-file link in the paper must refer to the **same
-immutable commit** in `sumsquares_revision`. The older directory
-`sumsquares_revised` is a separate development. This README, the challenge, the
-solution, the metadata, and the dependency pins belong to this project together.
+| Check | Observed result |
+| --- | --- |
+| Required files and both 42-theorem inventories | Passed |
+| Official v0.4 metadata schema | Passed |
+| `lake comparator --config comparator.json` | `Lean default kernel accepts the solution`; `Your solution is okay!` |
+| `lake build RequestProject Challenge Solution` | `Build completed successfully (9052 jobs).` |
+| Complete `bash verify.sh` | Exit code 0; `==> all checks passed` |
+| Built-in axiom audit of all 42 proved declarations | Exactly the union `{propext, Quot.sound, Classical.choice}`; no `sorryAx` |
+
+The relative links to the [project snapshot](.) and
+[proof development](RequestProject/Main.lean) resolve within the same revision
+as this README. For a paper citation, obtain the full immutable commit with
+`git rev-parse HEAD` and use it in both links. The directory
+`sumsquares_revised` contains a separate, older development.
 
 ## What is formalised
 
@@ -82,13 +91,13 @@ needed infinitude statements internally using a Pell-orbit argument.
 | `verify.sh` | Required source checks, metadata validation, real comparator, and full build |
 | `scripts/check_project.py` | Structural preflight and source-placeholder checks |
 | `scripts/check_metadata.py` | Validation against the vendored official v0.4 schema |
-| `scripts/CheckComparator.lean` | Optional diagnostic; does not replace the official comparator |
 | `../.github/workflows/sumsquares-revision-ci.yml` | CI verification of this directory |
 
 ## Practical instructions: obtain a successful build and verification
 
-Use a **Bash terminal on Linux** for the complete procedure. The official Lean
-4.35 comparator requires a working `bubblewrap` sandbox. An Ubuntu environment
+Use a **Bash terminal on Linux** for the complete procedure. The CI workflow
+uses the supported **Ubuntu 22.04** runner. The official Lean 4.35 comparator
+requires a working `bubblewrap` sandbox. An Ubuntu environment
 with permission to create the required namespaces and mount its isolated `/proc`
 is suitable. Some containers and hosted notebooks prohibit those operations;
 in that case use the repository's GitHub Actions workflow or another suitable
@@ -134,17 +143,17 @@ git rev-parse HEAD
 cd sumsquares_revision
 ```
 
-The final paper citation will pin an immutable commit after verification. Keep
-the full hash printed above in the meantime. All subsequent commands run from
+Keep the full hash printed above. To reproduce a paper snapshot, check out
+that exact commit before entering the project directory. All subsequent commands run from
 `sumsquares_revision`.
 
 ### 3. Install the pinned metadata validator
 
-Create the virtual environment outside the source tree:
+Create the virtual environment outside the repository:
 
 ```bash
-python3 -m venv ../sumsquares-verification-venv
-source ../sumsquares-verification-venv/bin/activate
+python3 -m venv ../../sumsquares-verification-venv
+source ../../sumsquares-verification-venv/bin/activate
 python3 -m pip install -r scripts/requirements.txt
 python3 scripts/check_project.py
 python3 scripts/check_metadata.py
@@ -217,8 +226,9 @@ advertised target using **`lake build RequestProject Challenge Solution`**.
 Lean 4.35 supplies the comparator and matching exporter; no standalone
 `COMPARATOR` path, `landrun`, or separately installed `lean4export` is needed.
 
-A successful run must contain the comparator's successful conclusion, Lake's
-message beginning **`Build completed successfully`**, the final verifier line
+A successful run must contain **`Lean default kernel accepts the solution`**,
+**`Your solution is okay!`**, Lake's message beginning
+**`Build completed successfully`**, the final verifier line
 **`==> all checks passed`**, and **`Verification exit code: 0`**. The number of
 build jobs varies. If the block returns a nonzero status, verification has failed.
 
@@ -249,16 +259,6 @@ lake clean RequestProject
 lake build RequestProject Challenge Solution
 ```
 
-The optional local diagnostic is:
-
-```bash
-lake env lean --run scripts/CheckComparator.lean
-```
-
-It compares the interfaces and examines axiom dependencies. The official
-comparator also exports, compares and kernel-checks in its sandbox; the diagnostic
-is useful for debugging but is not an equivalent verification procedure.
-
 ## Verification in GitHub Actions
 
 Open the repository's **Actions** tab and choose **Sumsquares revision
@@ -269,7 +269,8 @@ logs as a run artifact. A successful workflow for the older
 `sumsquares_revised` directory does not verify this package.
 
 The new workflow runs on pull requests and pushes affecting this project, and
-also supports manual dispatch. Its green result is meaningful only for the
+also supports manual dispatch. On pull requests it checks out the exact head
+commit, asserts its identity, and uses that same hash for the evidence artifact. Its green result is meaningful only for the
 commit and working directory recorded in the run. Retain the logs with the
 paper's final submitted revision.
 

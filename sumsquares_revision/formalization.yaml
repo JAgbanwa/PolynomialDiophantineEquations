@@ -53,7 +53,7 @@ automation:
       models, prompts, costs and timings were not recorded in this repository.
   - method: agent
     framework: ChatGPT
-    tool_setup: Assisted audit against the supplied manuscript and referee report, proof and packaging
+    tool_setup: Assisted audit against the supplied manuscript and referee report, source documentation and packaging
       corrections, independent statement interface, metadata, and reproducibility checks.
   notes: Toolchain and dependency revisions are recorded by lean-toolchain and lake-manifest.json. Build
     and comparator commands are documented in README.md and verify.sh.
@@ -210,10 +210,13 @@ fidelity:
 review:
   status: agent-reviewed
   notes: 'The statement-to-paper correspondence was reviewed with AI assistance against the supplied final
-    manuscript and the R1 referee report. The complete Lean 4.35.0 build of RequestProject, Challenge and Solution passed
-    on 22 October 2026. The official comparator run is pending on this repair branch;
-    this metadata does not yet claim a successful comparator result. The paper''s acceptance is not
-    presented as independent human review of the Lean statements.'
+    manuscript and the R1 referee report. On 22 October 2026 the complete Lean 4.35.0 build of
+    RequestProject, Challenge and Solution and the official sandboxed comparator both passed for
+    all 42 listed declarations. Lean kernel replay accepted the solution. A separate built-in
+    axiom audit of those declarations reported exactly propext, Classical.choice and Quot.sound
+    in their union, with no sorryAx. Verification commands and CI evidence are in README.md.
+    The paper''s acceptance is not presented as independent human review of the Lean statements.'
+
 alignment:
   namespace: PolyQF
   comparator_namespace: Paper
@@ -221,214 +224,214 @@ alignment:
   - source: Equation (6)
     lean: Paper.taylor_identity
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.taylor_identity in RequestProject/Main.lean.'
   - source: Equation (6), uniqueness of D_u
     lean: Paper.Du_unique
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.Du_unique in RequestProject/Main.lean.'
   - source: Section 2, deg D_u <= deg R - 2
     lean: Paper.natDegree_Du_le
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.natDegree_Du_le in RequestProject/Main.lean.'
   - source: Equation (7)
     lean: Paper.tangent_identity
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.tangent_identity in RequestProject/Main.lean.'
   - source: Section 3, D_u for R(t) = t^3 + f
     lean: Paper.Du_cubic
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.Du_cubic in RequestProject/Main.lean.'
   - source: Section 3, passage from (8) to (11)
     lean: Paper.aux_cubic
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.aux_cubic in RequestProject/Main.lean.'
   - source: Section 2, characterisation of S_2
     lean: Paper.S2_iff_prime_exponents
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.S2_iff_prime_exponents in RequestProject/Main.lean.'
   - source: Property (*)
     lean: Paper.property_star
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.property_star in RequestProject/Main.lean.'
   - source: Proposition 2.1
     lean: Paper.proposition_2_1
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.proposition_2_1 in RequestProject/Main.lean.'
   - source: Proposition 2.2
     lean: Paper.proposition_2_2
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.proposition_2_2 in RequestProject/Main.lean.'
   - source: Algorithms 2.1/4.1, auxiliary equation is quadratic
     lean: Paper.aux_equation_quadratic
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.aux_equation_quadratic in RequestProject/Main.lean.'
   - source: Algorithm 2.1, Step 2
     lean: Paper.algorithm_2_1_step2
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.algorithm_2_1_step2 in RequestProject/Main.lean.'
   - source: Algorithm 2.1 (correctness)
     lean: Paper.algorithm_2_1
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.algorithm_2_1 in RequestProject/Main.lean. Conditional correctness given successful
       seed data; the search procedure is not implemented.'
   - source: Algorithm 2.1, seed test for a = 0
     lean: Paper.algorithm_2_1_linear_seed_test
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.algorithm_2_1_linear_seed_test in RequestProject/Main.lean.'
   - source: Equations (2) and (3)
     lean: Paper.equation_2_iff_3
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.equation_2_iff_3 in RequestProject/Main.lean.'
   - source: Section 3, auxiliary equations
     lean: Paper.aux_equations_section_3
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.aux_equations_section_3 in RequestProject/Main.lean.'
   - source: Section 3, seed u = 2 fails for f = -4
     lean: Paper.corollary_3_1_seed_two_fails
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.corollary_3_1_seed_two_fails in RequestProject/Main.lean.'
   - source: Section 3, x^6 - 4 in S_2 infinitely often
     lean: Paper.corollary_3_1_sum_of_two_squares
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.corollary_3_1_sum_of_two_squares in RequestProject/Main.lean.'
   - source: Corollary 3.1
     lean: Paper.corollary_3_1
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.corollary_3_1 in RequestProject/Main.lean.'
   - source: Corollary 3.2, sums of two squares
     lean: Paper.corollary_3_2_sum_of_two_squares
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.corollary_3_2_sum_of_two_squares in RequestProject/Main.lean.'
   - source: Equations (13)-(16) rewritten
     lean: Paper.equations_13_to_16_rewritten
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.equations_13_to_16_rewritten in RequestProject/Main.lean.'
   - source: Corollary 3.2, equation (13)
     lean: Paper.corollary_3_2_eq13
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.corollary_3_2_eq13 in RequestProject/Main.lean.'
   - source: Corollary 3.2, equation (14)
     lean: Paper.corollary_3_2_eq14
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.corollary_3_2_eq14 in RequestProject/Main.lean.'
   - source: Corollary 3.2, equation (15)
     lean: Paper.corollary_3_2_eq15
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.corollary_3_2_eq15 in RequestProject/Main.lean.'
   - source: Corollary 3.2, equation (16)
     lean: Paper.corollary_3_2_eq16
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.corollary_3_2_eq16 in RequestProject/Main.lean.'
   - source: Corollary 3.2
     lean: Paper.corollary_3_2
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.corollary_3_2 in RequestProject/Main.lean.'
   - source: Section 3, closing remark on y^2 + z^2 = x^6 + 3
     lean: Paper.remark_x6_plus_3
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.remark_x6_plus_3 in RequestProject/Main.lean.'
   - source: Proposition 4.1, recovery formulas (28)
     lean: Paper.proposition_4_1_recovery
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.proposition_4_1_recovery in RequestProject/Main.lean.'
   - source: Proposition 4.1
     lean: Paper.proposition_4_1
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.proposition_4_1 in RequestProject/Main.lean.'
   - source: Proposition 4.2
     lean: Paper.proposition_4_2
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.proposition_4_2 in RequestProject/Main.lean. Uses a proved residue-preserving
       Pell-orbit argument; no nonzero-discriminant hypothesis is needed for infinitude of pairs.'
   - source: Algorithm 4.1, Step 2
     lean: Paper.algorithm_4_1_step2
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.algorithm_4_1_step2 in RequestProject/Main.lean.'
   - source: Algorithm 4.1 (correctness)
     lean: Paper.algorithm_4_1
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.algorithm_4_1 in RequestProject/Main.lean. Conditional correctness given successful
       seed data; the search procedure is not implemented.'
   - source: Algorithm 4.1, seed test for a = 0
     lean: Paper.algorithm_4_1_linear_seed_test
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.algorithm_4_1_linear_seed_test in RequestProject/Main.lean.'
   - source: Proposition 4.3, explicit families
     lean: Paper.proposition_4_3_families
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.proposition_4_3_families in RequestProject/Main.lean.'
   - source: Proposition 4.3
     lean: Paper.proposition_4_3
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.proposition_4_3 in RequestProject/Main.lean.'
   - source: Proposition 4.3, data used in the proof
     lean: Paper.proposition_4_3_data
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.proposition_4_3_data in RequestProject/Main.lean.'
   - source: Section 4, non-multiplicativity example
     lean: Paper.non_multiplicative_example
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.non_multiplicative_example in RequestProject/Main.lean.'
   - source: Section 4, remark on 4(y^2 + z^2)
     lean: Paper.four_sum_two_squares_remark
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.four_sum_two_squares_remark in RequestProject/Main.lean.'
   - source: 'Section 4, degenerate case: parametrisation'
     lean: Paper.degenerate_parametrisation
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.degenerate_parametrisation in RequestProject/Main.lean.'
   - source: 'Section 4, degenerate case: F = k(ry + sz)^2'
     lean: Paper.degenerate_form_eq
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.degenerate_form_eq in RequestProject/Main.lean.'
   - source: 'Section 4, degenerate case: if and only if criterion'
     lean: Paper.degenerate_infinite_iff
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.degenerate_infinite_iff in RequestProject/Main.lean. Infinitude refers to solution
       triples, not necessarily to distinct x-coordinates; the zero form is included.'
   - source: Section 4, comparison with Section 2
     lean: Paper.comparison_with_section_2
     module: Solution
-    status: pending-verification
+    status: proved
     note: 'Proof: PolyQF.comparison_with_section_2 in RequestProject/Main.lean.'
