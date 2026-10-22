@@ -1,222 +1,437 @@
-# Metadata for the Lean formalisation of the paper (format version 0.4).
-version: "0.4"
-
-paper:
-  title: "On the polynomial values represented by binary quadratic forms"
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+# Standard v0.4 metadata; toolchain and dependency pins live in their Lake files.
+version: v0.4
+project:
+  name: polynomial-values-represented-by-binary-quadratic-forms
+  description: Lean formalization of the paper by Bogdan Grechuk and Jamal Agbanwa. The development covers
+    the sum-of-two-squares criteria and applications, the tangent construction for general integral binary
+    quadratic forms, conditional correctness of the two algorithms, and the if-and-only-if criterion for
+    degenerate forms. The comparison interface has 42 theorem statements.
   authors:
-    - "Bogdan Grechuk"
-    - "Jamal Agbanwa"
-  revision: "R1"
-  journal: "International Journal of Number Theory (submission IJNT-D-26-00150)"
-
-lean:
-  toolchain: "leanprover/lean4:v4.28.0"
-  mathlib: "v4.28.0"
-  build: "lake build"
-
+  - Bogdan Grechuk
+  - Jamal Agbanwa
+  license: Unspecified; no license file is present in this repository.
 repository:
-  # Cite one and the same commit in both links of footnote b and in the README:
-  # the commit that contains this file together with all files listed under `files`.
-  commit: null
+  role: substantive-development
+classification:
+  arxiv:
+  - math.NT
+  msc2020:
+  - 11D09
+  - 11D45
+sources:
+- title: On the polynomial values represented by binary quadratic forms
+  authors:
+  - Bogdan Grechuk
+  - Jamal Agbanwa
+  type: article
+  id: International Journal of Number Theory manuscript IJNT-D-26-00150, revision R1
+  location: 'Sections 2-4: Propositions 2.1, 2.2, 4.1, 4.2 and 4.3; Corollaries 3.1 and 3.2; Algorithms
+    2.1 and 4.1; the degenerate case and supporting identities.'
+  relationship: formalizes
+  author_endorsement: participated
+  note: Numbering follows the supplied final manuscript, in which the sum-of-two-squares criterion and
+    auxiliary seed criterion are Propositions 2.1 and 2.2. The R1 referee report refers to these as Propositions
+    2.2 and 2.3. Source-author participation refers to Jamal Agbanwa; this entry does not claim an independent
+    review of the Lean statements.
+- title: 'Polynomial Diophantine equations: a systematic approach'
+  authors:
+  - Bogdan Grechuk
+  type: book
+  id: Springer, Cham, 2024
+  location: Propositions 5.4 and 3.14, cited in the paper for the auxiliary infinitude results; Proposition
+    3.67, cited for the reduced degenerate equation.
+  relationship: background
+  note: Reference [11] of the paper. The formalization supplies its own Pell-orbit argument for the two
+    infinitude results, using Mathlib, rather than assuming these cited results as axioms. The general
+    algorithm referred to in Proposition 3.67 is not implemented.
+automation:
+  methods:
+  - method: agent
+    framework: Aristotle (Harmonic)
+    tool_setup: Original formal proof development assisted by Aristotle, as reported by the author. Run-level
+      models, prompts, costs and timings were not recorded in this repository.
+  - method: agent
+    framework: ChatGPT
+    tool_setup: Assisted audit against the supplied manuscript and referee report, source documentation and packaging
+      corrections, independent statement interface, metadata, and reproducibility checks.
+  notes: Toolchain and dependency revisions are recorded by lean-toolchain and lake-manifest.json. Build
+    and comparator commands are documented in README.md and verify.sh.
+status:
+  scope: 'The 42 declarations below cover the main results in Sections 2-4 and supporting identities,
+    the prime-exponent criterion and property (*) for positive sums of two squares, both tangent criteria,
+    both seed-infinitude criteria, the two algorithms as conditional correctness implications, quadratic
+    reduction for admissible degree pairs, finite seed tests in the linear case, the applications of Corollaries
+    3.1 and 3.2 and Proposition 4.3, the obstruction for x^6+3, non-multiplicativity examples, and the
+    parametrization and if-and-only-if criterion for degenerate forms. Not included: executable general
+    seed searches or quadratic-equation decision procedures; the claim that u=50 is the smallest successful
+    seed for x^6-4; the literature survey, length-ordering discussion and Table 1 of remaining open problems.
+    The sufficient seed u=162 used in the proof is included.'
+  main_results:
+  - declaration: Paper.taylor_identity
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.Du_unique
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.natDegree_Du_le
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.tangent_identity
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.Du_cubic
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.aux_cubic
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.S2_iff_prime_exponents
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.property_star
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.proposition_2_1
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.proposition_2_2
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.aux_equation_quadratic
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.algorithm_2_1_step2
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.algorithm_2_1
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.algorithm_2_1_linear_seed_test
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.equation_2_iff_3
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.aux_equations_section_3
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.corollary_3_1_seed_two_fails
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.corollary_3_1_sum_of_two_squares
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.corollary_3_1
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.corollary_3_2_sum_of_two_squares
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.equations_13_to_16_rewritten
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.corollary_3_2_eq13
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.corollary_3_2_eq14
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.corollary_3_2_eq15
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.corollary_3_2_eq16
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.corollary_3_2
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.remark_x6_plus_3
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.proposition_4_1_recovery
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.proposition_4_1
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.proposition_4_2
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.algorithm_4_1_step2
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.algorithm_4_1
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.algorithm_4_1_linear_seed_test
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.proposition_4_3_families
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.proposition_4_3
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.proposition_4_3_data
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.non_multiplicative_example
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.four_sum_two_squares_remark
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.degenerate_parametrisation
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.degenerate_form_eq
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.degenerate_infinite_iff
+    file: Solution.lean
+    comparator_config: comparator.json
+  - declaration: Paper.comparison_with_section_2
+    file: Solution.lean
+    comparator_config: comparator.json
+fidelity:
+  divergences: PolyQF.S2 is the set of positive integers represented by two integer squares, exactly as
+    in the manuscript. Proposition 2.1 retains the nonconstancy hypotheses on R and Q. The formal proofs
+    of Proposition 2.2 and Proposition 4.2 use the internally proved PolyQF.pell_orbit_infinite argument,
+    based on Mathlib, in place of the paper's citations to [11, Proposition 5.4] and [11, Proposition
+    3.14]. Proposition 4.2 exposes only the needed hypothesis m != 0; its conclusion concerns infinitely
+    many pairs and does not require a nonzero discriminant. Proposition 4.1 requires a nonzero discriminant
+    to infer infinitely many distinct x-coordinates. Algorithm 4.1 correctness is stated more generally
+    without degree restrictions once quadratic coefficients are supplied; algorithm_4_1_step2 supplies
+    those coefficients for the degree pairs in the paper. Proposition 4.3 is verified directly from the
+    displayed polynomial families. The degenerate criterion also includes the zero form. Challenge.lean
+    contains deliberate theorem placeholders for independent statement comparison; it is not imported
+    by the proof development or Solution.lean.
+review:
+  status: agent-reviewed
+  notes: 'The statement-to-paper correspondence was reviewed with AI assistance against the supplied final
+    manuscript and the R1 referee report. On 22 October 2026 the complete Lean 4.35.0 build of
+    RequestProject, Challenge and Solution and the official sandboxed comparator both passed for
+    all 42 listed declarations. Lean kernel replay accepted the solution. A separate built-in
+    axiom audit of those declarations reported exactly propext, Classical.choice and Quot.sound
+    in their union, with no sorryAx. Verification commands and CI evidence are in README.md.
+    The paper''s acceptance is not presented as independent human review of the Lean statements.'
 
-files:
-  main: "RequestProject/Main.lean"
-  challenge: "Challenge.lean"
-  solution: "Solution.lean"
-  comparator_config: "comparator.json"
-  verification_script: "verify.sh"
-  offline_check: "scripts/CheckComparator.lean"
-
-definitions:
-  - name: "PolyQF.S2"
-    paper: "S_2, the set of positive integers that are sums of two squares"
-  - name: "PolyQF.Du"
-    paper: "the polynomial D_u of equation (6)"
-  - name: "PolyQF.bqf"
-    paper: "the binary quadratic form F(y, z) = A y^2 + B y z + C z^2 of (17)"
-  - name: "PolyQF.AdmissibleDegrees"
-    paper: "the degree pairs (3,1), (4,1), (3,2) of Algorithms 2.1 and 4.1"
-
-axioms:
-  permitted:
-    - "propext"
-    - "Quot.sound"
-    - "Classical.choice"
-
-results:
-  - paper: "Equation (6)"
-    challenge: "Paper.taylor_identity"
-    proof: "PolyQF.taylor_identity"
-    status: "proved"
-  - paper: "Equation (6), uniqueness of D_u"
-    challenge: "Paper.Du_unique"
-    proof: "PolyQF.Du_unique"
-    status: "proved"
-  - paper: "Section 2, deg D_u <= deg R - 2"
-    challenge: "Paper.natDegree_Du_le"
-    proof: "PolyQF.natDegree_Du_le"
-    status: "proved"
-  - paper: "Equation (7)"
-    challenge: "Paper.tangent_identity"
-    proof: "PolyQF.tangent_identity"
-    status: "proved"
-  - paper: "Section 3, D_u for R(t) = t^3 + f"
-    challenge: "Paper.Du_cubic"
-    proof: "PolyQF.Du_cubic"
-    status: "proved"
-  - paper: "Section 3, passage from (8) to (12)"
-    challenge: "Paper.aux_cubic"
-    proof: "PolyQF.aux_cubic"
-    status: "proved"
-  - paper: "Section 2, characterisation of S_2"
-    challenge: "Paper.S2_iff_prime_exponents"
-    proof: "PolyQF.S2_iff_prime_exponents"
-    status: "proved"
-  - paper: "Property (*)"
-    challenge: "Paper.property_star"
-    proof: "PolyQF.property_star"
-    status: "proved"
-  - paper: "Proposition 2.1"
-    challenge: "Paper.proposition_2_1"
-    proof: "PolyQF.proposition_2_1"
-    status: "proved"
-  - paper: "Proposition 2.2"
-    challenge: "Paper.proposition_2_2"
-    proof: "PolyQF.proposition_2_2"
-    status: "proved"
-  - paper: "Algorithms 2.1/4.1, auxiliary equation is quadratic"
-    challenge: "Paper.aux_equation_quadratic"
-    proof: "PolyQF.aux_equation_quadratic"
-    status: "proved"
-  - paper: "Algorithm 2.1, Step 2"
-    challenge: "Paper.algorithm_2_1_step2"
-    proof: "PolyQF.algorithm_2_1_step2"
-    status: "proved"
-  - paper: "Algorithm 2.1 (correctness)"
-    challenge: "Paper.algorithm_2_1"
-    proof: "PolyQF.algorithm_2_1"
-    status: "proved"
-  - paper: "Algorithm 2.1, seed test for a = 0"
-    challenge: "Paper.algorithm_2_1_linear_seed_test"
-    proof: "PolyQF.algorithm_2_1_linear_seed_test"
-    status: "proved"
-  - paper: "Equations (2) and (3)"
-    challenge: "Paper.equation_2_iff_3"
-    proof: "PolyQF.equation_2_iff_3"
-    status: "proved"
-  - paper: "Section 3, auxiliary equations"
-    challenge: "Paper.aux_equations_section_3"
-    proof: "PolyQF.aux_equations_section_3"
-    status: "proved"
-  - paper: "Section 3, seed u = 2 fails for f = -4"
-    challenge: "Paper.corollary_3_1_seed_two_fails"
-    proof: "PolyQF.corollary_3_1_seed_two_fails"
-    status: "proved"
-  - paper: "Section 3, x^6 - 4 in S_2 infinitely often"
-    challenge: "Paper.corollary_3_1_sum_of_two_squares"
-    proof: "PolyQF.corollary_3_1_sum_of_two_squares"
-    status: "proved"
-  - paper: "Corollary 3.1"
-    challenge: "Paper.corollary_3_1"
-    proof: "PolyQF.corollary_3_1"
-    status: "proved"
-  - paper: "Corollary 3.2, sums of two squares"
-    challenge: "Paper.corollary_3_2_sum_of_two_squares"
-    proof: "PolyQF.corollary_3_2_sum_of_two_squares"
-    status: "proved"
-  - paper: "Equations (13)-(16) rewritten"
-    challenge: "Paper.equations_13_to_16_rewritten"
-    proof: "PolyQF.equations_13_to_16_rewritten"
-    status: "proved"
-  - paper: "Corollary 3.2, equation (13)"
-    challenge: "Paper.corollary_3_2_eq13"
-    proof: "PolyQF.corollary_3_2_eq13"
-    status: "proved"
-  - paper: "Corollary 3.2, equation (14)"
-    challenge: "Paper.corollary_3_2_eq14"
-    proof: "PolyQF.corollary_3_2_eq14"
-    status: "proved"
-  - paper: "Corollary 3.2, equation (15)"
-    challenge: "Paper.corollary_3_2_eq15"
-    proof: "PolyQF.corollary_3_2_eq15"
-    status: "proved"
-  - paper: "Corollary 3.2, equation (16)"
-    challenge: "Paper.corollary_3_2_eq16"
-    proof: "PolyQF.corollary_3_2_eq16"
-    status: "proved"
-  - paper: "Corollary 3.2"
-    challenge: "Paper.corollary_3_2"
-    proof: "PolyQF.corollary_3_2"
-    status: "proved"
-  - paper: "Section 3, closing remark on y^2 + z^2 = x^6 + 3"
-    challenge: "Paper.remark_x6_plus_3"
-    proof: "PolyQF.remark_x6_plus_3"
-    status: "proved"
-  - paper: "Proposition 4.1, recovery formulas (25)"
-    challenge: "Paper.proposition_4_1_recovery"
-    proof: "PolyQF.proposition_4_1_recovery"
-    status: "proved"
-  - paper: "Proposition 4.1"
-    challenge: "Paper.proposition_4_1"
-    proof: "PolyQF.proposition_4_1"
-    status: "proved"
-  - paper: "Proposition 4.2"
-    challenge: "Paper.proposition_4_2"
-    proof: "PolyQF.proposition_4_2"
-    status: "proved"
-  - paper: "Algorithm 4.1, Step 2"
-    challenge: "Paper.algorithm_4_1_step2"
-    proof: "PolyQF.algorithm_4_1_step2"
-    status: "proved"
-  - paper: "Algorithm 4.1 (correctness)"
-    challenge: "Paper.algorithm_4_1"
-    proof: "PolyQF.algorithm_4_1"
-    status: "proved"
-  - paper: "Algorithm 4.1, seed test for a = 0"
-    challenge: "Paper.algorithm_4_1_linear_seed_test"
-    proof: "PolyQF.algorithm_4_1_linear_seed_test"
-    status: "proved"
-  - paper: "Proposition 4.3, explicit families"
-    challenge: "Paper.proposition_4_3_families"
-    proof: "PolyQF.proposition_4_3_families"
-    status: "proved"
-  - paper: "Proposition 4.3"
-    challenge: "Paper.proposition_4_3"
-    proof: "PolyQF.proposition_4_3"
-    status: "proved"
-  - paper: "Proposition 4.3, data used in the proof"
-    challenge: "Paper.proposition_4_3_data"
-    proof: "PolyQF.proposition_4_3_data"
-    status: "proved"
-  - paper: "Section 4, non-multiplicativity example"
-    challenge: "Paper.non_multiplicative_example"
-    proof: "PolyQF.non_multiplicative_example"
-    status: "proved"
-  - paper: "Section 4, remark on 4(y^2 + z^2)"
-    challenge: "Paper.four_sum_two_squares_remark"
-    proof: "PolyQF.four_sum_two_squares_remark"
-    status: "proved"
-  - paper: "Section 4, degenerate case: parametrisation"
-    challenge: "Paper.degenerate_parametrisation"
-    proof: "PolyQF.degenerate_parametrisation"
-    status: "proved"
-  - paper: "Section 4, degenerate case: F = k(ry + sz)^2"
-    challenge: "Paper.degenerate_form_eq"
-    proof: "PolyQF.degenerate_form_eq"
-    status: "proved"
-  - paper: "Section 4, degenerate case: if and only if criterion"
-    challenge: "Paper.degenerate_infinite_iff"
-    proof: "PolyQF.degenerate_infinite_iff"
-    status: "proved"
-  - paper: "Section 4, comparison with Section 2"
-    challenge: "Paper.comparison_with_section_2"
-    proof: "PolyQF.comparison_with_section_2"
-    status: "proved"
-
-not_formalised:
-  - "Section 1: informal discussion (lengths of equations, Table 1 of open equations)"
-  - "Footnote to Corollary 3.1: u = 50 is the smallest seed satisfying Algorithm 2.1 for f = -4 (the proof uses u = 162, which is formalised)"
-
-notes:
-  - "Proposition 2.2 (case a > 0) and Proposition 4.2 (case a != 0), for which the paper cites [11, Proposition 5.4] and Gauss's theorem [11, Proposition 3.14] respectively, are proved in Main.lean from a Pell-equation lemma (PolyQF.pell_orbit_infinite); no external result is assumed."
-  - "Proposition 4.2 is stated with the hypothesis m != 0 only (the paper has m = F(p, q))."
+alignment:
+  namespace: PolyQF
+  comparator_namespace: Paper
+  statements:
+  - source: Equation (6)
+    lean: Paper.taylor_identity
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.taylor_identity in RequestProject/Main.lean.'
+  - source: Equation (6), uniqueness of D_u
+    lean: Paper.Du_unique
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.Du_unique in RequestProject/Main.lean.'
+  - source: Section 2, deg D_u <= deg R - 2
+    lean: Paper.natDegree_Du_le
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.natDegree_Du_le in RequestProject/Main.lean.'
+  - source: Equation (7)
+    lean: Paper.tangent_identity
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.tangent_identity in RequestProject/Main.lean.'
+  - source: Section 3, D_u for R(t) = t^3 + f
+    lean: Paper.Du_cubic
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.Du_cubic in RequestProject/Main.lean.'
+  - source: Section 3, passage from (8) to (11)
+    lean: Paper.aux_cubic
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.aux_cubic in RequestProject/Main.lean.'
+  - source: Section 2, characterisation of S_2
+    lean: Paper.S2_iff_prime_exponents
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.S2_iff_prime_exponents in RequestProject/Main.lean.'
+  - source: Property (*)
+    lean: Paper.property_star
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.property_star in RequestProject/Main.lean.'
+  - source: Proposition 2.1
+    lean: Paper.proposition_2_1
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.proposition_2_1 in RequestProject/Main.lean.'
+  - source: Proposition 2.2
+    lean: Paper.proposition_2_2
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.proposition_2_2 in RequestProject/Main.lean.'
+  - source: Algorithms 2.1/4.1, auxiliary equation is quadratic
+    lean: Paper.aux_equation_quadratic
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.aux_equation_quadratic in RequestProject/Main.lean.'
+  - source: Algorithm 2.1, Step 2
+    lean: Paper.algorithm_2_1_step2
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.algorithm_2_1_step2 in RequestProject/Main.lean.'
+  - source: Algorithm 2.1 (correctness)
+    lean: Paper.algorithm_2_1
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.algorithm_2_1 in RequestProject/Main.lean. Conditional correctness given successful
+      seed data; the search procedure is not implemented.'
+  - source: Algorithm 2.1, seed test for a = 0
+    lean: Paper.algorithm_2_1_linear_seed_test
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.algorithm_2_1_linear_seed_test in RequestProject/Main.lean.'
+  - source: Equations (2) and (3)
+    lean: Paper.equation_2_iff_3
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.equation_2_iff_3 in RequestProject/Main.lean.'
+  - source: Section 3, auxiliary equations
+    lean: Paper.aux_equations_section_3
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.aux_equations_section_3 in RequestProject/Main.lean.'
+  - source: Section 3, seed u = 2 fails for f = -4
+    lean: Paper.corollary_3_1_seed_two_fails
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.corollary_3_1_seed_two_fails in RequestProject/Main.lean.'
+  - source: Section 3, x^6 - 4 in S_2 infinitely often
+    lean: Paper.corollary_3_1_sum_of_two_squares
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.corollary_3_1_sum_of_two_squares in RequestProject/Main.lean.'
+  - source: Corollary 3.1
+    lean: Paper.corollary_3_1
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.corollary_3_1 in RequestProject/Main.lean.'
+  - source: Corollary 3.2, sums of two squares
+    lean: Paper.corollary_3_2_sum_of_two_squares
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.corollary_3_2_sum_of_two_squares in RequestProject/Main.lean.'
+  - source: Equations (13)-(16) rewritten
+    lean: Paper.equations_13_to_16_rewritten
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.equations_13_to_16_rewritten in RequestProject/Main.lean.'
+  - source: Corollary 3.2, equation (13)
+    lean: Paper.corollary_3_2_eq13
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.corollary_3_2_eq13 in RequestProject/Main.lean.'
+  - source: Corollary 3.2, equation (14)
+    lean: Paper.corollary_3_2_eq14
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.corollary_3_2_eq14 in RequestProject/Main.lean.'
+  - source: Corollary 3.2, equation (15)
+    lean: Paper.corollary_3_2_eq15
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.corollary_3_2_eq15 in RequestProject/Main.lean.'
+  - source: Corollary 3.2, equation (16)
+    lean: Paper.corollary_3_2_eq16
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.corollary_3_2_eq16 in RequestProject/Main.lean.'
+  - source: Corollary 3.2
+    lean: Paper.corollary_3_2
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.corollary_3_2 in RequestProject/Main.lean.'
+  - source: Section 3, closing remark on y^2 + z^2 = x^6 + 3
+    lean: Paper.remark_x6_plus_3
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.remark_x6_plus_3 in RequestProject/Main.lean.'
+  - source: Proposition 4.1, recovery formulas (28)
+    lean: Paper.proposition_4_1_recovery
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.proposition_4_1_recovery in RequestProject/Main.lean.'
+  - source: Proposition 4.1
+    lean: Paper.proposition_4_1
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.proposition_4_1 in RequestProject/Main.lean.'
+  - source: Proposition 4.2
+    lean: Paper.proposition_4_2
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.proposition_4_2 in RequestProject/Main.lean. Uses a proved residue-preserving
+      Pell-orbit argument; no nonzero-discriminant hypothesis is needed for infinitude of pairs.'
+  - source: Algorithm 4.1, Step 2
+    lean: Paper.algorithm_4_1_step2
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.algorithm_4_1_step2 in RequestProject/Main.lean.'
+  - source: Algorithm 4.1 (correctness)
+    lean: Paper.algorithm_4_1
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.algorithm_4_1 in RequestProject/Main.lean. Conditional correctness given successful
+      seed data; the search procedure is not implemented.'
+  - source: Algorithm 4.1, seed test for a = 0
+    lean: Paper.algorithm_4_1_linear_seed_test
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.algorithm_4_1_linear_seed_test in RequestProject/Main.lean.'
+  - source: Proposition 4.3, explicit families
+    lean: Paper.proposition_4_3_families
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.proposition_4_3_families in RequestProject/Main.lean.'
+  - source: Proposition 4.3
+    lean: Paper.proposition_4_3
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.proposition_4_3 in RequestProject/Main.lean.'
+  - source: Proposition 4.3, data used in the proof
+    lean: Paper.proposition_4_3_data
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.proposition_4_3_data in RequestProject/Main.lean.'
+  - source: Section 4, non-multiplicativity example
+    lean: Paper.non_multiplicative_example
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.non_multiplicative_example in RequestProject/Main.lean.'
+  - source: Section 4, remark on 4(y^2 + z^2)
+    lean: Paper.four_sum_two_squares_remark
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.four_sum_two_squares_remark in RequestProject/Main.lean.'
+  - source: 'Section 4, degenerate case: parametrisation'
+    lean: Paper.degenerate_parametrisation
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.degenerate_parametrisation in RequestProject/Main.lean.'
+  - source: 'Section 4, degenerate case: F = k(ry + sz)^2'
+    lean: Paper.degenerate_form_eq
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.degenerate_form_eq in RequestProject/Main.lean.'
+  - source: 'Section 4, degenerate case: if and only if criterion'
+    lean: Paper.degenerate_infinite_iff
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.degenerate_infinite_iff in RequestProject/Main.lean. Infinitude refers to solution
+      triples, not necessarily to distinct x-coordinates; the zero form is included.'
+  - source: Section 4, comparison with Section 2
+    lean: Paper.comparison_with_section_2
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.comparison_with_section_2 in RequestProject/Main.lean.'

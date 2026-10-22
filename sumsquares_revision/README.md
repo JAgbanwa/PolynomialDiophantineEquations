@@ -1,101 +1,129 @@
-# Lean formalisation: "On the polynomial values represented by binary quadratic forms"
+# Lean formalisation: “On the polynomial values represented by binary quadratic forms”
 
-Lean 4 source for the paper by B. Grechuk and J. Agbanwa (revision R1).
-The intended toolchain is `leanprover/lean4:v4.28.0`, with Mathlib `v4.28.0`.
+Lean formalisation of the paper by Bogdan Grechuk and Jamal Agbanwa, IJNT manuscript
+IJNT-D-26-00150. This project uses **Lean 4.35.0** and **Mathlib v4.35.0**, with all
+resolved dependency revisions committed in `lake-manifest.json`.
 
-## Verification status
+## Verification and paper snapshot
 
-**The published revision is not yet a reproducibly verified project.** An audit on
-22 October 2026 inspected commit
-[`f7b8950b458b67621b378c3e496b6a2bb9f22b3d`](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/f7b8950b458b67621b378c3e496b6a2bb9f22b3d/sumsquares_revision).
-That snapshot has these packaging problems:
-
-- `Challenge.lean` is missing, although the configuration expects it.
-- The source directory is named `RequestProject ` **with a trailing space**.
-  `Solution.lean` imports `RequestProject.Main`, which requires
-  `RequestProject/Main.lean` without that space.
-- Neither `lean-toolchain` nor `lake-manifest.json` is committed in this folder.
-  Lake may generate these locally when resolving dependencies; that does not make
-  them part of the published snapshot.
-- The existing GitHub Actions workflow builds **`sumsquares_revised`**, a different
-  folder. Its green checks do not establish a successful build of
-  **`sumsquares_revision`**.
-
-The instructions below explain how to obtain and record an actual successful
-build **after the missing files and source-path problem are repaired**. At the
-audited snapshot, the preflight check intentionally stops. An example success
-message below is an acceptance criterion, not a claim that this snapshot passed.
-
-### Observed checks on 22 October 2026
-
-The audit installed Lean 4.28.0 and resolved Mathlib to
-`8f9d9cff6bd728b17a24e163c9402775d9e6a365`.
+**The complete build and the official comparator passed on 22 October 2026.**
+The [completed verification run](https://github.com/JAgbanwa/PolynomialDiophantineEquations/actions/runs/39761112134)
+checked the 42 advertised statements with the real sandbox enabled and then
+built every project target. Lean 4.35.0 uses Mathlib revision
+`56a005855ea17e0b0958f73ec801ae140b0a1679` in this project.
 
 | Check | Observed result |
 | --- | --- |
-| `lake +leanprover/lean4:v4.28.0 build RequestProject Challenge Solution` in the published layout | **Failed**, exit code 1: Lake cannot find the `RequestProject` directory. |
-| Direct check of the unchanged `RequestProject /Main.lean` | **Passed**, exit code 0. |
-| `lake build RequestProject Solution` in a temporary directory with the source path corrected and both Lean source files copied byte-for-byte | **Passed**, exit code 0: `Build completed successfully (8029 jobs).` This was a two-target diagnostic, excluding the absent `Challenge`. |
-| `#print axioms` for all 42 `Paper.*` declarations after the two-target build | **Passed**: every reported axiom belongs to `{propext, Classical.choice, Quot.sound}`; no `sorryAx` was reported. |
-| Independent challenge comparison / official comparator | **Not performed**: the published challenge is absent. |
+| Required files and both 42-theorem inventories | Passed |
+| Official v0.4 metadata schema | Passed |
+| `lake comparator --config comparator.json` | `Lean default kernel accepts the solution`; `Your solution is okay!` |
+| `lake build RequestProject Challenge Solution` | `Build completed successfully (9052 jobs).` |
+| Complete `bash verify.sh` | Exit code 0; `==> all checks passed` |
+| Built-in axiom audit of all 42 proved declarations | Exactly the union `{propext, Quot.sound, Classical.choice}`; no `sorryAx` |
 
-Thus the proof development and its solution wrappers compile with the intended
-dependencies after correcting the path in a temporary copy. This does not certify
-the complete published package or its agreement with an independent challenge.
-The reproducible proof-only diagnostic appears after the full-project instructions.
+**Paper snapshot:** `85b3903f4af4424be7939ff9eaee3b6c0dd2c7ab`.
 
-## Mathematical scope
+- [Project snapshot](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/85b3903f4af4424be7939ff9eaee3b6c0dd2c7ab/sumsquares_revision)
+- [Proof development](https://github.com/JAgbanwa/PolynomialDiophantineEquations/blob/85b3903f4af4424be7939ff9eaee3b6c0dd2c7ab/sumsquares_revision/RequestProject/Main.lean)
 
-`Solution.lean` contains 42 theorem statements matching the 42 names in
-`comparator.json`. They include the tangent criterion, Propositions 2.2, 4.1 and
-4.2, Corollaries 3.1 and 3.2, Proposition 4.3, and both directions of the
-degenerate-case criterion. This is a source inventory; successful compilation
-and comparator verification are separate requirements.
+Use these two links together in the manuscript. They identify one immutable
+verified project, including the challenge, solution, metadata, and dependency
+pins. The directory `sumsquares_revised` contains a separate, older development.
+Later documentation-only commits may record this snapshot without changing its
+Lean sources or verification configuration.
 
-The algorithm results prove the correctness of the conclusions of Algorithms
-2.1 and 4.1 **when suitable seed data and the stated hypotheses are supplied**.
-They also cover reduction to quadratic auxiliary equations and the linear-case
-seed tests. They do not implement the full seed searches or general quadratic
-equation decision procedures, or assert termination for arbitrary inputs.
+## What is formalised
 
-The development defines `PolyQF.S2` using **positive** integers. It excludes the
-informal introductory discussion, the list of open equations in Table 1, and
-the footnote claim that `u = 50` is the smallest successful positive seed for
-`f = -4`. The example proofs use the sufficient seed `u = 162`.
+`Challenge.lean` independently states **42 theorems** in namespace `Paper`. It
+imports only Mathlib and supplies four explicit definitions: positive sums of
+two squares (`S2`), the Taylor quotient (`Du`), the binary quadratic form (`bqf`),
+and the admissible degree pairs (`AdmissibleDegrees`). Each theorem has the
+deliberate placeholder `by sorry` required for the comparison interface.
 
-## Intended project layout
+`Solution.lean` proves the same 42 statements through
+`RequestProject/Main.lean`. Neither proof file imports the challenge. The
+comparator checks the statements and their dependencies, restricts the solution
+axioms to `propext`, `Quot.sound`, and `Classical.choice`, and replays the exported
+solution in the Lean kernel. `sorryAx` is not permitted for the solution.
 
-| File | Purpose and status at the audited snapshot |
+| Manuscript content | Representative declarations in `Paper` |
 | --- | --- |
-| `RequestProject/Main.lean` | Main mathematical development. Currently uploaded under the incorrectly named directory `RequestProject `. |
-| `Challenge.lean` | **Missing.** Must independently state the advertised results as `theorem ... := by sorry`, importing Mathlib and including the required definitions. It must not import the solution or proof development. |
-| `Solution.lean` | Proof interface in namespace `Paper`, using the development in namespace `PolyQF`. |
-| `lean-toolchain` | **Missing from Git.** Must pin `leanprover/lean4:v4.28.0` for this version. |
-| `lakefile.toml` | Package configuration and three build targets: `RequestProject`, `Challenge`, `Solution`. |
-| `lake-manifest.json` | **Missing from Git.** Commit the resolved dependency revisions for the final reproducible snapshot. |
-| `comparator.json` | Configuration for the official [comparator](https://github.com/leanprover/comparator). |
-| `formalization.yaml` | Existing metadata requires conversion to the actual v0.4 schema; see below. |
-| `verify.sh` | Builds targets, checks proof sources, runs the diagnostic pre-check, and then requires the real comparator. Invoke with `bash`, because its executable bit is not set. |
-| `scripts/CheckComparator.lean` | Diagnostic check of statements, challenge-local definitions, and axiom dependencies. It does not replace the comparator. |
+| Taylor quotient, tangent identity, and positive sums of two squares | `taylor_identity`, `Du_unique`, `natDegree_Du_le`, `tangent_identity`, `S2_iff_prime_exponents`, `property_star` |
+| Sum-of-two-squares criteria | `proposition_2_1`, `proposition_2_2` |
+| Algorithm 2.1, quadratic reduction and linear seed test | `aux_equation_quadratic`, `algorithm_2_1_step2`, `algorithm_2_1`, `algorithm_2_1_linear_seed_test` |
+| Applications in Section 3 | `corollary_3_1`, `corollary_3_2`, `remark_x6_plus_3`, and the supporting identities and explicit equations |
+| General binary quadratic forms | `proposition_4_1_recovery`, `proposition_4_1`, `proposition_4_2` |
+| Algorithm 4.1 and its linear seed test | `algorithm_4_1_step2`, `algorithm_4_1`, `algorithm_4_1_linear_seed_test` |
+| Explicit polynomial families and examples | `proposition_4_3_families`, `proposition_4_3`, `proposition_4_3_data`, `non_multiplicative_example`, `four_sum_two_squares_remark` |
+| Degenerate forms, including both directions of the criterion | `degenerate_parametrisation`, `degenerate_form_eq`, `degenerate_infinite_iff` |
+| Comparison of the two constructions | `comparison_with_section_2` |
 
-## Step-by-step build instructions
+The full 42-name inventory is in `comparator.json`; the statement-to-paper map is
+in `formalization.yaml`. Numbering follows the supplied final manuscript. The
+referee's references to the earlier Propositions **2.2 and 2.3** correspond to
+**2.1 and 2.2** in that manuscript. The general Propositions **4.1 and 4.2** keep
+their numbers.
 
-Use a Bash terminal on Linux or macOS. On Windows, the same commands can be run
-inside an Ubuntu WSL terminal. The standalone comparator requires a compatible
-Linux environment. The first dependency download needs an internet connection
-and substantial free disk space.
+### Scope of the claims
 
-### 1. Install prerequisites and Elan
+The algorithm theorems prove **conditional correctness when suitable seed data
+and the stated hypotheses are supplied**. The quadratic reductions and the
+linear-case seed tests are included. General seed searches, executable general
+quadratic-equation solvers, and termination for arbitrary inputs are not claimed.
 
-Install Git and curl using your operating system's package manager. For Ubuntu:
+`S2` consists of positive integers, as in the paper. The infinitude conclusion
+for the degenerate case concerns solution triples; it can hold with a fixed
+`x`. The introductory survey, Table 1 of open problems, and the footnote claim
+that `u = 50` is the smallest successful positive seed for `f = -4` are outside
+the formalised scope. The sufficient seed `u = 162` used in the proof is checked.
+
+The proof of the auxiliary sum-of-two-squares criterion corresponds to the
+paper's citation **[11, Proposition 5.4]**. The general criterion retains the
+correct citation **[11, Proposition 3.14]**. The Lean development proves the
+needed infinitude statements internally using a Pell-orbit argument.
+
+## Project files
+
+| File | Purpose |
+| --- | --- |
+| `RequestProject/Main.lean` | Mathematical proofs in namespace `PolyQF` |
+| `Challenge.lean` | Independent theorem statements with deliberate placeholders |
+| `Solution.lean` | Completed proof interface in namespace `Paper` |
+| `lean-toolchain` | Exact Lean version |
+| `lakefile.toml`, `lake-manifest.json` | Build targets and pinned dependencies |
+| `comparator.json` | Configuration for the official Lean comparator |
+| `formalization.yaml` | Metadata in the official v0.4 format |
+| `verify.sh` | Required source checks, metadata validation, real comparator, and full build |
+| `scripts/check_project.py` | Structural preflight and source-placeholder checks |
+| `scripts/check_metadata.py` | Validation against the vendored official v0.4 schema |
+| `../.github/workflows/sumsquares-revision-ci.yml` | CI verification of this directory |
+
+## Practical instructions: obtain a successful build and verification
+
+Use a **Bash terminal on Linux** for the complete procedure. The CI workflow
+uses the supported **Ubuntu 22.04** runner. The official Lean 4.35 comparator
+requires a working `bubblewrap` sandbox. An Ubuntu environment
+with permission to create the required namespaces and mount its isolated `/proc`
+is suitable. Some containers and hosted notebooks prohibit those operations;
+in that case use the repository's GitHub Actions workflow or another suitable
+Linux machine. Ordinary compilation can also run on the other platforms Lean
+supports, but it does not replace the comparator check.
+
+The first download needs an internet connection and several gigabytes of disk
+space. Run the numbered steps in order. A failed command must be resolved before
+claiming that verification succeeded.
+
+### 1. Install system prerequisites and Elan
+
+For Ubuntu:
 
 ```bash
-sudo apt update
-sudo apt install git curl
+sudo apt-get update
+sudo apt-get install -y git curl bubblewrap python3 python3-venv
 ```
 
-If Elan is not already installed, use the official installer. These commands
-install the version manager without selecting an unrelated default Lean release:
+If Elan is not installed, obtain the official installer and install the version
+manager without choosing an unrelated default Lean version:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o elan-init.sh
@@ -105,84 +133,80 @@ elan --version
 ```
 
 See the [official Lean installation guide](https://lean-lang.org/install/manual/)
-for platform-specific alternatives. If `lake` is not found, reopen the terminal
-or repeat `source "$HOME/.elan/env"`.
+for installation details. If `lake` is not found, reopen the terminal or run
+`source "$HOME/.elan/env"` again.
 
-### 2. Clone the repository and enter the correct folder
+### 2. Clone the repository and select this revision
 
-Run this in a directory where a new checkout should be created:
+Run in a directory where a new checkout can be created:
 
 ```bash
 git clone https://github.com/JAgbanwa/PolynomialDiophantineEquations.git
 cd PolynomialDiophantineEquations
+git checkout --detach 85b3903f4af4424be7939ff9eaee3b6c0dd2c7ab
 git rev-parse HEAD
 cd sumsquares_revision
 ```
 
-Keep the full commit hash printed by `git rev-parse HEAD`. For a final paper
-snapshot, check out the exact commit cited in the paper before entering the
-project folder. Do not substitute `sumsquares_revised` when testing this revision.
+The printed commit must be the paper snapshot above. All commands below
+therefore use the exact formalization cited in the manuscript. All subsequent commands run from
+`sumsquares_revision`.
 
-### 3. Check that the required project files are present
+### 3. Install the pinned metadata validator
 
-Run the whole block from `sumsquares_revision`:
+Create the virtual environment outside the repository:
 
 ```bash
-(
-  set -eu
-  for file in lean-toolchain lakefile.toml lake-manifest.json \
-      RequestProject/Main.lean Challenge.lean Solution.lean \
-      comparator.json formalization.yaml verify.sh scripts/CheckComparator.lean
-  do
-    if [ ! -f "$file" ]; then
-      printf 'Missing required file: %s\n' "$file" >&2
-      exit 1
-    fi
-  done
-  if [ -d 'RequestProject ' ]; then
-    printf 'Unexpected trailing space in directory: RequestProject \n' >&2
-    exit 1
-  fi
-  printf 'Project-file preflight passed.\n'
-)
+python3 -m venv ../../sumsquares-verification-venv
+source ../../sumsquares-verification-venv/bin/activate
+python3 -m pip install -r scripts/requirements.txt
+python3 scripts/check_project.py
+python3 scripts/check_metadata.py
 ```
 
-**Stop if this check fails.** In particular, do not work around a missing
-`Challenge.lean` by removing it from the build targets: the challenge is part of
-the referee's requested verification. The maintainer must restore it and correct
-the source directory name in the published project.
+Expected preflight messages include:
 
-### 4. Install and verify the pinned toolchain
+```text
+OK: 42 named statements in each interface; proof sources contain no placeholders or extra axioms.
+OK: formalization.yaml conforms to the pinned v0.4 schema.
+```
 
-For this revision, `lean-toolchain` must contain
-`leanprover/lean4:v4.28.0`:
+The schema is an unmodified, pinned copy of the
+[official v0.4 schema](https://github.com/mathlib-initiative/formalization.yaml/blob/99c678e569c7c4c0772db297c5ddd5e4c9b6322e/schema/v0.4.schema.json).
+Its source and license are recorded in `scripts/schema/README.md`.
+
+### 4. Install Lean 4.35.0 and download the matching dependency cache
 
 ```bash
 cat lean-toolchain
-elan toolchain install leanprover/lean4:v4.28.0
-lake env lean --version
+elan toolchain install leanprover/lean4:v4.35.0
+lean --version
 lake --version
-```
-
-The Lean version must report **4.28.0**. Do not run `elan default stable` as a
-substitute for the project pin. Updating Lean is a separate change that also
-requires a compatible Mathlib revision and another complete verification run.
-
-### 5. Download the matching Mathlib build cache
-
-```bash
 lake exe cache get
 ```
 
-Wait for this command to finish successfully. It downloads dependency build
-artefacts; it is not a verification of this project's theorems. For a published
-snapshot, preserve the committed `lake-manifest.json` instead of deleting it or
-updating dependencies to newer versions.
+`lean-toolchain` must read `leanprover/lean4:v4.35.0`, and the Lean version must
+report **4.35.0**. Wait for the cache command to finish successfully. The cache
+contains dependency build artifacts; it does not certify this project's proofs.
+Preserve the committed manifest. Do not run `lake update` or substitute newer
+dependencies when reproducing the paper snapshot.
 
-### 6. Build all three targets and preserve the result
+### 5. Check that the comparator sandbox works
 
-Run this complete block. The Bash `pipefail` setting ensures that a failed
-`lake build` is not concealed by a successful `tee` command:
+```bash
+bwrap --version
+bwrap --unshare-all --ro-bind / / --proc /proc --dev /dev -- /bin/true
+```
+
+The second command must finish with exit code zero. Errors such as
+`Operation not permitted` mean that this environment cannot run the required
+sandbox. Use a suitable Linux host or GitHub Actions; do not bypass the sandbox
+or describe an axiom-only diagnostic as a comparator pass.
+
+### 6. Run the complete verification and save the evidence
+
+Run the entire block below. Bash `pipefail` preserves a failing verifier's exit
+status even though the output is also written by `tee`.
 
 ```bash
 (
@@ -190,188 +214,92 @@ Run this complete block. The Bash `pipefail` setting ensures that a failed
   {
     date -u '+UTC: %Y-%m-%dT%H:%M:%SZ'
     git rev-parse HEAD
-    git status --short
-    lake env lean --version
+    git status --short --untracked-files=no
+    lean --version
     lake --version
     git -C .lake/packages/mathlib rev-parse HEAD
   } | tee build-environment.log
+  git diff --exit-code -- lean-toolchain lakefile.toml lake-manifest.json
+  bash verify.sh 2>&1 | tee verification.log
+  printf 'Verification exit code: 0\n' | tee -a verification.log
+)
+```
 
+`verify.sh` first checks the source inventory and metadata, then runs the real
+**`lake comparator --config comparator.json`**, then explicitly builds every
+advertised target using **`lake build RequestProject Challenge Solution`**.
+Lean 4.35 supplies the comparator and matching exporter; no standalone
+`COMPARATOR` path, `landrun`, or separately installed `lean4export` is needed.
+
+A successful run must contain **`Lean default kernel accepts the solution`**,
+**`Your solution is okay!`**, Lake's message beginning
+**`Build completed successfully`**, the final verifier line
+**`==> all checks passed`**, and **`Verification exit code: 0`**. The number of
+build jobs varies. If the block returns a nonzero status, verification has failed.
+
+Warnings about deliberate `sorry` proofs in **`Challenge.lean`** are expected.
+They are specification placeholders and are never imported by the solution.
+The comparator must reject a solution whose proof depends on `sorryAx` or any
+axiom outside the three permitted ones.
+
+### 7. Reproduce only the explicit build, if needed
+
+After the complete verification, the compilation command can be repeated alone:
+
+```bash
+(
+  set -euo pipefail
   lake build RequestProject Challenge Solution 2>&1 | tee build.log
   printf 'Build exit code: 0\n' | tee -a build.log
 )
 ```
 
-A successful run ends with Lake's message beginning
-`Build completed successfully` and the recorded line `Build exit code: 0`.
-The environment log also records local changes; use a clean source checkout
-when certifying an immutable paper snapshot. The number of build jobs varies.
-If there is an error or a nonzero exit code,
-the build has **not** completed successfully; preserve the error log for repair.
+This is the direct way to record **“Build completes successfully.”** It checks
+all three targets. Its success does not independently replace the comparator.
 
-Deliberate `sorry` warnings in **`Challenge.lean`** are expected: it specifies
-the claims to be checked. Such placeholders must not occur in the proof
-development or `Solution.lean`, or be dependencies of their proofs. A successful
-build alone does not establish this stronger condition.
-
-For an additional fresh build of the project's own targets, after a successful
-initial run:
+For a fresh rebuild of this package while retaining the dependency cache:
 
 ```bash
-lake clean
+lake clean RequestProject
 lake build RequestProject Challenge Solution
 ```
 
-### 7. Run the diagnostic pre-check and the real comparator
+## Verification in GitHub Actions
 
-After the build succeeds, the optional diagnostic check is:
+To run the check without installing Lean on your own computer:
 
-```bash
-lake env lean --run scripts/CheckComparator.lean
-```
+1. Open the repository's **Actions** tab.
+2. Select **Sumsquares revision verification** in the workflow list.
+3. Click **Run workflow**, select `main` (or the intended revision branch), and
+   click the green **Run workflow** button.
+4. Open the resulting run and the job **Build and compare the paper statements**.
+5. Expand **Run the real comparator and full project build**. Confirm that the
+   step is green and contains the comparator, build and final success messages
+   shown in Step 6 above.
+6. Download the verification artifact from the run's summary to retain the
+   environment, sandbox and verification logs. Check its recorded commit against
+   the revision you intended to test.
 
-It compares the listed statements, checks reachable challenge-local definitions,
-and inspects axiom dependencies. It does not perform the official comparator's
-complete exported-environment checks, kernel replay, or sandboxed workflow.
+For the fixed paper snapshot, follow the linked completed verification run at
+the top of this README. A new manual run on `main` checks the current `main`
+commit, which may be later than that snapshot. A successful workflow for the
+older `sumsquares_revised` directory does not verify this package.
 
-For the standalone comparator used with this Lean 4.28 project, install a
-compatible comparator binary, `landrun`, and a `lean4export` version compatible
-with Lean 4.28.0, following the [upstream instructions](https://github.com/leanprover/comparator).
-Check that the two helper programs are on `PATH`, then supply the actual
-comparator executable path:
+The new workflow runs on pull requests and pushes affecting this project, and
+also supports manual dispatch. On pull requests it checks out the exact head
+commit, asserts its identity, and uses that same hash for the evidence artifact. Its green result is meaningful only for the
+commit and working directory recorded in the run. Retain the logs with the
+paper's final submitted revision.
 
-```bash
-command -v landrun
-command -v lean4export
-read -r -p 'Absolute path to the comparator executable: ' COMPARATOR
-(
-  set -euo pipefail
-  test -x "$COMPARATOR"
-  COMPARATOR="$COMPARATOR" bash verify.sh 2>&1 | tee verification.log
-)
-```
+The current Ubuntu 22.04 runner is scheduled to retire on **17 April 2027**.
+Before that date, move CI to a supported runner on which the same sandbox probe
+and complete verifier succeed; see the
+[official retirement notice](https://github.com/actions/runner-images/issues/14254).
 
-The script must finish with `==> all checks passed` and exit code zero. A missing
-comparator is a failure, not a skipped success. These are the project's commands;
-follow upstream's environment and sandbox requirements for an authoritative
-comparator run. For independent verification, use a fresh checkout and follow
-upstream's trusted-challenge procedure before compiling the proposed solution.
-No successful comparator run is claimed for the audited snapshot.
+## Provenance
 
-Lean 4.35.0 incorporates comparator functionality as `lake comparator` / `lake check`.
-That is relevant to a future toolchain upgrade; it does not make those commands
-available in this project's intended Lean 4.28.0 toolchain.
-
-## Reproduce the successful proof-only diagnostic
-
-This separate diagnostic uses the exact audited source commit. It checks the
-existing proofs while leaving the checkout unchanged. It deliberately builds
-only `RequestProject` and `Solution`; it is **not** a substitute for restoring
-`Challenge.lean` and completing the full verification above.
-
-After installing Elan as in Step 1, run the following from anywhere inside the
-cloned repository. The temporary directory is printed so its logs can be kept.
-
-```bash
-(
-  set -euo pipefail
-  PAPER_REPO_ROOT=$(git rev-parse --show-toplevel)
-  AUDITED_COMMIT=f7b8950b458b67621b378c3e496b6a2bb9f22b3d
-  PROOF_AUDIT_DIR=$(mktemp -d)
-  printf 'Proof diagnostic directory: %s\n' "$PROOF_AUDIT_DIR"
-  mkdir -p "$PROOF_AUDIT_DIR/RequestProject"
-
-  git -C "$PAPER_REPO_ROOT" show \
-    "$AUDITED_COMMIT:sumsquares_revision/RequestProject /Main.lean" \
-    > "$PROOF_AUDIT_DIR/RequestProject/Main.lean"
-  for file in Solution.lean lakefile.toml comparator.json; do
-    git -C "$PAPER_REPO_ROOT" show \
-      "$AUDITED_COMMIT:sumsquares_revision/$file" > "$PROOF_AUDIT_DIR/$file"
-  done
-  printf 'leanprover/lean4:v4.28.0\n' > "$PROOF_AUDIT_DIR/lean-toolchain"
-
-  cd "$PROOF_AUDIT_DIR"
-  elan toolchain install leanprover/lean4:v4.28.0
-  lake exe cache get
-  lake env lean --version
-  git -C .lake/packages/mathlib rev-parse HEAD
-  lake build RequestProject Solution 2>&1 | tee proof-build.log
-  printf 'Proof-only build exit code: 0\n' | tee -a proof-build.log
-)
-```
-
-The audit obtained `Build completed successfully (8029 jobs).` from this
-two-target build; the job count can differ with the cache state. The source files
-checked had these SHA-256 hashes:
-
-| Source | SHA-256 |
-| --- | --- |
-| `Main.lean` | `02d13e6ad8cbf2800c676540d5d8ee729f3606951dac3a674bfa20dbb063583b` |
-| `Solution.lean` | `b2a3cf72916534b3b56b7f36ce33cf6a0b041646aa2ad3142787d85ac77ad7b4` |
-
-To reproduce the axiom diagnostic, change into the printed temporary directory.
-This additional command uses Python 3's standard library to generate the 42
-inspection commands directly from the comparator configuration:
-
-```bash
-python3 - <<'PY'
-import json
-from pathlib import Path
-names = json.loads(Path("comparator.json").read_text())["theorem_names"]
-Path("AxiomAudit.lean").write_text(
-    "import Solution\n\n"
-    + "\n".join("#print axioms " + name for name in names)
-    + "\n"
-)
-PY
-set -o pipefail
-lake env lean AxiomAudit.lean 2>&1 | tee axioms.log
-```
-
-Inspect all 42 outputs: only `propext`, `Classical.choice`, and `Quot.sound`
-should occur. This diagnostic checks axiom dependencies, not independent
-statement matching or the official comparator's other checks.
-
-## Remaining referee requirements
-
-In addition to obtaining a successful build and comparator run:
-
-1. Restore an independent `Challenge.lean` with the same 42 theorem statements
-   and the required definitions. Review its statements against the paper;
-   agreement between two files is not by itself proof of fidelity to the paper.
-2. Convert `formalization.yaml` using the official
-   [v0.4 template and schema](https://github.com/mathlib-initiative/formalization.yaml).
-   The present file lacks the required top-level sections `project`, `sources`,
-   `automation`, and `review`. The default version-dispatcher schema expects
-   `version: "v0.4"`, not `version: "0.4"`.
-3. Make the CI workflow test `sumsquares_revision` and its actual comparator
-   setup. Do not treat the existing older-folder checks as evidence for this one.
-4. Select one immutable, verified project commit and use it for the paper's
-   project link, proof-file link, and this README's citation.
-
-The source comments now distinguish [11, Proposition 5.4] in the quadratic
-sum-of-squares seed argument from [11, Proposition 3.14] in the general-form
-argument. Some equation-number comments still need alignment with the final
-manuscript. The optional Lean 4.35.0 upgrade is separate from these mandatory
-corrections.
-
-## Citing this formalisation
-
-The audit snapshot named above is **not** a verified final publication snapshot.
-After repairs and verification, record the full commit hash and use that same
-hash in both links in footnote b and in this section. The project and proof file
-must belong to that one snapshot, under `sumsquares_revision` with the corrected
-`RequestProject/Main.lean` path. Record the tested commit alongside the build and
-comparator logs. A moving `main` URL is not an immutable citation.
-
----
-
-This project was edited by [Aristotle](https://aristotle.harmonic.fun).
-
-To cite Aristotle:
-
-- Tag @Aristotle-Harmonic on GitHub PRs/issues.
-- Add as co-author to commits that include Aristotle's work:
-
-```text
-Co-authored-by: Aristotle (Harmonic) <aristotle-harmonic@harmonic.fun>
-```
+The original formal proof development was assisted by
+[Aristotle (Harmonic)](https://aristotle.harmonic.fun). The revision audit,
+statement interface, packaging repairs and reproducibility checks were assisted
+by ChatGPT. `formalization.yaml` records the scope, sources, automation, review
+status and known differences between the paper's proofs and the Lean proofs.
