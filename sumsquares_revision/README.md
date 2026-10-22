@@ -11,13 +11,33 @@ your computer. Separate instructions below also explain how to build locally.
 
 ## Verification and paper snapshot
 
-**The complete build and the official comparator passed on 22 October 2026.**
+### Current numbering
+
+The corrected declaration names were verified at commit
+[`815a352000f6fbb6236d0f7591edde95d1bd7d9c`](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/815a352000f6fbb6236d0f7591edde95d1bd7d9c/sumsquares_revision).
+The [completed verification run](https://github.com/JAgbanwa/PolynomialDiophantineEquations/actions/runs/39794070171)
+passed on 22 October 2026: both 42-statement inventories and the official v0.4
+metadata schema passed, the sandboxed comparator accepted the solution through
+Lean's kernel, and `lake build RequestProject Challenge Solution` completed
+successfully. The verification record below concerns the older snapshot cited
+in the paper.
+
+To reproduce the corrected names with the local instructions below, use
+`815a352000f6fbb6236d0f7591edde95d1bd7d9c` as the checkout commit. The existing
+paper-snapshot instructions reproduce the historical commit cited in the
+unchanged manuscript.
+
+### Snapshot cited in the paper
+
+**The paper snapshot's complete build and official comparator passed on 22 October 2026.**
 The [completed verification run](https://github.com/JAgbanwa/PolynomialDiophantineEquations/actions/runs/39761112134)
-checked the 42 advertised statements with the real sandbox enabled and then
-built every project target. Lean 4.35.0 uses Mathlib revision
+checked the 42 statements in that immutable snapshot with the real sandbox enabled
+and then built every project target. The snapshot uses the earlier declaration
+names listed below; this run does not verify subsequent identifier changes.
+Lean 4.35.0 uses Mathlib revision
 `56a005855ea17e0b0958f73ec801ae140b0a1679` in this project.
 
-| Check | Observed result |
+| Paper snapshot check | Recorded result |
 | --- | --- |
 | Required files and both 42-theorem inventories | Passed |
 | Official v0.4 metadata schema | Passed |
@@ -31,11 +51,13 @@ built every project target. Lean 4.35.0 uses Mathlib revision
 - [Project snapshot](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/85b3903f4af4424be7939ff9eaee3b6c0dd2c7ab/sumsquares_revision)
 - [Proof development](https://github.com/JAgbanwa/PolynomialDiophantineEquations/blob/85b3903f4af4424be7939ff9eaee3b6c0dd2c7ab/sumsquares_revision/RequestProject/Main.lean)
 
-Use these two links together in the manuscript. They identify one immutable
-verified project, including the challenge, solution, metadata, and dependency
-pins. The directory `sumsquares_revised` contains a separate, older development.
-Later documentation-only commits may record this snapshot without changing its
-Lean sources or verification configuration.
+These are the two links already cited together in the manuscript. They identify
+one immutable verified project, including the challenge, solution, metadata,
+and dependency pins. The current revision corrects declaration names and source
+labels to match the manuscript's numbering; the mathematical statements and proof
+arguments are unchanged. The paper snapshot retains its earlier identifiers.
+Verification results apply to the commit recorded in each run. The directory
+`sumsquares_revised` contains a separate, older development.
 
 ## What is formalised
 
@@ -54,20 +76,34 @@ solution in the Lean kernel. `sorryAx` is not permitted for the solution.
 | Manuscript content | Representative declarations in `Paper` |
 | --- | --- |
 | Taylor quotient, tangent identity, and positive sums of two squares | `taylor_identity`, `Du_unique`, `natDegree_Du_le`, `tangent_identity`, `S2_iff_prime_exponents`, `property_star` |
-| Sum-of-two-squares criteria | `proposition_2_1`, `proposition_2_2` |
-| Algorithm 2.1, quadratic reduction and linear seed test | `aux_equation_quadratic`, `algorithm_2_1_step2`, `algorithm_2_1`, `algorithm_2_1_linear_seed_test` |
+| Sum-of-two-squares criteria | `proposition_2_2`, `proposition_2_3` |
+| Algorithm 2.4, quadratic reduction and linear seed test | `aux_equation_quadratic`, `algorithm_2_4_step2`, `algorithm_2_4`, `algorithm_2_4_linear_seed_test` |
 | Applications in Section 3 | `corollary_3_1`, `corollary_3_2`, `remark_x6_plus_3`, and the supporting identities and explicit equations |
 | General binary quadratic forms | `proposition_4_1_recovery`, `proposition_4_1`, `proposition_4_2` |
-| Algorithm 4.1 and its linear seed test | `algorithm_4_1_step2`, `algorithm_4_1`, `algorithm_4_1_linear_seed_test` |
-| Explicit polynomial families and examples | `proposition_4_3_families`, `proposition_4_3`, `proposition_4_3_data`, `non_multiplicative_example`, `four_sum_two_squares_remark` |
+| Algorithm 4.3 and its linear seed test | `algorithm_4_3_step2`, `algorithm_4_3`, `algorithm_4_3_linear_seed_test` |
+| Explicit polynomial families and examples | `proposition_4_4_families`, `proposition_4_4`, `proposition_4_4_data`, `non_multiplicative_example`, `four_sum_two_squares_remark` |
 | Degenerate forms, including both directions of the criterion | `degenerate_parametrisation`, `degenerate_form_eq`, `degenerate_infinite_iff` |
 | Comparison of the two constructions | `comparison_with_section_2` |
 
 The full 42-name inventory is in `comparator.json`; the statement-to-paper map is
-in `formalization.yaml`. Numbering follows the supplied final manuscript. The
-referee's references to the earlier Propositions **2.2 and 2.3** correspond to
-**2.1 and 2.2** in that manuscript. The general Propositions **4.1 and 4.2** keep
-their numbers.
+in `formalization.yaml`. The current declaration names follow the supplied
+manuscript, which uses Propositions **2.2 and 2.3**, Algorithms **2.4 and 4.3**,
+and Proposition **4.4**. The referee's references to Propositions 2.2 and 2.3
+use the same numbering. The table also records the older identifiers in the
+immutable paper snapshot so that its cited proof file remains easy to navigate.
+
+| Manuscript result | Current declaration in `Paper` | Declaration in the paper snapshot |
+| --- | --- | --- |
+| Proposition 2.2: sum-of-two-squares tangent criterion | `proposition_2_2` | `proposition_2_1` |
+| Proposition 2.3: auxiliary seed criterion | `proposition_2_3` | `proposition_2_2` |
+| Algorithm 2.4: conditional correctness | `algorithm_2_4` | `algorithm_2_1` |
+| Proposition 4.1: general tangent criterion | `proposition_4_1` | `proposition_4_1` |
+| Proposition 4.2: general seed criterion | `proposition_4_2` | `proposition_4_2` |
+| Algorithm 4.3: conditional correctness | `algorithm_4_3` | `algorithm_4_1` |
+| Proposition 4.4: explicit polynomial families | `proposition_4_4` | `proposition_4_3` |
+
+The `_step2`, `_linear_seed_test`, `_families`, and `_data` supporting declarations
+follow the same renaming. Corollary numbers and equation numbers are unchanged.
 
 ### Scope of the claims
 

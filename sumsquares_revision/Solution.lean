@@ -64,29 +64,29 @@ theorem property_star (a b : ℤ) (ha : 0 < a) (hb : 0 < b) :
       (b ∈ S2 → a * b ∈ S2 → a ∈ S2) :=
   PolyQF.property_star a b ha hb
 
-/-- **Proposition 2.1.** Let `R(t)` and `Q(x)` be non-constant polynomials with integer
+/-- **Proposition 2.2.** Let `R(t)` and `Q(x)` be non-constant polynomials with integer
 coefficients, and let `u ∈ ℤ` satisfy `R(u) ∈ 𝒮₂`. Define `D_u` by (6). If the auxiliary
 equation (8) `4R(u)D_u(Q(x)) - R'(u)² = v²` has infinitely many integer solutions
 `(x, v)`, then `R(Q(x)) ∈ 𝒮₂` for infinitely many integers `x`. -/
-theorem proposition_2_1 (R Q : ℤ[X]) (hR : 0 < R.natDegree) (hQ : 0 < Q.natDegree) (u : ℤ)
+theorem proposition_2_2 (R Q : ℤ[X]) (hR : 0 < R.natDegree) (hQ : 0 < Q.natDegree) (u : ℤ)
     (hu : R.eval u ∈ S2)
     (haux : {xv : ℤ × ℤ | 4 * R.eval u * (Du R u).eval (Q.eval xv.1) -
       (R.derivative.eval u) ^ 2 = xv.2 ^ 2}.Infinite) :
     {x : ℤ | R.eval (Q.eval x) ∈ S2}.Infinite :=
-  PolyQF.proposition_2_1 R Q hR hQ u hu haux
+  PolyQF.proposition_2_2 R Q hR hQ u hu haux
 
-/-- **Proposition 2.2.** Let `a, b, c ∈ ℤ`. Assume that (a) either `a = 0`, or `a > 0`
+/-- **Proposition 2.3.** Let `a, b, c ∈ ℤ`. Assume that (a) either `a = 0`, or `a > 0`
 and `a` is not a perfect square, (b) `b² - 4ac ≠ 0`, and (c) equation (9)
 `a x² + b x + c = v²` has an integer solution `(x₀, v₀)`. Then (9) has infinitely many
 integer solutions `(x, v)`, with infinitely many distinct values of `x`.
 
 (The paper quotes [11, Proposition 5.4] for the case `a > 0`; here that case is proved
 from `PolyQF.pell_orbit_infinite` in `RequestProject/Main.lean`.) -/
-theorem proposition_2_2 (a b c : ℤ) (ha : a = 0 ∨ (0 < a ∧ ¬ IsSquare a))
+theorem proposition_2_3 (a b c : ℤ) (ha : a = 0 ∨ (0 < a ∧ ¬ IsSquare a))
     (hb : b ^ 2 - 4 * a * c ≠ 0) (hc : ∃ x0 v0 : ℤ, a * x0 ^ 2 + b * x0 + c = v0 ^ 2) :
     {xv : ℤ × ℤ | a * xv.1 ^ 2 + b * xv.1 + c = xv.2 ^ 2}.Infinite ∧
       {x : ℤ | ∃ v : ℤ, a * x ^ 2 + b * x + c = v ^ 2}.Infinite :=
-  PolyQF.proposition_2_2 a b c ha hb hc
+  PolyQF.proposition_2_3 a b c ha hb hc
 
 /-- For admissible degrees, `K · D_u(Q(x)) - L` is a polynomial of degree at most two in
 `x`: this is why the auxiliary equations (8) and (26) take the forms (9) and (29). -/
@@ -94,32 +94,32 @@ theorem aux_equation_quadratic (R Q : ℤ[X]) (hdeg : AdmissibleDegrees R Q) (u 
     ∃ a b c : ℤ, ∀ x : ℤ, K * (Du R u).eval (Q.eval x) - L = a * x ^ 2 + b * x + c :=
   PolyQF.aux_equation_quadratic R Q hdeg u K L
 
-/-- **Algorithm 2.1, Step 2.** For admissible `(deg R, deg Q)` and any `u`, the auxiliary
+/-- **Algorithm 2.4, Step 2.** For admissible `(deg R, deg Q)` and any `u`, the auxiliary
 equation (8) can be written in the form (9) `a x² + b x + c = v²`. -/
-theorem algorithm_2_1_step2 (R Q : ℤ[X]) (hdeg : AdmissibleDegrees R Q) (u : ℤ) :
+theorem algorithm_2_4_step2 (R Q : ℤ[X]) (hdeg : AdmissibleDegrees R Q) (u : ℤ) :
     ∃ a b c : ℤ, ∀ x : ℤ, 4 * R.eval u * (Du R u).eval (Q.eval x) -
       (R.derivative.eval u) ^ 2 = a * x ^ 2 + b * x + c :=
-  PolyQF.algorithm_2_1_step2 R Q hdeg u
+  PolyQF.algorithm_2_4_step2 R Q hdeg u
 
-/-- **Algorithm 2.1 (correctness of the output).** Let `(deg R, deg Q)` be admissible.
+/-- **Algorithm 2.4 (correctness of the output).** Let `(deg R, deg Q)` be admissible.
 If Step 1 finds `u` with `R(u) ∈ 𝒮₂`, Step 2 writes (8) as `a x² + b x + c = v²`, and
-conditions (a), (b), (c) of Proposition 2.2 hold (so that the algorithm stops), then
+conditions (a), (b), (c) of Proposition 2.3 hold (so that the algorithm stops), then
 `P(x) = R(Q(x)) ∈ 𝒮₂` for infinitely many integers `x`. -/
-theorem algorithm_2_1 (R Q : ℤ[X]) (hdeg : AdmissibleDegrees R Q) (u a b c : ℤ)
+theorem algorithm_2_4 (R Q : ℤ[X]) (hdeg : AdmissibleDegrees R Q) (u a b c : ℤ)
     (hu : R.eval u ∈ S2)
     (habc : ∀ x : ℤ, 4 * R.eval u * (Du R u).eval (Q.eval x) - (R.derivative.eval u) ^ 2 =
       a * x ^ 2 + b * x + c)
     (ha : a = 0 ∨ (0 < a ∧ ¬ IsSquare a)) (hb : b ^ 2 - 4 * a * c ≠ 0)
     (hc : ∃ x0 v0 : ℤ, a * x0 ^ 2 + b * x0 + c = v0 ^ 2) :
     {x : ℤ | R.eval (Q.eval x) ∈ S2}.Infinite :=
-  PolyQF.algorithm_2_1 R Q hdeg u a b c hu habc ha hb hc
+  PolyQF.algorithm_2_4 R Q hdeg u a b c hu habc ha hb hc
 
-/-- **Seed test for Algorithm 2.1 in the linear case `a = 0`** (Section 2): if `b ≠ 0`,
+/-- **Seed test for Algorithm 2.4 in the linear case `a = 0`** (Section 2): if `b ≠ 0`,
 then `b x + c = v²` has an integer solution iff `v² ≡ c (mod |b|)` for some
 `0 ≤ v < |b|`; a successful residue gives `x = (v² - c)/b`. -/
-theorem algorithm_2_1_linear_seed_test (b c : ℤ) (hb : b ≠ 0) :
+theorem algorithm_2_4_linear_seed_test (b c : ℤ) (hb : b ≠ 0) :
     (∃ x v : ℤ, b * x + c = v ^ 2) ↔ ∃ v : ℤ, 0 ≤ v ∧ v < |b| ∧ b ∣ v ^ 2 - c :=
-  PolyQF.algorithm_2_1_linear_seed_test b c hb
+  PolyQF.algorithm_2_4_linear_seed_test b c hb
 
 /-! ## Section 3: examples (Corollaries 3.1 and 3.2) -/
 
@@ -148,7 +148,7 @@ theorem corollary_3_1_seed_two_fails :
   PolyQF.corollary_3_1_seed_two_fails
 
 /-- Corollary 3.1, sum-of-two-squares part: `x⁶ - 4 ∈ 𝒮₂` for infinitely many integers
-`x` (Algorithm 2.1 with `R(t) = t³ - 4`, `Q(x) = x²`, `u = 162`). -/
+`x` (Algorithm 2.4 with `R(t) = t³ - 4`, `Q(x) = x²`, `u = 162`). -/
 theorem corollary_3_1_sum_of_two_squares : {x : ℤ | x ^ 6 - 4 ∈ S2}.Infinite :=
   PolyQF.corollary_3_1_sum_of_two_squares
 
@@ -213,7 +213,7 @@ theorem corollary_3_2 :
 /-- The closing remark of Section 3 on `y² + z² = x⁶ + 3`: with `R(t) = t³ + 3` and
 `Q(x) = x²`, any `u` with `R(u) ∈ 𝒮₂` must be odd, and for odd `u` the auxiliary equation
 (11) `4(u³+3)x² - u(u³-24) = v²` has no integer solutions (its left-hand side is
-`≡ 3 (mod 4)`). Hence Algorithm 2.1 cannot resolve this equation. -/
+`≡ 3 (mod 4)`). Hence Algorithm 2.4 cannot resolve this equation. -/
 theorem remark_x6_plus_3 :
     (∀ u : ℤ, u ^ 3 + 3 ∈ S2 → Odd u) ∧
       (∀ u : ℤ, Odd u → ∀ x v : ℤ, 4 * (u ^ 3 + 3) * x ^ 2 - u * (u ^ 3 - 24) ≠ v ^ 2) :=
@@ -270,21 +270,21 @@ theorem proposition_4_2 (A B C p q r m a b c : ℤ) (hm : m ≠ 0)
       2 * |m| ∣ r * q - xv.2 * (2 * A * p + B * q)}.Infinite :=
   PolyQF.proposition_4_2 A B C p q r m a b c hm ha hb hc
 
-/-- **Algorithm 4.1, Step 2.** For admissible `(deg R, deg Q)`, the auxiliary equation (26)
+/-- **Algorithm 4.3, Step 2.** For admissible `(deg R, deg Q)`, the auxiliary equation (26)
 `4 m D_u(Q(x)) - r² = -Δ v²` can be written in the form (29) `a x² + b x + c = -Δ v²`. -/
-theorem algorithm_4_1_step2 (R Q : ℤ[X]) (hdeg : AdmissibleDegrees R Q) (u m r : ℤ) :
+theorem algorithm_4_3_step2 (R Q : ℤ[X]) (hdeg : AdmissibleDegrees R Q) (u m r : ℤ) :
     ∃ a b c : ℤ, ∀ x : ℤ, 4 * m * (Du R u).eval (Q.eval x) - r ^ 2 = a * x ^ 2 + b * x + c :=
-  PolyQF.algorithm_4_1_step2 R Q hdeg u m r
+  PolyQF.algorithm_4_3_step2 R Q hdeg u m r
 
-/-- **Algorithm 4.1 (correctness of the output).** Let `F = A y² + B y z + C z²` be
+/-- **Algorithm 4.3 (correctness of the output).** Let `F = A y² + B y z + C z²` be
 non-degenerate. If Step 1 finds `u, p, q` with `m = R(u) = F(p, q) ≠ 0`, Step 2 writes (26)
 as (29) `a x² + b x + c = -Δ v²` (with `r = R'(u)`), and conditions (a)–(c) of
 Proposition 4.2 hold (so that the algorithm stops), then `F(y, z) = R(Q(x))` is solvable in
 integers `(y, z)` for infinitely many integers `x`.
 
 (The degree restriction on `(R, Q)` only serves to guarantee that Step 2 is possible, see
-`algorithm_4_1_step2`; it is not needed for this implication.) -/
-theorem algorithm_4_1 (A B C : ℤ) (hΔ : B ^ 2 - 4 * A * C ≠ 0) (R Q : ℤ[X])
+`algorithm_4_3_step2`; it is not needed for this implication.) -/
+theorem algorithm_4_3 (A B C : ℤ) (hΔ : B ^ 2 - 4 * A * C ≠ 0) (R Q : ℤ[X])
     (u p q m r a b c : ℤ)
     (hm : R.eval u = m) (hmF : m = bqf A B C p q) (hm0 : m ≠ 0) (hr : R.derivative.eval u = r)
     (habc : ∀ x : ℤ, 4 * m * (Du R u).eval (Q.eval x) - r ^ 2 = a * x ^ 2 + b * x + c)
@@ -293,45 +293,45 @@ theorem algorithm_4_1 (A B C : ℤ) (hΔ : B ^ 2 - 4 * A * C ≠ 0) (R Q : ℤ[X
     (hc : ∃ x0 v0 : ℤ, a * x0 ^ 2 + b * x0 + c = -(B ^ 2 - 4 * A * C) * v0 ^ 2 ∧
       2 * |m| ∣ r * p + v0 * (B * p + 2 * C * q) ∧ 2 * |m| ∣ r * q - v0 * (2 * A * p + B * q)) :
     {x : ℤ | ∃ y z : ℤ, bqf A B C y z = R.eval (Q.eval x)}.Infinite :=
-  PolyQF.algorithm_4_1 A B C hΔ R Q u p q m r a b c hm hmF hm0 hr habc ha hb hc
+  PolyQF.algorithm_4_3 A B C hΔ R Q u p q m r a b c hm hmF hm0 hr habc ha hb hc
 
-/-- **Seed test for Algorithm 4.1 in the linear case `a = 0`** (Section 4): if `b ≠ 0` and
+/-- **Seed test for Algorithm 4.3 in the linear case `a = 0`** (Section 4): if `b ≠ 0` and
 `m ≠ 0`, then `b x + c = -Δ v²` has an integer solution satisfying the congruences (27) iff
 some `v` with `0 ≤ v < lcm(2|m|, |b|)` satisfies (27) and `b ∣ -Δ v² - c`; then
 `x = (-Δ v² - c)/b`. -/
-theorem algorithm_4_1_linear_seed_test (A B C p q r m b c : ℤ) (hm : m ≠ 0) (hb : b ≠ 0) :
+theorem algorithm_4_3_linear_seed_test (A B C p q r m b c : ℤ) (hm : m ≠ 0) (hb : b ≠ 0) :
     (∃ x v : ℤ, b * x + c = -(B ^ 2 - 4 * A * C) * v ^ 2 ∧
       2 * |m| ∣ r * p + v * (B * p + 2 * C * q) ∧ 2 * |m| ∣ r * q - v * (2 * A * p + B * q)) ↔
     ∃ v : ℤ, 0 ≤ v ∧ v < (Int.lcm (2 * m) b : ℤ) ∧
       2 * |m| ∣ r * p + v * (B * p + 2 * C * q) ∧ 2 * |m| ∣ r * q - v * (2 * A * p + B * q) ∧
       b ∣ -(B ^ 2 - 4 * A * C) * v ^ 2 - c :=
-  PolyQF.algorithm_4_1_linear_seed_test A B C p q r m b c hm hb
+  PolyQF.algorithm_4_3_linear_seed_test A B C p q r m b c hm hb
 
-/-- **Proposition 4.3.** Both equations (31) `2y² + yz + 2z² = x³ + 1` and
+/-- **Proposition 4.4.** Both equations (31) `2y² + yz + 2z² = x³ + 1` and
 `2y² + yz + 2z² = x³ - 1` have infinitely many integer solutions; explicitly, for every
 `n ∈ ℤ` the recovery formulas give the families
 `(x, y, z) = (30n² + 15n + 1, 30n³ + 45n² + 15n + 1, -120n³ - 90n² - 15n)` for (a) and
 `(x, y, z) = (570n² + 225n + 24, 9690n³ + 6105n² + 1189n + 71, -4560n³ - 1230n² + 89n + 29)`
 for (b). -/
-theorem proposition_4_3_families (n : ℤ) :
+theorem proposition_4_4_families (n : ℤ) :
     bqf 2 1 2 (30 * n ^ 3 + 45 * n ^ 2 + 15 * n + 1) (-120 * n ^ 3 - 90 * n ^ 2 - 15 * n) =
       (30 * n ^ 2 + 15 * n + 1) ^ 3 + 1 ∧
     bqf 2 1 2 (9690 * n ^ 3 + 6105 * n ^ 2 + 1189 * n + 71)
       (-4560 * n ^ 3 - 1230 * n ^ 2 + 89 * n + 29) = (570 * n ^ 2 + 225 * n + 24) ^ 3 - 1 :=
-  PolyQF.proposition_4_3_families n
+  PolyQF.proposition_4_4_families n
 
-/-- **Proposition 4.3.** Both equations (31) have infinitely many integer solutions. -/
-theorem proposition_4_3 :
+/-- **Proposition 4.4.** Both equations (31) have infinitely many integer solutions. -/
+theorem proposition_4_4 :
     {s : ℤ × ℤ × ℤ | bqf 2 1 2 s.2.1 s.2.2 = s.1 ^ 3 + 1}.Infinite ∧
       {s : ℤ × ℤ × ℤ | bqf 2 1 2 s.2.1 s.2.2 = s.1 ^ 3 - 1}.Infinite :=
-  PolyQF.proposition_4_3
+  PolyQF.proposition_4_4
 
-/-- The data used in the proof of Proposition 4.3, checked against Algorithm 4.1:
+/-- The data used in the proof of Proposition 4.4, checked against Algorithm 4.3:
 for (a), `R(t) = t³ + 1`, `u = 1`, `(p, q) = (1, 0)`, `m = 2 = F(1, 0)`, `r = 3`,
 `D_u(t) = t + 2`, and (26) reads `8x + 7 = 15v²`; for (b), `R(t) = t³ - 1`, `u = 7`,
 `(p, q) = (3, 12)`, `m = 342 = F(3, 12)`, `r = 147`, `D_u(t) = t + 14`, and (26) reads
 `456x - 819 = 5v²`. Here `Δ = 1 - 16 = -15`. -/
-theorem proposition_4_3_data (x v : ℤ) :
+theorem proposition_4_4_data (x v : ℤ) :
     (bqf 2 1 2 1 0 = (X ^ 3 + C 1 : ℤ[X]).eval 1 ∧
       (X ^ 3 + C 1 : ℤ[X]).derivative.eval 1 = 3 ∧ Du (X ^ 3 + C 1) 1 = X + C 2 ∧
       (4 * 2 * (Du (X ^ 3 + C 1) 1).eval x - 3 ^ 2 = -((1 : ℤ) ^ 2 - 4 * 2 * 2) * v ^ 2 ↔
@@ -341,7 +341,7 @@ theorem proposition_4_3_data (x v : ℤ) :
       Du (X ^ 3 + C (-1)) 7 = X + C 14 ∧
       (4 * 342 * (Du (X ^ 3 + C (-1)) 7).eval x - 147 ^ 2 =
           -((1 : ℤ) ^ 2 - 4 * 2 * 2) * v ^ 2 ↔ 456 * x - 819 = 5 * v ^ 2)) :=
-  PolyQF.proposition_4_3_data x v
+  PolyQF.proposition_4_4_data x v
 
 /-- The non-multiplicative form `F(y, z) = 2y² + yz + 2z²` of Section 4: it represents `2`
 (as `F(0, 1)`), but does not represent `2 · 2 = 4`. -/

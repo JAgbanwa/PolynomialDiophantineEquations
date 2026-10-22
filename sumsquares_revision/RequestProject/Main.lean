@@ -23,21 +23,21 @@ Comparator setup (in the project root): `Challenge.lean` restates the main resul
 
 Numbering follows the paper (R1):
 
-* §2: property (*), Proposition 2.1, Proposition 2.2, Algorithm 2.1
+* §2: property (*), Proposition 2.2, Proposition 2.3, Algorithm 2.4
   (correctness of its output, the fact that Step 2 always produces an equation of the
   form `a x² + b x + c = v²`, and the finite seed test in the linear case `a = 0`);
 * §3: Corollary 3.1 (`y² + x³y + z² + 1 = 0` has infinitely many integer solutions),
   Corollary 3.2 (the four equations (13)–(16)), and the closing remark on
   `y² + z² = x⁶ + 3`;
 * §4: Proposition 4.1 (including the explicit recovery formulas (28)),
-  Proposition 4.2, Algorithm 4.1 (correctness, Step 2, linear seed test),
-  Proposition 4.3 (both equations (31), with the explicit families),
+  Proposition 4.2, Algorithm 4.3 (correctness, Step 2, linear seed test),
+  Proposition 4.4 (both equations (31), with the explicit families),
   the non-multiplicativity example, the degenerate case `Δ = 0`
   (parametrisation and the "if and only if" criterion), and the comparison with §2.
 
 Not formalised: the informal discussion of Section 1 (lengths of equations, the list of
 open equations in Table 1) and the claim in the footnote to Corollary 3.1 that `u = 50` is
-the smallest positive seed satisfying all conditions of Algorithm 2.1 for `f = -4` (the
+the smallest positive seed satisfying all conditions of Algorithm 2.4 for `f = -4` (the
 proof uses `u = 162`, which is fully checked here).
 
 Sets of integer solutions of equations in variables `(x, y, z)` are sets of triples
@@ -45,7 +45,7 @@ Sets of integer solutions of equations in variables `(x, y, z)` are sets of trip
 
 Regarding citations: the paper invokes [11, Proposition 5.4] (the monograph
 *Polynomial Diophantine equations — a systematic approach*) in the proof of
-Proposition 2.2, and Gauss's theorem [11, Proposition 3.14] in the proof of
+Proposition 2.3, and Gauss's theorem [11, Proposition 3.14] in the proof of
 Proposition 4.2.  Neither result is assumed here: both are replaced by a self-contained
 Pell-equation argument (`PolyQF.pell_orbit_infinite`) proved below from Mathlib's
 existence theorem for nontrivial solutions of Pell's equation.
@@ -239,7 +239,7 @@ lemma sq_add_sq_even_of_mod_four_zero {A B n : ℤ} (h : A ^ 2 + B ^ 2 = n) (hn 
 /-! ## A Pell-equation lemma with congruence conditions
 
 This replaces the external results [11, Proposition 5.4] and [11, Proposition 3.14]
-used in the proofs of Propositions 2.2 and 4.2: from one solution of
+used in the proofs of Propositions 2.3 and 4.2: from one solution of
 `X² - d V² = δ` (`d > 0` not a square, `δ ≠ 0`) we produce infinitely many solutions in
 the same residue class modulo any prescribed `N ≠ 0`. -/
 
@@ -422,11 +422,11 @@ lemma infinite_image_neg_sq {S : Set ℤ} (hS : S.Infinite) :
 
 /-! ## Section 2: the sum of two squares case -/
 
-/-- **Proposition 2.1.** Let `R(t)` and `Q(x)` be non-constant polynomials with integer
+/-- **Proposition 2.2.** Let `R(t)` and `Q(x)` be non-constant polynomials with integer
 coefficients, and let `u ∈ ℤ` satisfy `R(u) ∈ 𝒮₂`. Define `D_u` by (6). If the auxiliary
 equation (8) `4R(u)D_u(Q(x)) - R'(u)² = v²` has infinitely many integer solutions
 `(x, v)`, then `R(Q(x)) ∈ 𝒮₂` for infinitely many integers `x`. -/
-theorem proposition_2_1 (R Q : ℤ[X]) (hR : 0 < R.natDegree) (hQ : 0 < Q.natDegree) (u : ℤ)
+theorem proposition_2_2 (R Q : ℤ[X]) (hR : 0 < R.natDegree) (hQ : 0 < Q.natDegree) (u : ℤ)
     (hu : R.eval u ∈ S2)
     (haux : {xv : ℤ × ℤ | 4 * R.eval u * (Du R u).eval (Q.eval xv.1) -
       (R.derivative.eval u) ^ 2 = xv.2 ^ 2}.Infinite) :
@@ -467,14 +467,14 @@ lemma isSquare_of_isSquare_four_mul {a : ℤ} (h : IsSquare (4 * a)) : IsSquare 
     have : (2 * k + 1) * (2 * k + 1) = 4 * (k ^ 2 + k) + 1 := by ring
     omega
 
-/-- **Proposition 2.2.** Let `a, b, c ∈ ℤ`. Assume that (a) either `a = 0`, or `a > 0`
+/-- **Proposition 2.3.** Let `a, b, c ∈ ℤ`. Assume that (a) either `a = 0`, or `a > 0`
 and `a` is not a perfect square, (b) `b² - 4ac ≠ 0`, and (c) equation (9)
 `a x² + b x + c = v²` has an integer solution `(x₀, v₀)`. Then (9) has infinitely many
 integer solutions `(x, v)`, with infinitely many distinct values of `x`.
 
 (The paper quotes [11, Proposition 5.4] for the case `a > 0`; here that case is proved
 from `pell_orbit_infinite`.) -/
-theorem proposition_2_2 (a b c : ℤ) (ha : a = 0 ∨ (0 < a ∧ ¬ IsSquare a))
+theorem proposition_2_3 (a b c : ℤ) (ha : a = 0 ∨ (0 < a ∧ ¬ IsSquare a))
     (hb : b ^ 2 - 4 * a * c ≠ 0) (hc : ∃ x0 v0 : ℤ, a * x0 ^ 2 + b * x0 + c = v0 ^ 2) :
     {xv : ℤ × ℤ | a * xv.1 ^ 2 + b * xv.1 + c = xv.2 ^ 2}.Infinite ∧
       {x : ℤ | ∃ v : ℤ, a * x ^ 2 + b * x + c = v ^ 2}.Infinite := by
@@ -529,7 +529,7 @@ theorem proposition_2_2 (a b c : ℤ) (ha : a = 0 ∨ (0 < a ∧ ¬ IsSquare a))
   exact ⟨v, h⟩
 
 /-- The admissible degree pairs `(deg R, deg Q) ∈ {(3,1), (4,1), (3,2)}` of
-Algorithms 2.1 and 4.1. -/
+Algorithms 2.4 and 4.3. -/
 def AdmissibleDegrees (R Q : ℤ[X]) : Prop :=
   (R.natDegree = 3 ∧ Q.natDegree = 1) ∨ (R.natDegree = 4 ∧ Q.natDegree = 1) ∨
     (R.natDegree = 3 ∧ Q.natDegree = 2)
@@ -551,18 +551,18 @@ theorem aux_equation_quadratic (R Q : ℤ[X]) (hdeg : AdmissibleDegrees R Q) (u 
   rw [← e, eval_eq_sum_range' (n := 3) (by omega)]
   simp [Finset.sum_range_succ]; ring
 
-/-- **Algorithm 2.1, Step 2.** For admissible `(deg R, deg Q)` and any `u`, the auxiliary
+/-- **Algorithm 2.4, Step 2.** For admissible `(deg R, deg Q)` and any `u`, the auxiliary
 equation (8) can be written in the form (9) `a x² + b x + c = v²`. -/
-theorem algorithm_2_1_step2 (R Q : ℤ[X]) (hdeg : AdmissibleDegrees R Q) (u : ℤ) :
+theorem algorithm_2_4_step2 (R Q : ℤ[X]) (hdeg : AdmissibleDegrees R Q) (u : ℤ) :
     ∃ a b c : ℤ, ∀ x : ℤ, 4 * R.eval u * (Du R u).eval (Q.eval x) -
       (R.derivative.eval u) ^ 2 = a * x ^ 2 + b * x + c :=
   aux_equation_quadratic R Q hdeg u _ _
 
-/-- **Algorithm 2.1 (correctness of the output).** Let `(deg R, deg Q)` be admissible.
+/-- **Algorithm 2.4 (correctness of the output).** Let `(deg R, deg Q)` be admissible.
 If Step 1 finds `u` with `R(u) ∈ 𝒮₂`, Step 2 writes (8) as `a x² + b x + c = v²`, and
-conditions (a), (b), (c) of Proposition 2.2 hold (so that the algorithm stops), then
+conditions (a), (b), (c) of Proposition 2.3 hold (so that the algorithm stops), then
 `P(x) = R(Q(x)) ∈ 𝒮₂` for infinitely many integers `x`. -/
-theorem algorithm_2_1 (R Q : ℤ[X]) (hdeg : AdmissibleDegrees R Q) (u a b c : ℤ)
+theorem algorithm_2_4 (R Q : ℤ[X]) (hdeg : AdmissibleDegrees R Q) (u a b c : ℤ)
     (hu : R.eval u ∈ S2)
     (habc : ∀ x : ℤ, 4 * R.eval u * (Du R u).eval (Q.eval x) - (R.derivative.eval u) ^ 2 =
       a * x ^ 2 + b * x + c)
@@ -573,15 +573,15 @@ theorem algorithm_2_1 (R Q : ℤ[X]) (hdeg : AdmissibleDegrees R Q) (u a b c : �
     rcases hdeg with ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ <;> omega
   have hQ : 0 < Q.natDegree := by
     rcases hdeg with ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ <;> omega
-  refine proposition_2_1 R Q hR hQ u hu ?_
-  convert (proposition_2_2 a b c ha hb hc).1 using 1
+  refine proposition_2_2 R Q hR hQ u hu ?_
+  convert (proposition_2_3 a b c ha hb hc).1 using 1
   ext xv
   simp only [mem_setOf_iff', habc]
 
-/-- **Seed test for Algorithm 2.1 in the linear case `a = 0`** (Section 2): if `b ≠ 0`,
+/-- **Seed test for Algorithm 2.4 in the linear case `a = 0`** (Section 2): if `b ≠ 0`,
 then `b x + c = v²` has an integer solution iff `v² ≡ c (mod |b|)` for some
 `0 ≤ v < |b|`; a successful residue gives `x = (v² - c)/b`. -/
-theorem algorithm_2_1_linear_seed_test (b c : ℤ) (hb : b ≠ 0) :
+theorem algorithm_2_4_linear_seed_test (b c : ℤ) (hb : b ≠ 0) :
     (∃ x v : ℤ, b * x + c = v ^ 2) ↔ ∃ v : ℤ, 0 ≤ v ∧ v < |b| ∧ b ∣ v ^ 2 - c := by
   constructor
   · rintro ⟨x, v, h⟩
@@ -648,11 +648,11 @@ theorem corollary_3_1_seed_two_fails :
   exact absurd h.1 (by norm_num)
 
 /-- Corollary 3.1, sum-of-two-squares part: `x⁶ - 4 ∈ 𝒮₂` for infinitely many integers
-`x` (Algorithm 2.1 with `R(t) = t³ - 4`, `Q(x) = x²`, `u = 162`). -/
+`x` (Algorithm 2.4 with `R(t) = t³ - 4`, `Q(x) = x²`, `u = 162`). -/
 theorem corollary_3_1_sum_of_two_squares : {x : ℤ | x ^ 6 - 4 ∈ S2}.Infinite := by
   have hdeg : AdmissibleDegrees (X ^ 3 + C (-4)) (X ^ 2) :=
     Or.inr (Or.inr ⟨natDegree_cubic _, natDegree_X_pow 2⟩)
-  have h := algorithm_2_1 (X ^ 3 + C (-4)) (X ^ 2) hdeg 162 17006096 0 (-688752720)
+  have h := algorithm_2_4 (X ^ 3 + C (-4)) (X ^ 2) hdeg 162 17006096 0 (-688752720)
     (by simp only [eval_add, eval_pow, eval_X, eval_C]
         exact ⟨by norm_num, 350, 2032, by norm_num⟩)
     (fun x => by rw [aux_cubic]; simp; ring)
@@ -696,7 +696,7 @@ theorem corollary_3_1 :
     linear_combination hAB' - hAB
   linarith
 
-/-- Algorithm 2.1 with `R(t) = t³ + f` and `Q(w) = 4w²` (as in the proof of Corollary 3.2):
+/-- Algorithm 2.4 with `R(t) = t³ + f` and `Q(w) = 4w²` (as in the proof of Corollary 3.2):
 given a seed `u` with `u³ + f ∈ 𝒮₂`, `16(u³+f)` strictly between two consecutive squares,
 `u(u³ - 8f) ≠ 0`, and one solution of `16(u³+f) w² - u(u³-8f) = v²`, there are infinitely
 many even `x` with `x⁶ + f ∈ 𝒮₂`. -/
@@ -708,7 +708,7 @@ lemma even_sixth_add_infinite (f u : ℤ) (hu : u ^ 3 + f ∈ S2) (k : ℤ) (hk 
   have hdeg : AdmissibleDegrees (X ^ 3 + C f) (C 4 * X ^ 2) :=
     Or.inr (Or.inr ⟨natDegree_cubic _, natDegree_C_mul_X_pow 2 (4 : ℤ) (by norm_num)⟩)
   have hpos : 0 < u ^ 3 + f := hu.1
-  have h := algorithm_2_1 (X ^ 3 + C f) (C 4 * X ^ 2) hdeg u (16 * (u ^ 3 + f)) 0
+  have h := algorithm_2_4 (X ^ 3 + C f) (C 4 * X ^ 2) hdeg u (16 * (u ^ 3 + f)) 0
     (-(u * (u ^ 3 - 8 * f)))
     (by simpa using hu) (fun x => by rw [aux_cubic]; simp; ring)
     (Or.inr ⟨by positivity, not_isSquare_of_lt_of_lt _ k hk hk1 hk2⟩)
@@ -842,7 +842,7 @@ theorem corollary_3_2 :
 /-- The closing remark of Section 3 on `y² + z² = x⁶ + 3`: with `R(t) = t³ + 3` and
 `Q(x) = x²`, any `u` with `R(u) ∈ 𝒮₂` must be odd, and for odd `u` the auxiliary equation
 (11) `4(u³+3)x² - u(u³-24) = v²` has no integer solutions (its left-hand side is
-`≡ 3 (mod 4)`). Hence Algorithm 2.1 cannot resolve this equation. -/
+`≡ 3 (mod 4)`). Hence Algorithm 2.4 cannot resolve this equation. -/
 theorem remark_x6_plus_3 :
     (∀ u : ℤ, u ^ 3 + 3 ∈ S2 → Odd u) ∧
       (∀ u : ℤ, Odd u → ∀ x v : ℤ, 4 * (u ^ 3 + 3) * x ^ 2 - u * (u ^ 3 - 24) ≠ v ^ 2) := by
@@ -1008,21 +1008,21 @@ theorem proposition_4_2 (A B C p q r m a b c : ℤ) (hm : m ≠ 0)
       rw [hpq] at e1
       exact Prod.ext (by rw [e1, e2]) (by simpa [φ] using congrArg Prod.snd hpq)
 
-/-- **Algorithm 4.1, Step 2.** For admissible `(deg R, deg Q)`, the auxiliary equation (26)
+/-- **Algorithm 4.3, Step 2.** For admissible `(deg R, deg Q)`, the auxiliary equation (26)
 `4 m D_u(Q(x)) - r² = -Δ v²` can be written in the form (29) `a x² + b x + c = -Δ v²`. -/
-theorem algorithm_4_1_step2 (R Q : ℤ[X]) (hdeg : AdmissibleDegrees R Q) (u m r : ℤ) :
+theorem algorithm_4_3_step2 (R Q : ℤ[X]) (hdeg : AdmissibleDegrees R Q) (u m r : ℤ) :
     ∃ a b c : ℤ, ∀ x : ℤ, 4 * m * (Du R u).eval (Q.eval x) - r ^ 2 = a * x ^ 2 + b * x + c :=
   aux_equation_quadratic R Q hdeg u _ _
 
-/-- **Algorithm 4.1 (correctness of the output).** Let `F = A y² + B y z + C z²` be
+/-- **Algorithm 4.3 (correctness of the output).** Let `F = A y² + B y z + C z²` be
 non-degenerate. If Step 1 finds `u, p, q` with `m = R(u) = F(p, q) ≠ 0`, Step 2 writes (26)
 as (29) `a x² + b x + c = -Δ v²` (with `r = R'(u)`), and conditions (a)–(c) of
 Proposition 4.2 hold (so that the algorithm stops), then `F(y, z) = R(Q(x))` is solvable in
 integers `(y, z)` for infinitely many integers `x`.
 
 (The degree restriction on `(R, Q)` only serves to guarantee that Step 2 is possible, see
-`algorithm_4_1_step2`; it is not needed for this implication.) -/
-theorem algorithm_4_1 (A B C : ℤ) (hΔ : B ^ 2 - 4 * A * C ≠ 0) (R Q : ℤ[X])
+`algorithm_4_3_step2`; it is not needed for this implication.) -/
+theorem algorithm_4_3 (A B C : ℤ) (hΔ : B ^ 2 - 4 * A * C ≠ 0) (R Q : ℤ[X])
     (u p q m r a b c : ℤ)
     (hm : R.eval u = m) (hmF : m = bqf A B C p q) (hm0 : m ≠ 0) (hr : R.derivative.eval u = r)
     (habc : ∀ x : ℤ, 4 * m * (Du R u).eval (Q.eval x) - r ^ 2 = a * x ^ 2 + b * x + c)
@@ -1036,11 +1036,11 @@ theorem algorithm_4_1 (A B C : ℤ) (hΔ : B ^ 2 - 4 * A * C ≠ 0) (R Q : ℤ[X
   ext xv
   simp only [mem_setOf_iff', habc]
 
-/-- **Seed test for Algorithm 4.1 in the linear case `a = 0`** (Section 4): if `b ≠ 0` and
+/-- **Seed test for Algorithm 4.3 in the linear case `a = 0`** (Section 4): if `b ≠ 0` and
 `m ≠ 0`, then `b x + c = -Δ v²` has an integer solution satisfying the congruences (27) iff
 some `v` with `0 ≤ v < lcm(2|m|, |b|)` satisfies (27) and `b ∣ -Δ v² - c`; then
 `x = (-Δ v² - c)/b`. -/
-theorem algorithm_4_1_linear_seed_test (A B C p q r m b c : ℤ) (hm : m ≠ 0) (hb : b ≠ 0) :
+theorem algorithm_4_3_linear_seed_test (A B C p q r m b c : ℤ) (hm : m ≠ 0) (hb : b ≠ 0) :
     (∃ x v : ℤ, b * x + c = -(B ^ 2 - 4 * A * C) * v ^ 2 ∧
       2 * |m| ∣ r * p + v * (B * p + 2 * C * q) ∧ 2 * |m| ∣ r * q - v * (2 * A * p + B * q)) ↔
     ∃ v : ℤ, 0 ≤ v ∧ v < (Int.lcm (2 * m) b : ℤ) ∧
@@ -1069,21 +1069,21 @@ theorem algorithm_4_1_linear_seed_test (A B C p q r m b c : ℤ) (hm : m ≠ 0) 
   · rintro ⟨v, -, -, hc1, hc2, x, hx⟩
     exact ⟨x, v, by linarith, hc1, hc2⟩
 
-/-- **Proposition 4.3.** Both equations (31) `2y² + yz + 2z² = x³ + 1` and
+/-- **Proposition 4.4.** Both equations (31) `2y² + yz + 2z² = x³ + 1` and
 `2y² + yz + 2z² = x³ - 1` have infinitely many integer solutions; explicitly, for every
 `n ∈ ℤ` the recovery formulas give the families
 `(x, y, z) = (30n² + 15n + 1, 30n³ + 45n² + 15n + 1, -120n³ - 90n² - 15n)` for (a) and
 `(x, y, z) = (570n² + 225n + 24, 9690n³ + 6105n² + 1189n + 71, -4560n³ - 1230n² + 89n + 29)`
 for (b). -/
-theorem proposition_4_3_families (n : ℤ) :
+theorem proposition_4_4_families (n : ℤ) :
     bqf 2 1 2 (30 * n ^ 3 + 45 * n ^ 2 + 15 * n + 1) (-120 * n ^ 3 - 90 * n ^ 2 - 15 * n) =
       (30 * n ^ 2 + 15 * n + 1) ^ 3 + 1 ∧
     bqf 2 1 2 (9690 * n ^ 3 + 6105 * n ^ 2 + 1189 * n + 71)
       (-4560 * n ^ 3 - 1230 * n ^ 2 + 89 * n + 29) = (570 * n ^ 2 + 225 * n + 24) ^ 3 - 1 := by
   unfold bqf; constructor <;> ring
 
-/-- **Proposition 4.3.** Both equations (31) have infinitely many integer solutions. -/
-theorem proposition_4_3 :
+/-- **Proposition 4.4.** Both equations (31) have infinitely many integer solutions. -/
+theorem proposition_4_4 :
     {s : ℤ × ℤ × ℤ | bqf 2 1 2 s.2.1 s.2.2 = s.1 ^ 3 + 1}.Infinite ∧
       {s : ℤ × ℤ × ℤ | bqf 2 1 2 s.2.1 s.2.2 = s.1 ^ 3 - 1}.Infinite := by
   constructor
@@ -1102,7 +1102,7 @@ theorem proposition_4_3 :
           nlinarith
       exact_mod_cast this
     exact (Set.infinite_range_of_injective hf).mono (by
-      rintro _ ⟨n, rfl⟩; exact (proposition_4_3_families n).1)
+      rintro _ ⟨n, rfl⟩; exact (proposition_4_4_families n).1)
   · let f : ℕ → ℤ × ℤ × ℤ := fun n => (570 * (n : ℤ) ^ 2 + 225 * n + 24,
       9690 * (n : ℤ) ^ 3 + 6105 * n ^ 2 + 1189 * n + 71,
       -4560 * (n : ℤ) ^ 3 - 1230 * n ^ 2 + 89 * n + 29)
@@ -1119,14 +1119,14 @@ theorem proposition_4_3 :
           nlinarith
       exact_mod_cast this
     exact (Set.infinite_range_of_injective hf).mono (by
-      rintro _ ⟨n, rfl⟩; exact (proposition_4_3_families n).2)
+      rintro _ ⟨n, rfl⟩; exact (proposition_4_4_families n).2)
 
-/-- The data used in the proof of Proposition 4.3, checked against Algorithm 4.1:
+/-- The data used in the proof of Proposition 4.4, checked against Algorithm 4.3:
 for (a), `R(t) = t³ + 1`, `u = 1`, `(p, q) = (1, 0)`, `m = 2 = F(1, 0)`, `r = 3`,
 `D_u(t) = t + 2`, and (26) reads `8x + 7 = 15v²`; for (b), `R(t) = t³ - 1`, `u = 7`,
 `(p, q) = (3, 12)`, `m = 342 = F(3, 12)`, `r = 147`, `D_u(t) = t + 14`, and (26) reads
 `456x - 819 = 5v²`. Here `Δ = 1 - 16 = -15`. -/
-theorem proposition_4_3_data (x v : ℤ) :
+theorem proposition_4_4_data (x v : ℤ) :
     (bqf 2 1 2 1 0 = (X ^ 3 + C 1 : ℤ[X]).eval 1 ∧
       (X ^ 3 + C 1 : ℤ[X]).derivative.eval 1 = 3 ∧ Du (X ^ 3 + C 1) 1 = X + C 2 ∧
       (4 * 2 * (Du (X ^ 3 + C 1) 1).eval x - 3 ^ 2 = -((1 : ℤ) ^ 2 - 4 * 2 * 2) * v ^ 2 ↔

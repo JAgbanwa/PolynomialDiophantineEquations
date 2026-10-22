@@ -26,14 +26,16 @@ sources:
   - Jamal Agbanwa
   type: article
   id: International Journal of Number Theory manuscript IJNT-D-26-00150, revision R1
-  location: 'Sections 2-4: Propositions 2.1, 2.2, 4.1, 4.2 and 4.3; Corollaries 3.1 and 3.2; Algorithms
-    2.1 and 4.1; the degenerate case and supporting identities.'
+  location: 'Sections 2-4: Propositions 2.2, 2.3, 4.1, 4.2 and 4.4; Corollaries 3.1 and 3.2; Algorithms
+    2.4 and 4.3; the degenerate case and supporting identities.'
   relationship: formalizes
   author_endorsement: participated
-  note: Numbering follows the supplied final manuscript, in which the sum-of-two-squares criterion and
-    auxiliary seed criterion are Propositions 2.1 and 2.2. The R1 referee report refers to these as Propositions
-    2.2 and 2.3. Source-author participation refers to Jamal Agbanwa; this entry does not claim an independent
-    review of the Lean statements.
+  note: The current declaration names and source labels follow the supplied manuscript and R1 referee
+    report. The sum-of-two-squares criterion and auxiliary seed criterion are Propositions 2.2 and 2.3;
+    the algorithms are 2.4 and 4.3, and the explicit-family result is Proposition 4.4. The immutable paper
+    snapshot 85b3903f4af4424be7939ff9eaee3b6c0dd2c7ab retains its earlier identifiers; README.md records
+    their correspondence with the current names. Source-author participation refers to Jamal Agbanwa;
+    this entry does not claim an independent review of the Lean statements.
 - title: 'Polynomial Diophantine equations: a systematic approach'
   authors:
   - Bogdan Grechuk
@@ -62,7 +64,7 @@ status:
     the prime-exponent criterion and property (*) for positive sums of two squares, both tangent criteria,
     both seed-infinitude criteria, the two algorithms as conditional correctness implications, quadratic
     reduction for admissible degree pairs, finite seed tests in the linear case, the applications of Corollaries
-    3.1 and 3.2 and Proposition 4.3, the obstruction for x^6+3, non-multiplicativity examples, and the
+    3.1 and 3.2 and Proposition 4.4, the obstruction for x^6+3, non-multiplicativity examples, and the
     parametrization and if-and-only-if criterion for degenerate forms. Not included: executable general
     seed searches or quadratic-equation decision procedures; the claim that u=50 is the smallest successful
     seed for x^6-4; the literature survey, length-ordering discussion and Table 1 of remaining open problems.
@@ -92,22 +94,22 @@ status:
   - declaration: Paper.property_star
     file: Solution.lean
     comparator_config: comparator.json
-  - declaration: Paper.proposition_2_1
+  - declaration: Paper.proposition_2_2
     file: Solution.lean
     comparator_config: comparator.json
-  - declaration: Paper.proposition_2_2
+  - declaration: Paper.proposition_2_3
     file: Solution.lean
     comparator_config: comparator.json
   - declaration: Paper.aux_equation_quadratic
     file: Solution.lean
     comparator_config: comparator.json
-  - declaration: Paper.algorithm_2_1_step2
+  - declaration: Paper.algorithm_2_4_step2
     file: Solution.lean
     comparator_config: comparator.json
-  - declaration: Paper.algorithm_2_1
+  - declaration: Paper.algorithm_2_4
     file: Solution.lean
     comparator_config: comparator.json
-  - declaration: Paper.algorithm_2_1_linear_seed_test
+  - declaration: Paper.algorithm_2_4_linear_seed_test
     file: Solution.lean
     comparator_config: comparator.json
   - declaration: Paper.equation_2_iff_3
@@ -158,22 +160,22 @@ status:
   - declaration: Paper.proposition_4_2
     file: Solution.lean
     comparator_config: comparator.json
-  - declaration: Paper.algorithm_4_1_step2
+  - declaration: Paper.algorithm_4_3_step2
     file: Solution.lean
     comparator_config: comparator.json
-  - declaration: Paper.algorithm_4_1
+  - declaration: Paper.algorithm_4_3
     file: Solution.lean
     comparator_config: comparator.json
-  - declaration: Paper.algorithm_4_1_linear_seed_test
+  - declaration: Paper.algorithm_4_3_linear_seed_test
     file: Solution.lean
     comparator_config: comparator.json
-  - declaration: Paper.proposition_4_3_families
+  - declaration: Paper.proposition_4_4_families
     file: Solution.lean
     comparator_config: comparator.json
-  - declaration: Paper.proposition_4_3
+  - declaration: Paper.proposition_4_4
     file: Solution.lean
     comparator_config: comparator.json
-  - declaration: Paper.proposition_4_3_data
+  - declaration: Paper.proposition_4_4_data
     file: Solution.lean
     comparator_config: comparator.json
   - declaration: Paper.non_multiplicative_example
@@ -196,26 +198,34 @@ status:
     comparator_config: comparator.json
 fidelity:
   divergences: PolyQF.S2 is the set of positive integers represented by two integer squares, exactly as
-    in the manuscript. Proposition 2.1 retains the nonconstancy hypotheses on R and Q. The formal proofs
-    of Proposition 2.2 and Proposition 4.2 use the internally proved PolyQF.pell_orbit_infinite argument,
+    in the manuscript. Proposition 2.2 retains the nonconstancy hypotheses on R and Q. The formal proofs
+    of Proposition 2.3 and Proposition 4.2 use the internally proved PolyQF.pell_orbit_infinite argument,
     based on Mathlib, in place of the paper's citations to [11, Proposition 5.4] and [11, Proposition
     3.14]. Proposition 4.2 exposes only the needed hypothesis m != 0; its conclusion concerns infinitely
     many pairs and does not require a nonzero discriminant. Proposition 4.1 requires a nonzero discriminant
-    to infer infinitely many distinct x-coordinates. Algorithm 4.1 correctness is stated more generally
-    without degree restrictions once quadratic coefficients are supplied; algorithm_4_1_step2 supplies
-    those coefficients for the degree pairs in the paper. Proposition 4.3 is verified directly from the
+    to infer infinitely many distinct x-coordinates. Algorithm 4.3 correctness is stated more generally
+    without degree restrictions once quadratic coefficients are supplied; algorithm_4_3_step2 supplies
+    those coefficients for the degree pairs in the paper. Proposition 4.4 is verified directly from the
     displayed polynomial families. The degenerate criterion also includes the zero form. Challenge.lean
     contains deliberate theorem placeholders for independent statement comparison; it is not imported
     by the proof development or Solution.lean.
 review:
   status: agent-reviewed
-  notes: 'The statement-to-paper correspondence was reviewed with AI assistance against the supplied final
-    manuscript and the R1 referee report. On 22 October 2026 the complete Lean 4.35.0 build of
-    RequestProject, Challenge and Solution and the official sandboxed comparator both passed for
-    all 42 listed declarations. Lean kernel replay accepted the solution. A separate built-in
-    axiom audit of those declarations reported exactly propext, Classical.choice and Quot.sound
-    in their union, with no sorryAx. Verification commands and CI evidence are in README.md.
-    The paper''s acceptance is not presented as independent human review of the Lean statements.'
+  notes: 'The statement-to-paper correspondence was reviewed with AI assistance against the supplied
+    manuscript and the R1 referee report. Declaration names and source labels in this revision have
+    been corrected to match that manuscript without changing the mathematical statements or proof
+    arguments. On 22 October 2026 the complete Lean 4.35.0 build of RequestProject, Challenge and
+    Solution and the official sandboxed comparator both passed for all 42 declarations in the immutable
+    paper snapshot 85b3903f4af4424be7939ff9eaee3b6c0dd2c7ab, using its earlier identifiers (GitHub Actions
+    run 39761112134). Lean kernel replay accepted that solution. A separate built-in axiom audit of
+    those declarations reported exactly propext, Classical.choice and Quot.sound in their union, with
+    no sorryAx. That recorded run applies to the paper snapshot, not to subsequent identifier changes.
+    The corrected identifiers were subsequently verified at commit
+    815a352000f6fbb6236d0f7591edde95d1bd7d9c in GitHub Actions run 39794070171 on 22 October 2026:
+    both 42-statement inventories and the official v0.4 schema passed, the sandboxed comparator and
+    Lean kernel accepted the solution, and the full project build completed successfully.
+    Verification commands and CI evidence are in README.md. The paper''s acceptance is not presented
+    as independent human review of the Lean statements.'
 
 alignment:
   namespace: PolyQF
@@ -261,37 +271,37 @@ alignment:
     module: Solution
     status: proved
     note: 'Proof: PolyQF.property_star in RequestProject/Main.lean.'
-  - source: Proposition 2.1
-    lean: Paper.proposition_2_1
-    module: Solution
-    status: proved
-    note: 'Proof: PolyQF.proposition_2_1 in RequestProject/Main.lean.'
   - source: Proposition 2.2
     lean: Paper.proposition_2_2
     module: Solution
     status: proved
     note: 'Proof: PolyQF.proposition_2_2 in RequestProject/Main.lean.'
-  - source: Algorithms 2.1/4.1, auxiliary equation is quadratic
+  - source: Proposition 2.3
+    lean: Paper.proposition_2_3
+    module: Solution
+    status: proved
+    note: 'Proof: PolyQF.proposition_2_3 in RequestProject/Main.lean.'
+  - source: Algorithms 2.4/4.3, auxiliary equation is quadratic
     lean: Paper.aux_equation_quadratic
     module: Solution
     status: proved
     note: 'Proof: PolyQF.aux_equation_quadratic in RequestProject/Main.lean.'
-  - source: Algorithm 2.1, Step 2
-    lean: Paper.algorithm_2_1_step2
+  - source: Algorithm 2.4, Step 2
+    lean: Paper.algorithm_2_4_step2
     module: Solution
     status: proved
-    note: 'Proof: PolyQF.algorithm_2_1_step2 in RequestProject/Main.lean.'
-  - source: Algorithm 2.1 (correctness)
-    lean: Paper.algorithm_2_1
+    note: 'Proof: PolyQF.algorithm_2_4_step2 in RequestProject/Main.lean.'
+  - source: Algorithm 2.4 (correctness)
+    lean: Paper.algorithm_2_4
     module: Solution
     status: proved
-    note: 'Proof: PolyQF.algorithm_2_1 in RequestProject/Main.lean. Conditional correctness given successful
+    note: 'Proof: PolyQF.algorithm_2_4 in RequestProject/Main.lean. Conditional correctness given successful
       seed data; the search procedure is not implemented.'
-  - source: Algorithm 2.1, seed test for a = 0
-    lean: Paper.algorithm_2_1_linear_seed_test
+  - source: Algorithm 2.4, seed test for a = 0
+    lean: Paper.algorithm_2_4_linear_seed_test
     module: Solution
     status: proved
-    note: 'Proof: PolyQF.algorithm_2_1_linear_seed_test in RequestProject/Main.lean.'
+    note: 'Proof: PolyQF.algorithm_2_4_linear_seed_test in RequestProject/Main.lean.'
   - source: Equations (2) and (3)
     lean: Paper.equation_2_iff_3
     module: Solution
@@ -373,37 +383,37 @@ alignment:
     status: proved
     note: 'Proof: PolyQF.proposition_4_2 in RequestProject/Main.lean. Uses a proved residue-preserving
       Pell-orbit argument; no nonzero-discriminant hypothesis is needed for infinitude of pairs.'
-  - source: Algorithm 4.1, Step 2
-    lean: Paper.algorithm_4_1_step2
+  - source: Algorithm 4.3, Step 2
+    lean: Paper.algorithm_4_3_step2
     module: Solution
     status: proved
-    note: 'Proof: PolyQF.algorithm_4_1_step2 in RequestProject/Main.lean.'
-  - source: Algorithm 4.1 (correctness)
-    lean: Paper.algorithm_4_1
+    note: 'Proof: PolyQF.algorithm_4_3_step2 in RequestProject/Main.lean.'
+  - source: Algorithm 4.3 (correctness)
+    lean: Paper.algorithm_4_3
     module: Solution
     status: proved
-    note: 'Proof: PolyQF.algorithm_4_1 in RequestProject/Main.lean. Conditional correctness given successful
+    note: 'Proof: PolyQF.algorithm_4_3 in RequestProject/Main.lean. Conditional correctness given successful
       seed data; the search procedure is not implemented.'
-  - source: Algorithm 4.1, seed test for a = 0
-    lean: Paper.algorithm_4_1_linear_seed_test
+  - source: Algorithm 4.3, seed test for a = 0
+    lean: Paper.algorithm_4_3_linear_seed_test
     module: Solution
     status: proved
-    note: 'Proof: PolyQF.algorithm_4_1_linear_seed_test in RequestProject/Main.lean.'
-  - source: Proposition 4.3, explicit families
-    lean: Paper.proposition_4_3_families
+    note: 'Proof: PolyQF.algorithm_4_3_linear_seed_test in RequestProject/Main.lean.'
+  - source: Proposition 4.4, explicit families
+    lean: Paper.proposition_4_4_families
     module: Solution
     status: proved
-    note: 'Proof: PolyQF.proposition_4_3_families in RequestProject/Main.lean.'
-  - source: Proposition 4.3
-    lean: Paper.proposition_4_3
+    note: 'Proof: PolyQF.proposition_4_4_families in RequestProject/Main.lean.'
+  - source: Proposition 4.4
+    lean: Paper.proposition_4_4
     module: Solution
     status: proved
-    note: 'Proof: PolyQF.proposition_4_3 in RequestProject/Main.lean.'
-  - source: Proposition 4.3, data used in the proof
-    lean: Paper.proposition_4_3_data
+    note: 'Proof: PolyQF.proposition_4_4 in RequestProject/Main.lean.'
+  - source: Proposition 4.4, data used in the proof
+    lean: Paper.proposition_4_4_data
     module: Solution
     status: proved
-    note: 'Proof: PolyQF.proposition_4_3_data in RequestProject/Main.lean.'
+    note: 'Proof: PolyQF.proposition_4_4_data in RequestProject/Main.lean.'
   - source: Section 4, non-multiplicativity example
     lean: Paper.non_multiplicative_example
     module: Solution
