@@ -1,12 +1,11 @@
 import Lean
 
 /-!
-# Offline check of the comparator conditions
+# Optional diagnostic check of statements and axiom dependencies
 
 Run with `lake env lean --run scripts/CheckComparator.lean` (after `lake build`).
 
-This script performs, independently of the comparator tool, the checks that the
-comparator performs on `comparator.json`:
+This script checks selected conditions from `comparator.json`:
 
 1. every theorem listed in `theorem_names` exists in `Challenge` and in `Solution`, with
    syntactically identical statements (`Expr` equality);
@@ -15,8 +14,10 @@ comparator performs on `comparator.json`:
    auxiliary constants) exists in the solution environment with the same kind, type and value;
 3. each listed theorem in `Solution` depends only on the axioms in `permitted_axioms`.
 
-It is a convenience check only; the authoritative check is running the comparator itself
-(see `verify.sh`).
+This is a convenience check only. It does not compare all imported definitions,
+export and replay the environment through the kernel, or sandbox compilation.
+The authoritative check is `lake comparator --config comparator.json`, which is
+mandatory in `verify.sh`. Success here must not be substituted for that check.
 -/
 
 open Lean

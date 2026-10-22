@@ -1,0 +1,102 @@
+name: Sumsquares revision verification
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "sumsquares_revision/**"
+      - ".github/workflows/sumsquares-revision-ci.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "sumsquares_revision/**"
+      - ".github/workflows/sumsquares-revision-ci.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sumsquares-revision-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Build and compare the paper statements
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    defaults:
+      run:
+        shell: bash
+        working-directory: sumsquares_revision
+    env:
+      LEAN_ABORT_ON_PANIC: "1"
+      LEAN_NUM_THREADS: "2"
+
+    steps:
+      - name: Check out the exact revision
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - name: Install and test the comparator sandbox
+        run: |
+          set -euo pipefail
+          sudo apt-get update -q
+          sudo apt-get install -y bubblewrap python3-venv
+          {
+            git rev-parse HEAD
+            bwrap --version
+            bwrap --unshare-all --ro-bind / / --proc /proc --dev /dev -- /bin/true
+          } 2>&1 | tee sandbox.log
+
+      - name: Check project files and proof sources
+        run: python3 scripts/check_project.py
+
+      - name: Install the metadata validator
+        run: |
+          set -euo pipefail
+          python3 -m venv "$RUNNER_TEMP/sumsquares-metadata-venv"
+          "$RUNNER_TEMP/sumsquares-metadata-venv/bin/python" -m pip install -r scripts/requirements.txt
+          echo "$RUNNER_TEMP/sumsquares-metadata-venv/bin" >> "$GITHUB_PATH"
+
+      - name: Install the pinned Lean toolchain and Mathlib cache
+        uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596
+        with:
+          lake-package-directory: sumsquares_revision
+          auto-config: "false"
+          build: "false"
+          test: "false"
+          lint: "false"
+          use-mathlib-cache: "true"
+          use-github-cache: "false"
+
+      - name: Record the build environment
+        run: |
+          set -euo pipefail
+          {
+            date -u '+UTC: %Y-%m-%dT%H:%M:%SZ'
+            git rev-parse HEAD
+            git status --short --untracked-files=no
+            lake --version
+            lean --version
+            git -C .lake/packages/mathlib rev-parse HEAD
+          } | tee build-environment.log
+          git diff --exit-code -- lean-toolchain lakefile.toml lake-manifest.json
+
+      - name: Run the real comparator and full project build
+        run: |
+          set -euo pipefail
+          bash verify.sh 2>&1 | tee verification.log
+
+      - name: Preserve verification evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: sumsquares-revision-verification-${{ github.sha }}
+          path: |
+            sumsquares_revision/sandbox.log
+            sumsquares_revision/build-environment.log
+            sumsquares_revision/verification.log
+          if-no-files-found: warn
+          retention-days: 90

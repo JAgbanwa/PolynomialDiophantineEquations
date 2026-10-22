@@ -44,7 +44,7 @@ theorem Du_cubic (f u : ℤ) : Du (X ^ 3 + C f) u = X + C (2 * u) :=
   PolyQF.Du_cubic f u
 
 /-- For `R(t) = t³ + f`, the auxiliary expression `4R(u)D_u(t) - R'(u)²` equals
-`4(u³+f) t - u(u³ - 8f)`; with `t = x²` this is the passage from (8) to (12). -/
+`4(u³+f) t - u(u³ - 8f)`; with `t = x²` this is the passage from (8) to (11). -/
 theorem aux_cubic (f u t : ℤ) :
     4 * (X ^ 3 + C f : ℤ[X]).eval u * (Du (X ^ 3 + C f) u).eval t -
       ((X ^ 3 + C f : ℤ[X]).derivative.eval u) ^ 2 = 4 * (u ^ 3 + f) * t - u * (u ^ 3 - 8 * f) :=
@@ -89,7 +89,7 @@ theorem proposition_2_2 (a b c : ℤ) (ha : a = 0 ∨ (0 < a ∧ ¬ IsSquare a))
   PolyQF.proposition_2_2 a b c ha hb hc
 
 /-- For admissible degrees, `K · D_u(Q(x)) - L` is a polynomial of degree at most two in
-`x`: this is why the auxiliary equations (8) and (26) take the forms (9) and (27). -/
+`x`: this is why the auxiliary equations (8) and (26) take the forms (9) and (29). -/
 theorem aux_equation_quadratic (R Q : ℤ[X]) (hdeg : AdmissibleDegrees R Q) (u K L : ℤ) :
     ∃ a b c : ℤ, ∀ x : ℤ, K * (Du R u).eval (Q.eval x) - L = a * x ^ 2 + b * x + c :=
   PolyQF.aux_equation_quadratic R Q hdeg u K L
@@ -129,8 +129,8 @@ theorem equation_2_iff_3 (x y z : ℤ) :
     y ^ 2 + x ^ 3 * y + z ^ 2 + 1 = 0 ↔ (x ^ 3 + 2 * y) ^ 2 + (2 * z) ^ 2 = x ^ 6 - 4 :=
   PolyQF.equation_2_iff_3 x y z
 
-/-- The four auxiliary computations of Section 3, for `R(t) = t³ + f`, `Q(x) = x²` and the
-chosen `u`: equation (12) becomes `a x² + c = v²`, with the indicated values. -/
+/-- The auxiliary computations of Section 3, for `R(t) = t³ + f`, `Q(x) = x²` and the
+chosen `u`: equation (11) becomes `a x² + c = v²`, with the indicated values. -/
 theorem aux_equations_section_3 (x : ℤ) :
     (4 * ((162 : ℤ) ^ 3 - 4) * x ^ 2 - 162 * (162 ^ 3 - 8 * (-4)) = 17006096 * x ^ 2 - 688752720) ∧
     (4 * ((2 : ℤ) ^ 3 - 4) * x ^ 2 - 2 * (2 ^ 3 - 8 * (-4)) = 16 * x ^ 2 - 80) ∧
@@ -212,7 +212,7 @@ theorem corollary_3_2 :
 
 /-- The closing remark of Section 3 on `y² + z² = x⁶ + 3`: with `R(t) = t³ + 3` and
 `Q(x) = x²`, any `u` with `R(u) ∈ 𝒮₂` must be odd, and for odd `u` the auxiliary equation
-(12) `4(u³+3)x² - u(u³-24) = v²` has no integer solutions (its left-hand side is
+(11) `4(u³+3)x² - u(u³-24) = v²` has no integer solutions (its left-hand side is
 `≡ 3 (mod 4)`). Hence Algorithm 2.1 cannot resolve this equation. -/
 theorem remark_x6_plus_3 :
     (∀ u : ℤ, u ^ 3 + 3 ∈ S2 → Odd u) ∧
@@ -221,9 +221,9 @@ theorem remark_x6_plus_3 :
 
 /-! ## Section 4: general binary quadratic forms -/
 
-/-- **Proposition 4.1, recovery formulas (25).** Assume (20) and (21), i.e.
-`m = R(u) = F(p, q) ≠ 0`, let `r = R'(u)`. For every pair `(x, v)` satisfying (23)
-`4 m D_u(Q(x)) - r² = -Δ v²` and the congruences (24), the integers `y, z` given by (25)
+/-- **Proposition 4.1, recovery formulas (28).** Assume (21), i.e.
+`m = R(u) = F(p, q) ≠ 0`, let `r = R'(u)`. For every pair `(x, v)` satisfying (26)
+`4 m D_u(Q(x)) - r² = -Δ v²` and the congruences (27), the integers `y, z` given by (28)
 satisfy `F(y, z) = R(Q(x))`. (Exact integer division is used; the congruences guarantee that
 the quotients are integers.) -/
 theorem proposition_4_1_recovery (A B C : ℤ) (R Q : ℤ[X]) (u p q m r : ℤ)
@@ -239,7 +239,7 @@ theorem proposition_4_1_recovery (A B C : ℤ) (R Q : ℤ[X]) (u p q m r : ℤ)
 
 /-- **Proposition 4.1.** Assume (20) `Δ = B² - 4AC ≠ 0` and (21) `m = R(u) = F(p, q) ≠ 0`,
 let `r = R'(u)` and let `D_u` be defined in (6). If there are infinitely many integer
-pairs `(x, v)` satisfying (23) `4 m D_u(Q(x)) - r² = -Δ v²` and the congruences (24)
+pairs `(x, v)` satisfying (26) `4 m D_u(Q(x)) - r² = -Δ v²` and the congruences (27)
 `rp + v(Bp + 2Cq) ≡ 0`, `rq - v(2Ap + Bq) ≡ 0 (mod 2|m|)`, then `F(y, z) = R(Q(x))` is
 solvable in integers `(y, z)` for infinitely many integers `x`. -/
 theorem proposition_4_1 (A B C : ℤ) (hΔ : B ^ 2 - 4 * A * C ≠ 0) (R Q : ℤ[X]) (u p q m r : ℤ)
@@ -251,11 +251,11 @@ theorem proposition_4_1 (A B C : ℤ) (hΔ : B ^ 2 - 4 * A * C ≠ 0) (R Q : ℤ
     {x : ℤ | ∃ y z : ℤ, bqf A B C y z = R.eval (Q.eval x)}.Infinite :=
   PolyQF.proposition_4_1 A B C hΔ R Q u p q m r hm hmF hm0 hr hinf
 
-/-- **Proposition 4.2.** Let `Δ = B² - 4AC`, `m ≠ 0`, and consider equation (27)
-`a x² + b x + c = -Δ v²` together with the congruences (24). Assume that
+/-- **Proposition 4.2.** Let `Δ = B² - 4AC`, `m ≠ 0`, and consider equation (29)
+`a x² + b x + c = -Δ v²` together with the congruences (27). Assume that
 (a) either `a = 0` or `-aΔ` is a positive integer that is not a perfect square,
-(b) `b² - 4ac ≠ 0`, and (c) (27) has an integer solution `(x₀, v₀)` satisfying (24).
-Then (27) has infinitely many integer solutions `(x, v)` satisfying (24).
+(b) `b² - 4ac ≠ 0`, and (c) (29) has an integer solution `(x₀, v₀)` satisfying (27).
+Then (29) has infinitely many integer solutions `(x, v)` satisfying (27).
 
 (In the paper `m = R(u) = F(p, q)` and `r = R'(u)`; only `m ≠ 0` is needed here. The paper
 invokes Gauss's theorem [11, Proposition 3.14] for the case `a ≠ 0`; here that case is
@@ -270,15 +270,15 @@ theorem proposition_4_2 (A B C p q r m a b c : ℤ) (hm : m ≠ 0)
       2 * |m| ∣ r * q - xv.2 * (2 * A * p + B * q)}.Infinite :=
   PolyQF.proposition_4_2 A B C p q r m a b c hm ha hb hc
 
-/-- **Algorithm 4.1, Step 2.** For admissible `(deg R, deg Q)`, the auxiliary equation (23)
-`4 m D_u(Q(x)) - r² = -Δ v²` can be written in the form (27) `a x² + b x + c = -Δ v²`. -/
+/-- **Algorithm 4.1, Step 2.** For admissible `(deg R, deg Q)`, the auxiliary equation (26)
+`4 m D_u(Q(x)) - r² = -Δ v²` can be written in the form (29) `a x² + b x + c = -Δ v²`. -/
 theorem algorithm_4_1_step2 (R Q : ℤ[X]) (hdeg : AdmissibleDegrees R Q) (u m r : ℤ) :
     ∃ a b c : ℤ, ∀ x : ℤ, 4 * m * (Du R u).eval (Q.eval x) - r ^ 2 = a * x ^ 2 + b * x + c :=
   PolyQF.algorithm_4_1_step2 R Q hdeg u m r
 
 /-- **Algorithm 4.1 (correctness of the output).** Let `F = A y² + B y z + C z²` be
-non-degenerate. If Step 1 finds `u, p, q` with `m = R(u) = F(p, q) ≠ 0`, Step 2 writes (23)
-as (27) `a x² + b x + c = -Δ v²` (with `r = R'(u)`), and conditions (a)–(c) of
+non-degenerate. If Step 1 finds `u, p, q` with `m = R(u) = F(p, q) ≠ 0`, Step 2 writes (26)
+as (29) `a x² + b x + c = -Δ v²` (with `r = R'(u)`), and conditions (a)–(c) of
 Proposition 4.2 hold (so that the algorithm stops), then `F(y, z) = R(Q(x))` is solvable in
 integers `(y, z)` for infinitely many integers `x`.
 
@@ -296,8 +296,8 @@ theorem algorithm_4_1 (A B C : ℤ) (hΔ : B ^ 2 - 4 * A * C ≠ 0) (R Q : ℤ[X
   PolyQF.algorithm_4_1 A B C hΔ R Q u p q m r a b c hm hmF hm0 hr habc ha hb hc
 
 /-- **Seed test for Algorithm 4.1 in the linear case `a = 0`** (Section 4): if `b ≠ 0` and
-`m ≠ 0`, then `b x + c = -Δ v²` has an integer solution satisfying the congruences (24) iff
-some `v` with `0 ≤ v < lcm(2|m|, |b|)` satisfies (24) and `b ∣ -Δ v² - c`; then
+`m ≠ 0`, then `b x + c = -Δ v²` has an integer solution satisfying the congruences (27) iff
+some `v` with `0 ≤ v < lcm(2|m|, |b|)` satisfies (27) and `b ∣ -Δ v² - c`; then
 `x = (-Δ v² - c)/b`. -/
 theorem algorithm_4_1_linear_seed_test (A B C p q r m b c : ℤ) (hm : m ≠ 0) (hb : b ≠ 0) :
     (∃ x v : ℤ, b * x + c = -(B ^ 2 - 4 * A * C) * v ^ 2 ∧
@@ -328,8 +328,8 @@ theorem proposition_4_3 :
 
 /-- The data used in the proof of Proposition 4.3, checked against Algorithm 4.1:
 for (a), `R(t) = t³ + 1`, `u = 1`, `(p, q) = (1, 0)`, `m = 2 = F(1, 0)`, `r = 3`,
-`D_u(t) = t + 2`, and (23) reads `8x + 7 = 15v²`; for (b), `R(t) = t³ - 1`, `u = 7`,
-`(p, q) = (3, 12)`, `m = 342 = F(3, 12)`, `r = 147`, `D_u(t) = t + 14`, and (23) reads
+`D_u(t) = t + 2`, and (26) reads `8x + 7 = 15v²`; for (b), `R(t) = t³ - 1`, `u = 7`,
+`(p, q) = (3, 12)`, `m = 342 = F(3, 12)`, `r = 147`, `D_u(t) = t + 14`, and (26) reads
 `456x - 819 = 5v²`. Here `Δ = 1 - 16 = -15`. -/
 theorem proposition_4_3_data (x v : ℤ) :
     (bqf 2 1 2 1 0 = (X ^ 3 + C 1 : ℤ[X]).eval 1 ∧
@@ -381,7 +381,7 @@ theorem degenerate_infinite_iff (A B C k r s : ℤ) (hA : A = k * r ^ 2) (hB : B
       ∃ x0 t0 : ℤ, k * t0 ^ 2 = P.eval x0 ∧ (Int.gcd r s : ℤ) ∣ t0 :=
   PolyQF.degenerate_infinite_iff A B C k r s hA hB hC P
 
-/-- Comparison with Section 2: for `F(y, z) = y² + z²` one has `Δ = -4`, and (23) becomes
+/-- Comparison with Section 2: for `F(y, z) = y² + z²` one has `Δ = -4`, and (26) becomes
 `4 m D - r² = 4 v²`, i.e. (8) with `V = 2v`; conversely, every integer solution `V` of
 `4 m D - r² = V²` is even (reduction modulo 4). -/
 theorem comparison_with_section_2 (m r D : ℤ) :
