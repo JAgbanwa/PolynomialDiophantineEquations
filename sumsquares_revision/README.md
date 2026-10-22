@@ -7,7 +7,7 @@ resolved dependency revisions committed in `lake-manifest.json`.
 ## Verification and paper snapshot
 
 **The complete build and the official comparator passed on 22 October 2026.**
-The [completed verification run](https://github.com/JAgbanwa/PolynomialDiophantineEquations/actions/runs/39760193447)
+The [completed verification run](https://github.com/JAgbanwa/PolynomialDiophantineEquations/actions/runs/39761112134)
 checked the 42 advertised statements with the real sandbox enabled and then
 built every project target. Lean 4.35.0 uses Mathlib revision
 `56a005855ea17e0b0958f73ec801ae140b0a1679` in this project.
@@ -21,11 +21,16 @@ built every project target. Lean 4.35.0 uses Mathlib revision
 | Complete `bash verify.sh` | Exit code 0; `==> all checks passed` |
 | Built-in axiom audit of all 42 proved declarations | Exactly the union `{propext, Quot.sound, Classical.choice}`; no `sorryAx` |
 
-The relative links to the [project snapshot](.) and
-[proof development](RequestProject/Main.lean) resolve within the same revision
-as this README. For a paper citation, obtain the full immutable commit with
-`git rev-parse HEAD` and use it in both links. The directory
-`sumsquares_revised` contains a separate, older development.
+**Paper snapshot:** `85b3903f4af4424be7939ff9eaee3b6c0dd2c7ab`.
+
+- [Project snapshot](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/85b3903f4af4424be7939ff9eaee3b6c0dd2c7ab/sumsquares_revision)
+- [Proof development](https://github.com/JAgbanwa/PolynomialDiophantineEquations/blob/85b3903f4af4424be7939ff9eaee3b6c0dd2c7ab/sumsquares_revision/RequestProject/Main.lean)
+
+Use these two links together in the manuscript. They identify one immutable
+verified project, including the challenge, solution, metadata, and dependency
+pins. The directory `sumsquares_revised` contains a separate, older development.
+Later documentation-only commits may record this snapshot without changing its
+Lean sources or verification configuration.
 
 ## What is formalised
 
@@ -138,13 +143,13 @@ Run in a directory where a new checkout can be created:
 ```bash
 git clone https://github.com/JAgbanwa/PolynomialDiophantineEquations.git
 cd PolynomialDiophantineEquations
-git switch fix/sumsquares-referee-lean
+git checkout --detach 85b3903f4af4424be7939ff9eaee3b6c0dd2c7ab
 git rev-parse HEAD
 cd sumsquares_revision
 ```
 
-Keep the full hash printed above. To reproduce a paper snapshot, check out
-that exact commit before entering the project directory. All subsequent commands run from
+The printed commit must be the paper snapshot above. All commands below
+therefore use the exact formalization cited in the manuscript. All subsequent commands run from
 `sumsquares_revision`.
 
 ### 3. Install the pinned metadata validator
@@ -261,18 +266,35 @@ lake build RequestProject Challenge Solution
 
 ## Verification in GitHub Actions
 
-Open the repository's **Actions** tab and choose **Sumsquares revision
-verification**. Select the run for the cited commit and inspect the step
-**Run the real comparator and full project build**. The workflow performs the
-same mandatory verifier and uploads the environment, sandbox and verification
-logs as a run artifact. A successful workflow for the older
-`sumsquares_revised` directory does not verify this package.
+To run the check without installing Lean on your own computer:
+
+1. Open the repository's **Actions** tab.
+2. Select **Sumsquares revision verification** in the workflow list.
+3. Click **Run workflow**, select `main` (or the intended revision branch), and
+   click the green **Run workflow** button.
+4. Open the resulting run and the job **Build and compare the paper statements**.
+5. Expand **Run the real comparator and full project build**. Confirm that the
+   step is green and contains the comparator, build and final success messages
+   shown in Step 6 above.
+6. Download the verification artifact from the run's summary to retain the
+   environment, sandbox and verification logs. Check its recorded commit against
+   the revision you intended to test.
+
+For the fixed paper snapshot, follow the linked completed verification run at
+the top of this README. A new manual run on `main` checks the current `main`
+commit, which may be later than that snapshot. A successful workflow for the
+older `sumsquares_revised` directory does not verify this package.
 
 The new workflow runs on pull requests and pushes affecting this project, and
 also supports manual dispatch. On pull requests it checks out the exact head
 commit, asserts its identity, and uses that same hash for the evidence artifact. Its green result is meaningful only for the
 commit and working directory recorded in the run. Retain the logs with the
 paper's final submitted revision.
+
+The current Ubuntu 22.04 runner is scheduled to retire on **17 April 2027**.
+Before that date, move CI to a supported runner on which the same sandbox probe
+and complete verifier succeed; see the
+[official retirement notice](https://github.com/actions/runner-images/issues/14254).
 
 ## Provenance
 
