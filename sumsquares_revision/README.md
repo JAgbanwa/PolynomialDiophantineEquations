@@ -11,6 +11,24 @@ your computer. Separate instructions below also explain how to build locally.
 
 ## Verification and paper snapshot
 
+### Current numbering
+
+The corrected declaration names were verified at commit
+[`815a352000f6fbb6236d0f7591edde95d1bd7d9c`](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/815a352000f6fbb6236d0f7591edde95d1bd7d9c/sumsquares_revision).
+The [completed verification run](https://github.com/JAgbanwa/PolynomialDiophantineEquations/actions/runs/39794070171)
+passed on 22 October 2026: both 42-statement inventories and the official v0.4
+metadata schema passed, the sandboxed comparator accepted the solution through
+Lean's kernel, and `lake build RequestProject Challenge Solution` completed
+successfully. The verification record below concerns the older snapshot cited
+in the paper.
+
+To reproduce the corrected names with the local instructions below, use
+`815a352000f6fbb6236d0f7591edde95d1bd7d9c` as the checkout commit. The existing
+paper-snapshot instructions reproduce the historical commit cited in the
+unchanged manuscript.
+
+### Snapshot cited in the paper
+
 **The paper snapshot's complete build and official comparator passed on 22 October 2026.**
 The [completed verification run](https://github.com/JAgbanwa/PolynomialDiophantineEquations/actions/runs/39761112134)
 checked the 42 statements in that immutable snapshot with the real sandbox enabled

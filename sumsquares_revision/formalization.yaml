@@ -220,6 +220,10 @@ review:
     run 39761112134). Lean kernel replay accepted that solution. A separate built-in axiom audit of
     those declarations reported exactly propext, Classical.choice and Quot.sound in their union, with
     no sorryAx. That recorded run applies to the paper snapshot, not to subsequent identifier changes.
+    The corrected identifiers were subsequently verified at commit
+    815a352000f6fbb6236d0f7591edde95d1bd7d9c in GitHub Actions run 39794070171 on 22 October 2026:
+    both 42-statement inventories and the official v0.4 schema passed, the sandboxed comparator and
+    Lean kernel accepted the solution, and the full project build completed successfully.
     Verification commands and CI evidence are in README.md. The paper''s acceptance is not presented
     as independent human review of the Lean statements.'
 
