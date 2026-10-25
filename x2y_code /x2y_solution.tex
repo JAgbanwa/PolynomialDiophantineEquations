@@ -1,0 +1,525 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xcolor}
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily\small,columns=fullflexible,breaklines=true,frame=single,framerule=0.3pt}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\leg}[2]{\left(\frac{#1}{#2}\right)}
+
+\title{A large integral point on the cubic surface\\[2pt]
+$x^2y+xy^2+xz^2+2x^2-z^2+3=0$}
+\author{Computation and exposition: Claude (Anthropic)\\ prepared for Jamal Agbanwa}
+\date{25 October 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We report the integer solution
+\[
+(x,y,z)=(-2450412151997178,\ 2357619934960084,\ 467727250324161)
+\]
+of $x^2y+xy^2+xz^2+2x^2-z^2+3=0$, together with the three companions obtained from the
+symmetries $z\mapsto -z$ and $y\mapsto -x-y$.  It was found by a complete, sieve-based search over
+$x$ that ran for about two days on a 2-core cloud machine and an 8-core Apple M1 Pro.  We explain
+the elementary reductions and the local--global arithmetic (including a Brauer--Manin type
+reciprocity condition) that confine $x$ to $x\equiv 6 \pmod{72}$ and to a set of density
+about $1/1800$ in the integers, why one should expect the
+first solution to be large, why ``small-parameter'' methods (elliptic fibrations, caps) could
+not have found this particular point, and how the search was organised, validated and
+executed.  The search was completed up to $|x|<2.452\cdot10^{15}$.  Up to the symmetries above,
+the point is the only solution in that range, and so the one with the smallest $|x|$
+(Theorem~\ref{thm:unique}).
+\end{abstract}
+
+\tableofcontents
+
+\section{The result}
+
+\begin{theorem}\label{thm:main}
+The quadruples
+\[
+\begin{array}{rcl}
+x&=&-2450412151997178,\\
+y&\in&\{\,2357619934960084,\ \ 92792217037094\,\},\\
+z&=&\pm 467727250324161
+\end{array}
+\]
+(four triples in total) satisfy
+\begin{equation}\label{eq:main}
+x^2y+xy^2+xz^2+2x^2-z^2+3=0 .
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Direct computation.  For
+\[(x,y,z)=(-2450412151997178,\,2357619934960084,\,467727250324161)\]
+the six terms are:
+\[
+\begin{array}{lr}
+x^2y   & 14156375379132502896580275368792446028069589456\\
+xy^2   & -13620301700437919819452512803799197104495927968\\
+xz^2   & -536073678694594867398411180074838272233234938\\
+2x^2   & 12009039429310881955628239927368\\
+-z^2   & -218768780695800366279580353921\\
++3     & 3\\\midrule
+\text{sum} & 0
+\end{array}
+\]
+The left side of \eqref{eq:main} is even in $z$, and it is invariant under $y\mapsto -x-y$
+because $x^2y+xy^2=xy(x+y)$ is.  This gives $-x-y=92792217037094$.
+\end{proof}
+
+The numbers have 15--16 decimal digits.  The rest of this note explains why a solution of this
+size was to be expected, and how it was found.
+
+\section{First reductions}
+
+\subsection{Parity}
+If $x$ is odd then $xy(x+y)$ is even, $z^2(x-1)$ is even and $2x^2$ is even, so the left side of
+\eqref{eq:main} is odd.  Hence \emph{$x$ is even}.  Write
+\[
+x=2a,\qquad y=b-a\qquad (a,b\in\Z).
+\]
+Since $x^2y+xy^2=xy(x+y)=2a(b-a)(b+a)=2a(b^2-a^2)$, equation \eqref{eq:main} becomes
+\begin{equation}\label{eq:red}
+\boxed{\;2a\,b^2+(2a-1)\,z^2 \;=\; N(a):=2a^3-8a^2-3\;}
+\end{equation}
+For the solution of Theorem~\ref{thm:main},
+\[a=-1225206075998589,\quad b=1132413858961495,\quad z=467727250324161.\]
+
+\subsection{The conic bundle and the circle at infinity}
+For fixed $a$, \eqref{eq:red} is a conic in $(b,z)$.  For $a>0$ both coefficients are positive.
+For $a<0$ one multiplies by $-1$.  Either way it is an \emph{ellipse}, so each fibre carries
+finitely many integral points.  Dividing by $2a$ gives
+\[
+b^2+z^2\Bigl(1-\frac1{2a}\Bigr)=a^2-4a-\frac{3}{2a},
+\]
+so asymptotically the point $(b,z)$ lies on the circle $b^2+z^2\approx a^2$.  It is natural to write
+\[
+b\approx |a|\cos\varphi,\qquad z\approx |a|\sin\varphi .
+\]
+The found solution has $\varphi=\arctan(z/b)\approx 0.3917$ rad ($22.4^\circ$), with
+$b/|a|\approx 0.924$ and $z/|a|\approx 0.382$.  This is a perfectly ``generic'' angle, a fact that
+matters in Section~\ref{sec:caps}.
+
+A second useful quantity is
+\begin{equation}\label{eq:k}
+k:=\frac{z^2-3}{2a}\in\Z .
+\end{equation}
+Indeed $z^2\equiv 3\pmod{2a}$ by \eqref{eq:red} taken modulo $2a$.  Substituting
+$z^2=2ak+3$ into \eqref{eq:red} gives the equivalent pair
+\begin{equation}\label{eq:pair}
+z^2=2ak+3,\qquad b^2=(a-2)^2-(2a-1)k-7 .
+\end{equation}
+For our point $k=-89278360996331=-13\cdot 431\cdot 7297\cdot 2183641$.
+
+\section{Local conditions}\label{sec:local}
+
+Throughout, $(x,y,z)$ is an integral solution, $x=2a$, $y=b-a$, and $t:=|2a-1|$.
+
+\begin{lemma}[conditions at the primes dividing $a$]\label{lem:a}
+$a$ is odd, $z$ is odd, and $z^2\equiv 3\pmod{2a}$.  Every prime $p\ge5$ dividing $a$ satisfies
+$p\equiv\pm1\pmod{12}$.  Moreover $9\nmid a$.
+\end{lemma}
+\begin{proof}
+Reduce \eqref{eq:red} modulo $2a$: $-z^2\equiv -3$.  If $a$ were even then $4\mid 2a$ and
+$z^2\equiv 3\pmod 4$, which is impossible.  So $z$ is odd.  For $p\ge5$, $p\mid a$, $3$ is a square
+mod $p$, i.e.\ $\leg{3}{p}=1$, i.e.\ $p\equiv\pm1\pmod{12}$.  If $9\mid a$ then $3\mid z$ and
+$z^2\equiv 3\pmod 9$, which is impossible.
+\end{proof}
+
+\begin{lemma}[conditions at $2$]\label{lem:two}
+$a\equiv 3\pmod 4$ and $b$ is odd.
+\end{lemma}
+\begin{proof}
+Since $z$ is odd, $z^2\equiv1\pmod 8$, and $8a^2\equiv0$.  Reducing \eqref{eq:red} modulo $8$ gives
+$2ab^2+2a-1\equiv 2a^3-3$, i.e.\ $ab^2\equiv a^3-a-1\pmod 4$.  As $a$ is odd, $a^3\equiv a\pmod 8$,
+so $ab^2\equiv -1\pmod4$.  This forces $b$ odd and $a\equiv-1\pmod 4$.
+\end{proof}
+
+\begin{lemma}[conditions at the primes dividing $2a-1$]\label{lem:t}
+$(2b)^2\equiv -19\pmod{t}$.  Consequently every prime $p\mid t$ is either $19$, occurring to the
+first power only, or satisfies $\leg{p}{19}=1$.
+\end{lemma}
+\begin{proof}
+Modulo $2a-1$ we have $2a\equiv1$, so \eqref{eq:red} gives
+$b^2\equiv N(a)=\tfrac{(2a)^3}{4}-2(2a)^2-3\equiv \tfrac14-2-3=-\tfrac{19}{4}$.  For $p\ne19$,
+quadratic reciprocity gives $\leg{-19}{p}=\leg{p}{19}$ because $-19\equiv1\pmod4$.  If $19^2\mid t$,
+then $19\mid 2b$ and $19^2\mid(2b)^2+19$, which is impossible.
+\end{proof}
+
+\begin{lemma}[the modulus $3$]\label{lem:three}
+$a\not\equiv 2\pmod 3$.
+\end{lemma}
+\begin{proof}
+Suppose $a\equiv2\pmod 3$.  Then \eqref{eq:red} modulo $3$ reads $4b^2+3z^2\equiv 16-32-3$, i.e.\
+$b^2\equiv 2\pmod3$, which is impossible.
+\end{proof}
+
+\begin{proposition}[a reciprocity obstruction]\label{prop:BM}
+$a\equiv 3\pmod{36}$, i.e.\ $x\equiv 6\pmod{72}$.
+\end{proposition}
+\begin{proof}
+Consider the quaternion algebra $(x,3)$ evaluated at the solution, i.e.\ the Hilbert symbols
+$(x,3)_v$ for all places $v$ of $\Q$.  By the product formula, $\prod_v (x,3)_v=1$.
+
+\emph{Places $v=\infty$ and $p\nmid 6x$.}  Here $(x,3)_v=1$: at $\infty$ because $3>0$, and at $p$
+because both entries are units.
+
+\emph{Primes $p\ge5$ with $p\mid x$.}  Here $(x,3)_p=\leg{3}{p}^{v_p(x)}=1$ by
+Lemma~\ref{lem:a}.
+
+Hence $(2a,3)_2=(2a,3)_3$.
+
+At $2$: $(2,3)_2=(-1)^{(9-1)/8}=-1$ and $(a,3)_2=(-1)^{\frac{a-1}{2}\cdot\frac{3-1}{2}}=(-1)^{(a-1)/2}=-1$
+by Lemma~\ref{lem:two}.  So $(2a,3)_2=+1$.
+
+At $3$:
+\begin{itemize}
+\item If $3\nmid a$, then $a\equiv1\pmod3$ by Lemma~\ref{lem:three}, and
+  $(2a,3)_3=\leg{2a}{3}=\leg{2}{3}=-1\ne 1$.  This is a contradiction, so $3\mid a$.
+\item By Lemma~\ref{lem:a}, $a=3a'$ with $3\nmid a'$.  Then
+  $(2a,3)_3=(3,3)_3\,(2a',3)_3=\leg{-1}{3}\leg{2a'}{3}=\leg{a'}{3}$.  This must equal $1$, so
+  $a'\equiv1\pmod3$, i.e.\ $a\equiv3\pmod 9$.
+\end{itemize}
+Together with $a\equiv3\pmod4$ this gives $a\equiv3\pmod{36}$.
+\end{proof}
+
+\begin{remark}
+Proposition~\ref{prop:BM} is an instance of the (integral) Brauer--Manin obstruction.  The class of
+$(x,3)$ is unramified on the affine surface away from the boundary.  Locally, $a\equiv1\pmod{12}$
+\emph{is} solvable at $2$ and at $3$ separately; it is only the global reciprocity
+$\prod_v(x,3)_v=1$ that kills it.  A direct check of $2$-adic and $3$-adic solvability, carried
+out by brute force modulo $2^{10}$ and $3^6$, shows that local conditions alone allow
+$a\equiv 3\pmod 4$ and $a\equiv 1\pmod 3$ or $a\equiv 3\pmod 9$.  The analogous algebra
+$(x-1,-19)$, attached to the other degenerate fibre $2a=1$, turns out to impose nothing new.
+\end{remark}
+
+\begin{lemma}[the cubic $N(a)$]\label{lem:N}
+Let $p$ be a prime with $p\nmid 2a(2a-1)$ and $p\,\|\,N(a)$.  Then $\leg{-2a(2a-1)}{p}=1$.
+\end{lemma}
+\begin{proof}
+If $p\mid b$ and $p\mid z$ then $p^2\mid N(a)$, contrary to assumption.  If exactly one of $b,z$ is
+divisible by $p$, then \eqref{eq:red} modulo $p$ forces $p\mid 2a$ or $p\mid 2a-1$.  So $p\nmid bz$ and
+$(z/b)^2\equiv -2a/(2a-1)$, and $-2a(2a-1)$ is a square mod $p$.
+\end{proof}
+
+\begin{remark}
+One checks that $\gcd(N(a),a)\mid 3$ and $\gcd(N(a),2a-1)\mid 19$.  When $19\mid 2a-1$ there is a
+further $19$-adic condition on $a\bmod 19^2$ (in effect $N(a)/19$ must be a square mod $19$), which
+the search did not exploit; it would have saved about $1\%$.  For $5\le p\le 23$, $p\ne19$, the conditions above
+agree exactly with brute-force $p$-adic solvability modulo $p^3$.
+\end{remark}
+
+\subsection*{How restrictive is this?}
+Lemmas~\ref{lem:a}--\ref{lem:N} and Proposition~\ref{prop:BM} leave
+\begin{itemize}
+\item $a$ in one class modulo $36$;
+\item $a/3$ composed of primes $\equiv\pm1\pmod{12}$, which is ``half of the primes'';
+\item $|2a-1|$ composed of quadratic residues mod $19$ (again half of the primes), plus possibly
+  one factor $19$;
+\item no small prime of $N(a)$ violating Lemma~\ref{lem:N}.
+\end{itemize}
+At $|a|\approx 10^{15}$ only about $2\%$ of the integers $a\equiv3\pmod{36}$ (between $1.7\%$ and $2.2\%$ depending on the sign of $a$) survive all four
+conditions, i.e.\ about one integer in $1800$.
+
+\subsection*{The found point satisfies every condition}
+
+\begin{center}
+\begin{tabular}{>{$}l<{$}>{$}l<{$}}
+\toprule
+a & -1225206075998589\equiv 3 \pmod{36}\\
+a/3 & -\,23\cdot 73\cdot 457\cdot 18803\cdot 28307\quad(\text{residues mod }12:\ 11,1,1,11,11)\\
+2a-1 & -\,40161731\cdot 61013609\quad(\text{residues mod }19:\ 6, 11;\ \text{both squares})\\
+N(a) & -\,3\cdot 13063\cdot 23567\cdot 1928926393102203289\cdot 2064777611218118087\\
+\leg{-2a(2a-1)}{p} & +1 \text{ for each of the four primes } p\ne 3 \text{ of } N(a)\\
+a\bmod 8,\ b\bmod 8,\ z\bmod 8 & 3,\ 7,\ 1 \qquad (b,z \text{ odd};\ 3\mid z)\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent Two of the primes of $N(a)$ have $19$ digits.  No sieve could have certified the condition of
+Lemma~\ref{lem:N} for them in advance; the search only ever checks it for $p<1.5\cdot10^6$.
+
+\section{Why the first solution is large}\label{sec:heuristics}
+
+\subsection{Geometry}
+Homogenise \eqref{eq:main} with $w$:
+$x^2y+xy^2+xz^2+2x^2w-z^2w+3w^3=0$.  This is a smooth cubic surface $S\subset\mathbb P^3$.  Its
+section at infinity $\{w=0\}$ is
+\[
+x\,(xy+y^2+z^2)=0,
+\]
+the union of the line $L_\infty=\{x=w=0\}$ and the conic $C_\infty=\{xy+y^2+z^2=0=w\}$.  These meet
+in the two complex conjugate points $y=\pm iz$.  So the affine surface $U=S\setminus(L_\infty\cup C_\infty)$
+is a \emph{log Calabi--Yau surface} whose boundary is a cycle of two rational curves.  The real
+points of $U$ go to infinity only along the real circle $C_\infty(\mathbb R)$, which is the circle
+$b^2+z^2\approx a^2$ of \S2.2.  For such surfaces integral points are expected to be
+sparse, with counts growing only like a power of $\log$ of the height.
+
+The only conic bundle defined over $\Q$ is the pencil of planes through $L_\infty$, i.e.\ the
+$x$-fibration of \S2.2, and its fibres are ellipses.  There is therefore no Pell-type family of
+solutions; nor did a search find rational lines or twisted cubics on $U$ that could parametrise solutions.
+
+\subsection{A probabilistic count}
+Fix an admissible $a$.  The congruence $z^2\equiv3\pmod{2a}$ has $2^{\omega(a/3)}$ roots modulo
+$|a|$, where $\omega(n)$ is the number of distinct prime factors of $n$.  Each gives one candidate
+$z\in[0,|a|]$ up to sign, and then $b^2$ is determined by \eqref{eq:pair}.  A number of size about
+$a^2\cos^2\varphi$ is a perfect square with probability about $1/(2|a\cos\varphi|)$.  The local
+conditions modify this: for instance, each prime of $2a-1$ doubles the chance that $b^2$ is a
+square.  Summing over admissible $|a|\le A$, the root counts $2^{\omega}$ compensate exactly for
+the thinness of the admissible set, and one finds
+\[
+\#\{\text{solutions with } |a|\le A\}\ \approx\ c\,\log A
+\]
+with a small constant $c$.  The constant was estimated numerically from the sibling equations
+$x^2y+xy^2+xz^2+2x^2-z^2+c=0$ ($c\ne 3$), which have many small solutions.  For $c=3$, the restriction
+$a\equiv3\pmod{36}$ and the two quadratic-character conditions make the constant much smaller:
+roughly $0.1$--$0.3$ expected solutions per factor $10$ in $|a|$.
+
+The first solution can therefore easily lie at $|a|\approx10^{15}$ or beyond, which is what happened.
+The expected number of solutions in any dyadic range $[A,2A]$ is roughly constant, while the cost
+of searching it is proportional to $A$.  This is the usual situation for log Calabi--Yau equations,
+the sums of three cubes being the best-known example.
+
+\subsection{Algebraic structure: two class-number-one rings}
+Two norm forms are hidden in \eqref{eq:pair}.
+
+\emph{The $\Z[\sqrt3]$ side.}  $z^2-3=2a\cdot k$, so $2a$ and $k$ are complementary divisors of the
+norm $N_{\Q(\sqrt3)/\Q}(z+\sqrt3)$.  In terms of binary quadratic forms, $[2a,2z,k]$ has
+discriminant $12$ and is $\mathrm{SL}_2(\Z)$-equivalent to $X^2-3Y^2$.
+
+\emph{The $\Z[\omega]$ side, $\omega=\frac{1+\sqrt{-19}}2$ (class number $1$).}  Completing the square
+in \eqref{eq:pair} gives
+\begin{equation}\label{eq:dprime}
+(a-k-2-b)(a-k-2+b)=k^2+3k+7=N(k+1+\omega).
+\end{equation}
+So with $d'=a-k-2-b$ and $e'=a-k-2+b$ we get $d'e'=k^2+3k+7$.  Equivalently, $[e',\,2k+3,\,d']$ is
+a binary quadratic form of discriminant $-19$, hence equivalent to $X^2+XY+5Y^2$.  We have
+$2a-1=e'+(2k+3)+d'$, and the whole equation collapses to
+\begin{equation}\label{eq:topo}
+2z^2=(T+1)(T-A-C-3)+6,\qquad A=e',\ C=d',\ T=A+B+C=2a-1,\ B=2k+3 .
+\end{equation}
+Here $(A,C,T)$ are the values of $X^2+XY+5Y^2$ on the three regions around a vertex of Conway's
+topograph, and $B$ is the label on the corresponding edge.  Thus integral points of
+\eqref{eq:main} correspond to vertices of the (negative-definite for $a<0$) topograph at which
+one quadratic expression is twice a square.
+
+For our point: $d'=-2268341573963755=-5\cdot541\cdot624667\cdot1342433$,
+$e'=-3513856040765=-5\cdot7\cdot359\cdot279654281$, $B^2-4AC=-19$, and \eqref{eq:topo} holds.  Note
+also $d'=(y^2+y+5)/(x-1)$.
+
+This structure explains Lemma~\ref{lem:t}, since $2a-1$ is a norm from $\Z[\omega]$, and
+Lemma~\ref{lem:a}, since $2a$ is a norm from $\Z[\sqrt3]$.  It does not give a shortcut: walking
+the topograph costs more per useful candidate than the sieve described below.
+
+\subsection{Caps and elliptic fibrations}\label{sec:caps}
+Fixing $d'$ in \eqref{eq:dprime} makes $z^2=k(d'+e')+2k^2+4k+3$, with $e'=(k^2+3k+7)/d'$, a
+genus-one curve.  Explicitly it is
+\[
+E_{d'}:\ W^2=X^3+d'(2d'+3)X^2+d'^2(d'^2+4d'+7)X+3d'^4,\qquad X=d'k,\ W=d'^2z .
+\]
+Similarly fixing $F=a+2k-2z$ (with $FG=s^2-12$, $s=a-2k$, $G=a+2k+2z$) gives another elliptic
+fibration.  Solutions with small $|d'|$ live near $\varphi=0$; solutions with small $|F|$ live
+near $\varphi=\pi/2$.  These ``caps'' were searched extensively in exploratory computations:
+rank and generator computations for $|d'|,|F|\le 1000$, and divisor sieves for $|k|,|s|\le10^9$
+with $|d'|,|F|\le10^6$.
+Nothing was found.
+
+The point found here has $d'\approx-2.27\cdot10^{15}$, $F=-2339217298639573$ and
+$k\approx-8.9\cdot10^{13}$, all of the same order as $a$.  It is a generic point in the middle
+of the surface, far from every cap.  No small-parameter fibre contains it, so the only practical
+way to reach it was a complete search over $a$.
+
+\section{The search algorithm}\label{sec:algorithm}
+
+The search enumerates $a=s\,m$ with $s=\pm1$ and $m=r+36j$, where $r=3$ for $s=+1$ and $r=33$ for
+$s=-1$, so that $a\equiv3\pmod{36}$ in both cases.  It processes $j$ in segments of $2^{19}$
+consecutive values.  The sizes involved are $m$ up to $1.2\cdot10^{15}$ and $|z|\le m+5$.  For each
+segment:
+
+\begin{enumerate}
+\item \textbf{Exclusion sieve.}  Mark $j$ as impossible when:
+  \begin{itemize}
+  \item a prime $p\equiv\pm5\pmod{12}$ with $p\le\sqrt{m_{\max}}$ divides $m$ (Lemma~\ref{lem:a});
+  \item a prime $p$ with $\leg p{19}=-1$ and $p\le\sqrt{2m_{\max}}$ divides $t=2m-s$
+    (Lemma~\ref{lem:t});
+  \item $361\mid t$;
+  \item $a\equiv\theta\pmod p$ for one of the $57{,}237$ simple roots $\theta$ of $N$ modulo primes
+    $p<1.5\cdot10^6$ with $\leg{-2\theta(2\theta-1)}{p}=-1$, unless $a$ lies on the Hensel lift of
+    $\theta$ modulo $p^2$ (Lemma~\ref{lem:N}).
+  \end{itemize}
+  The primes $5,7,13,17,19$ and $29,31,37$ are applied through two precomputed periodic byte
+  patterns.  Primes larger than the segment are handled by a bucket sieve, whose entries store
+  the prime itself.
+\item \textbf{The cofactor of $t$ without factoring.}  After sieving every bad prime up to
+  $\sqrt{t}$, at most one prime of $t$ is unknown.  By multiplicativity of the Legendre symbol it
+  is good if and only if $t^*$, which is $t$ with one factor $19$ removed, is a square modulo $19$.
+  One table lookup per survivor replaces a factorisation of $t$.
+\item \textbf{Factor $m/3$} over the good primes $p\equiv\pm1\pmod{12}$, $p\le\sqrt{m_{\max}}$, by a
+  second sieve restricted to survivors (a bitmap with rank).  The remaining cofactor $q$ is $1$ or
+  a prime, automatically $\equiv\pm1\pmod{12}$.
+\item \textbf{Square roots of $3$ modulo $q$}, batched four at a time with Montgomery arithmetic
+  and lazy reduction:
+  \begin{itemize}
+  \item $q\equiv3\pmod4$: $\rho=3^{(q+1)/4}$;
+  \item $q\equiv5\pmod8$: Atkin's formula with base $6$;
+  \item $q\equiv1\pmod 8$: Tonelli--Shanks, with a non-residue found from quadratic reciprocity
+    by table lookups.
+  \end{itemize}
+  The square roots of $3$ modulo the small primes are precomputed and lifted by Hensel's lemma for
+  prime powers.
+\item \textbf{CRT with sign symmetry.}  All roots of $z^2\equiv3\pmod m$ are combined from the prime
+  roots, with $z\equiv0\pmod 3$.  Only one representative of each pair $\{R,\,m-R\}$ is built.  Both
+  odd lifts $z$ and $2m-z$ in $[0,m+5]$ are then tested.
+\item \textbf{Candidate tests.}  Compute $k=(z^2-3)/(2a)$ exactly, using an inverse modulo $2^{64}$
+  and verifying the result, and
+  \[
+  B_2=(a-2)^2-(2a-1)k-7=m^2-4sm-z^2+sk .
+  \]
+  Then apply, in order:
+  \begin{itemize}
+  \item $B_2>0$;
+  \item $B_2\equiv1\pmod8$ (Lemma~\ref{lem:two});
+  \item $B_2$ is a square modulo $45045=5\cdot7\cdot9\cdot11\cdot13$ and modulo
+    $7429=17\cdot19\cdot23$, using signed residue arithmetic;
+  \item an exact integer square root.
+  \end{itemize}
+  Only about $1.2\%$ of the candidates reach the last step.
+\end{enumerate}
+
+Typical statistics for a $2\cdot10^{11}$-wide chunk of $|a|$ near $10^{15}$, for one sign, are
+$5.6\cdot10^9$ values of $j$, of which $1.2\cdot10^8$ survive the sieves.  These produce
+$3.1\cdot10^8$ candidates $z$, of which $3.7\cdot10^6$ need an exact square root.  The cost is
+linear in the range of $|a|$ searched.  Throughput was about $2\cdot10^9$ values of $|a|$ per
+second (both signs) on two Intel Xeon (Cascade Lake, 2.8\,GHz) cores, and about
+$9\cdot10^9$ per second with eight worker processes on an Apple M1 Pro.
+
+\section{Validation, and a bug worth recording}
+
+\textbf{An independent implementation.}  A short Python/SymPy program, \texttt{check.py}, re-derives
+everything from first principles:
+\begin{itemize}
+\item it factors $a/3$ and $2a-1$;
+\item it tests the $N$-condition by trial division over all primes below the bound;
+\item it computes all roots of $z^2\equiv3\pmod{2|a|}$ with \texttt{sqrt\_mod};
+\item it applies the same candidate tests.
+\end{itemize}
+On windows at $|a|\approx10^5$, $3.6\cdot10^7$, $3.6\cdot10^{10}$ and $10^{13}$, for both signs, the
+C program and \texttt{check.py} agree exactly.  They agree on the counts of kept $a$, of candidates
+and of survivors of each filter, and on the full list of $(m,z)$ pairs reaching the exact
+square-root test.  Every later optimisation was required to reproduce these lists exactly.  These
+were bucket sieving, SIMD scans, lazy Montgomery arithmetic, the portable Mac build and L1 blocking.
+The Mac build also ran a self-test of six known windows before starting.
+
+\textbf{The bug.}  An earlier generation of the program computed the residue of $B_2$ modulo
+$45045$ and $7429$ with an expression that mixed \texttt{uint64\_t} and \texttt{int64\_t}.  C's usual
+arithmetic conversions then evaluated it in unsigned arithmetic.  Whenever the intermediate value
+was negative, the residue was taken of $2^{64}+v$ instead of $v$, and a genuine square was rejected
+with high probability.  Because all versions shared the line, comparing versions against each
+other could not reveal it.  It surfaced when a rewrite produced twice as many
+square-root candidates.  The effective coverage of that first run, up to $|a|\approx10^{13}$, was
+only about $30\%$.  The whole range was re-searched from zero with the corrected code, which is the
+version validated against \texttt{check.py} as above.
+
+\textbf{Sanity checks inside the program.}  The program aborts if any of the following fails:
+\begin{itemize}
+\item every root satisfies $z^2\equiv3\pmod m$, checked through the exactness of $k$;
+\item the CRT modulus equals $m$;
+\item the large cofactor is $\equiv\pm1\pmod{12}$.
+\end{itemize}
+A wrong root therefore cannot silently lose a candidate.
+
+\section{The computation}\label{sec:computation}
+
+\begin{center}
+\small
+\begin{tabular}{p{0.2\textwidth}p{0.42\textwidth}p{0.3\textwidth}}
+\toprule
+date and time (CET/CEST) & event & coverage\\\midrule
+24 Oct, 00:10 & corrected search restarted from $a=0$ (cloud, 2 cores) & \\
+24 Oct, 01:48 & 8 workers started on the M1 Pro & \\
+24 Oct, 03:17 & all $|a|<2\cdot10^{13}$ complete & $|x|<4\cdot10^{13}$\\
+24 Oct, 03:17 onwards & interleaved chunks of width $2\cdot10^{11}$ & Mac $5/6$, cloud $1/6$\\
+25 Oct, 10:03 CET & \textbf{solution} found by Mac worker 2 & chunk $|a|\in[1.2252,1.2254)\cdot10^{15}$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The solution came from the $s=-1$ half of the chunk, at $j=34033502111071$, i.e.\ $m=33+36j$ and
+$a=-m$.  For this $a$ there were $2^5=32$ roots of $z^2\equiv3\pmod{|a|}$, giving $16$ candidates up
+to sign, and exactly one of them made $B_2$ a perfect square.  When the solution appeared, the
+workers stopped by themselves.
+
+\textbf{Searched range.}  When the solution appeared, the interleaved layout had left a few chunks
+below it unfinished.  These were the cloud's share between $1.18\cdot10^{15}$ and $1.2254\cdot10^{15}$,
+plus one interrupted half-chunk: $20$ intervals for $s=+1$ and $21$ for $s=-1$, each $5.6\cdot10^9$
+values of $j$ wide.  They were searched afterwards with the same program.
+None of the $41$ gap runs found a solution.  The searched range is therefore
+complete for both signs of $a$:
+\[
+|a|<1.226\cdot10^{15},\qquad\text{i.e.}\qquad |x|<2.452\cdot10^{15}.
+\]
+It was covered by $12{,}425$ completed program runs, with every $j$-interval accounted for in the
+logs.  In this whole range the only line ever reported was the one solution above.
+
+\begin{theorem}[computational]\label{thm:unique}
+Up to the symmetries $z\mapsto-z$ and $y\mapsto -x-y$, the solution of Theorem~\ref{thm:main} is the
+only integral solution of \eqref{eq:main} with $|x|<2.452\cdot10^{15}$.  In particular it is the
+solution with the smallest $|x|$.
+\end{theorem}
+
+\noindent This statement rests on two things: the proofs in Section~\ref{sec:local}, which justify
+every exclusion the program makes, and the correctness of the program.  The program was validated
+as described in the previous section.
+
+\section{Remarks}
+\begin{itemize}
+\item The heuristic suggests infinitely many solutions, with about $c\log A$ of them up to height
+  $A$.  The next one is expected to be much further out, by one or more factors of $10$ in $|a|$.
+\item The method is a direct analogue of Booker--Sutherland-style searches for sums of three cubes,
+  but here every natural factorisation is balanced.  The pairs $2a\cdot k$, $(2a-1)\cdot v$ with
+  $v=2a-4k-7$, $d'\cdot e'$ and $F\cdot G$ all have factors of the same size for generic points.
+  So there is no ``small factor'' to exploit, and the search must run over $a$ itself.
+\item The reciprocity argument of Proposition~\ref{prop:BM} cuts the residue classes of $a$ modulo $36$
+  that local conditions allow from four to one.  More refined conditions from the Brauer group, if there are
+  any, could reduce it further.
+\end{itemize}
+
+\appendix
+\section{Reproducing the verification}
+\begin{lstlisting}[language=Python]
+x, y, z = -2450412151997178, 2357619934960084, 467727250324161
+f = lambda x, y, z: x*x*y + x*y*y + x*z*z + 2*x*x - z*z + 3
+for Y in (y, -x - y):
+    for Z in (z, -z):
+        assert f(x, Y, Z) == 0
+\end{lstlisting}
+
+\section{Files}
+\noindent\begin{tabular}{p{0.42\textwidth}p{0.52\textwidth}}
+\texttt{search\_mac.c} & the program that found the solution (portable C, single thread)\\
+\texttt{run.sh}, \texttt{worker.sh}, \texttt{workers.sh}, \texttt{config.sh} & 8-worker driver with atomic chunk claims\\
+\texttt{selftest.sh}, \texttt{status.sh}, \texttt{stop.sh} & self-test, progress, graceful stop\\
+\texttt{search14.c}, \texttt{drive\_cloud.sh} & x86 version (OpenMP, AVX2) and cloud driver\\
+\texttt{make\_nbad.py}, \texttt{nbad.txt} & table of excluding roots of $N$ modulo $p<1.5\cdot10^6$\\
+\texttt{check.py} & independent Python/SymPy re-implementation used for validation\\
+\end{tabular}
+
+\end{document}
