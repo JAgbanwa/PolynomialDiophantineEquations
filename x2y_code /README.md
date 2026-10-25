@@ -20,7 +20,7 @@ in `x2y_solution.pdf`.
 | `mac/status.sh`, `mac/stop.sh` | Progress report, and a graceful stop. |
 | `cloud/search14.c` | The same algorithm for x86 Linux, using OpenMP and AVX2 (`gcc -O3 -march=native -fopenmp search14.c -lm`). It covered \|a\| < 2·10¹³ and every sixth chunk above that. |
 | `cloud/drive13.sh`, `cloud/drive_cloud.sh` | Sequential and interleaved drivers for the cloud machine. |
-| `tools/make_nbad.py` | Builds `nbad.txt` with PARI/GP (cypari2). Each line holds a prime p < 1.5·10⁶, a simple root θ of N(a) = 2a³ − 8a² − 3 mod p with (−2θ(2θ−1)/p) = −1, and its Hensel lift mod p². |
+| `tools/make_nbad.py` | Builds `mac/nbad.txt` with PARI/GP (cypari2). Each line holds a prime p < 1.5·10⁶, a simple root θ of N(a) = 2a³ − 8a² − 3 mod p with (−2θ(2θ−1)/p) = −1, and its Hensel lift mod p². |
 | `tools/check.py` | Independent Python/SymPy re-implementation of the whole pipeline, used for validation: `python3 check.py s J0 J1`. |
 | `tools/verify.py` | Exact check of `SOLUTION` lines in a log file. |
 
