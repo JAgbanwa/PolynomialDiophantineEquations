@@ -4,10 +4,11 @@ attempts (solutions at best) to this catalogue of open polynomial diophantine pr
 | Folder | Goal | Progress |
 |--------|------|----------|
 | [\[1\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_infinitely_many_solutions_polished) | Prove the infinitude of integer solutions for the equation:  $y^2 + x^3 \cdot y + z^2 + 1 = 0$ (Table 13, Problem 4). |  ✅ Success! |
-| [\[2\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_y2_x3y_z2_minus2_rigorous) | Prove the infinitude of integer solutions for the equation:  $y^2 + x^3 \cdot y + z^2 - 2 = 0$ (Table 13, Problem 4). | (Already solved) |
-| [\[3\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_z2_y2z_2x3_plus1) | Prove the infinitude of integer solutions for the equation:  $z^2 + y^2 \cdot z+2x^3 + 1=0$ (Table 13, Problem 4). | ✅ Success!  |
-| [\[4\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/yx3_z2_eq_x_no_positive_solutions) | Prove that the equation: $y(x^3-z^2)=x$ has no positive integer solutions (Problem 7).| 🔴 Still needs working on |
-| [\[5\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_z2_y2z_x3_minus2_solution) | Prove that the equation: $z^2 + y^2 \cdot z + x^3 - 2 = 0$ has infinitely many integer solutions (Table 13, Problem 4).| 🔴 Still needs working on|
+| [\[2\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_z2_y2z_2x3_plus1) | Prove the infinitude of integer solutions for the equation:  $z^2 + y^2 \cdot z+2x^3 + 1=0$ (Table 13, Problem 4). | ✅ Success!  |
+| [\[3\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/x2y_code%20) | Determine whether $x^2 \cdot y + x \cdot y^2 + xz^2 + 2x^2 - z^2 + 3 = 0$ has an integer solution. |  ✅ Success! |
+| [\[4\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_x3_x2y2_z2_plus1) | Prove that the equation: $x^3 + x^2 \cdot y^2+z^2 + 1=0$ has infinitely many integer solutions (Table 12). |  ✅ Success! |
+| [\[5\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/yx3_z2_eq_x_no_positive_solutions) | Prove that the equation: $y(x^3-z^2)=x$ has no positive integer solutions (Problem 7).| 🔴 Still needs working on |
+| [\[6\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_z2_y2z_x3_minus2_solution) | Prove that the equation: $z^2 + y^2 \cdot z + x^3 - 2 = 0$ has infinitely many integer solutions (Table 13, Problem 4).| 🔴 Still needs working on|
 | [\[6\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/pellian_infinite_family_diophantine) | Prove that the equation: $y^2 + x^2 \cdot y + z^2 \cdot x + 1 = 0$ has infinitely many integer solutions (Table 13, Problem 4). | (Already solved) |
 | [\[7\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_y_x3_z2_z_plus_1) | Prove that the equation: $y(x³ − z²) = z + 1$ has infinitely many integer solutions (Table 13, Problem 4).| (Already solved) |
 | [\[8\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_y_x3_minus_z2_equals_x_minus_1) | Prove that the equation: $y(x³ − z²) = x - 1$ has infinitely many integer solutions (Table 13, Problem 4).| (Already solved) |
@@ -22,7 +23,6 @@ Since Version 8 (the latest) of this [paper](https://arxiv.org/pdf/2404.08518), 
 
 | Folder | Goal | Progress |
 |--------|------|----------|
-| [\[15\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_x3_x2y2_z2_plus1) | Prove that the equation: $x^3 + x^2 \cdot y^2+z^2 + 1=0$ has infinitely many integer solutions (Table 12). |  ✅ Success! |
 | [\[16\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/rational_points_y2_minus_x2y_plus_z2_plus_1) | Describe all rational/integer solutions to the equation: $y^2 - x^2 \cdot y + z^2 + 1 = 0$. | 🔴 Still needs working on |
 | [\[17\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/polynomial_parametrization_xyz_ts_plus_1) | Provide a polynomial parametrisation to the equation: $xyz + ts + 1 = 0$. | 🔴 Still needs working on  |
 | [\[18\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/polynomial_parametrization_xyz_t2_plus_1) | Provide a polynomial parametrisation to the equation: $xyz + t^2 + 1 = 0$. | 🔴 Still needs working on  |
