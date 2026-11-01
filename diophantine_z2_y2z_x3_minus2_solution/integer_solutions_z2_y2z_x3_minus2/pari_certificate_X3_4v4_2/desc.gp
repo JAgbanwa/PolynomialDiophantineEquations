@@ -1,0 +1,30 @@
+
+default(parisize,"1G");
+K=bnfinit(t^3-2,1); A=Mod(t,t^3-2);
+E=ellinit([0,6*A^2,0,-48*A,-256],K);
+e1=4*A^2; e2=-2*A^2; e3=-8*A^2;
+fx(z)=z^3+6*A^2*z^2-48*A*z-256;
+Bs=[Mod(-1,t^3-2), 1-A, A, 1+A];
+P2=idealprimedec(K,2)[1]; P3=idealprimedec(K,3)[1];
+print("P2 e,f=",P2.e,",",P2.f,"  P3 e,f=",P3.e,",",P3.f, "  #primes over 2,3: ",#idealprimedec(K,2),",",#idealprimedec(K,3));
+rr=real(polroots(t^3-2)[1]);
+issq(v,a)= if(type(v)=="t_INT", subst(lift(a),t,rr)>0, nfislocalpower(K,v,a,2));
+kum(P)= my(z=P[1]); if(z==e1, [ (e1-e2)*(e1-e3), e1-e2 ], if(z==e2, [e2-e1, (e2-e1)*(e2-e3)], [z-e1, z-e2]));
+inspan(v,G,d)= my(n=#G,q1,q2); for(s=0,2^n-1, q1=d[1];q2=d[2]; for(j=1,n, if(bittest(s,j-1), q1*=G[j][1]; q2*=G[j][2])); if(issq(v,q1)&&issq(v,q2), return(1))); 0;
+{locim(v)=my(G=List(), z, cand);
+  for(i=1,3, cand=kum([[e1,e2,e3][i],0]); if(!inspan(v,Vec(G),cand), listput(G,cand)));
+  for(trial=1,6000, z=(random(41)-20 + (random(41)-20)*A + (random(41)-20)*A^2)/(random(6)+1)^2 * [1,A^2,A^4,(1+A)^2,(1+A)^4][random(5)+1]^(random(3)-1);
+     if(z!=e1&&z!=e2&&z!=e3 && issq(v,fx(z)), cand=kum([z,0]); if(!inspan(v,Vec(G),cand), listput(G,cand))));
+  Vec(G);}
+V=[P2,P3,0];
+IM=vector(3,k,locim(V[k]));
+for(k=1,3,print("local image dim at place ",k,": ",#IM[k]));
+sel=List();
+for(a=0,15,for(c=0,15, d1=prod(j=1,4,Bs[j]^bittest(a,j-1)); d2=prod(j=1,4,Bs[j]^bittest(c,j-1)); ok=1; for(k=1,3, if(!inspan(V[k],IM[k],[d1,d2]), ok=0;break)); if(ok, listput(sel,[a,c]))));
+print("Selmer size: ",#sel);
+print(Vec(sel));
+Pa=[-4*A^2+8*A-8, -24*A^2+48]; Pb=[-5*A^2,18];
+gsq(a)= #nfroots(K, y^2-lift(a))>0;
+glob=[kum(Pa),kum(Pb),kum([e1,0]),kum([e2,0])];
+cnt=0; for(s=1,15, q1=1;q2=1; for(j=1,4,if(bittest(s,j-1),q1*=glob[j][1];q2*=glob[j][2])); if(gsq(q1) && gsq(q2), cnt++));
+print("nontrivial global combos that are squares (should be 0): ",cnt);

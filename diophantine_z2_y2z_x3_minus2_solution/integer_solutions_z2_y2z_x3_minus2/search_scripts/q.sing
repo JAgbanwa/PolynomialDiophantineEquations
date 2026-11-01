@@ -1,0 +1,20 @@
+ring r=0,(w3,w2,w1,w0,a2,a1,a0,y0,a3,y),dp;
+poly x=a3*y^3+a2*y^2+a1*y+a0;
+poly W=y^4+w3*y^3+w2*y^2+w1*y+w0;
+poly F=y^4-4*x^3+8+4*a3^3*(y-y0)*W^2;
+matrix C=coeffs(F,y);
+ideal I;
+int i; for(i=1;i<=nrows(C);i++){ I=I+C[i,1]; }
+
+
+ring s=0,(w3,w2,w1,w0,a2,a1,a0,y0,a3,u),dp;
+ideal I=imap(r,I);
+I=I+(a3*u-1);
+option(redSB);
+ideal G=slimgb(I);
+dim(G);
+vdim(G);
+ideal E=eliminate(G,w3*w2*w1*w0*a2*a1*a0*y0*u);
+E;
+factorize(E[1]);
+quit;
