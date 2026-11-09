@@ -43,7 +43,7 @@ Since Version 9 (the latest) of this [paper](https://arxiv.org/pdf/2404.08518), 
 From the book Polynomial Diophantine Equations, 
 | Folder | Goal | Progress |
 |--------|------|----------|
-| [\[1\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_2x2_xy_2y2_z3) | Prove the infinitude of integer solutions for the equation:  $2x^{2}+xy+2y^{2}+z^{3}±1=0$ (Section 5.4.3). |  ✅ Success! |
+| [\[1\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_2x2_xy_2y2_z3) | Prove the infinitude of integer solutions for the equation:  $2x^{2}+xy+2y^{2}+z^{3}±1=0$ (Table 8.8, Page 640). |  ✅ Success! |
 
 For the problems marked (Already solved), see the latest version of Dr. Grechuk's (aforementioned) [paper](https://arxiv.org/pdf/2404.08518). I used GPT-Codex to build a simple website to track the progress of solved equations in the aforementioned paper [here](https://jagbanwa.github.io/OpenDiophantineTracker/). This is its GitHub [repo](https://github.com/JAgbanwa/OpenDiophantineTracker).
 
