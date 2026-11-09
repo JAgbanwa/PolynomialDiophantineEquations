@@ -1,0 +1,292 @@
+
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,booktabs}
+\usepackage[T1]{fontenc}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\N}{\mathrm{N}}
+\newcommand{\OK}{\mathcal{O}_K}
+\newcommand{\pp}{\mathfrak{p}}
+\title{Infinitely many integer solutions of\\ $2x^{2}+xy+2y^{2}+z^{3}\pm1=0$}
+\author{}
+\date{}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We prove, unconditionally and self-containedly, that each of the two Diophantine equations
+\[
+2x^{2}+xy+2y^{2}+z^{3}-1=0 \qquad\text{and}\qquad 2x^{2}+xy+2y^{2}+z^{3}+1=0
+\]
+has infinitely many solutions in integers $x,y,z$. For each sign we exhibit an explicit one-parameter
+family of polynomial solutions; the verification reduces to two small quadratic identities and
+Brahmagupta's composition formula for the form $X^{2}+15Y^{2}$. We then explain how the
+families were found: the form $2x^{2}+xy+2y^{2}$ is the norm form attached to the non-principal
+ideal class of $\Q(\sqrt{-15})$, and the factorisation $t^{3}\pm1=(t\pm1)(t^{2}\mp t+1)$ leads,
+via a Galois-theoretic analysis, to a conic whose rational points parametrise all candidate
+quadratic families.
+\end{abstract}
+
+\section{Statement}
+
+Throughout, $Q(x,y)=2x^{2}+xy+2y^{2}$. It is a positive definite binary quadratic form of
+discriminant $1-16=-15$, symmetric in $x,y$, and
+\begin{equation}\label{eq:8Q}
+8\,Q(x,y)=(4x+y)^{2}+15y^{2}.
+\end{equation}
+Since $Q\ge 0$, any solution of $Q(x,y)+z^{3}\pm1=0$ has $z\le 1$, and we write $t=-z$.
+
+\begin{theorem}\label{thm:main}
+\begin{enumerate}
+\item[(A)] For every integer $s$ the triple
+\[
+x=-15s(2s+1)(4s+1),\qquad y=30s^{3}+45s^{2}+15s+1,\qquad z=-(30s^{2}+15s+1)
+\]
+satisfies $2x^{2}+xy+2y^{2}+z^{3}-1=0$.
+\item[(B)] For every integer $s$ the triple
+\[
+x=-4560s^{3}-1230s^{2}+89s+29,\qquad y=9690s^{3}+6105s^{2}+1189s+71,\qquad z=-(570s^{2}+225s+24)
+\]
+satisfies $2x^{2}+xy+2y^{2}+z^{3}+1=0$.
+\end{enumerate}
+In both families $z$ is a strictly decreasing function of $s\ge0$, so each equation has
+infinitely many pairwise distinct integer solutions.
+\end{theorem}
+
+The first few members are listed in Table~\ref{tab:sol}.
+
+\begin{table}[h]\centering
+\begin{tabular}{c|ccc|ccc}
+\toprule
+ & \multicolumn{3}{c|}{(A): $Q+z^{3}-1=0$} & \multicolumn{3}{c}{(B): $Q+z^{3}+1=0$}\\
+$s$ & $x$ & $y$ & $z$ & $x$ & $y$ & $z$\\
+\midrule
+$0$ & $0$ & $1$ & $-1$ & $29$ & $71$ & $-24$\\
+$1$ & $-225$ & $91$ & $-46$ & $-5672$ & $17055$ & $-819$\\
+$-1$ & $45$ & $1$ & $-16$ & $3270$ & $-4703$ & $-369$\\
+$2$ & $-1350$ & $451$ & $-151$ & $-41193$ & $104389$ & $-2754$\\
+$-2$ & $630$ & $-89$ & $-91$ & $31411$ & $-55407$ & $-1854$\\
+$3$ & $-4095$ & $1261$ & $-316$ & $-133894$ & $320213$ & $-5829$\\
+\bottomrule
+\end{tabular}
+\caption{Small members of the two families.}\label{tab:sol}
+\end{table}
+
+\section{Proof of Theorem~\ref{thm:main}}
+
+The proof uses only \eqref{eq:8Q} and the classical composition identity
+\begin{equation}\label{eq:brahma}
+(A^{2}+15B^{2})(C^{2}+15D^{2})=(AC-15BD)^{2}+15(AD+BC)^{2},
+\end{equation}
+which holds for all $A,B,C,D$ (expand both sides). The idea is to write $t^{3}\pm1=(t\pm1)(t^{2}\mp t+1)$,
+represent each factor (times a power of $2$) by $X^{2}+15Y^{2}$, compose with \eqref{eq:brahma},
+and read off $x,y$ from \eqref{eq:8Q}.
+
+\subsection*{Family (A)}
+Put $t=30s^{2}+15s+1$, so $z=-t$ and the claim is $Q(x,y)=t^{3}+1$. One checks directly
+\begin{align}
+8(t+1)&=240s^{2}+120s+16=1^{2}+15\,(4s+1)^{2},\label{A1}\\
+4(t^{2}-t+1)&=3600s^{4}+3600s^{3}+1020s^{2}+60s+4
+ =(15s^{2}+15s+2)^{2}+15\,(15s^{2}+7s)^{2}.\label{A2}
+\end{align}
+(For \eqref{A2}: $(15s^{2}+15s+2)^{2}=225s^{4}+450s^{3}+285s^{2}+60s+4$ and
+$15(15s^{2}+7s)^{2}=3375s^{4}+3150s^{3}+735s^{2}$.)
+Apply \eqref{eq:brahma} with $A=1$, $B=4s+1$, $C=15s^{2}+15s+2$, $D=15s^{2}+7s$:
+\[
+AC-15BD=-2\,(450s^{3}+315s^{2}+45s-1),\qquad AD+BC=2\,(30s^{3}+45s^{2}+15s+1),
+\]
+so, dividing $32(t^{3}+1)=(AC-15BD)^{2}+15(AD+BC)^{2}$ by $4$,
+\begin{equation}\label{A3}
+8(t^{3}+1)=X^{2}+15Y^{2},\qquad X=-(450s^{3}+315s^{2}+45s-1),\quad Y=30s^{3}+45s^{2}+15s+1.
+\end{equation}
+Now $X-Y=-(480s^{3}+360s^{2}+60s)=-60s(8s^{2}+6s+1)=-60s(2s+1)(4s+1)$ is divisible by $4$.
+Setting $y=Y$ and $x=(X-Y)/4=-15s(2s+1)(4s+1)$ we get $4x+y=X$, hence by \eqref{eq:8Q} and \eqref{A3}
+\[
+8\,Q(x,y)=X^{2}+15Y^{2}=8(t^{3}+1),
+\]
+i.e.\ $Q(x,y)=t^{3}+1=-z^{3}+1$, which is $2x^{2}+xy+2y^{2}+z^{3}-1=0$. \qed
+
+\subsection*{Family (B)}
+Put $t=570s^{2}+225s+24$, so $z=-t$ and the claim is $Q(x,y)=t^{3}-1$. One checks directly
+\begin{align}
+8(t-1)&=4560s^{2}+1800s+184=(60s+13)^{2}+15\,(8s+1)^{2},\label{B1}\\
+4(t^{2}+t+1)&=1299600s^{4}+1026000s^{3}+314220s^{2}+44100s+2404 \notag\\
+ &=(285s^{2}+255s+38)^{2}+15\,(285s^{2}+103s+8)^{2}.\label{B2}
+\end{align}
+(For \eqref{B1}: $(60s+13)^{2}=3600s^{2}+1560s+169$, $15(8s+1)^{2}=960s^{2}+240s+15$.
+For \eqref{B2}: $(285s^{2}+255s+38)^{2}=81225s^{4}+145350s^{3}+86685s^{2}+19380s+1444$ and
+$15(285s^{2}+103s+8)^{2}=1218375s^{4}+880650s^{3}+227535s^{2}+24720s+960$.)
+Apply \eqref{eq:brahma} with $A=60s+13$, $B=8s+1$, $C=285s^{2}+255s+38$, $D=285s^{2}+103s+8$:
+\[
+AC-15BD=-2\,(8550s^{3}-1185s^{2}-1545s-187),\qquad AD+BC=2\,(9690s^{3}+6105s^{2}+1189s+71),
+\]
+so
+\begin{equation}\label{B3}
+8(t^{3}-1)=X^{2}+15Y^{2},\qquad X=-8550s^{3}+1185s^{2}+1545s+187,\quad Y=9690s^{3}+6105s^{2}+1189s+71.
+\end{equation}
+Here $X-Y=-18240s^{3}-4920s^{2}+356s+116=4\,(-4560s^{3}-1230s^{2}+89s+29)$.
+With $y=Y$ and $x=(X-Y)/4=-4560s^{3}-1230s^{2}+89s+29$ we have $4x+y=X$, hence
+$8Q(x,y)=X^{2}+15Y^{2}=8(t^{3}-1)$, i.e.\ $Q(x,y)=t^{3}-1=-z^{3}-1$, which is
+$2x^{2}+xy+2y^{2}+z^{3}+1=0$. \qed
+
+\medskip
+Both identities \eqref{A3} and \eqref{B3}, and the final identities
+$Q(x,y)+z^{3}\mp1=0$, were also verified by expanding both sides symbolically; the
+residuals are identically zero. This completes the proof of Theorem~\ref{thm:main}.
+
+\section{Where the families come from}
+
+Nothing in Section~2 depends on what follows; this section records the reasoning
+that produced the identities, because that is the non-obvious part.
+
+\subsection{The form $Q$ as a norm form}
+Let $K=\Q(\sqrt{-15})$, $\omega=\tfrac{1+\sqrt{-15}}{2}$, $\OK=\Z[\omega]$, $\omega^{2}=\omega-4$.
+The class number of $K$ is $2$; the two reduced forms of discriminant $-15$ are the principal form
+$P(u,v)=u^{2}+uv+4v^{2}=\N(u+v\omega)$ and $Q$. Indeed
+\[
+Q(x,y)=\tfrac12\,\N(2x+y\omega),
+\]
+and $\{2x+y\omega\}=2\Z+\omega\Z=\pp_{2}=(2,\omega)$ is the non-principal prime above $2$.
+Hence $Q$ represents $n$ exactly when there is an ideal of norm $n$ in the non-trivial class;
+unwinding this, with $\chi$ the class of a prime ($\pp_2,\pp_3,\pp_5$ and the split primes
+$p\equiv2,8\pmod{15}$ are non-principal, split primes $p\equiv1,4\pmod{15}$ are principal,
+inert primes $p\equiv7,11,13,14\pmod{15}$ must occur to even exponent),
+\begin{equation}\label{eq:crit}
+Q\ \text{represents}\ n>0\iff v_{p}(n)\ \text{even for all inert}\ p\ \text{and}\
+v_{2}(n)+v_{3}(n)+v_{5}(n)+\!\!\sum_{p\equiv2,8\,(15)}\!\! v_{p}(n)\ \text{is odd}.
+\end{equation}
+This criterion makes it cheap to list all $t\le 2\cdot10^{4}$ with $t^{3}\pm1$ represented, which was
+used to test candidate families. It also gives necessary congruences: values of $Q$ prime to $15$ are
+$\equiv2,8\pmod{15}$, so for $Q=t^{3}+1$ one needs $t\not\equiv0\pmod 3$ and $t\not\equiv 0,2\pmod5$,
+while for $Q=t^{3}-1$ one needs $t\not\equiv2\pmod3$ and $t\not\equiv0,3\pmod5$. (Our families have
+$t\equiv1\pmod{15}$ and $t\equiv9\pmod{15}$ respectively.)
+
+In these terms, $8n=X^{2}+15Y^{2}$ with $X\equiv Y\pmod 2$ is the same as $2n=\N(\alpha)$ with
+$\alpha=\tfrac{X-Y}{2}+Y\omega\in\OK$, and a short parity argument (replace $\alpha$ by $\bar\alpha$
+if necessary so that $\alpha\in\pp_{2}$) shows that this already forces $Q$ to represent $n$. The proof in
+Section~2 avoids this lemma by exhibiting $x,y$ directly.
+
+\subsection{Why a quadratic $t(s)$, and the Galois constraint}
+If $x,y,z$ are polynomials in a parameter $s$ with $Q(x,y)=t^{3}+c$, $c=\pm1$, then
+$\deg t=2d$ and $\deg x=\deg y=3d$; the simplest case is $d=1$, $t=as^{2}+bs+c_{0}$,
+and we need a cubic $\xi\in K[s]$ with $\xi\bar\xi=8(t^{3}+c)$.
+Over $\overline{\Q}$,
+\[
+t(s)^{3}+c=\prod_{j=0}^{2}\bigl(t(s)+c\rho^{j}\bigr),\qquad \rho=e^{2\pi i/3},
+\]
+has six roots $r_{1},\dots,r_{6}$, and $\xi$ corresponds to a triple $T$ of them, stable under
+$\mathrm{Gal}(\overline\Q/K)$, whose complement is its image under any automorphism acting
+non-trivially on $K$. Chasing the orbits one finds:
+\begin{itemize}
+\item the two roots of $t(s)=-c$ must lie in $K\setminus\Q$, i.e.\ $\operatorname{disc}(t+c)=b^{2}-4a(c_{0}+c)\in-15\,\Q^{\times2}$;
+\item the two roots of $t(s)=-c\rho$ must lie in $L=K(\rho)=\Q(\sqrt{-3},\sqrt5)$ but not in $\Q(\rho)$,
+i.e.\ $\operatorname{disc}(t+c\rho)=E-4ac\rho\in 5\,\Q(\rho)^{\times2}$, where $E=b^{2}-4ac_{0}$;
+\item the leading coefficient $8a^{3}$ must be a norm from $K^{\times}$, equivalently $2a\in\N(K^{\times})$.
+\end{itemize}
+Equivalently: $t+c$ is (a constant times) a norm of a \emph{linear} polynomial over $K$, and
+$t^{2}-ct+1=\N_{\Q(\rho)/\Q}(t+c\rho)$ is a norm of a \emph{quadratic} polynomial over $K$,
+because $t+c\rho$ is itself a norm from $L$ to $\Q(\rho)$ of a linear polynomial. The identities
+\eqref{A1}--\eqref{A2} and \eqref{B1}--\eqref{B2} are exactly these two norm statements.
+(The two conditions ``$\operatorname{disc}\in\Q^{\times2}$'' or ``$\operatorname{disc}=0$'' for $t+c$, which look
+more natural at first, are excluded: they would make $\xi$ rational up to a scalar $\lambda$ with
+$\N(\lambda)=8\cdot(\text{square})$, and $8$ is not a norm from $K$ because $\pp_{2}^{3}$ is non-principal.)
+
+\subsection{The conic}
+Write $E-4ac\rho=5(g_{0}+g_{1}\rho)^{2}$. Comparing coefficients of $1,\rho$ (using $\rho^{2}=-1-\rho$),
+\[
+E=5(g_{0}^{2}-g_{1}^{2}),\qquad -4ac=5g_{1}(2g_{0}-g_{1}),
+\]
+and then $\operatorname{disc}(t+c)=E-4ac=5\bigl((g_{0}+g_{1})^{2}-3g_{1}^{2}\bigr)$. Requiring this to be $-15m^{2}$
+gives $(g_{0}+g_{1})^{2}-3g_{1}^{2}=-3m^{2}$; putting $g_{0}+g_{1}=3h$ this is the conic
+\[
+g_{1}^{2}-3h^{2}=m^{2},
+\]
+with the rational parametrisation $g_{1}=1+3\tau^{2}$, $h=2\tau$, $m=1-3\tau^{2}$ (up to a common scalar $\lambda$).
+Substituting back,
+\begin{equation}\label{eq:param}
+ac=\tfrac{15}{4}\lambda^{2}(3\tau^{2}+1)(3\tau-1)(\tau-1),\qquad
+E=-60\lambda^{2}\tau(3\tau^{2}-3\tau+1),\qquad
+\operatorname{disc}(t+c)=-15\lambda^{2}(3\tau^{2}-1)^{2}.
+\end{equation}
+So every quadratic family is determined by a rational $\tau$ and a scaling $\lambda$, subject to:
+$a>0$, $2a\in\N(K^{\times})$, and the existence of integers $b,c_{0}$ with $b^{2}-4ac_{0}=E$
+(a congruence condition modulo $4a$).
+
+\paragraph{Sign $-1$ (i.e.\ $c=+1$).}
+Take $\tau=-1$, $\lambda=\tfrac12$: then $ac=\tfrac{15}{4}\cdot\tfrac14\cdot4\cdot(-4)(-2)=30$, so $a=30$, and $E=105$.
+Here $2a=60=P(7,1)$ is a norm. The congruence $b^{2}\equiv105\pmod{120}$ has the solution $b=15$, giving
+$c_{0}=(225-105)/120=1$ and $t=30s^{2}+15s+1$. The two norm identities \eqref{A1}, \eqref{A2} then follow
+by factoring $t+1$ and $t^{2}-t+1$ over $K$ (or by the small searches
+$240=X^{2}+15Y^{2}\Rightarrow(X,Y)=(0,4)$ and $16=1+15$).
+
+\paragraph{Sign $+1$ (i.e.\ $c=-1$).}
+Now $a>0$ forces $(3\tau-1)(\tau-1)<0$, i.e.\ $\tfrac13<\tau<1$, and the norm condition on $2a$
+becomes much more restrictive: for $\tau=\tfrac12,\tfrac23,\tfrac34,\tfrac35,\tfrac25,\tfrac45$ the
+squarefree part of $a$ contains an inert prime ($7$, $7$, $43$, $13$, $37$, $7$ respectively; for $\tau=\tfrac45$ also $73$) to an odd
+power, so these $\tau$ are excluded by \eqref{eq:crit}. The first admissible value is $\tau=\tfrac37$
+(and $\tau=\tfrac79$ gives the same family), for which the squarefree reduction of \eqref{eq:param} gives
+\[
+a=570=2\cdot3\cdot5\cdot19,\qquad E=-4095,\qquad 2a=1140=4\cdot285=\N\bigl(2(13+4\omega)\bigr),
+\]
+(the choice $\lambda=\tfrac{49}{2}$ in \eqref{eq:param}; $285=P(13,4)$, and indeed $19\equiv4\pmod{15}$ is a
+principal split prime, so $2a$ has an even number of non-principal prime factors and is a norm by \eqref{eq:crit}). The congruence $b^{2}\equiv-4095\pmod{2280}$
+forces $15\mid b$, $b$ odd, $b\equiv\pm60\pmod{285}$; the solution $b=225$ gives
+$c_{0}=(225^{2}+4095)/2280=24$ and $t=570s^{2}+225s+24$. Identities \eqref{B1}, \eqref{B2} were then
+obtained by factoring $t-1$ and $t^{2}+t+1$ over $K$ and rescaling the factors to integral coefficients.
+
+A search over all $\tau=p/q$ with $|p|,q\le45$ found no quadratic family for the sign $+1$ with a smaller
+leading coefficient (in the half-integer normalisation of Remark~\ref{rem:half} the minimal leading
+coefficient is $285/2$), which explains why family (B) is unavoidably larger than family (A).
+
+\subsection{Two ideas that do not work, for contrast}
+\emph{Making $t^{2}\mp t+1$ a norm first.} Solving $(2t\mp1)^{2}+3=(2u+v)^{2}+15v^{2}$ by factoring
+$3(5v^{2}-1)$ gives the polynomial families $t=5k^{2}$ and $t=15k^{2}-1$ only; but $5k^{2}$ fails the
+mod-$5$ congruence for both signs, and $15k^{2}-1$ fails mod $3$ for the sign $+1$.
+\emph{Making $t^{3}\pm1$ a fixed multiple of a square.} Equations such as $t^{3}\pm1=cu^{2}$ are elliptic
+curves and have only finitely many integer points, so they cannot produce infinitely many solutions.
+The quadratic-family approach above circumvents both obstacles by letting the two factors of $t^{3}\pm1$ be
+norms of polynomials of different degrees and composing them.
+
+\section{Remarks}
+
+\begin{remark}\label{rem:half}
+Both families extend to half-integral $s$. Writing $s=u/2$, family (A) has
+$t=1+15\binom{u+1}{2}$, i.e.\ $t=1+\tfrac{15u(u+1)}{2}$ for \emph{all} integers $u$ (values $1,16,46,91,151,226,\dots$),
+and family (B) has $t=\tfrac{285u^{2}+225u+48}{2}$ (values $24,54,279,369,819,969,\dots$). The corresponding
+$(x,y)$ for odd $u=2s+1$ are, respectively,
+\[
+x=-15(s+1)(2s+1)(4s+3),\quad y=30s^{3}+45s^{2}+15s-1,\quad z=-(30s^{2}+45s+16),
+\]
+and
+\[
+x=4560s^{3}+8070s^{2}+4561s+804,\quad y=7410s^{3}+16605s^{2}+12281s+3001,\quad z=-(570s^{2}+795s+279);
+\]
+these were verified symbolically in the same way.
+\end{remark}
+
+\begin{remark}
+Since $Q$ is symmetric and even, $(x,y)\mapsto(y,x)$ and $(x,y)\mapsto(-x,-y)$ map solutions to solutions.
+Composing the factor representations with the other sign choice in \eqref{eq:brahma} gives further
+polynomial solutions, e.g.\ for (A): $x=s(105s^{2}+75s+13)$, $y=30s^{3}+30s^{2}+8s+1$ with the same $z$.
+\end{remark}
+
+\begin{remark}
+The families are far from exhaustive: by \eqref{eq:crit} the equation with sign $-1$ also has solutions with
+$z=-8,-14,-23,-31,\dots$ and the one with sign $+1$ with $z=-7,-52,-54,-69,\dots$, none of which lie in the
+families above. Whether the solutions of either equation can be described by finitely many polynomial
+families is a different (and harder) question, not addressed here.
+\end{remark}
+
+\begin{remark}
+No unproved hypothesis is used anywhere: Theorem~\ref{thm:main} rests on the polynomial identities
+\eqref{A1}--\eqref{A3} and \eqref{B1}--\eqref{B3}, each of which can be checked by hand or by any computer
+algebra system. Section~3 is motivation only.
+\end{remark}
+
+\end{document}
