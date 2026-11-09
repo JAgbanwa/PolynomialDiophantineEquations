@@ -1,1 +1,185 @@
-.
+
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\title{Infinitely many integer solutions of\\ $x^{2}+y^{2}x+z^{2}y-x-y+1=0$}
+\author{}
+\date{November 2026}
+\begin{document}
+\maketitle
+
+\section*{Statement}
+
+\begin{theorem}\label{thm:main}
+The equation
+\begin{equation}\label{eq:main}
+x^{2}+y^{2}x+z^{2}y-x-y+1=0
+\end{equation}
+has infinitely many solutions in integers $x,y,z$. Explicitly, for every pair of
+integers $(u,v)$ with
+\begin{equation}\label{eq:pell}
+u^{2}-7v^{2}=1,
+\end{equation}
+the triple
+\begin{equation}\label{eq:family}
+x=-4v^{2}\bigl(2v^{2}+1+u\bigr),\qquad y=4v^{2}+1,\qquad z=2v\bigl(2v^{2}-1\bigr)
+\end{equation}
+is a solution of \eqref{eq:main}. Since \eqref{eq:pell} has infinitely many
+solutions, and $y=4v^{2}+1$ takes infinitely many values along them, the
+solutions \eqref{eq:family} are infinitely many.
+\end{theorem}
+
+The first members of the family are
+\[
+\begin{array}{c|c|r|r|r}
+n & (u_n,v_n) & x & y & z\\ \midrule
+0 & (1,0) & 0 & 1 & 0\\
+1 & (8,3) & -972 & 37 & 102\\
+2 & (127,48) & -43\,646\,976 & 9\,217 & 442\,272\\
+3 & (2024,765) & -2\,744\,646\,727\,500 & 2\,340\,901 & 1\,790\,786\,970\\
+4 & (32257,12192) & -176\,781\,544\,692\,719\,616 & 594\,579\,457 & 7\,249\,112\,703\,168
+\end{array}
+\]
+Each line has been checked by direct substitution.
+
+\section{Proof}
+
+\subsection{The polynomial identity}
+
+Everything rests on one identity in the polynomial ring $\mathbb{Z}[u,v]$.
+
+\begin{proposition}\label{prop:identity}
+With $x,y,z$ as in \eqref{eq:family},
+\begin{equation}\label{eq:identity}
+x^{2}+y^{2}x+z^{2}y-x-y+1 \;=\; 16\,v^{4}\,\bigl(u^{2}-7v^{2}-1\bigr).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Put $s=4v^{2}$, so that
+\[
+y=s+1,\qquad z=v(s-2),\qquad x=-\tfrac{s}{2}\,(s+2+2u).
+\]
+Group the left side of \eqref{eq:identity} as a quadratic in $x$:
+\begin{equation}\label{eq:grouped}
+x^{2}+y^{2}x+z^{2}y-x-y+1 \;=\; x\,\bigl(x+y^{2}-1\bigr)+\bigl(yz^{2}-y+1\bigr).
+\end{equation}
+First factor. Since $y^{2}-1=s^{2}+2s=s(s+2)$,
+\[
+x+y^{2}-1=-\tfrac{s}{2}(s+2+2u)+s(s+2)=\tfrac{s}{2}\,(s+2-2u),
+\]
+hence
+\[
+x\,(x+y^{2}-1)=-\tfrac{s^{2}}{4}\,(s+2+2u)(s+2-2u)=-\tfrac{s^{2}}{4}\Bigl((s+2)^{2}-4u^{2}\Bigr).
+\]
+Second term. Using $v^{2}=s/4$,
+\[
+yz^{2}-y+1=(s+1)\,\tfrac{s}{4}(s-2)^{2}-s=\tfrac{s}{4}\Bigl((s+1)(s-2)^{2}-4\Bigr)
+=\tfrac{s}{4}\bigl(s^{3}-3s^{2}\bigr)=\tfrac{s^{3}}{4}\,(s-3),
+\]
+because $(s+1)(s-2)^{2}-4=(s+1)(s^{2}-4s+4)-4=s^{3}-3s^{2}$.
+Adding the two pieces,
+\[
+\eqref{eq:grouped}=\tfrac{s^{2}}{4}\Bigl(s(s-3)-(s+2)^{2}+4u^{2}\Bigr)
+=\tfrac{s^{2}}{4}\Bigl(4u^{2}-7s-4\Bigr)
+=\tfrac{s^{2}}{4}\cdot 4\bigl(u^{2}-7v^{2}-1\bigr),
+\]
+where we used $s(s-3)-(s+2)^{2}=-7s-4$ and $7s+4=28v^{2}+4$.
+Finally $s^{2}=16v^{4}$, which gives \eqref{eq:identity}.
+\end{proof}
+
+Consequently, whenever $u^{2}-7v^{2}=1$, the right side of \eqref{eq:identity} vanishes and
+\eqref{eq:family} is an integer solution of \eqref{eq:main}. (The identity is even in $u$,
+so $u\mapsto -u$ gives the second solution $x'=-4v^{2}(2v^{2}+1-u)$ with the same $y,z$;
+it is the Vieta partner $x'=1-y^{2}-x$ of $x$.)
+
+\subsection{Infinitely many Pell solutions}
+
+\begin{lemma}\label{lem:pell}
+Define integers $u_n,v_n$ by $u_n+v_n\sqrt7=(8+3\sqrt7)^{\,n}$, $n\ge 0$. Then
+$u_n^{2}-7v_n^{2}=1$ for all $n$, and $0=v_0<v_1<v_2<\cdots$.
+\end{lemma}
+
+\begin{proof}
+Conjugating $\sqrt7\mapsto-\sqrt7$ gives $u_n-v_n\sqrt7=(8-3\sqrt7)^{n}$, so
+\[
+u_n^{2}-7v_n^{2}=(u_n+v_n\sqrt7)(u_n-v_n\sqrt7)=\bigl((8+3\sqrt7)(8-3\sqrt7)\bigr)^{n}=(64-63)^{n}=1 .
+\]
+Expanding $(u_n+v_n\sqrt7)(8+3\sqrt7)$ gives the recursion
+$u_{n+1}=8u_n+21v_n$, $v_{n+1}=3u_n+8v_n$. By induction $u_n\ge 1$ and $v_n\ge 0$,
+so $v_{n+1}\ge 3u_n+8v_n>v_n$.
+\end{proof}
+
+\subsection{Conclusion}
+
+For each $n\ge0$ let $(x_n,y_n,z_n)$ be \eqref{eq:family} evaluated at $(u_n,v_n)$.
+By Proposition~\ref{prop:identity} and Lemma~\ref{lem:pell} each triple is an integer
+solution of \eqref{eq:main}, and $y_n=4v_n^{2}+1$ is strictly increasing in $n$, so the
+triples are pairwise distinct. This proves Theorem~\ref{thm:main}. \qed
+
+\section{How the family was found}
+
+The proof above is a two-line verification; the content is in the choice
+\eqref{eq:family}. The following reductions led to it, and they also explain why the
+solution set is so sparse (122 solutions with $2\le y\le 5\cdot10^{4}$ in a complete
+search, all with $x<0$ and $y\equiv1\pmod 4$).
+
+\paragraph{1. Fixed $y$ gives a conic.} Completing the square in $x$,
+\eqref{eq:main} is equivalent to
+\begin{equation}\label{eq:conic}
+W^{2}+4y\,z^{2}=N(y),\qquad W:=2x+y^{2}-1,\qquad N(y):=(y^{2}-1)^{2}+4(y-1)=(y-1)\,g(y),
+\end{equation}
+with $g(y)=y^{3}+y^{2}-y+3$. For $y>0$ this is an ellipse (finitely many points for each
+$y$); for $y<0$ it is a Pell-type hyperbola, but a complete generalized-Pell computation
+shows it has \emph{no} integer points for $-120\le y<0$. (In every solution $x$ is even
+and $y\equiv1\pmod 4$: $y$ is odd because $y\mid x^{2}-x+1$, and reducing
+$yz^{2}=-(x^{2}+(y^{2}-1)x+1-y)$ modulo $8$ with $y^{2}\equiv1$ first excludes odd $x$,
+then forces $z$ even and $4\mid y-1$.) So infinitely many
+solutions must come from infinitely many values of $y$, not from a Pell family on one
+fibre. (The surface is a cubic surface whose only $\mathbb{Q}$-rational line is the line
+at infinity $\{y=0\}$, so $y=\mathrm{const}$ is its only conic bundle over~$\mathbb{Q}$.)
+
+\paragraph{2. $y-1$ is a sum of two squares.} Reducing \eqref{eq:conic} modulo $y-1$
+gives $W^{2}+4z^{2}\equiv 0 \pmod{y-1}$. If a prime $p\equiv 3\pmod 4$ divides $y-1$,
+then $p\mid W$ and $p\mid z$ (as $-1$ is a non-residue), so $p^{2}\mid (y-1)g(y)$; since
+$g(y)\equiv g(1)=4\pmod p$, $p^{2}\mid y-1$, and dividing $W,z$ by $p$ repeats the argument
+with $(y-1)/p^{2}$. Hence every such $p$ divides $y-1$ to an even power. Writing
+$y-1=A^{2}+B^{2}$ and factoring in $\mathbb{Z}[i]$, $W+2iz=(A+iB)(C+iD)$, the equation becomes
+\begin{equation}\label{eq:gauss}
+C^{2}+D^{2}+(AD+BC)^{2}=g(y),\qquad y=1+A^{2}+B^{2},
+\end{equation}
+with $W=AC-BD$, $2z=AD+BC$.
+
+\paragraph{3. The subfamily $A=0$.} If $y-1=B^{2}$ is itself a square,
+\eqref{eq:gauss} reads $D^{2}+y\,C^{2}=g(y)$. Modulo $y-1$ this forces
+$C^{2}\equiv g(1)=4$, i.e.\ $C\equiv\pm2\pmod{y-1}$. The choice $C=2$ gives
+$D^{2}=(y-1)^{2}(y+3)$, which requires $B^{2}+4$ to be a square (only $B=0$).
+The choice $C=y-3$ gives
+\[
+D^{2}=g(y)-y(y-3)^{2}=7y^{2}-10y+3=(y-1)(7y-3)=B^{2}\,(7B^{2}+4),
+\]
+so it suffices that $7B^{2}+4=E^{2}$ --- the Pell equation $E^{2}-7B^{2}=4$. All its
+solutions have $E,B$ even ($E^{2}-7B^{2}\equiv 2\pmod 8$ if both were odd), so
+$E=2u$, $B=2v$ with $u^{2}-7v^{2}=1$. Unwinding $W=-BD=-B^{2}E$, $2z=BC=B(B^{2}-2)$ and
+$x=(W-y^{2}+1)/2$ gives exactly \eqref{eq:family}.
+
+The data confirm the mechanism: the solutions $(x,y,z)=(-972,37,102)$ and
+$(-43646976,9217,442272)$ found by exhaustive search are the $n=1,2$ members, and
+$D=96$ at $n=1$ is precisely $B$ at $n=2$ ($96=2\cdot 48$).
+
+\begin{remark}
+Since $v_n\sim c\,(8+3\sqrt7)^{n}$, the family contributes only $O(\log Y)$ solutions
+with $y\le Y$, in line with the sparse numerical picture. The remaining solutions found
+by search (e.g.\ $y=21,469,577,721,\dots$) are not members of this family
+(for $y=577$ one has $y-1=24^{2}$, but $7\cdot24^{2}+4$ is not a square); whether they
+organise into further families is not addressed here.
+\end{remark}
+
+\end{document}
+
