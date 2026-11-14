@@ -40,11 +40,6 @@ Since Version 9 (the latest) of this [paper](https://arxiv.org/pdf/2404.08518), 
 | [\[21\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_obstruction) | Prove that the equation:  $y^3+y^2+xy=x^4+1$ has no integer solutions (Table 9). |  (Already solved) |
 | [\[22\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_y3_xy_x4_x_3) |  Prove that the equation:  $y^3+xy=x^4+x+3$ has no integer solutions (Table 9). |  (Already solved) |
 
-From the book Polynomial Diophantine Equations, the following equations were solved with the assistance of Fable 5.1
-| Folder | Goal | Progress |
-|--------|------|----------|
-| [\[1\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/diophantine_2x2_xy_2y2_z3) | Prove the infinitude of integer solutions for the equation:  $2x^{2}+xy+2y^{2}+z^{3}±1=0$ (Table 8.8, Page 640). |  ✅ Success! |
-| [\[2\]](https://github.com/JAgbanwa/PolynomialDiophantineEquations/tree/main/pell_family_proof) | Prove the infinitude of integer solutions for the equation:  $x^{2}+y^{2}x+z^{2}y-x-y+1=0$ (Table 8.8, Page 639). |  ✅ Success! |
 
 
 For the problems marked (Already solved), see the latest version of Dr. Grechuk's (aforementioned) [paper](https://arxiv.org/pdf/2404.08518). I used GPT-Codex to build a simple website to track the progress of solved equations in the aforementioned paper [here](https://jagbanwa.github.io/OpenDiophantineTracker/). This is its GitHub [repo](https://github.com/JAgbanwa/OpenDiophantineTracker).
